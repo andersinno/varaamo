@@ -94,4 +94,33 @@ describe('shared/footer/FooterContent', () => {
       expect(link.prop('onClick')).to.equal(onLinkClick);
     });
   });
+
+  describe('When Tampere customization is used', () => {
+    let content;
+
+    before(() => {
+      simple.mock(customizationUtils, 'getCurrentCustomization').returnWith('TAMPERE');
+      content = getWrapper();
+    });
+
+    after(() => {
+      simple.restore();
+    });
+
+    it('contains feedback link', () => {
+      const feedbackLink = content.find(FeedbackLink);
+      expect(feedbackLink.length).to.equal(1);
+    });
+
+    it('renders texts for Tampere', () => {
+      const texts = content.find('p').text();
+      expect(texts).to.contain('Footer.tampereText');
+    });
+
+    it('Logo link has correct onClick prop', () => {
+      const onLinkClick = () => { };
+      const link = getWrapper({ onLinkClick }).find(Link).filter('.brand-link');
+      expect(link.prop('onClick')).to.equal(onLinkClick);
+    });
+  });
 });

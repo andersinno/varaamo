@@ -5,6 +5,8 @@ export default {
     'varaamotest-espoo.hel.ninja': 'ESPOO',
     'varaamo.vantaa.fi': 'VANTAA',
     'varaamotest-vantaa.hel.ninja': 'VANTAA',
+    'varaamo.tampere.fi': 'TAMPERE',
+    'varaamotest-tampere.temp:3000': 'TAMPERE',
   },
   DATE_FORMAT: 'YYYY-MM-DD',
   DEFAULT_LOCALE: 'fi',

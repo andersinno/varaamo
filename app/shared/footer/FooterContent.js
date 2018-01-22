@@ -34,6 +34,18 @@ function FooterContent({ onLinkClick, t }) {
       );
     }
 
+    case 'TAMPERE': {
+      return (
+        <div>
+          <Link className="brand-link" onClick={onLinkClick} to="/">
+            <Logo />
+            Varaamo
+          </Link>
+          <p>{t('Footer.tampereText')} {feedbackLink}</p>
+        </div>
+      );
+    }
+
     default: {
       return (
         <div>

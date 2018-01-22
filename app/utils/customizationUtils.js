@@ -16,6 +16,10 @@ function getCustomizationClassName() {
       return 'vantaa-customizations';
     }
 
+    case 'TAMPERE': {
+      return 'tampere-customizations';
+    }
+
     default: {
       return '';
     }

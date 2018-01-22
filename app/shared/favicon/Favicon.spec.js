@@ -8,6 +8,7 @@ import Favicon from './Favicon';
 import espooFavicon from './espoo-favicon.ico';
 import vantaaFavicon from './vantaa-favicon.ico';
 import helsinkiFavicon from './helsinki-favicon.ico';
+import tampereFavicon from './tampere-favicon.ico';
 
 describe('shared/favicon/Favicon', () => {
   function getWrapper() {
@@ -57,6 +58,23 @@ describe('shared/favicon/Favicon', () => {
 
     it('renders favicon of Vantaa', () => {
       expect(favicon.prop('link')[0].href).to.deep.equal(vantaaFavicon);
+    });
+  });
+
+  describe('When Tampere customization is used', () => {
+    let favicon;
+
+    before(() => {
+      simple.mock(customizationUtils, 'getCurrentCustomization').returnWith('TAMPERE');
+      favicon = getWrapper();
+    });
+
+    after(() => {
+      simple.restore();
+    });
+
+    it('renders favicon of Tampere', () => {
+      expect(favicon.prop('link')[0].href).to.deep.equal(tampereFavicon);
     });
   });
 });

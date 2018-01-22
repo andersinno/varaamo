@@ -25,6 +25,12 @@ const customizedTranslationKeys = {
     reservable: 'AboutPageContent.vantaaReservableParagraph',
     partners: 'AboutPageContent.vantaaPartnersHeader',
   },
+  TAMPERE: {
+    header: 'AboutPageContent.tampereHeader',
+    lead: 'AboutPageContent.tampereLead',
+    reservable: 'AboutPageContent.tampereReservableParagraph',
+    partners: 'AboutPageContent.tamperePartnersHeader',
+  },
 };
 
 function AboutPageContent({ t }) {

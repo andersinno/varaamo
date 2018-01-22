@@ -8,6 +8,7 @@ import Logo from './Logo';
 import espooLogoSrc from './espoo-logo.png';
 import vantaaLogoSrc from './vantaa-logo.png';
 import helsinkiLogoSrc from './helsinki-logo-white.png';
+import tampereLogoSrc from './tampere-logo.png';
 
 describe('shared/logo/Logo', () => {
   function getWrapper() {
@@ -72,6 +73,28 @@ describe('shared/logo/Logo', () => {
 
     it('renders Vantaa alt text', () => {
       expect(logo.props().alt).to.equal('Logo.vantaaAlt');
+    });
+  });
+
+  describe('When Tampere customization is used', () => {
+    let logo;
+
+    before(() => {
+      simple.mock(customizationUtils, 'getCurrentCustomization').returnWith('TAMPERE');
+      logo = getWrapper();
+    });
+
+    after(() => {
+      simple.restore();
+    });
+
+    it('renders logo of Tampere', () => {
+      expect(logo.type()).to.equal('img');
+      expect(logo.props().src).to.equal(tampereLogoSrc);
+    });
+
+    it('renders Tampere alt text', () => {
+      expect(logo.props().alt).to.equal('Logo.tampereAlt');
     });
   });
 });

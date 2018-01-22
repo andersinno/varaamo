@@ -5,10 +5,12 @@ import { getCurrentCustomization } from 'utils/customizationUtils';
 import helsinkiFavicon from './helsinki-favicon.ico';
 import espooFavicon from './espoo-favicon.ico';
 import vantaaFavicon from './vantaa-favicon.ico';
+import tampereFavicon from './tampere-favicon.ico';
 
 const favicons = {
   ESPOO: espooFavicon,
   VANTAA: vantaaFavicon,
+  TAMPERE: tampereFavicon,
 };
 
 function Favicon() {

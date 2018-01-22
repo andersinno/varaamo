@@ -56,4 +56,21 @@ describe('Component: customization/AboutPageContent', () => {
       expect(content.find('h1').text()).to.contain('AboutPageContent.vantaaHeader');
     });
   });
+
+  describe('When Tampere customization is used', () => {
+    let content;
+
+    before(() => {
+      simple.mock(customizationUtils, 'getCurrentCustomization').returnWith('TAMPERE');
+      content = getWrapper();
+    });
+
+    after(() => {
+      simple.restore();
+    });
+
+    it('renders header for Tampere', () => {
+      expect(content.find('h1').text()).to.contain('AboutPageContent.tampereHeader');
+    });
+  });
 });
