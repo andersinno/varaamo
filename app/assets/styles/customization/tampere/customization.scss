@@ -1,0 +1,120 @@
+@import "_variables.scss";
+
+@import url('//fonts.googleapis.com/css?family=Lato:400,700|Open+Sans:400,700');
+
+.tampere-customizations {
+  // Typography
+  // ----------
+
+  h1, h2, h3, h4, h5, h6 {
+    color: $tre-red;
+    font-family: $headings-font-family;
+    font-weight: $font-weight-bold;
+  }
+
+  p {
+    font-family: $font-family-base;
+    font-weight: $font-weight-regular;
+  }
+
+  a {
+    color: $tre-red;
+    font-family: $font-family-base;
+
+    &:hover {
+      color: $tre-red;
+    }
+  }
+
+  div {
+    font-family: $font-family-base;
+  }
+
+  // Navbar
+  // ------
+
+  .app-SideNavbar .app-Sidebar__sidebar {
+    background-color: $tre-blue;
+
+    h1, h2, h3, h4, h5, h6, p, a {
+      color: $white;
+      &:hover, &:focus {
+        color: $white;
+      }
+    }
+
+    .app-Navbar {
+      background-color: $tre-blue;
+      .main-nav {
+        .nav.nav-stacked {
+          li {
+            border-bottom: 1px solid lighten($tre-blue, 6);
+            &:first-of-type {
+              border-top: 1px solid lighten($tre-blue, 6);
+            }
+          }
+        }
+      }
+    }
+
+    .feedback-link {
+      color: #bbb;
+      &:hover, &:focus {
+        color: #bbb;
+      }
+    }
+  }
+
+  .app-SideNavbar__toggle {
+    background-color: $tre-blue;
+    color: $white;
+
+    &:hover, &:focus {
+      color: $white;
+    }
+  }
+
+  // Footer
+  // ------
+
+  footer {
+    background-color: $tre-blue;
+
+    .brand-link, .brand-link:hover {
+      color: #fff;
+    }
+
+    .feedback-link {
+      color: #ccc;
+    }
+
+    .about-link {
+      color: #fff;
+    }
+  }
+
+  // About-page
+  // ----------
+
+  .about-page {
+    .about-page-logos {
+      margin-bottom: 20px;
+      margin-top: -15px;
+
+      .aika-logo {
+        height: 40px;
+        margin-top: 20px;
+        margin-right: 10px;
+      }
+      .eu-vipuvoimaa-logo {
+        height: 60px;
+        margin-top: 20px;
+        margin-right: 10px;
+      }
+      .eakr-logo {
+        height: 80px;
+        margin-top: 20px;
+      }
+    }
+  }
+}
