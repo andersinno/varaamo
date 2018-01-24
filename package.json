@@ -33,7 +33,7 @@
     "nocache": "2.0.0",
     "normalizr": "2.2.1",
     "passport": "0.3.2",
-    "passport-helsinki": "git://github.com/City-of-Helsinki/passport-helsinki.git",
+    "passport-tampere": "git://github.com/Tampere/passport-tampere.git",
     "query-string": "4.2.3",
     "rc-slider": "8.3.1",
     "react": "15.3.2",

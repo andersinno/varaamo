@@ -33,11 +33,11 @@ router.get('/login',
     req.session.next = req.query.next; // eslint-disable-line no-param-reassign
     next();
   },
-  passport.authenticate('helsinki')
+  passport.authenticate('tampere')
 );
 
-router.get('/login/helsinki/return',
-  passport.authenticate('helsinki', { failureRedirect: '/login' }),
+router.get('/login/tampere/return',
+  passport.authenticate('tampere', { failureRedirect: '/login' }),
   (req, res) => {
     if (req.session.next) {
       const redirectUrl = req.session.next;
@@ -50,8 +50,8 @@ router.get('/login/helsinki/return',
 
 router.get('/logout', (req, res) => {
   req.logOut();
-  const redirectUrl = req.query.next || 'https://varaamo.hel.fi';
-  res.redirect(`https://api.hel.fi/sso/logout/?next=${redirectUrl}`);
+  const redirectUrl = req.query.next || 'https://varaamo.tampere.fi';
+  res.redirect(`https://auth.tampere.fi/logout/?next=${redirectUrl}`);
 });
 
 export default router;
