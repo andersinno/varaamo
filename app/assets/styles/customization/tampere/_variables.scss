@@ -8,6 +8,30 @@ $tre-blue:      #006b9f;
 $tre-green:     #95ad39;
 $tre-gray:      #9c9b9b;
 
+// Helsinki overwrites
+// -------------------
+
+$theme-primary: $tre-red;
+$theme-warning: $tre-yellow;
+$theme-info:    $tre-blue;
+$theme-success: $tre-green;
+
+$theme-primary-dark:    $tre-blue;
+$theme-primary-light:   lighten($tre-blue, 7%);
+
+$theme-secondary-dark:  $tre-red;
+$theme-secondary-light: lighten($tre-red, 7%);
+
+$blue: $tre-blue;
+$green: $tre-green;
+$red: $tre-red;
+$yellow: $tre-yellow;
+$copper: $tre-gray;
+$gold: $tre-gray;
+$orange: $tre-red;
+$pink: $tre-red;
+
+
 // Typography
 // ----------
 
@@ -15,3 +39,9 @@ $font-family-base:       "Open Sans", "Lucida Grande", "Lucida Sans", "Lucida Sa
 $headings-font-family:   "Lato", Helvetica, Arial, sans-serif;
 $font-weight-regular:    400;
 $font-weight-bold:       700;
+
+
+// Other
+// -----
+
+$sidebar-bg: $tre-blue;

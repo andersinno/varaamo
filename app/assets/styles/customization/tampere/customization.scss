@@ -1,40 +1,23 @@
-@import "_variables.scss";
-
 @import url('//fonts.googleapis.com/css?family=Lato:400,700|Open+Sans:400,700');
 
 .tampere-customizations {
-  // Typography
+  // Links
   // ----------
-
-  h1, h2, h3, h4, h5, h6 {
-    color: $tre-red;
-    font-family: $headings-font-family;
-    font-weight: $font-weight-bold;
-  }
-
-  p {
-    font-family: $font-family-base;
-    font-weight: $font-weight-regular;
-  }
 
   a {
     color: $tre-red;
     font-family: $font-family-base;
 
     &:hover {
-      color: $tre-red;
+      color: darken($tre-red, 5%);
     }
-  }
-
-  div {
-    font-family: $font-family-base;
   }
 
   // Navbar
   // ------
 
   .app-SideNavbar .app-Sidebar__sidebar {
-    background-color: $tre-blue;
+    background-color: $sidebar-bg;
 
     h1, h2, h3, h4, h5, h6, p, a {
       color: $white;
@@ -44,13 +27,13 @@
     }
 
     .app-Navbar {
-      background-color: $tre-blue;
+      background-color: $sidebar-bg;
       .main-nav {
         .nav.nav-stacked {
           li {
-            border-bottom: 1px solid lighten($tre-blue, 6);
+            border-bottom: 1px solid lighten($sidebar-bg, 6);
             &:first-of-type {
-              border-top: 1px solid lighten($tre-blue, 6);
+              border-top: 1px solid lighten($sidebar-bg, 6);
             }
           }
         }
@@ -58,15 +41,15 @@
     }
 
     .feedback-link {
-      color: #bbb;
+      color: rgba(255,255,255,0.6);
       &:hover, &:focus {
-        color: #bbb;
+        color: rgba(255,255,255,0.6);
       }
     }
   }
 
   .app-SideNavbar__toggle {
-    background-color: $tre-blue;
+    background-color: $sidebar-bg;
     color: $white;
 
     &:hover, &:focus {
@@ -78,7 +61,7 @@
   // ------
 
   footer {
-    background-color: $tre-blue;
+    background-color: $sidebar-bg;
 
     .brand-link, .brand-link:hover {
       color: #fff;
