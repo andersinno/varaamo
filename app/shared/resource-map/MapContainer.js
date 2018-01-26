@@ -13,8 +13,9 @@ const defaultPosition = {
   null: [60.18952, 24.99545],
   ESPOO: [60.205490, 24.755899],
   VANTAA: [60.29414, 25.14099],
-  TAMPERE: [61.63196, 23.55012],
+  TAMPERE: [61.49745, 23.76096],
 };
+
 const defaultZoom = 12;
 
 export class UnconnectedResourceMapContainer extends React.Component {
@@ -73,6 +74,7 @@ export class UnconnectedResourceMapContainer extends React.Component {
     );
   }
 
+
   fitMapToBoundaries = () => {
     if (this.map) {
       if (this.hasBoundaries() && this.props.shouldMapFitBoundaries) {
@@ -84,6 +86,15 @@ export class UnconnectedResourceMapContainer extends React.Component {
   }
 
   render() {
+    const defaultMapTileUrl = 'https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoidmFyYWFtbyIsImEiOiJjamU2cWhmdTUwM2ZmMzFud2dvZzFqb2dnIn0.Mj6YrtV9RbJXiU82dqqwhw';
+
+    const mapTileUrl = {
+      null: defaultMapTileUrl,
+      ESPOO: defaultMapTileUrl,
+      VANTAA: defaultMapTileUrl,
+      TAMPERE: 'https://api.mapbox.com/styles/v1/tampere/cjcvqn5gs0pxh2roieick30gf/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoidGFtcGVyZSIsImEiOiJjamN2bHF0MWcwOTd2MzNxbzB4dDRhaGxsIn0.uJQvUx891JK-VwWuKocQgg',
+    };
+
     return (
       <div className={classnames('app-ResourceMap', { 'app-ResourceMap__showMap': this.props.showMap })}>
         <Map
@@ -96,7 +107,7 @@ export class UnconnectedResourceMapContainer extends React.Component {
         >
           <TileLayer
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            url="https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoidmFyYWFtbyIsImEiOiJjamU2cWhmdTUwM2ZmMzFud2dvZzFqb2dnIn0.Mj6YrtV9RbJXiU82dqqwhw"
+            url={mapTileUrl[getCurrentCustomization()]}
           />
           <ZoomControl position="bottomright" />
           {this.props.markers && this.props.markers.map(
