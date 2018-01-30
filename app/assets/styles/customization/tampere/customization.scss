@@ -100,4 +100,16 @@
       }
     }
   }
+
+  .modal {
+    &.modal-city-theme {
+      .modal-header {
+        &::before {
+          background-image: url('../../shared/logo/tampere-logo.png');
+          height: 50px;
+          width: 200px;
+        }
+      }
+    }
+  }
 }
