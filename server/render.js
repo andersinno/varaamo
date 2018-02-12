@@ -22,6 +22,7 @@ function render(req, res) {
     <Html
       appCssSrc={config.assetsSources.appCss}
       appScriptSrc={config.assetsSources.appJs}
+      gtagId={config.gtagId}
       initialState={initialState}
       isProduction={config.isProduction}
       piwikSiteId={config.piwikSiteId}

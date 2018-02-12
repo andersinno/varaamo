@@ -31,6 +31,7 @@ module.exports = {
   },
   isProduction,
   piwikSiteId: process.env.PIWIK_SITE_ID,
+  gtagId: process.env.GTAG_ID,
   port,
   webpackStylesExtensions: ['css', 'scss'],
 };

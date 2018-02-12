@@ -40,6 +40,27 @@ class Html extends Component {
     );
   }
 
+  renderGtagCode(gtagId) {
+    if (!gtagId) {
+      return null;
+    }
+
+    const scriptString = `
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      
+      gtag('config', '${gtagId}');
+    `;
+    const scriptSrc = `https://www.googletagmanager.com/gtag/js?id=${gtagId}`;
+    return (
+      <div>
+        <script async src={scriptSrc} />
+        <script dangerouslySetInnerHTML={{ __html: scriptString }} />
+      </div>
+    );
+  }
+
   renderStylesLink(appCssSrc, isProduction) {
     if (!isProduction) {
       return null;
@@ -55,6 +76,7 @@ class Html extends Component {
       initialState,
       isProduction,
       piwikSiteId,
+      gtagId,
     } = this.props;
     const initialStateHtml = this.getInitialStateHtml(initialState);
 
@@ -75,6 +97,7 @@ class Html extends Component {
           <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en-gb,Intl.~locale.fi,Intl.~locale.sv" />
           <script src={appScriptSrc} />
           {this.renderAnalyticsCode(piwikSiteId)}
+          {this.renderGtagCode(gtagId)}
         </body>
       </html>
     );
@@ -87,6 +110,7 @@ Html.propTypes = {
   initialState: PropTypes.object.isRequired,
   isProduction: PropTypes.bool.isRequired,
   piwikSiteId: PropTypes.string,
+  gtagId: PropTypes.string,
 };
 
 export default Html;
