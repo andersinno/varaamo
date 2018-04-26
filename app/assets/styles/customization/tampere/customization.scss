@@ -40,6 +40,14 @@
       }
     }
 
+    .brand-link {
+      img {
+        display: inline-block;
+        margin: 6px 4px;
+        height: 42px;
+      }
+    }
+
     .feedback-link {
       color: rgba(255,255,255,0.6);
       &:hover, &:focus {
