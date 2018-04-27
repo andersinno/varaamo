@@ -27,9 +27,6 @@ const customizedTranslationKeys = {
   },
   TAMPERE: {
     header: 'AboutPageContent.tampereHeader',
-    lead: 'AboutPageContent.tampereLead',
-    reservable: 'AboutPageContent.tampereReservableParagraph',
-    partners: 'AboutPageContent.tamperePartnersHeader',
   },
 };
 
@@ -40,37 +37,64 @@ function AboutPageContent({ t }) {
     translationKeys = customizedTranslationKeys[customization];
   }
 
-  return (
-    <div>
-      <h1>{t(translationKeys.header)}</h1>
-      <p className="lead">{t(translationKeys.lead)}</p>
-      <p>{t('AboutPageContent.pilotParagraph')}</p>
-      <p>{t(translationKeys.reservable)}</p>
-      <p><FormattedHTMLMessage id="AboutPageContent.basedOnParagraph" /></p>
-      <p>{t('AboutPageContent.developmentParagraph')}</p>
-      <p>{t('AboutPageContent.goalParagraph')}</p>
-      <p>
-        {t('AboutPageContent.feedbackParagraph')}
-        {' '}
-        <FeedbackLink>{t('AboutPageContent.feedbackLink')}</FeedbackLink>
-      </p>
-      {translationKeys.partners && (
+  switch (customization) {
+    case 'TAMPERE': {
+      return (
         <div>
-          <h3>{t(translationKeys.partners)}</h3>
-          <AboutPartners />
+          <h1>{t(translationKeys.header)}</h1>
+          <FormattedHTMLMessage id="AboutPageContent.tampereText" />
+          <p>
+            <FeedbackLink>{t('AboutPageContent.tampereFeedbackLink')}</FeedbackLink>
+          </p>
+          <div>
+            <AboutPartners />
+          </div>
+          <h3>{t('AboutPageContent.customerRegisterHeader')}</h3>
+          <p>
+            {t('AboutPageContent.customerRegisterParagraph')}
+            {' '}
+            <a href="https://www.tampere.fi/tampereen-kaupunki/yhteystiedot-ja-asiointi/verkkoasiointi/tietosuoja.html">
+              {t('AboutPageContent.customerRegisterLink')}
+            </a>
+          </p>
         </div>
-      )}
+      );
+    }
 
-      <h3>{t('AboutPageContent.customerRegisterHeader')}</h3>
-      <p>
-        {t('AboutPageContent.customerRegisterParagraph')}
-        {' '}
-        <a href="https://app.helmet-kirjasto.fi/varaamo/rekisteriseloste.php">
-          {t('AboutPageContent.customerRegisterLink')}
-        </a>
-      </p>
-    </div>
-  );
+    default: {
+      return (
+        <div>
+          <h1>{t(translationKeys.header)}</h1>
+          <p className="lead">{t(translationKeys.lead)}</p>
+          <p>{t('AboutPageContent.pilotParagraph')}</p>
+          <p>{t(translationKeys.reservable)}</p>
+          <p><FormattedHTMLMessage id="AboutPageContent.basedOnParagraph" /></p>
+          <p>{t('AboutPageContent.developmentParagraph')}</p>
+          <p>{t('AboutPageContent.goalParagraph')}</p>
+          <p>
+            {t('AboutPageContent.feedbackParagraph')}
+            {' '}
+            <FeedbackLink>{t('AboutPageContent.feedbackLink')}</FeedbackLink>
+          </p>
+          {translationKeys.partners && (
+            <div>
+              <h3>{t(translationKeys.partners)}</h3>
+              <AboutPartners />
+            </div>
+          )}
+
+          <h3>{t('AboutPageContent.customerRegisterHeader')}</h3>
+          <p>
+            {t('AboutPageContent.customerRegisterParagraph')}
+            {' '}
+            <a href="https://app.helmet-kirjasto.fi/varaamo/rekisteriseloste.php">
+              {t('AboutPageContent.customerRegisterLink')}
+            </a>
+          </p>
+        </div>
+      );
+    }
+  }
 }
 
 AboutPageContent.propTypes = {

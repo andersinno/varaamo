@@ -12,6 +12,7 @@ export default {
   DATE_FORMAT: 'YYYY-MM-DD',
   DEFAULT_LOCALE: 'fi',
   FEEDBACK_URL: 'https://app.helmet-kirjasto.fi/forms/?site=varaamopalaute',
+  TAMPERE_FEEDBACK_URL: 'https://palvelut2.tampere.fi/e3/lomakkeet/15701/lomake.html',
   NOTIFICATION_DEFAULTS: {
     message: '',
     type: 'info',
