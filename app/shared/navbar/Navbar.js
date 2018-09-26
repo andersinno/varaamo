@@ -103,11 +103,6 @@ function Navbar(props) {
             </NavItem>
           </LinkContainer>
         </Nav>
-        <div className="alert alert-warning">
-          {/* TODO: Remove this */}
-          Rakennamme Tampereen uutta Varaamo-palvelua. Tämä on palvelun testiversio,
-          jonka kautta ei voi vielä varata resursseja.
-        </div>
       </div>
     </div>
   );
