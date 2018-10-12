@@ -26,8 +26,9 @@ describe('shared/footer/FooterContent', () => {
     });
 
     it('renders texts for Helsinki', () => {
-      const texts = content.find('p').text();
-      expect(texts).to.contain('Footer.helsinkiText');
+      const texts = content.find('p');
+      expect(texts.length).to.equal(2);
+      expect(texts.at(0).text()).to.contain('Footer.helsinkiText');
     });
 
     // it('Logo link has correct onClick prop', () => {
