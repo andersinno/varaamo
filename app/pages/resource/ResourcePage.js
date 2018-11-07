@@ -182,7 +182,7 @@ class UnconnectedResourcePage extends Component {
         </Loader>
 
         <div>
-          <button type="button" onClick={() => this.setState({ isOpen: true })}>
+          <button onClick={() => this.setState({ isOpen: true })} type="button" >
             Open Lightbox
           </button>
 
@@ -190,18 +190,18 @@ class UnconnectedResourcePage extends Component {
             <Lightbox
               mainSrc={images[photoIndex]}
               nextSrc={images[(photoIndex + 1) % images.length]}
-              prevSrc={images[(photoIndex + images.length - 1) % images.length]}
               onCloseRequest={() => this.setState({ isOpen: false })}
-              onMovePrevRequest={() =>
-                this.setState({
-                  photoIndex: (photoIndex + images.length - 1) % images.length,
-                })
-              }
               onMoveNextRequest={() =>
                 this.setState({
                   photoIndex: (photoIndex + 1) % images.length,
                 })
               }
+              onMovePrevRequest={() =>
+                this.setState({
+                  photoIndex: (photoIndex + images.length - 1) % images.length,
+                })
+              }
+              prevSrc={images[(photoIndex + images.length - 1) % images.length]}
             />
           )}
         </div>
