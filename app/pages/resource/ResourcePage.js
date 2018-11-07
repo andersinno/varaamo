@@ -7,6 +7,8 @@ import { browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import Col from 'react-bootstrap/lib/Col';
 import Panel from 'react-bootstrap/lib/Panel';
+import Lightbox from 'lightbox-react';
+import 'lightbox-react/style.css';
 
 import { fetchResource } from 'actions/resourceActions';
 import { clearReservations, toggleResourceMap } from 'actions/uiActions';
@@ -25,6 +27,12 @@ import resourcePageSelector from './resourcePageSelector';
 class UnconnectedResourcePage extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      photoIndex: 0,
+      isOpen: false,
+    };
+
     this.fetchResource = this.fetchResource.bind(this);
   }
 
@@ -77,6 +85,8 @@ class UnconnectedResourcePage extends Component {
       t,
       unit,
     } = this.props;
+
+    const { photoIndex, isOpen } = this.state;
 
     if (isEmpty(resource) && !isFetchingResource) {
       return <NotFoundPage />;
@@ -170,6 +180,32 @@ class UnconnectedResourcePage extends Component {
             </PageWrapper>
           }
         </Loader>
+
+        <div>
+          <button type="button" onClick={() => this.setState({ isOpen: true })}>
+            Open Lightbox
+          </button>
+
+          {isOpen && (
+            <Lightbox
+              mainSrc={images[photoIndex]}
+              nextSrc={images[(photoIndex + 1) % images.length]}
+              prevSrc={images[(photoIndex + images.length - 1) % images.length]}
+              onCloseRequest={() => this.setState({ isOpen: false })}
+              onMovePrevRequest={() =>
+                this.setState({
+                  photoIndex: (photoIndex + images.length - 1) % images.length,
+                })
+              }
+              onMoveNextRequest={() =>
+                this.setState({
+                  photoIndex: (photoIndex + 1) % images.length,
+                })
+              }
+            />
+          )}
+        </div>
+
       </div>
     );
   }
