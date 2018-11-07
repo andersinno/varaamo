@@ -160,16 +160,6 @@ class UnconnectedResourcePage extends Component {
                 </Col>
                 <Col className="app-ResourceInfo__imgs-wrapper" lg={3} md={3} xs={12}>
 
-                  {/* {images.map(image => (
-                    <div className="app-ResourceInfo__image-wrapper" key={image.url}>
-                      <img
-                        alt={image.caption}
-                        className="app-ResourceInfo__image"
-                        src={image.url}
-                      />
-                    </div>
-                  ))} */}
-
                   <div className="app-ResourceInfo__image-wrapper">
                     <button onClick={this.imageClick}>
                       <img
@@ -188,10 +178,6 @@ class UnconnectedResourcePage extends Component {
         </Loader>
 
         <div>
-          {/* <button onClick={() => this.setState({ isOpen: true })} type="button" >
-            Open Lightbox
-          </button> */}
-
           {isOpen && (
             <Lightbox
               mainSrc={images[photoIndex].url}
