@@ -198,10 +198,10 @@ class UnconnectedResourcePage extends Component {
               }
               onMovePrevRequest={() =>
                 this.setState({
-                  photoIndex: (photoIndex + images.length - 1) % images.length,
+                  photoIndex: (photoIndex + (images.length - 1)) % images.length,
                 })
               }
-              prevSrc={images[(photoIndex + images.length - 1) % images.length]}
+              prevSrc={images[(photoIndex + (images.length - 1)) % images.length]}
             />
           )}
         </div>
