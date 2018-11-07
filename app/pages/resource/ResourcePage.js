@@ -47,6 +47,10 @@ class UnconnectedResourcePage extends Component {
     }
   }
 
+  imageClick = () => {
+    this.setState({ isOpen: true });
+  }
+
   fetchResource(date = this.props.date) {
     const { actions, id } = this.props;
     const start = moment(date).subtract(2, 'M').startOf('month').format();
@@ -167,11 +171,13 @@ class UnconnectedResourcePage extends Component {
                   ))} */}
 
                   <div className="app-ResourceInfo__image-wrapper">
-                    <img
-                      alt={images[0].caption}
-                      className="app-ResourceInfo__image"
-                      src={images[0].url}
-                    />
+                    <button onClick={this.imageClick}>
+                      <img
+                        alt={images[0].caption}
+                        className="app-ResourceInfo__image"
+                        src={images[0].url}
+                      />
+                    </button>
                   </div>
 
                 </Col>
@@ -182,14 +188,14 @@ class UnconnectedResourcePage extends Component {
         </Loader>
 
         <div>
-          <button onClick={() => this.setState({ isOpen: true })} type="button" >
+          {/* <button onClick={() => this.setState({ isOpen: true })} type="button" >
             Open Lightbox
-          </button>
+          </button> */}
 
           {isOpen && (
             <Lightbox
-              mainSrc={images[photoIndex]}
-              nextSrc={images[(photoIndex + 1) % images.length]}
+              mainSrc={images[photoIndex].url}
+              nextSrc={images[(photoIndex + 1) % images.length].url}
               onCloseRequest={() => this.setState({ isOpen: false })}
               onMoveNextRequest={() =>
                 this.setState({
@@ -201,7 +207,7 @@ class UnconnectedResourcePage extends Component {
                   photoIndex: (photoIndex + (images.length - 1)) % images.length,
                 })
               }
-              prevSrc={images[(photoIndex + (images.length - 1)) % images.length]}
+              prevSrc={images[(photoIndex + (images.length - 1)) % images.length].url}
             />
           )}
         </div>
