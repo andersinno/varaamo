@@ -181,7 +181,6 @@ class UnconnectedResourcePage extends Component {
           {isOpen && (
             <Lightbox
               imageCaption={images[photoIndex].caption}
-              imagePadding={50}
               mainSrc={images[photoIndex].url}
               nextSrc={images[(photoIndex + 1) % images.length].url}
               onCloseRequest={() => this.setState({ isOpen: false })}
