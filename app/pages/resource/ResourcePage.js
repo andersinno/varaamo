@@ -160,15 +160,17 @@ class UnconnectedResourcePage extends Component {
                 </Col>
                 <Col className="app-ResourceInfo__imgs-wrapper" lg={3} md={3} xs={12}>
 
-                  <div className="app-ResourceInfo__image-wrapper">
-                    <button onClick={this.imageClick}>
-                      <img
-                        alt={images[0].caption}
-                        className="app-ResourceInfo__image"
-                        src={images[0].url}
-                      />
-                    </button>
-                  </div>
+                  {images.map(image => (
+                    <div className="app-ResourceInfo__image-wrapper" key={image.url}>
+                      <button onClick={this.imageClick}>
+                        <img
+                          alt={image.caption}
+                          className="app-ResourceInfo__image"
+                          src={image.url}
+                        />
+                      </button>
+                    </div>
+                  ))}
 
                 </Col>
 
