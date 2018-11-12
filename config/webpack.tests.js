@@ -56,5 +56,6 @@ module.exports = merge(common, {
     }),
     new HtmlWebpackPlugin(),
     new webpack.IgnorePlugin(/ReactContext/),
+    new ExtractTextPlugin('app.css'),
   ],
 });
