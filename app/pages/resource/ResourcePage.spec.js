@@ -23,17 +23,17 @@ describe('pages/resource/ResourcePage', () => {
     images: [
       {
         caption: 'caption 1',
-        url: 'url 1?dim=700x420 || url 1',
+        url: 'url 1?dim=700x420',
         type: 'main',
       },
       {
         caption: 'caption 2',
-        url: 'url 2?dim=700x420 || url 2',
+        url: 'url 2?dim=700x420',
         type: 'other',
       },
       {
         caption: 'caption 3',
-        url: 'url 3?dim=700x420 || url 3',
+        url: 'url 3?dim=700x420',
         type: 'other',
       },
     ],
