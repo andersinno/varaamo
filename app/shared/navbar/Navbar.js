@@ -7,6 +7,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import finlandFlagSrc from 'assets/flags/fi.svg';
 import swedenFlagSrc from 'assets/flags/sv.svg';
 import englandFlagSrc from 'assets/flags/gb.svg';
+import constants from 'constants/AppConstants';
 import { injectT } from 'i18n';
 import { getSearchPageUrl } from 'utils/searchUtils';
 
@@ -103,6 +104,12 @@ function Navbar(props) {
             </NavItem>
           </LinkContainer>
         </Nav>
+        {constants.SHOW_TEST_SITE_MESSAGE && (
+          <div className="alert alert-warning">
+            Tämä on QA-ympäristö, jossa kehitetään ja testataan
+            uusia toiminnallisuuksia.
+          </div>
+        )}
       </div>
     </div>
   );
