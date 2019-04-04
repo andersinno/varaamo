@@ -1,10 +1,9 @@
-import { expect } from 'chai';
 import MockDate from 'mockdate';
 import React from 'react';
-import Label from 'react-bootstrap/lib/Label';
 import Immutable from 'seamless-immutable';
 import simple from 'simple-mock';
 
+import Label from 'shared/label';
 import Resource from 'utils/fixtures/Resource';
 import * as resourceUtils from 'utils/resourceUtils';
 import { shallowWithIntl } from 'utils/testUtils';
@@ -32,9 +31,30 @@ describe('shared/resource-list/ResourceAvailability', () => {
       MockDate.reset();
     });
 
-    it('renders an empty span', () => {
+    test('renders an empty span', () => {
       const wrapper = getWrapper({ date });
-      expect(wrapper.equals(<span />)).to.be.true;
+      expect(wrapper.equals(<span />)).toBe(true);
+    });
+  });
+
+  describe('if resource has an external reservation url', () => {
+    const resource = Resource.build({
+      externalReservationUrl: 'http://test.com',
+    });
+    const now = '2016-10-10T06:00:00+03:00';
+    const date = '2016-10-10';
+
+    beforeEach(() => {
+      MockDate.set(now);
+    });
+
+    afterEach(() => {
+      MockDate.reset();
+    });
+
+    test('renders an empty span', () => {
+      const wrapper = getWrapper({ date, resource });
+      expect(wrapper.equals(<span />)).toBe(true);
     });
   });
 
@@ -50,18 +70,18 @@ describe('shared/resource-list/ResourceAvailability', () => {
       MockDate.reset();
     });
 
-    it('renders a Label component', () => {
+    test('renders a Label component', () => {
       const label = getWrapper({ date }).find(Label);
-      expect(label.length).to.equal(1);
+      expect(label.length).toBe(1);
     });
 
-    it('uses getAvailabilityDataForNow for Label props', () => {
+    test('uses getAvailabilityDataForNow for Label props', () => {
       const expectedData = { status: 'closed', bsStyle: 'danger' };
       simple.mock(resourceUtils, 'getAvailabilityDataForNow').returnWith(expectedData);
       const label = getWrapper({ date }).find(Label);
 
-      expect(label.prop('bsStyle')).to.equal(expectedData.bsStyle);
-      expect(label.prop('children')).to.equal('ResourceAvailability.closed');
+      expect(label.prop('bsStyle')).toBe(expectedData.bsStyle);
+      expect(label.prop('children')).toBe('ResourceAvailability.closed');
       simple.restore();
     });
   });
@@ -78,18 +98,18 @@ describe('shared/resource-list/ResourceAvailability', () => {
       MockDate.reset();
     });
 
-    it('renders a Label component', () => {
+    test('renders a Label component', () => {
       const label = getWrapper({ date }).find(Label);
-      expect(label.length).to.equal(1);
+      expect(label.length).toBe(1);
     });
 
-    it('uses getAvailabilityDataForWholeDay for Label props', () => {
+    test('uses getAvailabilityDataForWholeDay for Label props', () => {
       const expectedData = { status: 'closed', bsStyle: 'danger' };
       simple.mock(resourceUtils, 'getAvailabilityDataForWholeDay').returnWith(expectedData);
       const label = getWrapper({ date }).find(Label);
 
-      expect(label.prop('bsStyle')).to.equal(expectedData.bsStyle);
-      expect(label.prop('children')).to.equal('ResourceAvailability.closed');
+      expect(label.prop('bsStyle')).toBe(expectedData.bsStyle);
+      expect(label.prop('children')).toBe('ResourceAvailability.closed');
       simple.restore();
     });
   });

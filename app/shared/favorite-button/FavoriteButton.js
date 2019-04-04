@@ -1,23 +1,37 @@
-import React, { PropTypes } from 'react';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import PropTypes from 'prop-types';
+import React from 'react';
+import Button from 'react-bootstrap/lib/Button';
+import classnames from 'classnames';
+import iconHeart from 'hel-icons/dist/shapes/heart-o.svg';
 
-function FavoriteButton({ favorited, onClick }) {
+import iconHeartWhite from 'assets/icons/heart-white.svg';
+import { injectT } from 'i18n';
+
+function FavoriteButton({ favorited, onClick, t }) {
+  const buttonClassNames = classnames('favorite-button', {
+    'favorite-button--favorite': favorited,
+  });
+  const buttonText = t(
+    `ResourceHeader.${favorited ? 'favoriteRemoveButton' : 'favoriteAddButton'}`
+  );
   return (
-    <button
-      className="favorite-button"
-      onClick={onClick}
-    >
-      { favorited ?
-        <Glyphicon glyph="star" /> :
-          <Glyphicon glyph="star-empty" />
-      }
-    </button>
+    <Button className={buttonClassNames} onClick={onClick}>
+      <img
+        alt={buttonText}
+        className="favorite-button__icon"
+        src={favorited ? iconHeartWhite : iconHeart}
+      />
+      <span>{buttonText}</span>
+    </Button>
   );
 }
 
 FavoriteButton.propTypes = {
   favorited: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
 };
+
+FavoriteButton = injectT(FavoriteButton); // eslint-disable-line
 
 export default FavoriteButton;

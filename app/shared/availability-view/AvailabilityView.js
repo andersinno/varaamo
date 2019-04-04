@@ -1,5 +1,6 @@
 import isEqual from 'lodash/isEqual';
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import ReservationInfoModal from 'shared/modals/reservation-info';
 import DateSelector from './DateSelector';
@@ -10,6 +11,7 @@ export default class AvailabilityView extends React.Component {
   static propTypes = {
     date: PropTypes.string.isRequired,
     groups: PropTypes.arrayOf(PropTypes.object).isRequired,
+    isAdmin: PropTypes.bool.isRequired,
     onDateChange: PropTypes.func.isRequired,
     onSelect: PropTypes.func,
   };
@@ -43,8 +45,8 @@ export default class AvailabilityView extends React.Component {
   handleReservationSlotMouseEnter(slot) {
     const isSlotSelectable = (
       !this.state.selection || (
-        this.state.selection.resourceId === slot.resourceId &&
-        this.state.selection.begin < slot.begin
+        this.state.selection.resourceId === slot.resourceId
+        && this.state.selection.begin < slot.begin
       )
     );
     if (isSlotSelectable) {
@@ -66,8 +68,8 @@ export default class AvailabilityView extends React.Component {
 
   endSelection(slot) {
     const isValid = (
-      this.state.selection.resourceId === slot.resourceId &&
-      this.state.selection.begin <= slot.begin
+      this.state.selection.resourceId === slot.resourceId
+      && this.state.selection.begin <= slot.begin
     );
     if (!isValid) {
       return;
@@ -78,7 +80,9 @@ export default class AvailabilityView extends React.Component {
   }
 
   startSelection(slot) {
-    this.setState({ selection: slot });
+    if (this.props.isAdmin) {
+      this.setState({ selection: slot });
+    }
   }
 
   render() {

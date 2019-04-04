@@ -1,24 +1,52 @@
 $horizontal-margin: 20px;
 
 .app-ResourceInfo {
-  &__images-wrapper {
-    position: relative;
-    color: $white;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-    background-color: $medium-gray;
-    min-height: $carousel-image-min-height;
-
-    @media (min-width: $screen-xs-min) {
-      min-height: $carousel-image-mid-height;
-    }
+  &__images {
+    min-height: 240px;
 
     @media (min-width: $screen-md-min) {
-      min-height: $carousel-image-max-height;
+      padding-top: 15px;
     }
   }
 
+  &__image-wrapper {
+    margin-bottom: 30px;
+    text-align: center;
+
+    &--main-image {
+      display: none;
+    }
+
+    &--mobile-main-image {
+      display: block;
+      margin-top: 30px;
+      margin-left: 15px;
+      margin-right: 15px;
+    }
+
+    @media (min-width: $screen-md-min) {
+      &--main-image {
+        display: block;
+      }
+
+      &--mobile-main-image {
+        display: none;
+      }
+    }
+  }
+
+  &__image-button {
+    border: 0;
+    padding: 0;
+    max-width: 100%;
+  }
+
+  &__image {
+    max-width: 100%;
+    transform: translate3d(0, 0, 0);
+  }
+
   &__top-bar {
-    position: absolute;
     top: 0;
     left: 0;
     right: 0;
@@ -33,8 +61,11 @@ $horizontal-margin: 20px;
     }
   }
 
-  &__address {
-    font-size: 1.4rem;
+  &__address,
+  &__web {
+    span {
+      display: block;
+    }
   }
 
   &__bottom-bar {
@@ -68,11 +99,6 @@ $horizontal-margin: 20px;
 
   &__content {
     margin: $horizontal-margin;
-  }
-
-  &__description {
-    margin-top: 10px;
-    margin-bottom: 10px;
   }
 
   &__equipment {

@@ -1,17 +1,26 @@
+import types from 'constants/ActionTypes';
+
 import Immutable from 'seamless-immutable';
 
-import types from 'constants/ActionTypes';
 import { pickSupportedFilters } from 'utils/searchUtils';
+import { getDuration, getEndTimeString, getStartTimeString } from 'utils/timeUtils';
 
 const initialState = Immutable({
   filters: {
     date: '',
     people: '',
     purpose: '',
+    municipality: '',
     search: '',
     distance: '',
+    duration: 0,
+    start: '',
+    end: '',
+    useTimeRange: false,
   },
+  page: 1,
   position: null,
+  resultCount: 0,
   results: [],
   searchDone: false,
   showMap: false,
@@ -20,12 +29,15 @@ const initialState = Immutable({
 
 function searchReducer(state = initialState, action) {
   switch (action.type) {
-
     case types.API.SEARCH_RESULTS_GET_SUCCESS: {
       const results = Object.keys(action.payload.entities.resources || {});
+      const paginatedResources = Object.values(action.payload.entities.paginatedResources || {});
+      const resultCount = paginatedResources.length ? paginatedResources[0].count : 0;
       return state.merge({
+        resultCount,
         results,
         searchDone: true,
+        unitId: null,
       });
     }
 
@@ -51,6 +63,22 @@ function searchReducer(state = initialState, action) {
     case types.UI.DISABLE_GEOPOSITION: {
       const position = null;
       return state.merge({ position });
+    }
+
+    case types.UI.DISABLE_TIME_RANGE: {
+      const filters = pickSupportedFilters({ useTimeRange: false });
+      return state.merge({ filters }, { deep: true });
+    }
+
+    case types.UI.ENABLE_TIME_RANGE: {
+      const duration = getDuration(Number(state.filters.duration));
+      const end = getEndTimeString(state.filters.end);
+      const start = getStartTimeString(state.filters.start);
+      const useTimeRange = true;
+      const filters = pickSupportedFilters({
+        duration, end, start, useTimeRange
+      });
+      return state.merge({ filters }, { deep: true });
     }
 
     case types.UI.TOGGLE_SEARCH_SHOW_MAP: {

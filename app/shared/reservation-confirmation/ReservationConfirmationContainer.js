@@ -1,6 +1,10 @@
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import first from 'lodash/first';
+import last from 'lodash/last';
+import orderBy from 'lodash/orderBy';
 
 import { deleteReservation, postReservation, putReservation } from 'actions/reservationActions';
 import {
@@ -39,8 +43,15 @@ export class UnconnectedReservationConfirmationContainer extends Component {
   }
 
   handleReservation = (values = {}) => {
-    const { actions, recurringReservations, resource, selectedReservations } = this.props;
-    [...selectedReservations, ...recurringReservations].forEach((reservation) => {
+    const {
+      actions, recurringReservations, resource, selectedReservations
+    } = this.props;
+    const orderedReservations = orderBy(selectedReservations, 'begin');
+    const selectedReservation = Object.assign({}, first(orderedReservations));
+    selectedReservation.end = last(orderedReservations).end;
+    const mergedReservations = [selectedReservation];
+
+    [...mergedReservations, ...recurringReservations].forEach((reservation) => {
       actions.postReservation({
         ...reservation,
         ...values,

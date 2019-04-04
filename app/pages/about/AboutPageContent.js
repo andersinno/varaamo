@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { FormattedHTMLMessage } from 'react-intl';
 
 import FeedbackLink from 'shared/feedback-link';
@@ -91,6 +92,7 @@ function AboutPageContent({ t }) {
               {t('AboutPageContent.customerRegisterLink')}
             </a>
           </p>
+          <br />
         </div>
       );
     }

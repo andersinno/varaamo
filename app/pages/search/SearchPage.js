@@ -1,16 +1,16 @@
 import isEqual from 'lodash/isEqual';
-import React, { Component, PropTypes } from 'react';
-import { findDOMNode } from 'react-dom';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Headroom from 'react-headroom';
 
 import { searchResources, toggleMap } from 'actions/searchActions';
 import { changeSearchFilters } from 'actions/uiActions';
+import { fetchPurposes } from 'actions/purposeActions';
 import { fetchUnits } from 'actions/unitActions';
 import PageWrapper from 'pages/PageWrapper';
 import { injectT } from 'i18n';
-import { scrollTo } from 'utils/domUtils';
+import ResourceMap from 'shared/resource-map';
 import SearchControls from './controls';
 import searchPageSelector from './searchPageSelector';
 import SearchResults from './results/SearchResults';
@@ -19,12 +19,14 @@ import MapToggle from './results/MapToggle';
 class UnconnectedSearchPage extends Component {
   constructor(props) {
     super(props);
-    this.scrollToSearchResults = this.scrollToSearchResults.bind(this);
     this.searchResources = this.searchResources.bind(this);
   }
 
   componentDidMount() {
-    const { actions, filters, location, searchDone, uiFilters } = this.props;
+    const {
+      actions, filters, location, searchDone, uiFilters
+    } = this.props;
+    actions.fetchPurposes();
     actions.fetchUnits();
     if (!searchDone) {
       this.searchResources(filters);
@@ -62,10 +64,6 @@ class UnconnectedSearchPage extends Component {
     this.searchResources(nextFilters);
   }
 
-  scrollToSearchResults() {
-    scrollTo(findDOMNode(this.refs.searchResults));
-  }
-
   searchResources(filters, position = this.props.position || {}) {
     this.props.actions.searchResources({ ...filters, ...position });
   }
@@ -75,7 +73,9 @@ class UnconnectedSearchPage extends Component {
       actions,
       isFetchingSearchResults,
       location,
-      params,
+      history,
+      match,
+      resultCount,
       searchResultIds,
       searchDone,
       selectedUnitId,
@@ -83,34 +83,36 @@ class UnconnectedSearchPage extends Component {
       t,
     } = this.props;
     return (
-      <PageWrapper className="app-SearchPage" fluid title={t('SearchPage.title')} transparent>
-        <div className="app-SearchPage__content">
-          <Headroom className="app-SearchPage__header">
-            <SearchControls
-              location={location}
-              params={params}
-              scrollToSearchResults={this.scrollToSearchResults}
-            />
-            {!isFetchingSearchResults &&
-              <MapToggle
-                mapVisible={showMap}
-                onClick={actions.toggleMap}
-                resultsCount={searchResultIds.length || 0}
+      <div className="app-SearchPage">
+        <SearchControls location={location} params={match.params} />
+        {!isFetchingSearchResults && (
+          <MapToggle mapVisible={showMap} onClick={actions.toggleMap} resultCount={resultCount} />
+        )}
+        {showMap && (
+          <ResourceMap
+            location={location}
+            resourceIds={searchResultIds}
+            selectedUnitId={selectedUnitId}
+            showMap={showMap}
+          />
+        )}
+        <PageWrapper className="app-SearchPage__wrapper" title={t('SearchPage.title')} transparent>
+          <div className="app-SearchPage__content">
+            {(searchDone || isFetchingSearchResults) && (
+              <SearchResults
+                history={history}
+                isFetching={isFetchingSearchResults}
+                location={location}
+                ref="searchResults"
+                resultCount={resultCount}
+                searchResultIds={searchResultIds}
+                selectedUnitId={selectedUnitId}
+                showMap={showMap}
               />
-            }
-          </Headroom>
-          {(searchDone || isFetchingSearchResults) &&
-            <SearchResults
-              isFetching={isFetchingSearchResults}
-              location={location}
-              ref="searchResults"
-              searchResultIds={searchResultIds}
-              selectedUnitId={selectedUnitId}
-              showMap={showMap}
-            />
-          }
-        </div>
-      </PageWrapper>
+            )}
+          </div>
+        </PageWrapper>
+      </div>
     );
   }
 }
@@ -121,8 +123,10 @@ UnconnectedSearchPage.propTypes = {
   filters: PropTypes.object.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
-  params: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
   position: PropTypes.object,
+  resultCount: PropTypes.number.isRequired,
   searchDone: PropTypes.bool.isRequired,
   searchResultIds: PropTypes.array.isRequired,
   selectedUnitId: PropTypes.string,
@@ -136,6 +140,7 @@ UnconnectedSearchPage = injectT(UnconnectedSearchPage); // eslint-disable-line
 function mapDispatchToProps(dispatch) {
   const actionCreators = {
     changeSearchFilters,
+    fetchPurposes,
     fetchUnits,
     searchResources,
     toggleMap,
@@ -145,4 +150,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 export { UnconnectedSearchPage };
-export default connect(searchPageSelector, mapDispatchToProps)(UnconnectedSearchPage);
+export default connect(
+  searchPageSelector,
+  mapDispatchToProps
+)(UnconnectedSearchPage);

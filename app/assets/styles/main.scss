@@ -1,5 +1,3 @@
-
-// Bootstrap + City of Helsinki Bootstrap theme
 @import '~hel-bootstrap-3/src/sass/helsinki-variables';
 @import './application-variables';
 @import '~hel-bootstrap-3/src/sass/theme-bootstrap-variables';
@@ -10,17 +8,12 @@
 @import '~bootstrap-sass/assets/stylesheets/bootstrap';
 @import '~hel-bootstrap-3/src/sass/theme-custom-styles';
 
-
-// Other third party
 @import '~leaflet/dist/leaflet.css';
 @import '~rc-slider/assets/index.css';
-@import '~react-date-picker/index.css';
 @import '~react-day-picker/lib/style.css';
 @import '~react-notifications/lib/notifications.css';
-@import '~react-select/dist/react-select.css';
 @import '~react-toggle/style.css';
 
-// App styles
 @import './layout';
 @import './mixins';
 
@@ -31,8 +24,7 @@
 @import './loader';
 @import './modals';
 @import './react-select';
+@import './react-toggle';
 
-
-// Customizations
 @import './customization/espoo/customization';
 @import './customization/tampere/customization';

@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import Immutable from 'seamless-immutable';
 
 import selectedReservationsSelector from 'state/selectors/selectedReservationsSelector';
@@ -22,20 +21,25 @@ function getProps() {
 }
 
 describe('Selector: selectedReservationsSelector', () => {
-  const selected = [
-    '2015-12-12T12:00:00+03:00/2015-12-12T13:00:00+03:00',
-    '2015-12-12T13:00:00+03:00/2015-12-12T14:00:00+03:00',
-  ];
+  const selected = [{
+    begin: '2015-12-12T12:00:00+03:00',
+    end: '2015-12-12T13:00:00+03:00',
+    resource: 'some-id',
+  }, {
+    begin: '2015-12-12T13:00:00+03:00',
+    end: '2015-12-12T14:00:00+03:00',
+    resource: 'some-id',
+  }];
 
-  it('returns an empty object if no reservations are selected', () => {
+  test('returns an empty object if no reservations are selected', () => {
     const state = getState([]);
     const props = getProps();
     const actual = selectedReservationsSelector(state, props);
 
-    expect(actual).to.deep.equal([]);
+    expect(actual).toEqual([]);
   });
 
-  it('returns selectedReservations in correct form', () => {
+  test('returns selectedReservations in correct form', () => {
     const state = getState([selected[0]]);
     const props = getProps();
     const actual = selectedReservationsSelector(state, props);
@@ -47,10 +51,10 @@ describe('Selector: selectedReservationsSelector', () => {
       },
     ];
 
-    expect(actual).to.deep.equal(expected);
+    expect(actual).toEqual(expected);
   });
 
-  it('combines reservations that if they are continual', () => {
+  test('combines reservations that if they are continual', () => {
     const state = getState(selected);
     const props = getProps();
     const actual = selectedReservationsSelector(state, props);
@@ -62,6 +66,6 @@ describe('Selector: selectedReservationsSelector', () => {
       },
     ];
 
-    expect(actual).to.deep.equal(expected);
+    expect(actual).toEqual(expected);
   });
 });

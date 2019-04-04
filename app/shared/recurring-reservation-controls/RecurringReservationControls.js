@@ -1,21 +1,14 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import Col from 'react-bootstrap/lib/Col';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
 import Row from 'react-bootstrap/lib/Row';
 import NumericInput from 'react-numeric-input';
-import Select from 'react-select';
 
 import { injectT } from 'i18n';
 import DatePicker from 'shared/date-picker';
-
-function createOptionRenderer(t) {
-  return option => t(option.label);
-}
-
-function createValueRenderer(t) {
-  return option => t(option.label);
-}
+import SelectControl from 'pages/search/controls/SelectControl';
 
 function RecurringReservationControls({
   changeFrequency,
@@ -39,20 +32,19 @@ function RecurringReservationControls({
             <label htmlFor="recurrence-frequency-select">
               {t('RecurringReservationControls.frequencyLabel')}
             </label>
-            <Select
+            <SelectControl
               className="recurrence-frequency-select"
-              clearable={false}
-              inputProps={{ id: 'recurrence-frequency-select' }}
+              getOptionLabel={({ label }) => t(label)}
+              id="recurrence-frequency-select"
+              isClearable={false}
               name="recurrence-frequency-select"
               onChange={changeFrequency}
-              optionRenderer={createOptionRenderer(t)}
               options={frequencyOptions}
               value={frequency}
-              valueRenderer={createValueRenderer(t)}
             />
           </div>
         </Col>
-        {frequency !== '' &&
+        {frequency !== '' && (
           <Col sm={3} xs={12}>
             <FormGroup controlId="numberOfOccurrencesGroup">
               <ControlLabel>
@@ -66,22 +58,19 @@ function RecurringReservationControls({
               />
             </FormGroup>
           </Col>
-        }
-        {frequency !== '' &&
+        )}
+        {frequency !== '' && (
           <Col sm={4} xs={12}>
             <FormGroup controlId="LastTimeGroup">
-              <ControlLabel>
-                {t('RecurringReservationControls.lastTimeLabel')}
-              </ControlLabel>
+              <ControlLabel>{t('RecurringReservationControls.lastTimeLabel')}</ControlLabel>
               <DatePicker
                 dateFormat="D.M.YYYY"
-                formControl
                 onChange={changeLastTime}
                 value={lastTime}
               />
             </FormGroup>
           </Col>
-        }
+        )}
       </Row>
     </div>
   );

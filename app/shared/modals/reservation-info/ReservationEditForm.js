@@ -1,15 +1,18 @@
+import FormTypes from 'constants/FormTypes';
+
 import classNames from 'classnames';
 import isEmpty from 'lodash/isEmpty';
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import Button from 'react-bootstrap/lib/Button';
 import Col from 'react-bootstrap/lib/Col';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import Form from 'react-bootstrap/lib/Form';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import FormGroup from 'react-bootstrap/lib/FormGroup';
+import Well from 'react-bootstrap/lib/Well';
 import { Field, Fields, reduxForm } from 'redux-form';
 
-import FormTypes from 'constants/FormTypes';
 import ReduxFormField from 'shared/form-fields/ReduxFormField';
 import ReservationTimeControls from 'shared/form-fields/ReservationTimeControls';
 import TimeRange from 'shared/time-range';
@@ -84,8 +87,18 @@ class UnconnectedReservationEditForm extends Component {
     return this.renderInfoRow(label, value);
   }
 
+  renderUserInfoRow(userPropertyName, labelName) {
+    const { reservation, t } = this.props;
+    const user = reservation.user || {};
+    const value = user[userPropertyName];
+    const label = t(`common.${labelName}Label`);
+    return this.renderInfoRow(label, value);
+  }
+
   renderReservationTime() {
-    const { isEditing, reservation, resource, t } = this.props;
+    const {
+      isEditing, reservation, resource, t
+    } = this.props;
     if (isEditing) {
       return (
         <FormGroup id="reservation-time">
@@ -129,6 +142,10 @@ class UnconnectedReservationEditForm extends Component {
         horizontal
         onSubmit={handleSubmit}
       >
+        <Well>
+          {this.renderUserInfoRow('displayName', 'userName')}
+          {this.renderUserInfoRow('email', 'userEmail')}
+        </Well>
         {this.renderEditableInfoRow('eventSubject', 'text')}
         {this.renderStaticInfoRow('reserverName')}
         {this.renderEditableInfoRow('eventDescription', 'textarea')}

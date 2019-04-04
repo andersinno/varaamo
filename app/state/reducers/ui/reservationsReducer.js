@@ -1,9 +1,15 @@
-import includes from 'lodash/includes';
-import without from 'lodash/without';
-import Immutable from 'seamless-immutable';
-
 import types from 'constants/ActionTypes';
 import ModalTypes from 'constants/ModalTypes';
+
+import find from 'lodash/find';
+import first from 'lodash/first';
+import last from 'lodash/last';
+import orderBy from 'lodash/orderBy';
+import without from 'lodash/without';
+import moment from 'moment';
+import Immutable from 'seamless-immutable';
+
+
 import { getTimeSlots } from 'utils/timeUtils';
 
 const initialState = Immutable({
@@ -16,14 +22,28 @@ const initialState = Immutable({
   toCancel: [],
   toEdit: [],
   toShow: [],
+  toShowEdited: [],
 });
 
 function selectReservationToEdit(state, action) {
   const { minPeriod, reservation } = action.payload;
-  const selected = getTimeSlots(reservation.begin, reservation.end, minPeriod).map(
-    slot => slot.asISOString
-  );
-
+  const slots = getTimeSlots(reservation.begin, reservation.end, minPeriod);
+  const firstSlot = first(slots);
+  const selected = [
+    {
+      begin: firstSlot.start,
+      end: firstSlot.end,
+      resource: reservation.resource,
+    },
+  ];
+  if (slots.length > 1) {
+    const lastSlot = last(slots);
+    selected.push({
+      begin: lastSlot.start,
+      end: lastSlot.end,
+      resource: reservation.resource,
+    });
+  }
   return state.merge({
     selected,
     toEdit: [reservation],
@@ -32,8 +52,11 @@ function selectReservationToEdit(state, action) {
 
 function parseError(error) {
   if (error.response && error.response.non_field_errors && error.response.non_field_errors.length) {
-    return error.response.non_field_errors.join('. ').replace('[\'', '').replace('\']', '');
-  } else if (error.response && error.response.detail) {
+    return error.response.non_field_errors
+      .join('. ')
+      .replace("['", '')
+      .replace("']", '');
+  } if (error.response && error.response.detail) {
     return error.response.detail;
   }
   return 'Jotain meni vikaan';
@@ -41,7 +64,6 @@ function parseError(error) {
 
 function reservationsReducer(state = initialState, action) {
   switch (action.type) {
-
     case types.API.RESERVATION_POST_SUCCESS: {
       return state.merge({
         selected: [],
@@ -63,6 +85,7 @@ function reservationsReducer(state = initialState, action) {
         selected: [],
         toEdit: [],
         toShow: [],
+        toShowEdited: [...state.toShowEdited, action.payload],
       });
     }
 
@@ -114,10 +137,31 @@ function reservationsReducer(state = initialState, action) {
 
     case types.UI.TOGGLE_TIME_SLOT: {
       const slot = action.payload;
-      if (includes(state.selected, slot)) {
-        return state.merge({ selected: without(state.selected, slot) });
+      const stateSlot = find(state.selected, slot);
+      if (stateSlot) {
+        return state.merge({ selected: without(state.selected, stateSlot) });
+      } if (state.selected.length <= 1) {
+        return state.merge({ selected: [...state.selected, slot] });
+      }
+      const orderedSelected = orderBy(state.selected, 'begin');
+      const firstSelected = first(orderedSelected);
+      const lastSelected = last(orderedSelected);
+      if (moment(lastSelected.begin).isBefore(slot.begin)) {
+        return state.merge({ selected: [...without(state.selected, lastSelected), slot] });
+      }
+      if (
+        moment(firstSelected.begin).isBefore(slot.begin)
+        && moment(lastSelected.begin).isAfter(slot.begin)
+      ) {
+        return state.merge({ selected: [...without(state.selected, lastSelected), slot] });
       }
       return state.merge({ selected: [...state.selected, slot] });
+    }
+
+    case types.UI.CLEAR_TIME_SLOTS: {
+      return state.merge({
+        selected: [],
+      });
     }
 
     default: {

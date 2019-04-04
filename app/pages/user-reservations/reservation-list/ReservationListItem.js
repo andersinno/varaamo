@@ -1,7 +1,10 @@
 import isEmpty from 'lodash/isEmpty';
-import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import iconHome from 'hel-icons/dist/shapes/home.svg';
 
+import iconCalendar from 'assets/icons/calendar.svg';
 import ReservationAccessCode from 'shared/reservation-access-code';
 import ReservationControls from 'shared/reservation-controls';
 import ReservationStateLabel from 'shared/reservation-state-label';
@@ -13,54 +16,53 @@ import { getResourcePageUrl } from 'utils/resourceUtils';
 class ReservationListItem extends Component {
   renderImage(image) {
     if (image && image.url) {
-      const src = `${image.url}?dim=200x200`;
-      return <img alt={image.caption} src={src} />;
+      return <img alt={image.caption} className="resourceImg" src={image.url} />;
     }
     return null;
   }
 
   render() {
     const {
-      isAdmin,
-      isStaff,
-      reservation,
-      resource,
-      t,
-      unit,
+      isAdmin, isStaff, reservation, resource, t, unit
     } = this.props;
 
-    const nameSeparator = isEmpty(resource) || isEmpty(unit) ? '' : ',';
+    const nameSeparator = isEmpty(resource) || isEmpty(unit) ? '' : ', ';
 
     return (
       <li className="reservation">
-        <div className="image-container">
-          <ReservationStateLabel reservation={reservation} />
+        <div className="col-md-3 col-lg-2 image-container">
           <Link to={getResourcePageUrl(resource)}>
             {this.renderImage(getMainImage(resource.images))}
           </Link>
         </div>
-        <div className="names">
+        <div className="col-xs-8 col-md-6 col-lg-7 reservation-details">
+          <ReservationStateLabel reservation={reservation} />
           <Link to={getResourcePageUrl(resource)}>
-            <h4>
-              {resource.name}{nameSeparator} <span className="unit-name">{unit.name}</span>
-            </h4>
+            <h4>{resource.name}</h4>
           </Link>
-        </div>
-        <div className="time">
-          <Link to={getResourcePageUrl(resource, reservation.begin, reservation.begin)}>
+          <div>
+            <img alt={resource.type.name} className="location" src={iconHome} />
+            <span className="unit-name">{unit.name}</span>
+            {nameSeparator}
+            <span>{unit.streetAddress}</span>
+          </div>
+          <div>
+            <img alt={resource.type.name} className="timeslot" src={iconCalendar} />
             <TimeRange begin={reservation.begin} end={reservation.end} />
-          </Link>
+          </div>
+          <ReservationAccessCode
+            reservation={reservation}
+            text={t('ReservationListItem.accessCodeText')}
+          />
         </div>
-        <ReservationAccessCode
-          reservation={reservation}
-          text={t('ReservationListItem.accessCodeText')}
-        />
-        <ReservationControls
-          isAdmin={isAdmin}
-          isStaff={isStaff}
-          reservation={reservation}
-          resource={resource}
-        />
+        <div className="col-xs-4 col-md-3 col-lg-3 action-container">
+          <ReservationControls
+            isAdmin={isAdmin}
+            isStaff={isStaff}
+            reservation={reservation}
+            resource={resource}
+          />
+        </div>
       </li>
     );
   }

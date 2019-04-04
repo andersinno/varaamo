@@ -13,6 +13,11 @@ export default {
   DEFAULT_LOCALE: 'fi',
   FEEDBACK_URL: 'https://app.helmet-kirjasto.fi/forms/?site=varaamopalaute',
   TAMPERE_FEEDBACK_URL: 'https://palvelut2.tampere.fi/e3/lomakkeet/15701/lomake.html',
+  FILTER: {
+    timeFormat: 'HH:mm',
+    timePeriod: 30,
+    timePeriodType: 'minutes',
+  },
   NOTIFICATION_DEFAULTS: {
     message: '',
     type: 'info',
@@ -24,10 +29,7 @@ export default {
     'Accept-Language': 'fi',
     'Content-Type': 'application/json',
   },
-  REQUIRED_STAFF_EVENT_FIELDS: [
-    'eventDescription',
-    'reserverName',
-  ],
+  REQUIRED_STAFF_EVENT_FIELDS: ['eventDescription', 'reserverName'],
   RESERVATION_STATE_LABELS: {
     cancelled: {
       labelBsStyle: 'default',
@@ -46,17 +48,28 @@ export default {
       labelTextId: 'common.requested',
     },
   },
+  SEARCH_PAGE_SIZE: 30,
+  SEARCH_MUNICIPALITY_OPTIONS: ['Helsinki', 'Espoo', 'Vantaa'],
   SHOW_TEST_SITE_MESSAGE: SETTINGS.SHOW_TEST_SITE_MESSAGE,
   SUPPORTED_LANGUAGES: ['en', 'fi', 'sv'],
   SUPPORTED_SEARCH_FILTERS: {
+    freeOfCharge: '',
     date: '',
     distance: '',
+    duration: 0,
+    municipality: '',
+    end: '',
     lat: '',
     lon: '',
+    page: 1,
     people: '',
     purpose: '',
     search: '',
+    start: '',
+    unit: '',
+    useTimeRange: false,
   },
   TIME_FORMAT: 'H:mm',
+  TIME_SLOT_DEFAULT_LENGTH: 30,
   TRACKING: SETTINGS.TRACKING,
 };

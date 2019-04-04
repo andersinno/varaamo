@@ -1,13 +1,13 @@
-import { expect } from 'chai';
+import types from 'constants/ActionTypes';
+
 import { createAction } from 'redux-actions';
 import Immutable from 'seamless-immutable';
 
 import {
   changeAdminResourcesPageDate,
-  filterAdminResourceType,
-  unfilterAdminResourceType,
+  selectAdminResourceType,
+  unselectAdminResourceType,
 } from 'actions/uiActions';
-import types from 'constants/ActionTypes';
 import Resource from 'utils/fixtures/Resource';
 import adminResourcesPageReducer from './adminResourcesPageReducer';
 
@@ -15,61 +15,61 @@ describe('state/reducers/ui/adminResourcesPageReducer', () => {
   describe('initial state', () => {
     const initialState = adminResourcesPageReducer(undefined, {});
 
-    it('resourceIds is an empty array', () => {
-      expect(initialState.resourceIds).to.deep.equal([]);
+    test('resourceIds is an empty array', () => {
+      expect(initialState.resourceIds).toEqual([]);
     });
 
-    it('date is undefined', () => {
-      expect(initialState.date).to.be.undefined;
+    test('date is undefined', () => {
+      expect(initialState.date).toBeUndefined();
     });
   });
 
   describe('handling actions', () => {
     describe('UI.CHANGE_ADMIN_RESOURCES_PAGE_DATE', () => {
-      it('updates date from payload', () => {
+      test('updates date from payload', () => {
         const date = '2017-01-20';
         const state = adminResourcesPageReducer(undefined, changeAdminResourcesPageDate(date));
-        expect(state.date).to.equal(date);
+        expect(state.date).toBe(date);
       });
 
-      it('sets date to undefined if set to null', () => {
+      test('sets date to undefined if set to null', () => {
         const state = adminResourcesPageReducer(undefined, changeAdminResourcesPageDate(null));
-        expect(state.date).to.be.undefined;
+        expect(state.date).toBeUndefined();
       });
     });
 
     describe('UI.FILTER_ADMIN_RESOURCE_TYPE', () => {
-      it('updates filtered types from payload', () => {
+      test('updates filtered types from payload', () => {
         const resourceType = 'new type';
-        const state = adminResourcesPageReducer(undefined, filterAdminResourceType(resourceType));
-        expect(state.filteredResourceTypes).to.deep.equal([resourceType]);
+        const state = adminResourcesPageReducer(undefined, selectAdminResourceType(resourceType));
+        expect(state.selectedResourceTypes).toEqual([resourceType]);
       });
 
-      it('does not duplicate types in array', () => {
+      test('does not duplicate types in array', () => {
         const resourceType = 'new type';
         const initialState = Immutable({
-          filteredResourceTypes: [resourceType],
+          selectedResourceTypes: [resourceType],
         });
         const state = adminResourcesPageReducer(
           initialState,
-          filterAdminResourceType(resourceType)
+          selectAdminResourceType(resourceType)
         );
-        expect(state.filteredResourceTypes).to.deep.equal([resourceType]);
+        expect(state.selectedResourceTypes).toEqual([resourceType]);
       });
     });
 
     describe('UI.UNFILTER_ADMIN_RESOURCE_TYPE', () => {
-      it('removes resource type from payload', () => {
+      test('removes resource type from payload', () => {
         const resourceType = 'type';
         const removedResourceType = 'old type';
         const initialState = Immutable({
-          filteredResourceTypes: [removedResourceType, resourceType],
+          selectedResourceTypes: [removedResourceType, resourceType],
         });
         const state = adminResourcesPageReducer(
           initialState,
-          unfilterAdminResourceType(removedResourceType)
+          unselectAdminResourceType(removedResourceType)
         );
-        expect(state.filteredResourceTypes).to.deep.equal([resourceType]);
+        expect(state.selectedResourceTypes).toEqual([resourceType]);
       });
     });
 
@@ -93,7 +93,7 @@ describe('state/reducers/ui/adminResourcesPageReducer', () => {
       describe('with correct meta source', () => {
         let action;
 
-        before(() => {
+        beforeAll(() => {
           action = getResourceSuccess(
             {
               entities: { resources },
@@ -102,24 +102,24 @@ describe('state/reducers/ui/adminResourcesPageReducer', () => {
           );
         });
 
-        it('adds resources ids from action', () => {
+        test('adds resources ids from action', () => {
           const initialState = Immutable({
             resourceIds: [],
           });
           const nextState = adminResourcesPageReducer(initialState, action);
-          expect(nextState.resourceIds).to.deep.equal([
+          expect(nextState.resourceIds).toEqual([
             resourcesList[0].id,
             resourcesList[1].id,
             resourcesList[2].id,
           ]);
         });
 
-        it('overrides resources ids from action', () => {
+        test('overrides resources ids from action', () => {
           const initialState = Immutable({
             resourceIds: ['1', '2', '3'],
           });
           const nextState = adminResourcesPageReducer(initialState, action);
-          expect(nextState.resourceIds).to.deep.equal([
+          expect(nextState.resourceIds).toEqual([
             resourcesList[0].id,
             resourcesList[1].id,
             resourcesList[2].id,
@@ -129,7 +129,7 @@ describe('state/reducers/ui/adminResourcesPageReducer', () => {
       describe('with incorrect meta source', () => {
         let action;
 
-        before(() => {
+        beforeAll(() => {
           action = getResourceSuccess({
             entities: {
               resources: { resources },
@@ -137,14 +137,17 @@ describe('state/reducers/ui/adminResourcesPageReducer', () => {
           });
         });
 
-        it('does not add resources ids to state if meta source is not adminResourcesPage', () => {
-          const initialState = Immutable({
-            resourceIds: [],
-          });
-          const nextState = adminResourcesPageReducer(initialState, action);
+        test(
+          'does not add resources ids to state if meta source is not adminResourcesPage',
+          () => {
+            const initialState = Immutable({
+              resourceIds: [],
+            });
+            const nextState = adminResourcesPageReducer(initialState, action);
 
-          expect(nextState.resourceIds).to.deep.equal([]);
-        });
+            expect(nextState.resourceIds).toEqual([]);
+          }
+        );
       });
 
       describe('which are not public', () => {
@@ -152,7 +155,7 @@ describe('state/reducers/ui/adminResourcesPageReducer', () => {
         const nonPublicResource = Resource.build({ public: false });
 
         let action;
-        before(() => {
+        beforeAll(() => {
           action = getResourceSuccess(
             {
               entities: {
@@ -166,13 +169,13 @@ describe('state/reducers/ui/adminResourcesPageReducer', () => {
           );
         });
 
-        it('adds resources ids to state', () => {
+        test('adds resources ids to state', () => {
           const initialState = Immutable({
             resourceIds: [],
           });
           const nextState = adminResourcesPageReducer(initialState, action);
 
-          expect(nextState.resourceIds).to.deep.equal([publicResource.id, nonPublicResource.id]);
+          expect(nextState.resourceIds).toEqual([publicResource.id, nonPublicResource.id]);
         });
       });
     });

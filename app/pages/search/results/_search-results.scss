@@ -1,22 +1,24 @@
 .app-SearchResults {
-  margin-left: -15px;
-  margin-right: -15px;
 
   @media (min-width: $screen-sm-min) {
     margin-left: 0;
     margin-right: 0;
   }
+  &__container {
+    min-height: 400px;
+  }
+}
 
-  .app-ResourceCompactList {
-    position: fixed;
-    bottom: 0;
-    margin: 0;
-    margin-bottom: 15px;
-    width: 100%;
-    max-width: $app-SearchPage-max-width;
+.app-SearchResultsPaging {
+  padding: 30px 0;
 
-    @media (min-width: $screen-sm-min) {
-      width: calc(100% - 30px);
-    }
+  .btn {
+    background-color: $white;
+  }
+  .btn:not(:last-child) {
+    border-right: none;
+  }
+  &__selected.btn {
+    background-color: $yellow;
   }
 }

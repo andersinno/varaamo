@@ -1,9 +1,10 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import { injectT } from 'i18n';
 import { getCurrentCustomization } from 'utils/customizationUtils';
 import helsinkiLogoSrc from './helsinki-logo-white.png';
-import espooLogoSrc from './espoo-logo.png';
+import espooLogoSrc from './espoo-blue-logo.png';
 import vantaaLogoSrc from './vantaa-logo.png';
 // Tampere logos
 import kangasalaLogoSrc from './kangasala-coat-of-arms.png';
@@ -17,7 +18,6 @@ import ylojarviLogoSrc from './ylojarvi-coat-of-arms.png';
 
 function Logo({ t }) {
   switch (getCurrentCustomization()) {
-
     case 'ESPOO': {
       return (
         <img

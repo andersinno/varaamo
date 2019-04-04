@@ -1,6 +1,11 @@
+import first from 'lodash/first';
+import last from 'lodash/last';
+import orderBy from 'lodash/orderBy';
 import pick from 'lodash/pick';
+import uniq from 'lodash/uniq';
 import camelCase from 'lodash/camelCase';
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import Modal from 'react-bootstrap/lib/Modal';
 
 import CompactReservationList from 'shared/compact-reservation-list';
@@ -53,6 +58,9 @@ class ConfirmReservationModal extends Component {
 
     if (isAdmin) {
       formFields.push('comments');
+      formFields.push('reserverName');
+      formFields.push('reserverEmailAddress');
+      formFields.push('reserverPhoneNumber');
     }
 
     if (resource.needManualConfirmation && isStaff) {
@@ -63,7 +71,7 @@ class ConfirmReservationModal extends Component {
       formFields.push('termsAndConditions');
     }
 
-    return formFields;
+    return uniq(formFields);
   }
 
   getFormInitialValues = () => {
@@ -78,7 +86,11 @@ class ConfirmReservationModal extends Component {
     if (isEditing) {
       reservation = reservationsToEdit.length ? reservationsToEdit[0] : null;
     } else {
-      reservation = selectedReservations.length ? selectedReservations[0] : null;
+      const orderedSelected = orderBy(selectedReservations, 'begin');
+      const firstReservation = first(orderedSelected);
+      const lastReservation = last(orderedSelected);
+      const endReservation = lastReservation ? { end: lastReservation.end } : {};
+      reservation = firstReservation ? Object.assign({}, firstReservation, endReservation) : null;
     }
 
     let rv = reservation ? pick(reservation, this.getFormFields()) : {};
@@ -136,9 +148,9 @@ class ConfirmReservationModal extends Component {
     } = this.props;
 
     const reservationsCount = selectedReservations.length + recurringReservations.length;
-    const introText = isPreliminaryReservation ?
-      t('ConfirmReservationModal.preliminaryReservationText', { reservationsCount }) :
-      t('ConfirmReservationModal.regularReservationText', { reservationsCount });
+    const introText = isPreliminaryReservation
+      ? t('ConfirmReservationModal.preliminaryReservationText', { reservationsCount })
+      : t('ConfirmReservationModal.regularReservationText', { reservationsCount });
 
     return (
       <div>
