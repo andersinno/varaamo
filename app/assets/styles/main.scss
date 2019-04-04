@@ -2,7 +2,6 @@
 @import './application-variables';
 @import '~hel-bootstrap-3/src/sass/theme-bootstrap-variables';
 
-// Load tampere variables here so that they override helsinki variables
 @import './customization/tampere/_variables';
 
 @import '~bootstrap-sass/assets/stylesheets/bootstrap';

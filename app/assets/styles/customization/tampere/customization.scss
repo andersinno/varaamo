@@ -1,86 +1,91 @@
-@import url('//fonts.googleapis.com/css?family=Lato:400,700|Open+Sans:400,700');
+@import "./variables";
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
 
 .tampere-customizations {
-  // Links
+
+  // Typography
   // ----------
 
-  a {
-    color: $tre-red;
-    font-family: $font-family-base;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: $heading-font-family;
+    font-weight: $font-weight-bold;
+  }
 
-    &:hover {
-      color: darken($tre-red, 5%);
-    }
+  p {
+    font-family: $font-family;
+    font-weight: $font-weight-regular;
   }
 
   // Navbar
   // ------
 
-  .app-SideNavbar .app-Sidebar__sidebar {
-    background-color: $sidebar-bg;
-
-    h1, h2, h3, h4, h5, h6, p, a {
-      color: $white;
-      &:hover, &:focus {
-        color: $white;
-      }
-    }
-
-    .app-Navbar {
-      background-color: $sidebar-bg;
-      .main-nav {
-        .nav.nav-stacked {
-          li {
-            border-bottom: 1px solid lighten($sidebar-bg, 6);
-            &:first-of-type {
-              border-top: 1px solid lighten($sidebar-bg, 6);
-            }
-          }
-        }
-      }
-    }
-
-    .brand-link {
-      img {
-        display: inline-block;
-        margin: 6px 4px;
-        height: 42px;
-      }
-    }
-
-    .feedback-link {
-      color: rgba(255,255,255,0.6);
-      &:hover, &:focus {
-        color: rgba(255,255,255,0.6);
-      }
-    }
+  .brand-logo {
+    background-image: url('../../../../shared/logo/tampere-logo.png');
+    background-position: center;
+    background-size: 120% auto;
   }
 
-  .app-SideNavbar__toggle {
-    background-color: $sidebar-bg;
-    color: $white;
-
-    &:hover, &:focus {
-      color: $white;
-    }
+  .app-MainNavbar {
+    background-color: $blue;
   }
 
   // Footer
   // ------
 
   footer {
-    background-color: $sidebar-bg;
+    background-color: $blue;
 
-    .brand-link, .brand-link:hover {
-      color: #fff;
+    .coat-of-arms {
+      height: 75px;
+      padding: 10px;
     }
+  }
 
-    .feedback-link {
-      color: #ccc;
+  // Home-page
+  // ----------
+  .app-HomePage__koro {
+    visibility: hidden;
+  }
+
+  .app-HomePageContent {
+    padding-top: 50px;
+  }
+
+  .app-HomePageContent__banner {
+    &__linkWrapper {
+      background-color: $brand-tiilenpunainen;
+
+      h5 {
+        color: $white;
+      }
+
+      &:hover,
+      &:focus {
+        h5 {
+          color: $white;
+        }
+      }
     }
+  }
 
-    .about-link {
-      color: #fff;
+  // Search-page
+  // -----------
+
+  .app-SearchControlsContainer {
+    background-color: $brand-vaalea-siniharmaa;
+  }
+
+  .app-MapToggle {
+    background-color: $brand-vaalea-siniharmaa;
+    button {
+      background-color: $brand-vaalea-siniharmaa;
+      border-color: $brand-vaalea-siniharmaa;
+    }
+    button:hover,
+    button:active {
+      background-color: $brand-siniharmaa;
+      border-color: $brand-siniharmaa;
     }
   }
 
@@ -109,15 +114,19 @@
     }
   }
 
+  // Modals
+  // ------
   .modal {
-    &.modal-city-theme {
-      .modal-header {
-        &::before {
-          background-image: url('../../shared/logo/tampere-logo.png');
-          height: 50px;
-          width: 200px;
-        }
-      }
+    .modal-header::before {
+      background-image: url('../../../../shared/logo/tampere-logo.png');
+    }
+  }
+  .app-DatePickerControl__modal-header,
+  .app-PurposeControl__modal-header,
+  .app-PositionControl__modal-header,
+  .app-PeopleCapacityControl__modal-header {
+    h1, h2, h3, h4, h5, h6 {
+      color: white;
     }
   }
 }

@@ -11,6 +11,7 @@ import Immutable from 'seamless-immutable';
 import '../app/assets/styles/main.scss';
 import '../app/assets/styles/customization/espoo/customization.scss';
 import '../app/assets/styles/customization/vantaa/customization.scss';
+import '../app/assets/styles/customization/tampere/customization.scss';
 import { initI18n } from '../app/i18n';
 import configureStore from '../app/store/configureStore';
 import rootReducer from '../app/state/rootReducer';

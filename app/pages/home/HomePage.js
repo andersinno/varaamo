@@ -24,6 +24,7 @@ import FAIcon from 'shared/fontawesome-icon';
 const purposeIcons = {
   photoAndAudio: iconPhotoAndAudio,
   sports: iconSports,
+  'sports-or-games': iconSports,
   guidance: iconGuidance,
   manufacturing: iconManufacturing,
   meetingsAndWorking: iconMeetingsAndWorking,
