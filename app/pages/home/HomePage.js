@@ -22,6 +22,7 @@ import iconMeetingsAndWorking from './images/frontpage_work.svg';
 const purposeIcons = {
   photoAndAudio: iconPhotoAndAudio,
   sports: iconSports,
+  'sports-or-games': iconSports,
   guidance: iconGuidance,
   manufacturing: iconManufacturing,
   meetingsAndWorking: iconMeetingsAndWorking,

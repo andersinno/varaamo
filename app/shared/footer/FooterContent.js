@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 
 import FeedbackLink from 'shared/feedback-link';
 import Logo from 'shared/logo';
+import MunicipalityLogos from 'shared/logo/MunicipalityLogos';
 import { injectT } from 'i18n';
 import { getCurrentCustomization } from 'utils/customizationUtils';
 
@@ -63,13 +64,25 @@ function FooterContent({ t }) {
 
     case 'TAMPERE': {
       return (
-        <div>
-          <Link className="brand-link" onClick={onLinkClick} to="/">
-            <Logo />
-            Varaamo
-          </Link>
-          <p>{t('Footer.tampereText')} {feedbackLink}</p>
-        </div>
+        <Grid>
+          <Row>
+            <Col lg={3} md={3}>
+              <Link className="brand-link" to="/">
+                <Logo />
+                Varaamo
+              </Link>
+            </Col>
+            <Col lg={6} md={6}>
+              <p>
+                <FormattedHTMLMessage id="Footer.tampereText" />
+              </p>
+              <MunicipalityLogos />
+              <p>
+                {feedbackLink}
+              </p>
+            </Col>
+          </Row>
+        </Grid>
       );
     }
 

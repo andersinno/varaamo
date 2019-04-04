@@ -1,47 +1,74 @@
-// Colors
-// -----
+// Tampere Brand variables
+// Variable names are in finnish to stay consistent with the style guide
+// Source: https://www.tampere.fi/tiedostot/g/68AHPEQPX/graafinen_ohjeisto.pdf
 
+// Main brand colors (fi: Päävärit)
+$brand-tunnelma:   #c83e36;
+$brand-muutos:     #cb4a6c;
+$brand-tyo:        #29549a;
+$brand-koti:       #39a7d7;
+$brand-kokemus:    #abc872;
+$brand-idea:       #f4d240;
+
+// Additional colors (fi: Lisävärit)
+$brand-tumma-vesi:      #00417d;
+$brand-usva:            #668ec9;
+$brand-tiilenpunainen:  #eb5e58;
+$brand-vaaleanharmaa:   #bebfbf;
+$brand-paahde:          #e8b455;
+$brand-vedensininen:    #91c9ea;
+
+// Basic color (fi: Perusvärit)
+$brand-vaaleanharmaa:      #bebfbf;
+$brand-siniharmaa:         #cad6e2;
+$brand-vaalea-siniharmaa:  #e5eef8;
+
+
+// Commonly used color variables
 $white:         #ffffff;
-$tre-yellow:    #fbba00;
-$tre-red:       #d54b0b;
-$tre-blue:      #006b9f;
-$tre-green:     #95ad39;
-$tre-gray:      #9c9b9b;
+$black:         #191919;
+$blue-light:    $brand-koti;
+$blue:          $brand-tyo;
+$green:         $brand-kokemus;
+$yellow:        $brand-idea;
+$orange:        $brand-paahde;
+$warning:       $brand-paahde;
+$red:           $brand-tunnelma;
 
 // Helsinki overwrites
 // -------------------
 
-$theme-primary: $tre-red;
-$theme-warning: $tre-yellow;
-$theme-info:    $tre-blue;
-$theme-success: $tre-green;
+$theme-primary: $brand-tyo;
+$theme-warning: $brand-paahde;
+$theme-info:    $brand-vedensininen;
+$theme-success: $brand-kokemus;
 
-$theme-primary-dark:    $tre-blue;
-$theme-primary-light:   lighten($tre-blue, 7%);
+$theme-primary-dark:    $brand-tumma-vesi;
+$theme-primary-light:   $brand-usva;
 
-$theme-secondary-dark:  $tre-red;
-$theme-secondary-light: lighten($tre-red, 7%);
+$theme-secondary-dark:  $brand-tunnelma;
+$theme-secondary-light: $brand-tiilenpunainen;
 
-$blue: $tre-blue;
-$green: $tre-green;
-$red: $tre-red;
-$yellow: $tre-yellow;
-$copper: $tre-gray;
-$gold: $tre-gray;
-$orange: $tre-red;
-$pink: $tre-red;
+$blue: $brand-tyo;
+$green: $brand-kokemus;
+$red: $brand-tunnelma;
+$yellow: $brand-idea;
+$copper: $brand-vaaleanharmaa;
+$gold: $brand-vaaleanharmaa;
+$orange: $brand-tunnelma;
+$pink: $brand-tunnelma;
 
 
 // Typography
 // ----------
 
-$font-family-base:       "Open Sans", "Lucida Grande", "Lucida Sans", "Lucida Sans Unicode", Helvetica, Arial, sans-serif;
-$headings-font-family:   "Lato", Helvetica, Arial, sans-serif;
+$font-family: 'Montserrat', 'Arial', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+$heading-font-family: $font-family;
 $font-weight-regular:    400;
-$font-weight-bold:       700;
+$font-weight-bold:       600;
 
 
 // Other
 // -----
 
-$sidebar-bg: $tre-blue;
+$sidebar-bg: $brand-tyo;
