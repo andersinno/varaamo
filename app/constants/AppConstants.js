@@ -1,5 +1,6 @@
 export default {
   API_URL: SETTINGS.API_URL,
+  RESPA_ADMIN_URL: SETTINGS.RESPA_ADMIN_URL,
   CUSTOMIZATIONS: {
     'varaamo.espoo.fi': 'ESPOO',
     'varaamotest-espoo.hel.ninja': 'ESPOO',
