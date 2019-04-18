@@ -1,4 +1,7 @@
+import constants from 'constants/AppConstants';
+
 import React from 'react';
+import simple from 'simple-mock';
 import Nav from 'react-bootstrap/lib/Nav';
 import { LinkContainer } from 'react-router-bootstrap';
 import NavItem from 'react-bootstrap/lib/NavItem';
@@ -24,6 +27,10 @@ describe('shared/main-navbar/MainNavbar', () => {
     };
     return shallowWithIntl(<MainNavbar {...defaults} {...props} />);
   }
+
+  beforeAll(() => {
+    simple.mock(constants, 'RESPA_ADMIN_URL', respaURL);
+  });
 
   test('renders nav with correct activeKey', () => {
     const nav = getWrapper().find(Nav);
