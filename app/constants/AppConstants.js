@@ -61,6 +61,7 @@ export default {
     end: '',
     lat: '',
     lon: '',
+    orderBy: '',
     page: 1,
     people: '',
     purpose: '',
@@ -72,4 +73,11 @@ export default {
   TIME_FORMAT: 'H:mm',
   TIME_SLOT_DEFAULT_LENGTH: 30,
   TRACKING: SETTINGS.TRACKING,
+  SORT_BY_OPTIONS: {
+    NAME: 'resource_name_lang',
+    TYPE: 'type_name_lang',
+    PREMISES: 'unit_name_lang',
+    PEOPLE: 'people_capacity',
+    // TODO: sortby 'open now' should be implemented later after API support it
+  }
 };
