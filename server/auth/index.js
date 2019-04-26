@@ -33,8 +33,7 @@ router.get('/login',
     req.session.next = req.query.next; // eslint-disable-line no-param-reassign
     next();
   },
-  passport.authenticate('tampere')
-);
+  passport.authenticate('tampere'));
 
 router.get('/login/tampere/return',
   passport.authenticate('tampere', { failureRedirect: '/login' }),

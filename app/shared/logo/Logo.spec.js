@@ -78,22 +78,22 @@ describe('shared/logo/Logo', () => {
   describe('When Tampere customization is used', () => {
     let logo;
 
-    before(() => {
+    beforeAll(() => {
       simple.mock(customizationUtils, 'getCurrentCustomization').returnWith('TAMPERE');
       logo = getWrapper();
     });
 
-    after(() => {
+    afterAll(() => {
       simple.restore();
     });
 
     it('renders logo of Tampere', () => {
-      expect(logo.type()).to.equal('img');
-      expect(logo.props().src).to.equal(tampereLogoSrc);
+      expect(logo.type()).toBe('img');
+      expect(logo.props().src).toBe(tampereLogoSrc);
     });
 
     it('renders Tampere alt text', () => {
-      expect(logo.props().alt).to.equal('Logo.tampereAlt');
+      expect(logo.props().alt).toBe('Logo.tampereAlt');
     });
   });
 });

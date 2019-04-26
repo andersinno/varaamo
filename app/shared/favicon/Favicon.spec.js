@@ -63,17 +63,17 @@ describe('shared/favicon/Favicon', () => {
   describe('When Tampere customization is used', () => {
     let favicon;
 
-    before(() => {
+    beforeAll(() => {
       simple.mock(customizationUtils, 'getCurrentCustomization').returnWith('TAMPERE');
       favicon = getWrapper();
     });
 
-    after(() => {
+    afterAll(() => {
       simple.restore();
     });
 
     it('renders favicon of Tampere', () => {
-      expect(favicon.prop('link')[0].href).to.deep.equal(tampereFavicon);
+      expect(favicon.prop('link')[0].href).toEqual(tampereFavicon);
     });
   });
 });
