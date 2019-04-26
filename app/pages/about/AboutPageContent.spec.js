@@ -59,17 +59,17 @@ describe('Component: customization/AboutPageContent', () => {
   describe('When Tampere customization is used', () => {
     let content;
 
-    before(() => {
+    beforeAll(() => {
       simple.mock(customizationUtils, 'getCurrentCustomization').returnWith('TAMPERE');
       content = getWrapper();
     });
 
-    after(() => {
+    afterAll(() => {
       simple.restore();
     });
 
     it('renders header for Tampere', () => {
-      expect(content.find('h1').text()).to.contain('AboutPageContent.tampereHeader');
+      expect(content.find('h1').text()).toContain('AboutPageContent.tampereHeader');
     });
   });
 });
