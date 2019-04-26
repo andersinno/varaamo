@@ -10,8 +10,8 @@ function FeedbackLink({ children }) {
   const href = `${constants.FEEDBACK_URL}&ref=${refUrl}`;
 
   switch (getCurrentCustomization()) {
-    case 'TAMPERE': {
-      return <a className="feedback-link" href={constants.TAMPERE_FEEDBACK_URL}>{children}</a>;
+    case 'ESPOO': {
+      return <a className="feedback-link" href={href}>{children}</a>;
     }
 
     default: {
