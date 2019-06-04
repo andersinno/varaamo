@@ -1,5 +1,4 @@
 import React from 'react';
-import Button from 'react-bootstrap/lib/Button';
 import Immutable from 'seamless-immutable';
 
 import Resource from 'utils/fixtures/Resource';
@@ -23,14 +22,6 @@ describe('pages/resource/resource-map-info/ResourceMapInfo', () => {
   function getWrapper(props) {
     return shallowWithIntl(<ResourceMapInfo {...defaultProps} {...props} />);
   }
-
-  test('renders Service map link as a Button with correct url', () => {
-    const button = getWrapper().find(Button);
-    const expected = 'https://palvelukartta.hel.fi/unit/123#!route-details';
-
-    expect(button).toHaveLength(1);
-    expect(button.prop('href')).toBe(expected);
-  });
 
   test('renders address text', () => {
     const { addressZip, streetAddress } = defaultProps.unit;
