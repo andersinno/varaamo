@@ -254,7 +254,6 @@
   "ResourceIcons.free": "Avgiftsfri",
   "ResourceInfo.additionalInfoTitle": "Utrymmets närmare uppgifter",
   "ResourceInfo.equipmentHeader": "Utrustning",
-  "ResourceInfo.serviceMapLink": "Reseplanering i Servicekarta",
   "ResourceInfo.loginMessage": "För att kunna boka detta utrymme måste du <a href=”/login”>logga in</a>.",
   "ResourceInfo.reservationTitle": "Bokningsinformation",
   "ResourceInfo.reserveTitle": "Boka utrymme",

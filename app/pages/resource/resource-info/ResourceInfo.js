@@ -7,14 +7,11 @@ import Row from 'react-bootstrap/lib/Row';
 
 import { injectT } from 'i18n';
 import WrappedText from 'shared/wrapped-text';
-import { getServiceMapUrl } from 'utils/unitUtils';
 import ReservationInfo from '../reservation-info';
 
 function ResourceInfo({
   isLoggedIn, resource, unit, t
 }) {
-  const serviceMapUrl = getServiceMapUrl(unit);
-
   return (
     <Row>
       <section className="app-ResourceInfo">
@@ -30,22 +27,6 @@ function ResourceInfo({
               {unit && unit.name && <span>{unit.name}</span>}
               {unit && unit.streetAddress && <span>{unit.streetAddress}</span>}
               {unit && <span>{`${unit.addressZip} ${upperFirst(unit.municipality)}`.trim()}</span>}
-            </Col>
-            <Col className="app-ResourceInfo__web" xs={6}>
-              {serviceMapUrl && (
-                <span className="app-ResourceInfo__servicemap">
-                  <a href={serviceMapUrl} rel="noopener noreferrer" target="_blank">
-                    {t('ResourceInfo.serviceMapLink')}
-                  </a>
-                </span>
-              )}
-              {unit && unit.wwwUrl && (
-                <span className="app-ResourceInfo__www">
-                  <a href={unit.wwwUrl} rel="noopener noreferrer" target="_blank">
-                    {unit.wwwUrl}
-                  </a>
-                </span>
-              )}
             </Col>
           </Row>
         </Panel>
