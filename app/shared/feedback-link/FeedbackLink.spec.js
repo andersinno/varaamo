@@ -31,7 +31,7 @@ describe('shared/feedback-link/FeedbackLink', () => {
     });
 
     test('has correct href', () => {
-      const expected = `${constants.FEEDBACK_URL}&ref=${window.location.href}`;
+      const expected = `${constants.FEEDBACK_URL}`;
       expect(link.props().href).toBe(expected);
     });
   });
@@ -58,7 +58,7 @@ describe('shared/feedback-link/FeedbackLink', () => {
     });
 
     test('has correct href', () => {
-      const expected = `${constants.FEEDBACK_URL}&ref=${window.location.href}`;
+      const expected = `${constants.FEEDBACK_URL}`;
       expect(link.props().href).toBe(expected);
     });
   });
