@@ -18,11 +18,15 @@ import iconPhotoAndAudio from './images/frontpage_music.svg';
 import iconSports from './images/frontpage_sport.svg';
 import iconGuidance from './images/frontpage_guidance.svg';
 import iconMeetingsAndWorking from './images/frontpage_work.svg';
+import iconPerformOrOrganizeAnEvent from './images/frontpage_perform.svg';
+import iconHaveASauna from './images/frontpage_sauna.svg';
 
 const purposeIcons = {
+  performOrOrganizeAnEvent: iconPerformOrOrganizeAnEvent,
+  haveASauna: iconHaveASauna,
   photoAndAudio: iconPhotoAndAudio,
   sports: iconSports,
-  'sports-or-games': iconSports,
+  sportsOrGames: iconSports,
   guidance: iconGuidance,
   manufacturing: iconManufacturing,
   meetingsAndWorking: iconMeetingsAndWorking,
