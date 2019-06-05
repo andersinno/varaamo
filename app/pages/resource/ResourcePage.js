@@ -50,13 +50,6 @@ class UnconnectedResourcePage extends Component {
     }
   }
 
-  getImageThumbnailUrl(image) {
-    const width = 700;
-    const height = 420;
-
-    return `${image.url}?dim=${width}x${height}`;
-  }
-
   disableDays = (day) => {
     const { resource: { reservableAfter } } = this.props;
     const beforeDate = reservableAfter || moment();
@@ -102,7 +95,7 @@ class UnconnectedResourcePage extends Component {
           <img
             alt={image.caption}
             className="app-ResourceInfo__image"
-            src={this.getImageThumbnailUrl(image)}
+            src={image.url}
           />
         </button>
       </div>

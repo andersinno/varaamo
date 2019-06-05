@@ -105,7 +105,7 @@ describe('pages/resource/ResourcePage', () => {
       images.forEach((image, index) => {
         const imageProps = defaultProps.resource.images[index > 0 ? index - 1 : 0];
         expect(image.props().alt).toBe(imageProps.caption);
-        expect(image.props().src).toBe(`${imageProps.url}?dim=700x420`);
+        expect(image.props().src).toBe(imageProps.url);
       });
     });
 
