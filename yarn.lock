@@ -6055,12 +6055,6 @@ pascalcase@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/pascalcase/-/pascalcase-0.1.1.tgz#b363e55e8006ca6fe21784d2db22bd15d7917f14"
 
-"passport-helsinki@git://github.com/City-of-Helsinki/passport-helsinki.git":
-  version "0.1.0"
-  resolved "git://github.com/City-of-Helsinki/passport-helsinki.git#fec48d78e0258aa1472369014ffc01cd98c7cdc6"
-  dependencies:
-    passport-oauth2 "^1.1.2"
-
 passport-oauth2@^1.1.2:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/passport-oauth2/-/passport-oauth2-1.4.0.tgz#f62f81583cbe12609be7ce6f160b9395a27b86ad"
@@ -6073,6 +6067,12 @@ passport-oauth2@^1.1.2:
 passport-strategy@1.x.x:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/passport-strategy/-/passport-strategy-1.0.0.tgz#b5539aa8fc225a3d1ad179476ddf236b440f52e4"
+
+"passport-tampere@git://github.com/Tampere/passport-tampere.git":
+  version "0.1.0"
+  resolved "git://github.com/Tampere/passport-tampere.git#eb8af41d4fd6344b67af729cde656daf6abc31ac"
+  dependencies:
+    passport-oauth2 "^1.1.2"
 
 passport@0.3.2:
   version "0.3.2"
