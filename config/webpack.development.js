@@ -13,7 +13,7 @@ module.exports = merge(common, {
   entry: [
     '@babel/polyfill',
     'webpack-hot-middleware/client',
-    path.resolve(__dirname, '../app/index.js'),
+    path.resolve(__dirname, '../src/index.js'),
   ],
   devtool: 'source-map',
   output: {
@@ -26,7 +26,7 @@ module.exports = merge(common, {
       {
         enforce: 'pre',
         test: /\.(js|jsx)$/,
-        include: path.resolve(__dirname, '../app'),
+        include: [path.resolve(__dirname, '../app'), path.resolve(__dirname, '../src')],
         loader: 'eslint-loader',
         options: {
           configFile: path.resolve(__dirname, '../.eslintrc'),
@@ -35,7 +35,7 @@ module.exports = merge(common, {
       },
       {
         test: /\.(js|jsx)$/,
-        include: path.resolve(__dirname, '../app'),
+        include: [path.resolve(__dirname, '../app'), path.resolve(__dirname, '../src')],
         exclude: path.resolve(__dirname, '../node_modules'),
         options: {
           presets: ['@babel/preset-env', '@babel/preset-react'],
@@ -70,6 +70,7 @@ module.exports = merge(common, {
         RESPA_ADMIN_URL: JSON.stringify(process.env.RESPA_ADMIN_URL || 'https://respa.tampere.fi/ra/'),
         SHOW_TEST_SITE_MESSAGE: Boolean(process.env.SHOW_TEST_SITE_MESSAGE),
         TRACKING: Boolean(process.env.PIWIK_SITE_ID),
+        CUSTOM_MUNICIPALITY_OPTIONS: process.env.CUSTOM_MUNICIPALITY_OPTIONS
       },
     }),
     new webpack.HotModuleReplacementPlugin(),

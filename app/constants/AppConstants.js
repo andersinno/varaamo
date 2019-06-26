@@ -66,7 +66,7 @@ export default {
     date: '',
     distance: '',
     duration: 0,
-    municipality: '',
+    municipality: [],
     end: '',
     lat: '',
     lon: '',
