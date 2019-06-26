@@ -1,6 +1,20 @@
 .favorite-button {
-  border: none;
-  background-color: transparent;
-  font-size: 2.5rem;
-  color: $brand-danger;
+  &--favorite {
+    &,
+    &:active {
+      &,
+      &:focus,
+      &:hover {
+        background-color: $black;
+        color: $white;
+      }
+    }
+  }
+
+  &__icon {
+    height: $line-height-computed;
+    width: $line-height-computed;
+    margin-right: 8px;
+    vertical-align: bottom;
+  }
 }

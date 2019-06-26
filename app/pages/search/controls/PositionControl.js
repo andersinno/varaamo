@@ -1,14 +1,10 @@
-import classnames from 'classnames';
-import React, { PropTypes } from 'react';
-import Button from 'react-bootstrap/lib/Button';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
-import Overlay from 'react-bootstrap/lib/Overlay';
-import Toggle from 'react-toggle';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { createSliderWithTooltip } from 'rc-slider';
 import Slider from 'rc-slider/lib/Slider';
 
 import { injectT } from 'i18n';
-import SearchControlOverlay from './SearchControlOverlay';
+import CheckboxControl from './CheckboxControl';
 
 const TooltipSlider = createSliderWithTooltip(Slider);
 
@@ -28,30 +24,17 @@ class PositionControl extends React.Component {
       maxDistance: 20000,
       step: 1000,
       toggled: this.props.geolocated,
-      visible: false,
     };
   }
 
-  getOption(value) {
-    return { label: String(value), value };
-  }
-
-  hideOverlay = () => {
-    this.setState({ visible: false });
-  }
-
-  showOverlay = () => {
-    this.setState({ visible: true });
-  }
-
-  handleToggleChange = (e) => {
-    this.setState({ toggled: e.target.checked });
-    this.props.onPositionSwitch(e);
-  }
+  handleToggleChange = (value) => {
+    this.setState({ toggled: value });
+    this.props.onPositionSwitch();
+  };
 
   handleDistanceSliderChange = (value) => {
     this.setState({ distance: value });
-  }
+  };
 
   handleConfirm = (value) => {
     if (value > this.state.maxDistance) {
@@ -59,74 +42,46 @@ class PositionControl extends React.Component {
     } else {
       this.props.onConfirm(value);
     }
-    this.hideOverlay();
-  }
+  };
 
-  distanceFormatter = value => (
-    value > this.state.maxDistance ?
-    this.props.t('PositionControl.noDistanceLimit') :
-    `${value / 1000} km`
-  );
+  distanceFormatter = (value) => {
+    if (value > this.state.maxDistance) {
+      return this.props.t('PositionControl.noDistanceLimit');
+    }
+    return `${value / 1000} km`;
+  };
 
   render() {
     const { t, geolocated } = this.props;
     return (
       <div className="app-PositionControl">
-        <Button
-          className={classnames('app-PositionControl__show-button', {
-            'app-PositionControl__active': geolocated,
-          })}
-          onClick={this.showOverlay}
-        >
-          <div><Glyphicon glyph="map-marker" /> {t('PositionControl.buttonLabel')}</div>
-          <div>{
-            this.props.geolocated ?
-              this.distanceFormatter(this.state.distance) :
-              t('PositionControl.geolocationOff')
-            }
+        <CheckboxControl
+          id="geolocation-status"
+          label={t('PositionControl.useDistance')}
+          labelClassName="app-SearchControlsCheckbox__label"
+          onConfirm={this.handleToggleChange}
+          toggleClassName="app-SearchControlsCheckbox__toggle"
+          value={geolocated}
+        />
+        {this.state.toggled && (
+          <TooltipSlider
+            className="app-PositionControl__distance_slider"
+            disabled={!this.state.toggled}
+            max={this.state.maxDistance + this.state.step}
+            min={this.state.step}
+            onAfterChange={this.handleConfirm}
+            onChange={this.handleDistanceSliderChange}
+            step={this.state.step}
+            tipFormatter={this.distanceFormatter}
+            tipProps={{ overlayClassName: 'app-PositionControl__distance_slider_tooltip' }}
+            value={this.state.distance}
+          />
+        )}
+        {this.state.toggled && (
+          <div>
+            {`${t('PositionControl.maxDistance')} : ${this.distanceFormatter(this.state.distance)}`}
           </div>
-        </Button>
-        <Overlay
-          container={this}
-          onHide={this.hideOverlay}
-          placement="bottom"
-          rootClose
-          show={this.state.visible}
-        >
-          <SearchControlOverlay
-            onHide={this.hideOverlay}
-            title={t('PositionControl.header')}
-          >
-            <div className="app-PositionControl__content">
-              <div className="app-PositionControl__toggle-content">
-                <label htmlFor="geolocation-status">
-                  <span>{t('PositionControl.useDistance')}</span>
-                  <Toggle
-                    className="app-PositionControl__geolocation-toggle"
-                    defaultChecked={geolocated}
-                    id="geolocation-status"
-                    onChange={this.handleToggleChange}
-                  />
-                </label>
-              </div>
-              <div>
-                {t('PositionControl.maxDistance')}: {this.distanceFormatter(this.state.distance)}
-              </div>
-              <TooltipSlider
-                className="app-PositionControl__distance_slider"
-                disabled={!this.state.toggled}
-                max={this.state.maxDistance + this.state.step}
-                min={this.state.step}
-                onAfterChange={this.handleConfirm}
-                onChange={this.handleDistanceSliderChange}
-                step={this.state.step}
-                tipFormatter={this.distanceFormatter}
-                tipProps={{ overlayClassName: 'app-PositionControl__distance_slider_tooltip' }}
-                value={this.state.distance}
-              />
-            </div>
-          </SearchControlOverlay>
-        </Overlay>
+        )}
       </div>
     );
   }

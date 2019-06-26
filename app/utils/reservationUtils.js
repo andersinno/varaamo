@@ -1,3 +1,5 @@
+import constants from 'constants/AppConstants';
+
 import camelCase from 'lodash/camelCase';
 import clone from 'lodash/clone';
 import find from 'lodash/find';
@@ -7,7 +9,6 @@ import sortBy from 'lodash/sortBy';
 import tail from 'lodash/tail';
 import moment from 'moment';
 
-import constants from 'constants/AppConstants';
 
 function combine(reservations) {
   if (!reservations || !reservations.length) {
@@ -70,10 +71,22 @@ function getNextReservation(reservations) {
   return find(orderedReservations, reservation => now < moment(reservation.begin));
 }
 
+function getEditReservationUrl(reservation) {
+  const {
+    begin, end, id, resource
+  } = reservation;
+  const date = moment(begin).format('YYYY-MM-DD');
+  const beginStr = moment(begin).format('HH:mm');
+  const endStr = moment(end).format('HH:mm');
+
+  return `/reservation?begin=${beginStr}&date=${date}&end=${endStr}&id=${id || ''}&resource=${resource}`;
+}
+
 export {
   combine,
   isStaffEvent,
   getCurrentReservation,
+  getEditReservationUrl,
   getMissingValues,
   getNextAvailableTime,
   getNextReservation,

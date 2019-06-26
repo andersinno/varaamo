@@ -1,47 +1,79 @@
-import React, { PropTypes } from 'react';
-import Button from 'react-bootstrap/lib/Button';
+import PropTypes from 'prop-types';
+import React from 'react';
+import ControlLabel from 'react-bootstrap/lib/ControlLabel';
+import FormGroup from 'react-bootstrap/lib/FormGroup';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import InputGroup from 'react-bootstrap/lib/InputGroup';
 import Overlay from 'react-bootstrap/lib/Overlay';
-import { Calendar } from 'react-date-picker';
-import FontAwesome from 'react-fontawesome';
+import DayPicker from 'react-day-picker';
+import moment from 'moment';
+import MomentLocaleUtils from 'react-day-picker/moment';
 
 import { injectT } from 'i18n';
 import SearchControlOverlay from './SearchControlOverlay';
+import iconCalendar from './images/calendar.svg';
 
 class DatePickerControl extends React.Component {
   static propTypes = {
+    currentLanguage: PropTypes.string.isRequired,
+    date: PropTypes.string,
     onConfirm: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
-    value: PropTypes.string,
   };
 
-  state = {
-    visible: false,
+  constructor(props) {
+    super(props);
+    const { date } = this.props;
+    this.state = {
+      date,
+      visible: false,
+    };
+  }
+
+  componentWillUpdate(nextProps) {
+    const { date } = nextProps;
+    if (date !== this.props.date) {
+      // TODO: fix this lint
+      // eslint-disable-next-line react/no-will-update-set-state
+      this.setState({ date });
+    }
   }
 
   hideOverlay = () => {
     this.setState({ visible: false });
-  }
+  };
 
   showOverlay = () => {
     this.setState({ visible: true });
-  }
+  };
 
   handleConfirm = (value) => {
-    this.props.onConfirm(value);
+    const date = value;
+    this.props.onConfirm({ date });
     this.hideOverlay();
-  }
+  };
 
   render() {
-    const { t, value } = this.props;
+    const { currentLanguage, t } = this.props;
+    const { date } = this.state;
+    const selectedDay = moment(date, 'L')
+      .startOf('day')
+      .toDate();
+
     return (
       <div className="app-DatePickerControl">
-        <Button
-          className="app-DatePickerControl__show-button"
-          onClick={this.showOverlay}
-        >
-          <div><FontAwesome name="calendar" /> {t('DatePickerControl.buttonLabel')}</div>
-          <div>{value || ''}</div>
-        </Button>
+        <ControlLabel>{t('DatePickerControl.label')}</ControlLabel>
+        <FormGroup onClick={this.showOverlay}>
+          <InputGroup>
+            <InputGroup.Addon className="app-DatePickerControl__title">
+              <img alt="" className="app-DatePickerControl__icon" src={iconCalendar} />
+              <span>{date}</span>
+            </InputGroup.Addon>
+            <InputGroup.Addon className="app-DatePickerControl__triangle">
+              <Glyphicon glyph="triangle-bottom" />
+            </InputGroup.Addon>
+          </InputGroup>
+        </FormGroup>
         <Overlay
           container={this}
           onHide={this.hideOverlay}
@@ -49,15 +81,16 @@ class DatePickerControl extends React.Component {
           rootClose
           show={this.state.visible}
         >
-          <SearchControlOverlay
-            onHide={this.hideOverlay}
-            title={t('DatePickerControl.header')}
-          >
-            <Calendar
-              className="app-DatePickerControl__calendar"
-              dateFormat={'L'}
-              defaultDate={value}
-              onChange={this.handleConfirm}
+          <SearchControlOverlay onHide={this.hideOverlay} title={t('DatePickerControl.header')}>
+            <DayPicker
+              disabledDays={day => new Date(day).setHours(23, 59, 59, 59) < new Date()}
+              initialMonth={selectedDay}
+              locale={currentLanguage}
+              localeUtils={MomentLocaleUtils}
+              onDayClick={this.handleConfirm}
+              selectedDays={selectedDay}
+              showOutsideDays
+              showWeekNumbers
             />
           </SearchControlOverlay>
         </Overlay>

@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import React from 'react';
 import simple from 'simple-mock';
 
@@ -9,10 +8,10 @@ import ResourceTypeFilterButton from './ResourceTypeFilterButton';
 
 describe('shared/resource-type-filter/ResourceTypeFilterContainer', () => {
   const defaultProps = {
-    onFilterResourceType: simple.mock(),
-    onUnfilterResourceType: simple.mock(),
+    onSelectResourceType: simple.mock(),
+    onUnselectResourceType: simple.mock(),
     resourceTypes: ['a', 'b', 'c'],
-    filteredResourceTypes: ['a'],
+    selectedResourceTypes: ['a'],
   };
 
   function getWrapper(props) {
@@ -20,41 +19,41 @@ describe('shared/resource-type-filter/ResourceTypeFilterContainer', () => {
   }
   let wrapper;
 
-  before(() => {
+  beforeAll(() => {
     wrapper = getWrapper();
   });
 
-  it('renders ResourceTypeFilter components', () => {
-    expect(wrapper.find(ResourceTypeFilterButton)).to.have.length(3);
+  test('renders ResourceTypeFilter components', () => {
+    expect(wrapper.find(ResourceTypeFilterButton)).toHaveLength(3);
   });
 
   describe('ResourceTypeFilter', () => {
     let resourceTypeFilter;
-    before(() => {
+    beforeAll(() => {
       resourceTypeFilter = wrapper.find(ResourceTypeFilterButton).at(0);
     });
 
-    it('passes correct props', () => {
-      expect(resourceTypeFilter.prop('onClick')).to.equal(wrapper.instance().handleClick);
-      expect(resourceTypeFilter.prop('resourceType')).to.equal('a');
+    test('passes correct props', () => {
+      expect(resourceTypeFilter.prop('onClick')).toBe(wrapper.instance().handleClick);
+      expect(resourceTypeFilter.prop('resourceType')).toBe('a');
     });
 
-    describe('filtered', () => {
-      before(() => {
+    describe('selected', () => {
+      beforeAll(() => {
         resourceTypeFilter = wrapper.find(ResourceTypeFilterButton).at(0);
       });
 
-      it('passes correct active prop', () => {
-        expect(resourceTypeFilter.prop('active')).to.be.false;
+      test('passes correct active prop', () => {
+        expect(resourceTypeFilter.prop('active')).toBe(true);
       });
     });
-    describe('not filtered', () => {
-      before(() => {
+    describe('not selected', () => {
+      beforeAll(() => {
         resourceTypeFilter = wrapper.find(ResourceTypeFilterButton).at(1);
       });
 
-      it('passes correct active prop', () => {
-        expect(resourceTypeFilter.prop('active')).to.be.true;
+      test('passes correct active prop', () => {
+        expect(resourceTypeFilter.prop('active')).toBe(false);
       });
     });
   });
@@ -62,31 +61,31 @@ describe('shared/resource-type-filter/ResourceTypeFilterContainer', () => {
   describe('handleClick', () => {
     let instance;
 
-    before(() => {
+    beforeAll(() => {
       instance = wrapper.instance();
     });
 
     beforeEach(() => {
-      defaultProps.onFilterResourceType.reset();
-      defaultProps.onUnfilterResourceType.reset();
+      defaultProps.onSelectResourceType.reset();
+      defaultProps.onUnselectResourceType.reset();
     });
 
-    it('calls onUnfilterResourceType if resource was on filtered list', () => {
-      instance.handleClick(defaultProps.filteredResourceTypes[0]);
-      expect(defaultProps.onUnfilterResourceType.callCount).to.equal(1);
-      expect(defaultProps.onUnfilterResourceType.lastCall.args).to.deep.equal(
-        [defaultProps.filteredResourceTypes[0]]
-      );
-      expect(defaultProps.onFilterResourceType.callCount).to.equal(0);
+    test('calls onUnselectResourceType if resource was on selected list', () => {
+      instance.handleClick(defaultProps.selectedResourceTypes[0]);
+      expect(defaultProps.onUnselectResourceType.callCount).toBe(1);
+      expect(
+        defaultProps.onUnselectResourceType.lastCall.args
+      ).toEqual([defaultProps.selectedResourceTypes[0]]);
+      expect(defaultProps.onSelectResourceType.callCount).toBe(0);
     });
 
-    it('calls onFilterResourceType if resource was not on filtered list', () => {
+    test('calls onSelectResourceType if resource was not on selected list', () => {
       instance.handleClick(defaultProps.resourceTypes[-1]);
-      expect(defaultProps.onFilterResourceType.callCount).to.equal(1);
-      expect(defaultProps.onFilterResourceType.lastCall.args).to.deep.equal(
-        [defaultProps.resourceTypes[-1]]
-      );
-      expect(defaultProps.onUnfilterResourceType.callCount).to.equal(0);
+      expect(defaultProps.onSelectResourceType.callCount).toBe(1);
+      expect(
+        defaultProps.onSelectResourceType.lastCall.args
+      ).toEqual([defaultProps.resourceTypes[-1]]);
+      expect(defaultProps.onUnselectResourceType.callCount).toBe(0);
     });
   });
 });

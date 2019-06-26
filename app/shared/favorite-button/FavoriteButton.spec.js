@@ -1,9 +1,8 @@
-import { expect } from 'chai';
-import { shallow } from 'enzyme';
 import React from 'react';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import Button from 'react-bootstrap/lib/Button';
 import simple from 'simple-mock';
 
+import { shallowWithIntl } from 'utils/testUtils';
 import FavoriteButton from './FavoriteButton';
 
 describe('shared/favorite-button/FavoriteButton', () => {
@@ -13,35 +12,39 @@ describe('shared/favorite-button/FavoriteButton', () => {
   };
 
   function getWrapper(props) {
-    return shallow(<FavoriteButton {...defaultProps} {...props} />);
+    return shallowWithIntl(<FavoriteButton {...defaultProps} {...props} />);
   }
   let wrapper;
 
-  before(() => {
+  beforeAll(() => {
     wrapper = getWrapper();
   });
 
-  it('is a button', () => {
-    expect(wrapper.is('button')).to.be.true;
+  test('is a Button', () => {
+    expect(wrapper.is(Button)).toBe(true);
   });
 
-  it('has favorite-button class name', () => {
-    expect(wrapper.prop('className')).to.equal('favorite-button');
+  test('has favorite-button class name', () => {
+    expect(getWrapper({ favorited: false }).prop('className')).toBe('favorite-button');
   });
 
-  it('passes onClick prop', () => {
-    expect(wrapper.prop('onClick')).to.deep.equal(defaultProps.onClick);
+  test('has favorite class modifier if it is favorited', () => {
+    expect(getWrapper({ favorited: true }).prop('className')).toBe('favorite-button favorite-button--favorite');
   });
 
-
-  it('has a star glyphicon if favorited', () => {
-    expect(wrapper.children().is(Glyphicon)).to.be.true;
-    expect(wrapper.children().prop('glyph')).to.equal('star');
+  test('passes onClick prop', () => {
+    expect(wrapper.prop('onClick')).toEqual(defaultProps.onClick);
   });
 
-  it('has a star-empty glyphicon if not favorited', () => {
-    const customWrapper = getWrapper({ favorited: false });
-    expect(customWrapper.children().is(Glyphicon)).to.be.true;
-    expect(customWrapper.children().prop('glyph')).to.equal('star-empty');
+  test('has remove favorite text if favorited', () => {
+    const buttonText = getWrapper({ favorited: true }).find('span');
+    expect(buttonText).toHaveLength(1);
+    expect(buttonText.text()).toBe('ResourceHeader.favoriteRemoveButton');
+  });
+
+  test('has add favorite text if not favorited', () => {
+    const buttonText = getWrapper({ favorited: false }).find('span');
+    expect(buttonText).toHaveLength(1);
+    expect(buttonText.text()).toBe('ResourceHeader.favoriteAddButton');
   });
 });

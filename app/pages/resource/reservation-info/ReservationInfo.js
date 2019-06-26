@@ -1,30 +1,49 @@
-import moment from 'moment';
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { FormattedHTMLMessage } from 'react-intl';
-import Well from 'react-bootstrap/lib/Well';
+import moment from 'moment';
+import iconUser from 'hel-icons/dist/shapes/user-o.svg';
 
+import iconCalendar from 'assets/icons/calendar.svg';
+import iconClock from 'assets/icons/clock-o.svg';
 import WrappedText from 'shared/wrapped-text';
+import { getMaxPeriodText } from 'utils/resourceUtils';
 import { injectT } from 'i18n';
 
 function renderLoginText(isLoggedIn, resource) {
   if (isLoggedIn || !resource.reservable) {
     return null;
   }
+  const next = encodeURIComponent(window.location.href);
   return (
     <p className="login-text">
-      <FormattedHTMLMessage id="ReservationInfo.loginMessage" />
+      <FormattedHTMLMessage id="ReservationInfo.loginMessage" values={{ next }} />
     </p>
   );
 }
 
-function renderMaxPeriodText(maxPeriod, t) {
-  if (!maxPeriod) {
+function renderEarliestResDay(date, t) {
+  if (!date) {
     return null;
   }
-  const asHours = moment.duration(maxPeriod).asHours();
+  return (
+    <p className="reservable-after-text">
+      <img alt="" className="app-ResourceHeader__info-icon" src={iconCalendar} />
+      <strong>{t('ReservationInfo.reservationEarliestDays', { time: moment(date).toNow(true) })}</strong>
+    </p>
+  );
+}
+
+function renderMaxPeriodText(resource, t) {
+  if (!resource.maxPeriod) {
+    return null;
+  }
+  const maxPeriodText = getMaxPeriodText(t, resource);
   return (
     <p className="max-length-text">
-      {t('ReservationInfo.reservationMaxLength', { asHours })}
+      <img alt="" className="app-ResourceHeader__info-icon" src={iconClock} />
+      <strong>{t('ReservationInfo.reservationMaxLength')}</strong>
+      {` ${maxPeriodText}`}
     </p>
   );
 }
@@ -35,19 +54,22 @@ function renderMaxReservationsPerUserText(maxReservationsPerUser, t) {
   }
   return (
     <p className="max-number-of-reservations-text">
-      {t('ReservationInfo.maxNumberOfReservations', { maxReservationsPerUser })}
+      <img alt="" className="app-ResourceHeader__info-icon" src={iconUser} />
+      <strong>{t('ReservationInfo.maxNumberOfReservations')}</strong>
+      {` ${maxReservationsPerUser}`}
     </p>
   );
 }
 
 function ReservationInfo({ isLoggedIn, resource, t }) {
   return (
-    <Well id="reservation-info">
-      <WrappedText text={resource.reservationInfo} />
-      {renderMaxPeriodText(resource.maxPeriod, t)}
+    <div className="app-ReservationInfo">
+      <WrappedText openLinksInNewTab text={resource.reservationInfo} />
+      {renderEarliestResDay(resource.reservableAfter, t)}
+      {renderMaxPeriodText(resource, t)}
       {renderMaxReservationsPerUserText(resource.maxReservationsPerUser, t)}
       {renderLoginText(isLoggedIn, resource)}
-    </Well>
+    </div>
   );
 }
 

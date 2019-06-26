@@ -1,54 +1,45 @@
-import { expect } from 'chai';
 import React from 'react';
 import Immutable from 'seamless-immutable';
 
 import Reservation from 'utils/fixtures/Reservation';
+import Resource from 'utils/fixtures/Resource';
 import { shallowWithIntl } from 'utils/testUtils';
 import ReservationAccessCode from './ReservationAccessCode';
 
 describe('shared/reservation-access-code/ReservationAccessCode', () => {
+  const createReservation = attributes => Immutable(Reservation.build(attributes));
+  const createResource = attributes => Immutable(Resource.build(attributes));
+
   const defaultProps = {
-    reservation: Immutable(Reservation.build()),
+    reservation: createReservation(),
+    resource: createResource({ generateAccessCodes: true }),
   };
 
   function getWrapper(extraProps) {
     return shallowWithIntl(<ReservationAccessCode {...defaultProps} {...extraProps} />);
   }
 
-  describe('if reservation has accessCode', () => {
-    const accessCode = '1234';
-    const reservation = Immutable(Reservation.build({ accessCode }));
-
-    it('renders a span with correct class', () => {
-      const span = getWrapper({ reservation }).find('span');
-      expect(span.length).to.equal(1);
-      expect(span.prop('className')).to.equal('reservation-access-code');
-    });
-
-    it('renders the reservation access code', () => {
-      const content = getWrapper({ reservation }).text();
-      expect(content).to.contain(accessCode);
-    });
-
-    it('renders text given in props', () => {
-      const text = 'Some text';
-      const content = getWrapper({ reservation, text }).text();
-      expect(content).to.contain(text);
-    });
-
-    it('renders default text if no text is given in props', () => {
-      const content = getWrapper({ reservation }).text();
-      expect(content).to.contain('ReservationAccessCode.defaultText');
-    });
+  test('renders GeneratedAccessCode when PIN is available', () => {
+    const reservation = createReservation({ accessCode: '1232' });
+    const wrapper = getWrapper({ reservation });
+    expect(wrapper.name()).toBe('GeneratedAccessCode');
   });
 
-  describe('if reservation does not have an access code', () => {
-    const accessCode = null;
+  test('renders PendingAccessCode when PIN is pending', () => {
+    const resource = createResource({ generateAccessCodes: false });
+    const wrapper = getWrapper({ resource });
+    expect(wrapper.name()).toBe('PendingAccessCode');
+  });
 
-    it('renders an empty span', () => {
-      const reservation = Immutable(Reservation.build({ accessCode }));
-      const wrapper = getWrapper({ reservation });
-      expect(wrapper.equals(<span />)).to.be.true;
-    });
+  test('renders empty span when PIN is not available and it won\'t be generated either', () => {
+    const wrapper = getWrapper();
+    expect(wrapper.equals(<span />)).toBe(true);
+  });
+
+  test('renders empty span when reservation that would produce pending PIN is cancelled', () => {
+    const reservation = createReservation({ state: 'cancelled' });
+    const resource = createResource({ generateAccessCodes: false });
+    const wrapper = getWrapper({ reservation, resource });
+    expect(wrapper.equals(<span />)).toBe(true);
   });
 });

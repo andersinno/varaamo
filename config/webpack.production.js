@@ -1,42 +1,51 @@
 const path = require('path');
 
-require('dotenv').load({ path: path.resolve(__dirname, '../.env') });
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 const webpack = require('webpack');
 const merge = require('webpack-merge');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const autoprefixer = require('autoprefixer');
 
 const common = require('./webpack.common');
 
 module.exports = merge(common, {
-  entry: [
-    'babel-polyfill',
-    path.resolve(__dirname, '../app/index.js'),
-  ],
-  debug: false,
+  entry: ['@babel/polyfill', path.resolve(__dirname, '../src/index.js')],
   devtool: 'source-map',
+  mode: 'production',
   output: {
     path: path.resolve(__dirname, '../dist'),
     publicPath: '/_assets/',
     filename: 'app.js',
   },
   module: {
-    loaders: [
+    rules: [
       {
-        test: /\.js$/,
-        include: path.resolve(__dirname, '../app'),
+        test: /^(?!.*\.spec\.js$).*\.js$/,
+        include: [path.resolve(__dirname, '../app'), path.resolve(__dirname, '../src')],
         loader: 'babel-loader',
-        query: {
-          presets: ['es2015', 'node6', 'react', 'stage-2'],
+        options: {
+          presets: ['@babel/preset-env', '@babel/preset-react'],
         },
       },
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract('style', 'css-loader!postcss-loader'),
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          { loader: 'postcss-loader', options: { plugins: [autoprefixer({ browsers: ['last 2 version', 'ie 9'] })] } },
+        ],
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('style', 'css-loader!resolve-url-loader!postcss-loader!sass-loader'),
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'resolve-url-loader',
+          { loader: 'sass-loader', options: { sourceMap: true, sourceMapContents: false } },
+          { loader: 'postcss-loader', options: { plugins: [autoprefixer({ browsers: ['last 2 version', 'ie 9'] })] } },
+        ],
       },
     ],
   },
@@ -48,16 +57,20 @@ module.exports = merge(common, {
         API_URL: JSON.stringify(process.env.API_URL || 'https://api.hel.fi/respa/v1'),
         SHOW_TEST_SITE_MESSAGE: Boolean(process.env.SHOW_TEST_SITE_MESSAGE),
         TRACKING: Boolean(process.env.PIWIK_SITE_ID),
+        CUSTOM_MUNICIPALITY_OPTIONS: process.env.CUSTOM_MUNICIPALITY_OPTIONS,
       },
     }),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        screw_ie8: true,
-        warnings: false,
-      },
+    new MiniCssExtractPlugin({
+      filename: 'app.css',
     }),
-    new ExtractTextPlugin('app.css'),
   ],
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        cache: true,
+        parallel: true,
+        sourceMap: true, // Must be set to true if using source-maps in production
+      }),
+    ],
+  },
 });

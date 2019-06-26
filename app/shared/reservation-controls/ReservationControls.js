@@ -1,5 +1,6 @@
 import moment from 'moment';
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import Button from 'react-bootstrap/lib/Button';
 
 import { injectT } from 'i18n';
@@ -10,7 +11,6 @@ class ReservationControls extends Component {
     this.buttons = {
       cancel: (
         <Button
-          bsSize="xsmall"
           bsStyle="danger"
           key="cancelButton"
           onClick={props.onCancelClick}
@@ -20,7 +20,6 @@ class ReservationControls extends Component {
       ),
       confirm: (
         <Button
-          bsSize="xsmall"
           bsStyle="success"
           key="confirmButton"
           onClick={props.onConfirmClick}
@@ -30,7 +29,6 @@ class ReservationControls extends Component {
       ),
       deny: (
         <Button
-          bsSize="xsmall"
           bsStyle="danger"
           key="denyButton"
           onClick={this.props.onDenyClick}
@@ -40,7 +38,6 @@ class ReservationControls extends Component {
       ),
       edit: (
         <Button
-          bsSize="xsmall"
           bsStyle="primary"
           key="editButton"
           onClick={props.onEditClick}
@@ -50,7 +47,6 @@ class ReservationControls extends Component {
       ),
       info: (
         <Button
-          bsSize="xsmall"
           bsStyle="default"
           key="infoButton"
           onClick={props.onInfoClick}
@@ -66,39 +62,38 @@ class ReservationControls extends Component {
       if (reservation.state === 'cancelled') {
         return null;
       }
-      return isAdmin ?
-        [buttons.edit, buttons.cancel] :
-        [buttons.edit, buttons.cancel];
+      return isAdmin
+        ? [buttons.edit, buttons.cancel]
+        : [buttons.edit, buttons.cancel];
     }
 
     switch (reservation.state) {
-
       case 'cancelled': {
-        return isAdmin ?
-          [buttons.info] :
-          [buttons.info];
+        return isAdmin
+          ? [buttons.info]
+          : [buttons.info];
       }
 
       case 'confirmed': {
         if (isAdmin) {
-          return isStaff ?
-            [buttons.info, buttons.cancel, buttons.edit] :
-            [buttons.info, buttons.cancel];
+          return isStaff
+            ? [buttons.info, buttons.cancel, buttons.edit]
+            : [buttons.info, buttons.cancel];
         }
         return [buttons.info, buttons.cancel];
       }
 
       case 'denied': {
-        return isAdmin ?
-          [buttons.info] :
-          [buttons.info];
+        return isAdmin
+          ? [buttons.info]
+          : [buttons.info];
       }
 
       case 'requested': {
         if (isAdmin) {
-          return isStaff ?
-            [buttons.info, buttons.confirm, buttons.deny, buttons.edit] :
-            [buttons.info, buttons.edit];
+          return isStaff
+            ? [buttons.info, buttons.confirm, buttons.deny, buttons.edit]
+            : [buttons.info, buttons.edit];
         }
         return [buttons.info, buttons.edit, buttons.cancel];
       }
@@ -106,7 +101,6 @@ class ReservationControls extends Component {
       default: {
         return null;
       }
-
     }
   }
 
@@ -137,4 +131,4 @@ ReservationControls.propTypes = {
   t: PropTypes.func.isRequired,
 };
 
-export default injectT(ReservationControls) ;
+export default injectT(ReservationControls);

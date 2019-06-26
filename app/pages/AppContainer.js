@@ -1,45 +1,26 @@
 import MobileDetect from 'mobile-detect';
-import React, { Component, PropTypes } from 'react';
-import BodyClassName from 'react-body-classname';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import classNames from 'classnames';
 import Grid from 'react-bootstrap/lib/Grid';
-import DocumentTitle from 'react-document-title';
+import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { withRouter } from 'react-router-dom';
 
 import { fetchUser } from 'actions/userActions';
 import { enableGeoposition } from 'actions/uiActions';
 import Favicon from 'shared/favicon';
+import Footer from 'shared/footer';
+import Header from 'shared/header';
 import TestSiteMessage from 'shared/test-site-message';
 import Notifications from 'shared/notifications';
-import ResourceMap from 'shared/resource-map';
-import SideNavbar from 'shared/side-navbar';
 import { getCustomizationClassName } from 'utils/customizationUtils';
 
 const userIdSelector = state => state.auth.userId;
-const searchResultIdsSelector = (state, props) => {
-  if (props.location.pathname.slice(0, 11) === '/resources/') {
-    return [state.ui.resourceMap.resourceId];
-  }
-  return state.ui.search.results;
-};
-const showMapSelector = (state, props) => {
-  if (props.location.pathname.slice(0, 11) === '/resources/') {
-    return state.ui.resourceMap.showMap;
-  }
-  return state.ui.search.showMap;
-};
-const selectedUnitIdSelector = (state, props) => {
-  if (props.location.pathname.slice(0, 11) === '/resources/') {
-    return state.ui.resourceMap.unitId;
-  }
-  return state.ui.search.unitId;
-};
 
 export const selector = createStructuredSelector({
   userId: userIdSelector,
-  searchResultIds: searchResultIdsSelector,
-  selectedUnitId: selectedUnitIdSelector,
-  showMap: showMapSelector,
 });
 
 export class UnconnectedAppContainer extends Component {
@@ -51,16 +32,11 @@ export class UnconnectedAppContainer extends Component {
     }
   }
 
-  getChildContext() {
-    return {
-      location: this.props.location,
-    };
-  }
-
   componentDidMount() {
     if (this.props.userId) {
       this.props.fetchUser(this.props.userId);
     }
+    this.removeFacebookAppendedHash();
   }
 
   componentWillUpdate(nextProps) {
@@ -69,30 +45,32 @@ export class UnconnectedAppContainer extends Component {
     }
   }
 
+  removeFacebookAppendedHash() {
+    if (window.location.hash && window.location.hash.indexOf('_=_') !== -1) {
+      window.location.hash = ''; // for older browsers, leaves a # behind
+      window.history.pushState('', document.title, window.location.pathname);
+    }
+  }
+
   render() {
     return (
-      <BodyClassName className={getCustomizationClassName()} >
-        <DocumentTitle title="Varaamo">
-          <div className="app">
-            <SideNavbar>
-              <Favicon />
-              <TestSiteMessage />
-              <div className="app-content">
-                <Grid>
-                  <Notifications />
-                </Grid>
-                <ResourceMap
-                  location={this.props.location}
-                  resourceIds={this.props.searchResultIds}
-                  selectedUnitId={this.props.selectedUnitId}
-                  showMap={this.props.showMap}
-                />
-                {this.props.children}
-              </div>
-            </SideNavbar>
-          </div>
-        </DocumentTitle>
-      </BodyClassName>
+      <div className={classNames('app', getCustomizationClassName())}>
+        <Helmet>
+          <title>Varaamo</title>
+        </Helmet>
+
+        <Header location={this.props.location}>
+          <Favicon />
+          <TestSiteMessage />
+        </Header>
+        <div className="app-content">
+          <Grid>
+            <Notifications />
+          </Grid>
+          {this.props.children}
+        </div>
+        <Footer />
+      </div>
     );
   }
 }
@@ -102,16 +80,14 @@ UnconnectedAppContainer.propTypes = {
   enableGeoposition: PropTypes.func.isRequired,
   fetchUser: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
-  searchResultIds: PropTypes.array.isRequired,
-  selectedUnitId: PropTypes.string,
-  showMap: PropTypes.bool.isRequired,
   userId: PropTypes.string,
-};
-
-UnconnectedAppContainer.childContextTypes = {
-  location: React.PropTypes.object,
 };
 
 const actions = { enableGeoposition, fetchUser };
 
-export default connect(selector, actions)(UnconnectedAppContainer);
+export default withRouter(
+  connect(
+    selector,
+    actions
+  )(UnconnectedAppContainer)
+);

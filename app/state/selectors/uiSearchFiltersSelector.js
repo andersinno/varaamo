@@ -1,7 +1,9 @@
+import constants from 'constants/AppConstants';
+
 import omit from 'lodash/omit';
 import { createSelector } from 'reselect';
 
-import constants from 'constants/AppConstants';
+import { textBoolean } from 'utils/searchUtils';
 import { getDateString } from 'utils/timeUtils';
 
 const filtersSelector = state => state.ui.search.filters;
@@ -13,7 +15,12 @@ const uiSearchFiltersSelector = createSelector(
       {},
       omit(constants.SUPPORTED_SEARCH_FILTERS, ['lat', 'lon']),
       filters,
-      { date: getDateString(filters.date) }
+      {
+        freeOfCharge: textBoolean(filters.freeOfCharge) || '',
+        date: getDateString(filters.date),
+        page: parseInt(filters.page, 10) || 1,
+        useTimeRange: textBoolean(filters.useTimeRange),
+      }
     );
 
     return uiSearchFilters;

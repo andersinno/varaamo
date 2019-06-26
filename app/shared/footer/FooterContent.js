@@ -1,36 +1,63 @@
-import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { FormattedHTMLMessage } from 'react-intl';
+import Col from 'react-bootstrap/lib/Col';
+import Grid from 'react-bootstrap/lib/Grid';
+import Row from 'react-bootstrap/lib/Row';
+import { Link } from 'react-router-dom';
 
 import FeedbackLink from 'shared/feedback-link';
 import Logo from 'shared/logo';
 import { injectT } from 'i18n';
 import { getCurrentCustomization } from 'utils/customizationUtils';
 
-function FooterContent({ onLinkClick, t }) {
+function FooterContent({ t }) {
   const feedbackLink = <FeedbackLink>{t('Footer.feedbackLink')}</FeedbackLink>;
 
   switch (getCurrentCustomization()) {
     case 'ESPOO': {
       return (
-        <div>
-          <Link className="brand-link" onClick={onLinkClick} to="/">
-            <Logo />
-            Varaamo
-          </Link>
-          <p>{t('Footer.espooText')} {feedbackLink}</p>
-        </div>
+        <Grid>
+          <Row>
+            <Col lg={3} md={3}>
+              <Link className="brand-link" to="/">
+                <Logo />
+                Varaamo
+              </Link>
+            </Col>
+            <Col lg={6} md={6}>
+              <p>
+                <FormattedHTMLMessage id="Footer.espooText" />
+              </p>
+              <p>
+                {feedbackLink}
+              </p>
+            </Col>
+          </Row>
+        </Grid>
       );
     }
 
     case 'VANTAA': {
       return (
-        <div>
-          <Link className="brand-link" onClick={onLinkClick} to="/">
-            <Logo />
-            Varaamo
-          </Link>
-          <p>{t('Footer.vantaaText')} {feedbackLink}</p>
-        </div>
+        <Grid>
+          <Row>
+            <Col lg={3} md={3}>
+              <Link className="brand-link" to="/">
+                <Logo />
+                Varaamo
+              </Link>
+            </Col>
+            <Col lg={6} md={6}>
+              <p>
+                <FormattedHTMLMessage id="Footer.vantaaText" />
+              </p>
+              <p>
+                {feedbackLink}
+              </p>
+            </Col>
+          </Row>
+        </Grid>
       );
     }
 
@@ -48,20 +75,30 @@ function FooterContent({ onLinkClick, t }) {
 
     default: {
       return (
-        <div>
-          <Link className="brand-link" onClick={onLinkClick} to="/">
-            <Logo />
-            Varaamo
-          </Link>
-          <p>{t('Footer.helsinkiText')} {feedbackLink}</p>
-        </div>
+        <Grid>
+          <Row>
+            <Col lg={3} md={3}>
+              <Link className="brand-link" to="/">
+                <Logo />
+                Varaamo
+              </Link>
+            </Col>
+            <Col lg={6} md={6}>
+              <p>
+                <FormattedHTMLMessage id="Footer.helsinkiText" />
+              </p>
+              <p>
+                {feedbackLink}
+              </p>
+            </Col>
+          </Row>
+        </Grid>
       );
     }
   }
 }
 
 FooterContent.propTypes = {
-  onLinkClick: PropTypes.func,
   t: PropTypes.func.isRequired,
 };
 

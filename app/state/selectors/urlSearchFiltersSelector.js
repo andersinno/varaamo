@@ -1,10 +1,13 @@
+import constants from 'constants/AppConstants';
+
 import omit from 'lodash/omit';
 import { createSelector } from 'reselect';
+import queryString from 'query-string';
 
-import constants from 'constants/AppConstants';
+import { textBoolean } from 'utils/searchUtils';
 import { getDateString } from 'utils/timeUtils';
 
-const filtersSelector = (state, props) => props.location.query;
+const filtersSelector = (state, props) => queryString.parse(props.location.search);
 
 const urlSearchFiltersSelector = createSelector(
   filtersSelector,
@@ -13,9 +16,14 @@ const urlSearchFiltersSelector = createSelector(
       {},
       omit(constants.SUPPORTED_SEARCH_FILTERS, ['lat', 'lon']),
       filters,
-      { date: getDateString(filters.date) }
+      {
+        duration: Number(filters.duration),
+        freeOfCharge: textBoolean(filters.freeOfCharge) || '',
+        date: getDateString(filters.date),
+        page: parseInt(filters.page, 10) || 1,
+        useTimeRange: textBoolean(filters.useTimeRange),
+      }
     );
-
     return urlSearchFilters;
   }
 );
