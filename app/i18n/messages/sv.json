@@ -329,11 +329,8 @@
   "ResourceInfo.additionalInfoTitle": "Mer information",
   "ResourceInfo.descriptionTitle": "Beskrivning",
   "ResourceInfo.equipmentHeader": "Utrustning",
-<<<<<<< HEAD
-=======
   "ResourceInfo.serviceMapLink": "Reseplanering i Servicekarta",
   "ResourceInfo.serviceWebLink": "Hemsida",
->>>>>>> v0.10.0
   "ResourceInfo.loginMessage": "För att kunna boka detta utrymme måste du <a href=”/login”>logga in</a>.",
   "ResourceInfo.reservationTitle": "Bokningsinformation",
   "ResourceInfo.reserveTitle": "Boka",

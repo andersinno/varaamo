@@ -6,7 +6,7 @@ const DEFAULT_API_URL = 'https://api.hel.fi/respa-test/v1';
 const DEFAULT_TIME_ZONE = 'Europe/Helsinki';
 const DEFAULT_LOGIN_CALLBACK_URL = '/login/helsinki/return';
 const ENV_NAMESPACE = 'VARAAMO_ENV';
-const DEFAULT_RESPA_ADMIN_URL = 'https://respa.tampere.fi/ra/'
+const DEFAULT_RESPA_ADMIN_URL = 'https://respa.tampere.fi/ra/';
 
 function getAsArray(value) {
   if (value === undefined || value === null) {

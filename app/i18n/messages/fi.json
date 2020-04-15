@@ -327,11 +327,8 @@
   "ResourceInfo.additionalInfoTitle": "Lisätietoja",
   "ResourceInfo.descriptionTitle": "Kuvaus",
   "ResourceInfo.equipmentHeader": "Tilan varusteet",
-<<<<<<< HEAD
-=======
   "ResourceInfo.serviceMapLink": "Katso reitti Palvelukartasta",
   "ResourceInfo.serviceWebLink": "Verkkosivu",
->>>>>>> v0.10.0
   "ResourceInfo.loginMessage": "Sinun täytyy <a href=\"/login\">kirjautua sisään</a>, jotta voit tehdä varauksen tähän tilaan.",
   "ResourceInfo.reservationTitle": "Varauksen tiedot",
   "ResourceInfo.reserveTitle": "Varaa",

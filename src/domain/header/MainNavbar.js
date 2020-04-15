@@ -1,5 +1,3 @@
-import constants from 'constants/AppConstants';
-
 import PropTypes from 'prop-types';
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
@@ -82,7 +80,7 @@ class MainNavbar extends React.Component {
                       {t('Navbar.manageReservations')}
                     </NavItem>
                   </LinkContainer>
-                  <NavItem eventKey="adminMaintenance" href={constants.RESPA_ADMIN_URL} target="_blank">
+                  <NavItem eventKey="adminMaintenance" href="https://respa.tampere.fi/ra/" target="_blank">
                     {t('Navbar.adminMaintenance')}
                     <FAIcon icon={faExternalLinkAlt} />
                   </NavItem>
@@ -100,12 +98,6 @@ class MainNavbar extends React.Component {
               </NavItem>
             </LinkContainer>
           </Nav>
-          {constants.SHOW_TEST_SITE_MESSAGE && (
-            <div className="alert alert-warning\">
-              Tämä on QA-ympäristö, jossa kehitetään ja testataan
-              uusia toiminnallisuuksia.
-            </div>
-          )}
         </Navbar.Collapse>
       </Navbar>
     );
