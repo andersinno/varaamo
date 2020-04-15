@@ -1,4 +1,4 @@
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import forEach from 'lodash/forEach';
 import forIn from 'lodash/forIn';
 import get from 'lodash/get';
@@ -9,8 +9,8 @@ import React from 'react';
 import { IntlProvider } from 'react-intl';
 import { RSAA } from 'redux-api-middleware';
 
-import rootReducer from 'state/rootReducer';
-import enMessages from 'i18n/messages/en.json';
+import rootReducer from '../state/rootReducer';
+import enMessages from '../i18n/messages/en.json';
 
 const testMessages = mapValues(enMessages, (value, key) => key);
 
@@ -105,7 +105,7 @@ function createApiTest(options) {
           types: [{
             type: (
               (tests.request && tests.request.type) || 'Specify request.type'
-            )
+            ),
           }],
         },
       };
@@ -227,6 +227,27 @@ function shallowWithIntl(node, context) {
   return shallow(nodeWithIntl, { context: { ...context, intl } }).shallow({ context });
 }
 
+function mountWithIntl(node, context) {
+  const nodeWithIntl = React.cloneElement(node, { intl });
+  return mount(nodeWithIntl, { context: { ...context, intl } });
+}
+
+function globalDateMock() {
+  const mockedDate = new Date(2017, 11, 10);
+  const mockedUTCDate = Date.UTC(2017, 11, 10);
+  const originalDate = Date;
+
+  beforeAll(() => {
+    global.Date = jest.fn(() => mockedDate);
+    global.Date.UTC = jest.fn(() => mockedUTCDate);
+  });
+
+  afterAll(() => {
+    global.Date.setDate = originalDate.setDate;
+    global.Date.UTC = originalDate.UTC;
+  });
+}
+
 export {
   createApiTest,
   getDefaultRouterProps,
@@ -234,4 +255,6 @@ export {
   getState,
   makeButtonTests,
   shallowWithIntl,
+  mountWithIntl,
+  globalDateMock,
 };

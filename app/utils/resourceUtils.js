@@ -1,12 +1,13 @@
-import constants from 'constants/AppConstants';
-
 import filter from 'lodash/filter';
 import find from 'lodash/find';
 import forEach from 'lodash/forEach';
+import has from 'lodash/has';
 import moment from 'moment';
 import queryString from 'query-string';
 
-import { getCurrentReservation, getNextAvailableTime } from 'utils/reservationUtils';
+import constants from '../constants/AppConstants';
+import { getCurrentReservation, getNextAvailableTime } from './reservationUtils';
+import { getPrice as genericGetPrice } from '../../src/domain/resource/utils';
 
 function hasMaxReservations(resource) {
   let isMaxReservations = false;
@@ -21,15 +22,6 @@ function hasMaxReservations(resource) {
     isMaxReservations = reservationCounter >= resource.maxReservationsPerUser;
   }
   return isMaxReservations;
-}
-
-function isOpenNow(resource) {
-  const { closes, opens } = getOpeningHours(resource);
-  const now = moment();
-  if (now >= moment(opens) && now <= moment(closes)) {
-    return true;
-  }
-  return false;
 }
 
 function getAvailabilityDataForNow(resource = {}, date = null) {
@@ -105,19 +97,8 @@ function getAvailabilityDataForWholeDay(resource = {}, date = null) {
   };
 }
 
-function getHourlyPrice(t, { minPricePerHour, maxPricePerHour }) {
-  if (!(minPricePerHour || maxPricePerHour)) {
-    return t('ResourceIcons.free');
-  }
-  if (minPricePerHour && maxPricePerHour && minPricePerHour !== maxPricePerHour) {
-    return `${Number(minPricePerHour)} - ${Number(maxPricePerHour)} €/h`;
-  }
-  const priceString = maxPricePerHour || minPricePerHour;
-  const price = priceString !== 0 ? Number(priceString) : 0;
-  if (price === 0) {
-    return t('ResourceIcons.free');
-  }
-  return price ? `${price} €/h` : null;
+function getPrice(t, { minPrice, maxPrice, priceType }) {
+  return genericGetPrice(minPrice, maxPrice, priceType, t);
 }
 
 function getHumanizedPeriod(period) {
@@ -168,7 +149,7 @@ function getOpeningHours(resource, selectedDate) {
 function getOpenReservations(resource) {
   return filter(
     resource.reservations,
-    reservation => reservation.state !== 'cancelled' && reservation.state !== 'denied'
+    reservation => reservation.state !== 'cancelled' && reservation.state !== 'denied',
   );
 }
 
@@ -211,12 +192,19 @@ function reservingIsRestricted(resource, date) {
   return Boolean(isLimited && !isAdmin);
 }
 
+function hasProducts(resource) {
+  return (
+    has(resource, 'products')
+    && Array.isArray(resource.products)
+    && resource.products.length >= 1
+  );
+}
+
 export {
   hasMaxReservations,
-  isOpenNow,
   getAvailabilityDataForNow,
   getAvailabilityDataForWholeDay,
-  getHourlyPrice,
+  getPrice,
   getHumanizedPeriod,
   getMaxPeriodText,
   getOpeningHours,
@@ -225,5 +213,6 @@ export {
   getResourcePageUrlComponents,
   getTermsAndConditions,
   reservingIsRestricted,
-  getMinPeriodText
+  getMinPeriodText,
+  hasProducts,
 };

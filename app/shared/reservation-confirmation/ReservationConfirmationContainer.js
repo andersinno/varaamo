@@ -6,13 +6,13 @@ import first from 'lodash/first';
 import last from 'lodash/last';
 import orderBy from 'lodash/orderBy';
 
-import { deleteReservation, postReservation, putReservation } from 'actions/reservationActions';
+import { deleteReservation, postReservation, putReservation } from '../../actions/reservationActions';
 import {
   cancelReservationEdit,
   closeConfirmReservationModal,
   openConfirmReservationModal,
-} from 'actions/uiActions';
-import recurringReservationsConnector from 'state/recurringReservations';
+} from '../../actions/uiActions';
+import recurringReservationsConnector from '../../state/recurringReservations';
 import ConfirmReservationModal from './ConfirmReservationModal';
 import reservationConfirmationSelector from './reservationConfirmationSelector';
 
@@ -44,7 +44,7 @@ export class UnconnectedReservationConfirmationContainer extends Component {
 
   handleReservation = (values = {}) => {
     const {
-      actions, recurringReservations, resource, selectedReservations
+      actions, recurringReservations, resource, selectedReservations,
     } = this.props;
     const orderedReservations = orderBy(selectedReservations, 'begin');
     const selectedReservation = Object.assign({}, first(orderedReservations));
@@ -117,5 +117,5 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(reservationConfirmationSelector, mapDispatchToProps)(
-  UnconnectedReservationConfirmationContainer
+  UnconnectedReservationConfirmationContainer,
 );

@@ -1,0 +1,20 @@
+.app-SearchListResults {
+  @media (min-width: $screen-sm-min) {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  &__container {
+    min-height: 400px;
+  }
+
+  &__sort {
+    margin-top: 10px;
+  }
+
+  &__results {
+    @media (max-width: $screen-md) {
+      min-height: 150px;
+    }
+  }
+}

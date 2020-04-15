@@ -1,12 +1,11 @@
 const path = require('path');
 
-require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
-
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const autoprefixer = require('autoprefixer');
 
 const common = require('./webpack.common');
+const getCssLoaders = require('./getCssLoaders');
 
 module.exports = merge(common, {
   mode: 'development',
@@ -31,6 +30,7 @@ module.exports = merge(common, {
         options: {
           configFile: path.resolve(__dirname, '../.eslintrc'),
           eslintPath: require.resolve('eslint'),
+          emitWarning: true,
         },
       },
       {
@@ -42,14 +42,7 @@ module.exports = merge(common, {
         },
         loader: 'babel-loader',
       },
-      {
-        test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          { loader: 'postcss-loader', options: { plugins: [autoprefixer({ browsers: ['last 2 version', 'ie 9'] })] } },
-        ],
-      },
+      ...getCssLoaders(),
       {
         test: /\.scss$/,
         use: [
@@ -63,16 +56,6 @@ module.exports = merge(common, {
     ],
   },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development'),
-      SETTINGS: {
-        API_URL: JSON.stringify(process.env.API_URL || 'https://respa.tampere.fi/v1/'),
-        RESPA_ADMIN_URL: JSON.stringify(process.env.RESPA_ADMIN_URL || 'https://respa.tampere.fi/ra/'),
-        SHOW_TEST_SITE_MESSAGE: Boolean(process.env.SHOW_TEST_SITE_MESSAGE),
-        TRACKING: Boolean(process.env.PIWIK_SITE_ID),
-        CUSTOM_MUNICIPALITY_OPTIONS: process.env.CUSTOM_MUNICIPALITY_OPTIONS
-      },
-    }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
   ],

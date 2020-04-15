@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import ResourceCard from 'shared/resource-card';
+import ResourceCard from '../resource-card/ResourceCard';
 
 function ResourceList({
-  date, emptyMessage, location, resourceIds, history
+  date, emptyMessage, location, resourceIds, history,
 }) {
   function renderResourceListItem(resourceId) {
     return (

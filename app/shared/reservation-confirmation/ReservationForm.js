@@ -1,6 +1,3 @@
-import constants from 'constants/AppConstants';
-import FormTypes from 'constants/FormTypes';
-
 import includes from 'lodash/includes';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
@@ -13,11 +10,13 @@ import Well from 'react-bootstrap/lib/Well';
 import { Field, Fields, reduxForm } from 'redux-form';
 import isEmail from 'validator/lib/isEmail';
 
-
-import WrappedText from 'shared/wrapped-text';
-import ReduxFormField from 'shared/form-fields/ReduxFormField';
-import { injectT } from 'i18n';
+import constants from '../../constants/AppConstants';
+import FormTypes from '../../constants/FormTypes';
+import WrappedText from '../wrapped-text/WrappedText';
+import ReduxFormField from '../form-fields/ReduxFormField';
+import injectT from '../../i18n/injectT';
 import TimeControls from './TimeControls';
+import { INPUT_PURPOSES } from '../../../src/constants/InputPurposes';
 
 const validators = {
   reserverEmailAddress: (t, { reserverEmailAddress }) => {
@@ -96,7 +95,7 @@ class UnconnectedReservationForm extends Component {
 
   renderTimeControls = () => {
     const {
-      fields, maxReservationPeriod, t, timeSlots
+      fields, maxReservationPeriod, t, timeSlots,
     } = this.props;
     if (!includes(fields, 'begin') || !includes(fields, 'end')) {
       return null;
@@ -160,36 +159,21 @@ class UnconnectedReservationForm extends Component {
             t('ReservationForm.eventSubjectInfo'),
           )}
           {this.renderField(
-            'reserverName',
-            'text',
-            t('common.reserverNameLabel')
-          )}
-          {this.renderField(
             'reserverId',
             'text',
-            t('common.reserverIdLabel')
-          )}
-          {this.renderField(
-            'reserverPhoneNumber',
-            'text',
-            t('common.reserverPhoneNumberLabel')
-          )}
-          {this.renderField(
-            'reserverEmailAddress',
-            'email',
-            t('common.reserverEmailAddressLabel')
+            t('common.reserverIdLabel'),
           )}
           {this.renderField(
             'eventDescription',
             'textarea',
             t('common.eventDescriptionLabel'),
-            { rows: 5 }
+            { rows: 5 },
           )}
           {this.renderField(
             'numberOfParticipants',
             'number',
             t('common.numberOfParticipantsLabel'),
-            { min: '0' }
+            { min: '0' },
           )}
           {includes(this.props.fields, 'reserverAddressStreet') && (
             <Well>
@@ -198,16 +182,19 @@ class UnconnectedReservationForm extends Component {
                 'reserverAddressStreet',
                 'text',
                 t('common.addressStreetLabel'),
+                { name: 'street-address', autoComplete: INPUT_PURPOSES.STREET_ADDRESS },
               )}
               {this.renderField(
                 'reserverAddressZip',
                 'text',
                 t('common.addressZipLabel'),
+                { name: 'zip', autoComplete: INPUT_PURPOSES.POSTAL_CODE },
               )}
               {this.renderField(
                 'reserverAddressCity',
                 'text',
                 t('common.addressCityLabel'),
+                { name: 'city', autoComplete: INPUT_PURPOSES.ADDRESS_LEVEL_2 },
               )}
             </Well>
           )}
@@ -218,16 +205,19 @@ class UnconnectedReservationForm extends Component {
                 'billingAddressStreet',
                 'text',
                 t('common.addressStreetLabel'),
+                { name: 'billing-street-address', autoComplete: ['billing', INPUT_PURPOSES.STREET_ADDRESS].join(' ') },
               )}
               {this.renderField(
                 'billingAddressZip',
                 'text',
                 t('common.addressZipLabel'),
+                { name: 'billing-zip', autoComplete: ['billing', INPUT_PURPOSES.POSTAL_CODE].join(' ') },
               )}
               {this.renderField(
                 'billingAddressCity',
                 'text',
                 t('common.addressCityLabel'),
+                { name: 'billing-city', autoComplete: ['billing', INPUT_PURPOSES.ADDRESS_LEVEL_2].join(' ') },
               )}
             </Well>
           )}
@@ -238,7 +228,7 @@ class UnconnectedReservationForm extends Component {
             {
               placeholder: t('common.commentsPlaceholder'),
               rows: 5,
-            }
+            },
           )}
           {termsAndConditions && (
             <div className="terms-and-conditions">

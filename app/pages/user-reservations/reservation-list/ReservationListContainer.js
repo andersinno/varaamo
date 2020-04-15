@@ -1,10 +1,10 @@
-import includes from 'lodash/includes';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import Loader from 'react-loader';
 import { connect } from 'react-redux';
 
-import { injectT } from 'i18n';
+import Pagination from '../../../../src/common/pagination/Pagination';
+import injectT from '../../../i18n/injectT';
 import ReservationListItem from './ReservationListItem';
 import reservationListSelector from './reservationListSelector';
 
@@ -17,21 +17,13 @@ class UnconnectedReservationListContainer extends Component {
   renderReservationListItem(reservation) {
     const {
       isAdmin,
-      resources,
-      staffUnits,
-      units,
     } = this.props;
-    const resource = resources[reservation.resource] || {};
-    const unit = resource.unit ? units[resource.unit] || {} : {};
 
     return (
       <ReservationListItem
         isAdmin={isAdmin}
-        isStaff={includes(staffUnits, resource.unit)}
         key={reservation.url}
         reservation={reservation}
-        resource={resource}
-        unit={unit}
       />
     );
   }
@@ -41,17 +33,24 @@ class UnconnectedReservationListContainer extends Component {
       emptyMessage,
       loading,
       reservations,
+      page,
+      pages,
       t,
     } = this.props;
 
     return (
       <Loader loaded={!loading}>
-        {reservations.length
+        {reservations.length > 0
           ? (
             <div>
               <ul className="reservation-list">
                 {reservations.map(this.renderReservationListItem)}
               </ul>
+              <Pagination
+                onChange={this.props.onPageChange}
+                page={page}
+                pages={pages}
+              />
             </div>
           )
           : <p>{emptyMessage || t('ReservationListContainer.emptyMessage')}</p>
@@ -63,14 +62,13 @@ class UnconnectedReservationListContainer extends Component {
 
 UnconnectedReservationListContainer.propTypes = {
   emptyMessage: PropTypes.string,
-  filter: PropTypes.string, // eslint-disable-line react/no-unused-prop-types
   isAdmin: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
   reservations: PropTypes.array.isRequired,
-  resources: PropTypes.object.isRequired,
-  staffUnits: PropTypes.array.isRequired,
   t: PropTypes.func.isRequired,
-  units: PropTypes.object.isRequired,
+  onPageChange: PropTypes.func.isRequired,
+  page: PropTypes.number.isRequired,
+  pages: PropTypes.number.isRequired,
 };
 UnconnectedReservationListContainer = injectT(UnconnectedReservationListContainer);  // eslint-disable-line
 

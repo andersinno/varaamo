@@ -1,11 +1,10 @@
-import ActionTypes from 'constants/ActionTypes';
-
 import { createSelector, createStructuredSelector } from 'reselect';
 
-import { isAdminSelector, isLoggedInSelector } from 'state/selectors/authSelectors';
-import { createResourceSelector, unitsSelector } from 'state/selectors/dataSelectors';
-import dateSelector from 'state/selectors/dateSelector';
-import requestIsActiveSelectorFactory from 'state/selectors/factories/requestIsActiveSelectorFactory';
+import ActionTypes from '../../constants/ActionTypes';
+import { createIsStaffSelector, isAdminSelector, isLoggedInSelector } from '../../state/selectors/authSelectors';
+import { createResourceSelector, unitsSelector } from '../../state/selectors/dataSelectors';
+import dateSelector from '../../state/selectors/dateSelector';
+import requestIsActiveSelectorFactory from '../../state/selectors/factories/requestIsActiveSelectorFactory';
 
 const resourceIdSelector = (state, props) => props.match && props.match.params.id;
 const resourceSelector = createResourceSelector(resourceIdSelector);
@@ -13,7 +12,7 @@ const showMapSelector = state => state.ui.resourceMap.showMap;
 const unitSelector = createSelector(
   resourceSelector,
   unitsSelector,
-  (resource, units) => units[resource.unit] || {}
+  (resource, units) => units[resource.unit] || {},
 );
 
 const resourcePageSelector = createStructuredSelector({
@@ -22,6 +21,7 @@ const resourcePageSelector = createStructuredSelector({
   isAdmin: isAdminSelector,
   isFetchingResource: requestIsActiveSelectorFactory(ActionTypes.API.RESOURCE_GET_REQUEST),
   isLoggedIn: isLoggedInSelector,
+  isStaff: createIsStaffSelector(resourceSelector),
   resource: resourceSelector,
   showMap: showMapSelector,
   unit: unitSelector,

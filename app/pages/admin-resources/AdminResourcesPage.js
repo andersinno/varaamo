@@ -5,20 +5,22 @@ import Loader from 'react-loader';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { fetchFavoritedResources } from 'actions/resourceActions';
+import { fetchFavoritedResources } from '../../actions/resourceActions';
+import { fetchUnits } from '../../actions/unitActions';
 import {
   changeAdminResourcesPageDate,
   selectAdminResourceType,
   openConfirmReservationModal,
   unselectAdminResourceType,
-} from 'actions/uiActions';
-import { injectT } from 'i18n';
-import PageWrapper from 'pages/PageWrapper';
-import AvailabilityView from 'shared/availability-view';
-import ResourceTypeFilter from 'shared/resource-type-filter';
-import ReservationSuccessModal from 'shared/modals/reservation-success';
-import ReservationConfirmationContainer from 'shared/reservation-confirmation';
-import recurringReservations from 'state/recurringReservations';
+  myPremisessSetSelectedTimeSlots,
+} from '../../actions/uiActions';
+import injectT from '../../i18n/injectT';
+import PageWrapper from '../PageWrapper';
+import AvailabilityView from '../../shared/availability-view/AvailabilityView';
+import ResourceTypeFilter from '../../shared/resource-type-filter/ResourceTypeFilterContainer';
+import ReservationSuccessModal from '../../shared/modals/reservation-success/ReservationSuccessModalContainer';
+import ReservationConfirmationContainer from '../../shared/reservation-confirmation/ReservationConfirmationContainer';
+import recurringReservations from '../../state/recurringReservations';
 import adminResourcesPageSelector from './adminResourcesPageSelector';
 
 class UnconnectedAdminResourcesPage extends Component {
@@ -32,6 +34,7 @@ class UnconnectedAdminResourcesPage extends Component {
   componentDidMount() {
     const interval = 10 * 60 * 1000;
     this.fetchResources();
+    this.props.actions.fetchUnits();
     this.updateResourcesTimer = window.setInterval(this.fetchResources, interval);
   }
 
@@ -51,6 +54,7 @@ class UnconnectedAdminResourcesPage extends Component {
   }
 
   handleSelect(selection) {
+    this.props.actions.myPremisessSetSelectedTimeSlots(selection);
     this.setState({ selection });
     this.props.actions.changeRecurringBaseTime(selection);
     this.props.actions.openConfirmReservationModal();
@@ -127,9 +131,11 @@ function mapDispatchToProps(dispatch) {
     changeAdminResourcesPageDate,
     changeRecurringBaseTime: recurringReservations.changeBaseTime,
     fetchFavoritedResources,
+    fetchUnits,
     selectAdminResourceType,
     openConfirmReservationModal,
     unselectAdminResourceType,
+    myPremisessSetSelectedTimeSlots,
   };
 
   return { actions: bindActionCreators(actionCreators, dispatch) };

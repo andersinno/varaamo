@@ -6,9 +6,10 @@ import FormGroup from 'react-bootstrap/lib/FormGroup';
 import Row from 'react-bootstrap/lib/Row';
 import NumericInput from 'react-numeric-input';
 
-import { injectT } from 'i18n';
-import DatePicker from 'shared/date-picker';
-import SelectControl from 'pages/search/controls/SelectControl';
+import injectT from '../../i18n/injectT';
+import DatePicker from '../date-picker/DatePicker';
+import SelectControl from '../../pages/search/controls/SelectControl';
+import connect from './connectRecurringReservationControls';
 
 function RecurringReservationControls({
   changeFrequency,
@@ -16,18 +17,20 @@ function RecurringReservationControls({
   changeNumberOfOccurrences,
   frequency,
   frequencyOptions,
+  isAdmin,
   isVisible,
   numberOfOccurrences,
   lastTime,
   t,
 }) {
-  if (!isVisible) {
+  if (!isVisible || !isAdmin) {
     return <span />;
   }
+
   return (
     <div className="recurring-reservation-controls">
       <Row>
-        <Col sm={5} xs={12}>
+        <Col md={3} xs={12}>
           <div className="recurring-reservation-frequency-control">
             <label htmlFor="recurrence-frequency-select">
               {t('RecurringReservationControls.frequencyLabel')}
@@ -45,7 +48,7 @@ function RecurringReservationControls({
           </div>
         </Col>
         {frequency !== '' && (
-          <Col sm={3} xs={12}>
+          <Col md={3} xs={12}>
             <FormGroup controlId="numberOfOccurrencesGroup">
               <ControlLabel>
                 {t('RecurringReservationControls.numberOfOccurrencesLabel')}
@@ -60,7 +63,7 @@ function RecurringReservationControls({
           </Col>
         )}
         {frequency !== '' && (
-          <Col sm={4} xs={12}>
+          <Col md={6} xs={12}>
             <FormGroup controlId="LastTimeGroup">
               <ControlLabel>{t('RecurringReservationControls.lastTimeLabel')}</ControlLabel>
               <DatePicker
@@ -82,10 +85,12 @@ RecurringReservationControls.propTypes = {
   changeNumberOfOccurrences: PropTypes.func.isRequired,
   frequency: PropTypes.string.isRequired,
   frequencyOptions: PropTypes.array.isRequired,
+  isAdmin: PropTypes.bool.isRequired,
   isVisible: PropTypes.bool.isRequired,
   numberOfOccurrences: PropTypes.number.isRequired,
   lastTime: PropTypes.string,
   t: PropTypes.func.isRequired,
 };
 
-export default injectT(RecurringReservationControls);
+export const UnconnectedRecurringReservationControls = injectT(RecurringReservationControls);
+export default connect(UnconnectedRecurringReservationControls);

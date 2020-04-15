@@ -1,15 +1,14 @@
-import types from 'constants/ActionTypes';
-
 import { RSAA } from 'redux-api-middleware';
 
-import schemas from 'store/middleware/Schemas';
+import types from '../constants/ActionTypes';
+import schemas from '../store/middleware/Schemas';
 import {
   buildAPIUrl,
   getErrorTypeDescriptor,
   getHeadersCreator,
   getRequestTypeDescriptor,
   getSuccessTypeDescriptor,
-} from 'utils/apiUtils';
+} from '../utils/apiUtils';
 
 function fetchFavoritedResources(timeAsMoment, source) {
   const params = {
@@ -27,7 +26,7 @@ function fetchResource(id, params = {}) {
         getRequestTypeDescriptor(types.API.RESOURCE_GET_REQUEST),
         getSuccessTypeDescriptor(
           types.API.RESOURCE_GET_SUCCESS,
-          { schema: schemas.resourceSchema }
+          { schema: schemas.resourceSchema },
         ),
         getErrorTypeDescriptor(types.API.RESOURCE_GET_ERROR),
       ],
@@ -40,7 +39,6 @@ function fetchResource(id, params = {}) {
 
 function fetchResources(params = {}, source) {
   const fetchParams = Object.assign({}, params, { pageSize: 500 });
-
   return {
     [RSAA]: {
       types: [
@@ -50,7 +48,7 @@ function fetchResources(params = {}, source) {
           {
             meta: { source },
             schema: schemas.paginatedResourcesSchema,
-          }
+          },
         ),
         getErrorTypeDescriptor(types.API.RESOURCES_GET_ERROR),
       ],

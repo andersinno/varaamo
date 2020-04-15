@@ -7,39 +7,58 @@ import React, { Component } from 'react';
 import Loader from 'react-loader';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
-import Panel from 'react-bootstrap/lib/Panel';
 import Lightbox from 'lightbox-react';
+import { decamelizeKeys } from 'humps';
 import 'lightbox-react/style.css';
 
-import { fetchResource } from 'actions/resourceActions';
-import { clearReservations, toggleResourceMap } from 'actions/uiActions';
-import PageWrapper from 'pages/PageWrapper';
-import NotFoundPage from 'pages/not-found/NotFoundPage';
-import ResourceCalendar from 'shared/resource-calendar';
-import ResourceMap from 'shared/resource-map';
-import { injectT } from 'i18n';
-import { getMaxPeriodText, getResourcePageUrl, getMinPeriodText } from 'utils/resourceUtils';
-import ReservationCalendar from './reservation-calendar';
-import ResourceHeader from './resource-header';
-import ResourceInfo from './resource-info';
-import ResourceMapInfo from './resource-map-info';
+import { addNotification } from '../../actions/notificationsActions';
+import constants from '../../constants/AppConstants';
+import { fetchResource } from '../../actions/resourceActions';
+import { clearReservations, toggleResourceMap, setSelectedTimeSlots } from '../../actions/uiActions';
+import recurringReservations from '../../state/recurringReservations';
+import PageWrapper from '../PageWrapper';
+import NotFoundPage from '../not-found/NotFoundPage';
+import ResourceCalendar from '../../shared/resource-calendar/ResourceCalendar';
+import injectT from '../../i18n/injectT';
+import { getResourcePageUrl } from '../../utils/resourceUtils';
+import { getEditReservationUrl } from '../../utils/reservationUtils';
+import ResourceHeader from './resource-header/ResourceHeader';
+import ResourceInfo from './resource-info/ResourceInfo';
+import ResourceMapInfo from './resource-map-info/ResourceMapInfo';
 import resourcePageSelector from './resourcePageSelector';
+import ResourceMap from '../../../src/domain/resource/map/ResourceMap';
+import ResourceReservationCalendar from '../../../src/domain/resource/reservationCalendar/ResourceReservationCalendar';
+import ResourcePanel from './resource-info/ResourcePanel';
 
 class UnconnectedResourcePage extends Component {
-  constructor(props) {
-    super(props);
+  static propTypes = {
+    actions: PropTypes.object.isRequired,
+    date: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    isFetchingResource: PropTypes.bool.isRequired,
+    isLoggedIn: PropTypes.bool.isRequired,
+    isStaff: PropTypes.bool.isRequired,
+    location: PropTypes.object.isRequired,
+    resource: PropTypes.object.isRequired,
+    showMap: PropTypes.bool.isRequired,
+    t: PropTypes.func.isRequired,
+    unit: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
+  };
 
-    this.state = {
-      photoIndex: 0,
-      isOpen: false,
-    };
-
-    this.fetchResource = this.fetchResource.bind(this);
-    this.handleBackButton = this.handleBackButton.bind(this);
-  }
+  state = {
+    photoIndex: 0,
+    isOpen: false,
+  };
 
   componentDidMount() {
+    // Scroll to top of page if we are on client side.
+    if (window) {
+      window.scrollTo(0, 0);
+    }
+
     this.props.actions.clearReservations();
     this.fetchResource();
   }
@@ -50,39 +69,41 @@ class UnconnectedResourcePage extends Component {
     }
   }
 
-  getImageThumbnailUrl(image) {
+  getImageThumbnailUrl = (image) => {
     const width = 700;
     const height = 420;
 
     return `${image.url}?dim=${width}x${height}`;
-  }
+  };
 
-  disableDays = (day) => {
-    const { resource: { reservableAfter } } = this.props;
-    const beforeDate = reservableAfter || moment();
-    return moment(day).isBefore(beforeDate);
-  }
+  isDayReservable = (day) => {
+    const { resource: { reservableAfter, reservableBefore } } = this.props;
+    const beforeDate = reservableAfter || moment().subtract(0, 'day');
+    const lastDate = reservableBefore ? moment(reservableBefore).add(1, 'day') : null;
+    if (lastDate) return !moment(day).isBetween(beforeDate, lastDate, 'day');
+    return moment(day).isBefore(beforeDate, 'day');
+  };
 
   handleDateChange = (newDate) => {
     const { resource, history } = this.props;
-    const day = newDate.toISOString().substring(0, 10);
+    const day = moment(newDate).format(constants.DATE_FORMAT);
     history.replace(getResourcePageUrl(resource, day));
   };
 
-  handleBackButton() {
+  handleBackButton = () => {
     this.props.history.goBack();
-  }
+  };
 
-  handleImageClick(photoIndex) {
+  handleImageClick = (photoIndex) => {
     this.setState(() => ({ isOpen: true, photoIndex }));
-  }
+  };
 
-  orderImages(images) {
+  orderImages = (images) => {
     return [].concat(
       images.filter(image => image.type === 'main'),
-      images.filter(image => image.type !== 'main')
+      images.filter(image => image.type !== 'main'),
     );
-  }
+  };
 
   renderImage = (image, index, { mainImageMobileVisibility = false }) => {
     const isMainImage = image.type === 'main';
@@ -109,19 +130,47 @@ class UnconnectedResourcePage extends Component {
     );
   };
 
-  fetchResource(date = this.props.date) {
+  fetchResource = (date = this.props.date) => {
     const { actions, id } = this.props;
-    const start = moment(date)
-      .subtract(2, 'M')
+    let start = moment(date)
+      .subtract(1, 'M')
       .startOf('month')
-      .format();
+      .toISOString();
     const end = moment(date)
-      .add(2, 'M')
+      .add(3, 'M')
       .endOf('month')
-      .format();
+      .toISOString();
+
+    if (moment(date).isAfter(moment().add(30, 'days'))) {
+      start = moment().subtract(1, 'day').toISOString();
+    }
 
     actions.fetchResource(id, { start, end });
-  }
+  };
+
+  onReserve = (selected) => {
+    const { actions, resource, history } = this.props;
+
+    actions.setSelectedTimeSlots({
+      selected,
+      resource,
+    });
+
+    const startMoment = moment(selected.start);
+    const endMoment = moment(selected.end);
+
+    actions.changeRecurringBaseTime({
+      begin: startMoment.toISOString(),
+      end: endMoment.toISOString(),
+      resource: resource.id,
+    });
+
+    history.push(getEditReservationUrl({
+      begin: startMoment.toISOString(),
+      end: endMoment.toISOString(),
+      resource: resource.id,
+    }));
+  };
 
   render() {
     const {
@@ -129,25 +178,21 @@ class UnconnectedResourcePage extends Component {
       date,
       isFetchingResource,
       isLoggedIn,
+      isStaff,
       location,
-      match,
       resource,
       showMap,
       t,
       unit,
-      history,
     } = this.props;
-    const { params } = match;
+
     const { isOpen, photoIndex } = this.state;
 
     if (isEmpty(resource) && !isFetchingResource) {
       return <NotFoundPage />;
     }
 
-    const maxPeriodText = getMaxPeriodText(t, resource);
-    const minPeriodText = getMinPeriodText(t, resource);
     const images = this.orderImages(resource.images || []);
-
     const mainImageIndex = findIndex(images, image => image.type === 'main');
     const mainImage = mainImageIndex != null ? images[mainImageIndex] : null;
     const showBackButton = !!location.state && !!location.state.fromSearchResults;
@@ -157,6 +202,7 @@ class UnconnectedResourcePage extends Component {
         <Loader loaded={!isEmpty(resource)}>
           <ResourceHeader
             isLoggedIn={isLoggedIn}
+            isStaff={isStaff}
             onBackClick={this.handleBackButton}
             onMapClick={actions.toggleResourceMap}
             resource={resource}
@@ -165,71 +211,75 @@ class UnconnectedResourcePage extends Component {
             unit={unit}
           />
           {showMap && unit && <ResourceMapInfo unit={unit} />}
-          {showMap && (
-            <ResourceMap
-              location={location}
-              resourceIds={[resource.id]}
-              selectedUnitId={unit ? unit.id : null}
-              showMap={showMap}
-            />
-          )}
+          {showMap && (<ResourceMap resource={resource} unit={unit} />)}
           {!showMap && (
             <PageWrapper title={resource.name || ''} transparent>
-              <div>
-                <Col className="app-ResourcePage__content" lg={8} md={8} xs={12}>
-                  {mainImage
+              <Row>
+                <Col lg={8} md={8} xs={12}>
+                  <div className="app-ResourcePage__content">
+                    {mainImage
                     && this.renderImage(mainImage, mainImageIndex, {
                       mainImageMobileVisibility: true,
                     })}
-                  <ResourceInfo isLoggedIn={isLoggedIn} resource={resource} unit={unit} />
+                    <ResourceInfo
+                      isLoggedIn={isLoggedIn}
+                      resource={resource}
+                      unit={unit}
+                    />
 
-                  <Panel defaultExpanded header={t('ResourceInfo.reserveTitle')}>
-                    {resource.externalReservationUrl && (
-                      <form action={resource.externalReservationUrl}>
-                        <input
-                          className="btn btn-primary"
-                          type="submit"
-                          value="Siirry ulkoiseen ajanvarauskalenteriin"
-                        />
-                      </form>
-                    )}
-                    {!resource.externalReservationUrl && (
-                      <div>
-                        {/* Show reservation max period text */}
-                        {resource.maxPeriod && (
-                          <div className="app-ResourcePage__content-max-period">
-                            {`${t('ReservationInfo.reservationMaxLength')} ${maxPeriodText}`}
-                          </div>
+                    <ResourcePanel header={t('ResourceInfo.reserveTitle')}>
+                      <>
+                        {resource.externalReservationUrl && (
+                        <form action={resource.externalReservationUrl}>
+                          <input
+                            className="btn btn-primary"
+                            type="submit"
+                            value="Siirry ulkoiseen ajanvarauskalenteriin"
+                          />
+                        </form>
                         )}
+                        {!resource.externalReservationUrl && (
+                        <div>
+                          {window.innerWidth < 768 && (
+                            <React.Fragment>
+                              <div className="app-ResourcePage__content-selection-directions">
+                                {t('ReservationInfo.selectionStartDirections')}
+                              </div>
+                              <div className="app-ResourcePage__content-selection-directions">
+                                {t('ReservationInfo.selectionEditDirections')}
+                              </div>
+                            </React.Fragment>
+                          )
+                          }
 
-                        {/* Show reservation max period text */}
-                        {resource.minPeriod
-                        && (
-                          <div className="app-ResourcePage__content-min-period">
-                            <p>{`${t('ReservationInfo.reservationMinLength')} ${minPeriodText}`}</p>
-                          </div>
-                        )
-                        }
+                          <ResourceCalendar
+                            isDayReservable={this.isDayReservable}
+                            onDateChange={this.handleDateChange}
+                            resourceId={resource.id}
+                            selectedDate={date}
+                          />
+                          <ResourceReservationCalendar
+                            addNotification={actions.addNotification}
+                            date={date}
+                            isLoggedIn={isLoggedIn}
+                            isStaff={isStaff}
+                            onDateChange={newDate => this.handleDateChange(moment(newDate).toDate())}
+                            onReserve={this.onReserve}
+                            resource={decamelizeKeys(resource)}
+                          />
+                        </div>
+                        )}
+                      </>
+                    </ResourcePanel>
+                  </div>
+                </Col>
+                <Col lg={3} md={3} xs={12}>
+                  <div className="app-ResourceInfo__images">
+                    {images.map(this.renderImage)}
+                  </div>
+                </Col>
+              </Row>
 
-                        <ResourceCalendar
-                          disableDays={this.disableDays}
-                          onDateChange={this.handleDateChange}
-                          resourceId={resource.id}
-                          selectedDate={date}
-                        />
-                        <ReservationCalendar
-                          history={history}
-                          location={location}
-                          params={params}
-                        />
-                      </div>
-                    )}
-                  </Panel>
-                </Col>
-                <Col className="app-ResourceInfo__images" lg={3} md={3} xs={12}>
-                  {images.map(this.renderImage)}
-                </Col>
-              </div>
             </PageWrapper>
           )}
         </Loader>
@@ -259,20 +309,6 @@ class UnconnectedResourcePage extends Component {
   }
 }
 
-UnconnectedResourcePage.propTypes = {
-  actions: PropTypes.object.isRequired,
-  date: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  isFetchingResource: PropTypes.bool.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired,
-  location: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired,
-  resource: PropTypes.object.isRequired,
-  showMap: PropTypes.bool.isRequired,
-  t: PropTypes.func.isRequired,
-  unit: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
-};
 UnconnectedResourcePage = injectT(UnconnectedResourcePage); // eslint-disable-line
 
 function mapDispatchToProps(dispatch) {
@@ -280,6 +316,9 @@ function mapDispatchToProps(dispatch) {
     clearReservations,
     fetchResource,
     toggleResourceMap,
+    setSelectedTimeSlots,
+    changeRecurringBaseTime: recurringReservations.changeBaseTime,
+    addNotification,
   };
 
   return { actions: bindActionCreators(actionCreators, dispatch) };
@@ -288,5 +327,5 @@ function mapDispatchToProps(dispatch) {
 export { UnconnectedResourcePage };
 export default connect(
   resourcePageSelector,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(UnconnectedResourcePage);
