@@ -83,16 +83,36 @@ exports[`ResourceMap renders correctly 1`] = `
               options={
                 Array [
                   Object {
-                    "label": "Helsinki",
-                    "value": "helsinki",
+                    "label": "Kangasala",
+                    "value": "kangasala",
                   },
                   Object {
-                    "label": "Espoo",
-                    "value": "espoo",
+                    "label": "Lempäälä",
+                    "value": "lempäälä",
                   },
                   Object {
-                    "label": "Vantaa",
-                    "value": "vantaa",
+                    "label": "Nokia",
+                    "value": "nokia",
+                  },
+                  Object {
+                    "label": "Orivesi",
+                    "value": "orivesi",
+                  },
+                  Object {
+                    "label": "Pirkkala",
+                    "value": "pirkkala",
+                  },
+                  Object {
+                    "label": "Tampere",
+                    "value": "tampere",
+                  },
+                  Object {
+                    "label": "Vesilahti",
+                    "value": "vesilahti",
+                  },
+                  Object {
+                    "label": "Ylöjärvi",
+                    "value": "ylöjärvi",
                   },
                 ]
               }
