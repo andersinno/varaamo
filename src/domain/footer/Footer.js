@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { version } from '../../../package.json';
 import FeedbackLink from '../../../app/shared/feedback-link/FeedbackLink';
 import Logo from '../../../app/shared/logo/Logo';
+import MunicipalityLogos from '../../../app/shared/logo/MunicipalityLogos';
 import injectT from '../../../app/i18n/injectT';
 import { getCurrentCustomization } from '../../../app/utils/customizationUtils';
 
@@ -21,6 +22,9 @@ function Footer({ t }) {
       break;
     case 'VANTAA':
       cityNameId = 'Footer.vantaaText';
+      break;
+    case 'TAMPERE':
+      cityNameId = 'Footer.tampereText';
       break;
     case 'HELSINKI':
     default:
@@ -41,6 +45,7 @@ function Footer({ t }) {
             <p>
               {t(cityNameId)}
             </p>
+            <MunicipalityLogos />
             <p>
               {feedbackLink}
             </p>

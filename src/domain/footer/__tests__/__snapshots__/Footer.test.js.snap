@@ -37,6 +37,7 @@ exports[`domain/footer/Footer When there is no customization in use renders corr
         <p>
           Footer.helsinkiText
         </p>
+        <InjectT(MunicipalityLogos) />
         <p>
           <FeedbackLink>
             Footer.feedbackLink
@@ -102,6 +103,7 @@ exports[`domain/footer/Footer renders correctly 1`] = `
         <p>
           Footer.helsinkiText
         </p>
+        <InjectT(MunicipalityLogos) />
         <p>
           <FeedbackLink>
             Footer.feedbackLink
