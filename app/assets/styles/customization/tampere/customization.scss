@@ -72,20 +72,21 @@
   // Search-page
   // -----------
 
-  .app-SearchControlsContainer {
+  .app-SearchFilters {
     background-color: $brand-vaalea-siniharmaa;
   }
 
-  .app-MapToggle {
+  .app-SearchMapToggle {
     background-color: $brand-vaalea-siniharmaa;
     button {
       background-color: $brand-vaalea-siniharmaa;
       border-color: $brand-vaalea-siniharmaa;
     }
     button:hover,
-    button:active {
-      background-color: $brand-siniharmaa;
-      border-color: $brand-siniharmaa;
+    button:active, 
+    button[aria-selected='true'] {
+      background-color: #dedfe1;
+      border-color: #dedfe1;
     }
   }
 
