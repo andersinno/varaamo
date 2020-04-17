@@ -16,15 +16,8 @@ function AboutPage({ t }) {
     <PageWrapper className="about-page" title={t('AboutPage.title')}>
       <div className="app-aboutPage">
         <h1>{t(`AboutPageContent.${city}Header`)}</h1>
-        <p className="app-aboutPage__lead">{t(`AboutPageContent.${city}Lead`)}</p>
-
-        <p>{t('AboutPageContent.pilotParagraph')}</p>
-        <p>{t(`AboutPageContent.${city}ReservableParagraph`)}</p>
-        <p><FormattedHTMLMessage id="AboutPageContent.basedOnParagraph" /></p>
-        <p>{t('AboutPageContent.developmentParagraph')}</p>
-        <p>{t('AboutPageContent.goalParagraph')}</p>
+        <p><FormattedHTMLMessage id="AboutPageContent.tampereText" /></p>
         <p>
-          {t('AboutPageContent.feedbackParagraph')}
           <FeedbackLink>{t('AboutPageContent.feedbackLink')}</FeedbackLink>
         </p>
 

@@ -11,31 +11,13 @@ exports[`pages/about/AboutPage render normally 1`] = `
     <h1>
       AboutPageContent.defaultHeader
     </h1>
-    <p
-      className="app-aboutPage__lead"
-    >
-      AboutPageContent.defaultLead
-    </p>
-    <p>
-      AboutPageContent.pilotParagraph
-    </p>
-    <p>
-      AboutPageContent.defaultReservableParagraph
-    </p>
     <p>
       <FormattedHTMLMessage
-        id="AboutPageContent.basedOnParagraph"
+        id="AboutPageContent.tampereText"
         values={Object {}}
       />
     </p>
     <p>
-      AboutPageContent.developmentParagraph
-    </p>
-    <p>
-      AboutPageContent.goalParagraph
-    </p>
-    <p>
-      AboutPageContent.feedbackParagraph
       <FeedbackLink>
         AboutPageContent.feedbackLink
       </FeedbackLink>
