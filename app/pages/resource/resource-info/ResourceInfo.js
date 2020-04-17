@@ -6,7 +6,6 @@ import Row from 'react-bootstrap/lib/Row';
 
 import injectT from '../../../i18n/injectT';
 import WrappedText from '../../../shared/wrapped-text/WrappedText';
-import { getServiceMapUrl } from '../../../utils/unitUtils';
 import ReservationInfo from '../reservation-info/ReservationInfo';
 import Equipment from '../resource-equipment/ResourceEquipment';
 import ResourcePanel from './ResourcePanel';
@@ -14,7 +13,6 @@ import ResourcePanel from './ResourcePanel';
 function ResourceInfo({
   isLoggedIn, resource, unit, t,
 }) {
-  const serviceMapUrl = getServiceMapUrl(unit);
   const hasProducts = resource.products && resource.products.length > 0;
 
   return (
@@ -53,13 +51,6 @@ function ResourceInfo({
             {unit && <span>{`${unit.addressZip} ${upperFirst(unit.municipality)}`.trim()}</span>}
           </Col>
           <Col className="app-ResourceInfo__web" xs={6}>
-            {serviceMapUrl && (
-              <span className="app-ResourceInfo__servicemap">
-                <a href={serviceMapUrl} rel="noopener noreferrer" target="_blank">
-                  {t('ResourceInfo.serviceMapLink')}
-                </a>
-              </span>
-            )}
             {unit && unit.wwwUrl && (
               <span className="app-ResourceInfo__www">
                 <a href={unit.wwwUrl} rel="noopener noreferrer" target="_blank">
