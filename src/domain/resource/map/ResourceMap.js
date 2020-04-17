@@ -18,7 +18,7 @@ class SearchMapResults extends React.Component {
     } = this.props;
 
     // eslint-disable-next-line max-len
-    const tileLayerUrl = 'https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoidmFyYWFtbyIsImEiOiJjamU2cWhmdTUwM2ZmMzFud2dvZzFqb2dnIn0.Mj6YrtV9RbJXiU82dqqwhw';
+    const tileLayerUrl = 'https://api.mapbox.com/styles/v1/tampere/cjcvqn5gs0pxh2roieick30gf/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoidGFtcGVyZSIsImEiOiJjamN2bHF0MWcwOTd2MzNxbzB4dDRhaGxsIn0.uJQvUx891JK-VwWuKocQgg';
     const coordinates = get(unit, 'location.coordinates');
 
     return (
