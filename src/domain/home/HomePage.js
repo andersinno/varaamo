@@ -19,8 +19,11 @@ import PageWrapper from '../../../app/pages/PageWrapper';
 import injectT from '../../../app/i18n/injectT';
 
 const purposeIcons = {
+  performOrOrganizeAnEvent: iconOrganizeEvents,
+  haveASauna: iconSauna,
   photoAndAudio: iconPhotoAndAudio,
   sports: iconSports,
+  sportsOrGames: iconSports,
   guidance: iconGuidance,
   manufacturing: iconManufacturing,
   meetingsAndWorking: iconMeetingsAndWorking,
