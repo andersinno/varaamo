@@ -10,8 +10,8 @@ import InputGroup from 'react-bootstrap/lib/InputGroup';
 import Overlay from 'react-bootstrap/lib/Overlay';
 import moment from 'moment';
 
-import { injectT } from 'i18n';
-import iconCalendar from 'assets/icons/calendar.svg';
+import injectT from '../../i18n/injectT';
+import iconCalendar from '../../assets/icons/calendar.svg';
 import ResourceCalendarOverlay from './ResourceCalendarOverlay';
 import resourceCalendarSelector from './resourceCalendarSelector';
 
@@ -28,32 +28,33 @@ export class UnconnectedResourceCalendar extends Component {
 
   setCalendarWrapper = (element) => {
     this.calendarWrapper = element;
-  }
+  };
 
-  disableDays = (day) => {
-    if (this.props.disableDays) {
-      return this.props.disableDays(day);
+  isDayDisabled = (day) => {
+    if (this.props.isDayReservable) {
+      return this.props.isDayReservable(day);
     }
     return this.now.isAfter(day, 'day');
-  }
+  };
 
   handleDateChange = (newDate) => {
     this.hideOverlay();
     this.props.onDateChange(newDate);
-  }
+  };
 
   hideOverlay = () => {
     this.setState({ visible: false });
-  }
+  };
 
   showOverlay = () => {
     this.setState({ visible: true });
-  }
+  };
 
   render() {
     const {
       availability,
       currentLanguage,
+      resource,
       selectedDate,
       t,
     } = this.props;
@@ -61,10 +62,19 @@ export class UnconnectedResourceCalendar extends Component {
     const selectedDay = new Date();
     selectedDay.setFullYear(year, month - 1, dayNumber);
     const selectedDateText = moment(selectedDate).format('dddd D. MMMM YYYY');
+    let reservableUntil;
+    if (resource.reservableDaysInAdvance) {
+      reservableUntil = moment().add(resource.reservableDaysInAdvance, 'days');
+    } else reservableUntil = moment().add(12, 'M');
+
     const modifiers = {
       available: (day) => {
         const dayDate = day.toISOString().substring(0, 10);
-        return availability[dayDate] && availability[dayDate].percentage >= 80;
+        return (
+          availability[dayDate]
+          && availability[dayDate].percentage >= 80
+          && moment(day).isBetween(moment().startOf('day'), reservableUntil)
+        );
       },
       busy: (day) => {
         const dayDate = day.toISOString().substring(0, 10);
@@ -72,23 +82,20 @@ export class UnconnectedResourceCalendar extends Component {
           availability[dayDate]
           && availability[dayDate].percentage < 80
           && availability[dayDate].percentage > 0
+          && moment(day).isBetween(moment().startOf('day'), reservableUntil)
         );
       },
       booked: (day) => {
         const dayDate = day.toISOString().substring(0, 10);
-        return availability[dayDate] && availability[dayDate].percentage === 0;
+        return (
+          availability[dayDate]
+          && availability[dayDate].percentage === 0
+          && moment(day).isBetween(moment().startOf('day'), reservableUntil));
       },
     };
 
     return (
       <div className="app-ResourceCalendar">
-        <button
-          className="app-ResourceCalendar__week-button app-ResourceCalendar__week-button--prev"
-          onClick={() => this.handleDateChange(
-            moment(selectedDay).subtract(1, 'w').toDate()
-          )}
-          type="button"
-        />
         <div className="app-ResourceCalendar__wrapper" ref={this.setCalendarWrapper}>
           <FormGroup onClick={this.showOverlay}>
             <InputGroup>
@@ -110,7 +117,7 @@ export class UnconnectedResourceCalendar extends Component {
           >
             <ResourceCalendarOverlay onHide={this.hideOverlay}>
               <DayPicker
-                disabledDays={this.disableDays}
+                disabledDays={this.isDayDisabled}
                 enableOutsideDays
                 initialMonth={new Date(selectedDate)}
                 locale={currentLanguage}
@@ -128,13 +135,6 @@ export class UnconnectedResourceCalendar extends Component {
             </ResourceCalendarOverlay>
           </Overlay>
         </div>
-        <button
-          className="app-ResourceCalendar__week-button app-ResourceCalendar__week-button--next"
-          onClick={() => this.handleDateChange(
-            moment(selectedDay).add(1, 'w').toDate()
-          )}
-          type="button"
-        />
       </div>
     );
   }
@@ -142,10 +142,11 @@ export class UnconnectedResourceCalendar extends Component {
 
 UnconnectedResourceCalendar.propTypes = {
   availability: PropTypes.object.isRequired,
-  disableDays: PropTypes.func,
+  isDayReservable: PropTypes.func,
   currentLanguage: PropTypes.string.isRequired,
   selectedDate: PropTypes.string.isRequired,
   onDateChange: PropTypes.func.isRequired,
+  resource: PropTypes.object,
   t: PropTypes.func.isRequired,
 };
 UnconnectedResourceCalendar = injectT(UnconnectedResourceCalendar); // eslint-disable-line

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import { injectT } from 'i18n';
+import injectT from '../../i18n/injectT';
 import kangasalaLogoSrc from './kangasala-coat-of-arms.png';
 import lempaalaLogoSrc from './lempaala-coat-of-arms.png';
 import nokiaLogoSrc from './nokia-coat-of-arms.png';
@@ -27,7 +27,7 @@ function MunicipalityLogos({ t }) {
 }
 
 MunicipalityLogos.propTypes = {
-  t: PropTypes.func.isRequired
+  t: PropTypes.func.isRequired,
 };
 
 export default injectT(MunicipalityLogos);

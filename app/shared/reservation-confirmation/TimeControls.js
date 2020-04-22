@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import Moment from 'moment';
 import { extendMoment } from 'moment-range';
 
-import SelectControl from 'pages/search/controls/SelectControl';
+import SelectControl from '../../pages/search/controls/SelectControl';
 
 const moment = extendMoment(Moment);
 
@@ -48,7 +48,7 @@ class TimeControls extends Component {
 
   getEndTimeOptions(beginValue) {
     const {
-      begin, maxReservationPeriod, timeFormat, timeSlots
+      begin, maxReservationPeriod, timeFormat, timeSlots,
     } = this.props;
     const beginTime = beginValue || begin.input.value;
     const firstPossibleIndex = timeSlots.findIndex(slot => moment(slot.end).isAfter(beginTime));

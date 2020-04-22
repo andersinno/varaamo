@@ -1,9 +1,9 @@
-import types from 'constants/ActionTypes';
-
 import map from 'lodash/map';
 import uniq from 'lodash/uniq';
 import filter from 'lodash/filter';
 import Immutable from 'seamless-immutable';
+
+import types from '../../../constants/ActionTypes';
 
 
 const initialState = Immutable({
@@ -28,8 +28,8 @@ function adminResourcesPageReducer(state = initialState, action) {
       return state.merge({
         selectedResourceTypes: filter(
           state.selectedResourceTypes,
-          resourceType => resourceType !== action.payload
-        )
+          resourceType => resourceType !== action.payload,
+        ),
       });
     }
 

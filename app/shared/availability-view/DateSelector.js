@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import moment from 'moment';
 
-import { injectT } from 'i18n';
-import DatePicker from 'shared/date-picker';
+import injectT from '../../i18n/injectT';
+import DatePicker from '../date-picker/DatePicker';
 
 export class UninjectedDateSelector extends React.Component {
   static propTypes = {
@@ -14,6 +14,7 @@ export class UninjectedDateSelector extends React.Component {
 
   constructor(props) {
     super(props);
+    this.handleTodayClick = this.handleTodayClick.bind(this);
     this.handleNextClick = this.handleNextClick.bind(this);
     this.handlePreviousClick = this.handlePreviousClick.bind(this);
   }
@@ -22,6 +23,10 @@ export class UninjectedDateSelector extends React.Component {
     if (moment(newValue).isValid()) {
       this.props.onChange(newValue);
     }
+  }
+
+  handleTodayClick() {
+    this.handleChange(moment().format('YYYY-MM-DD'));
   }
 
   handleNextClick() {
@@ -44,6 +49,9 @@ export class UninjectedDateSelector extends React.Component {
             onChange={date => this.handleChange(date)}
             value={this.props.value}
           />
+          <a className="today" onClick={this.handleTodayClick} tabIndex="0">
+            {this.props.t('TimePickerCalendar.info.today')}
+          </a>
         </div>
         <a className="next" onClick={this.handleNextClick} tabIndex="0">
           {this.props.t('AvailabilityViewDateSelector.nextDay')}

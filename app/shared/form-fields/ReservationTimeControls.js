@@ -1,14 +1,13 @@
-import constants from 'constants/AppConstants';
-import { DEFAULT_SLOT_SIZE } from 'constants/SlotConstants';
-
 import Moment from 'moment';
 import { extendMoment } from 'moment-range';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import map from 'lodash/map';
 
-import DatePicker from 'shared/date-picker';
-import SelectControl from 'pages/search/controls/SelectControl';
+import constants from '../../constants/AppConstants';
+import { DEFAULT_SLOT_SIZE } from '../../constants/SlotConstants';
+import DatePicker from '../date-picker/DatePicker';
+import SelectControl from '../../pages/search/controls/SelectControl';
 
 const moment = extendMoment(Moment);
 
@@ -39,6 +38,10 @@ class ReservationTimeControls extends Component {
     end: PropTypes.object.isRequired,
     period: PropTypes.string,
     timeFormat: PropTypes.string,
+    constraints: PropTypes.shape({
+      startTime: PropTypes.string, // HH:mm
+      endTime: PropTypes.string, // HH:mm
+    }),
   };
 
   static defaultProps = {
@@ -53,10 +56,40 @@ class ReservationTimeControls extends Component {
     this.handleDateChange = this.handleDateChange.bind(this);
   }
 
+  get startTime() {
+    const { constraints } = this.props;
+
+    if (constraints && constraints.startTime) {
+      const [hours, minutes] = constraints.startTime.split(':');
+
+      return moment().startOf('day').set({
+        hour: hours,
+        minute: minutes,
+      });
+    }
+
+    return moment().startOf('day');
+  }
+
+  get endTime() {
+    const { constraints } = this.props;
+
+    if (constraints && constraints.endTime) {
+      const [hours, minutes] = constraints.endTime.split(':');
+
+      return moment().endOf('day').set({
+        hour: hours,
+        minute: minutes,
+      });
+    }
+
+    return moment().endOf('day');
+  }
+
   getTimeOptions() {
     const { period, timeFormat } = this.props;
-    const start = moment().startOf('day');
-    const end = moment().endOf('day');
+    const start = this.startTime;
+    const end = this.endTime;
     const range = moment.range(moment(start), moment(end));
     const duration = moment.duration(period);
 
@@ -64,12 +97,12 @@ class ReservationTimeControls extends Component {
       Array.from(
         range.by(constants.FILTER.timePeriodType, {
           step: duration.as(constants.FILTER.timePeriodType),
-        })
+        }),
       ),
       beginMoment => ({
         label: beginMoment.format(timeFormat),
         value: beginMoment.format(timeFormat),
-      })
+      }),
     );
 
     return options;

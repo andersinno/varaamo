@@ -1,0 +1,48 @@
+$externalIconMarginLeft: 5px;
+
+.app-MainNavbar {
+  background-color: $theme-primary-dark;
+  margin-bottom: 0;
+  .navbar-nav li,
+  .navbar-nav > .active {
+    a {
+      color: $white !important;
+    }
+    a:hover {
+      color: $white;
+    }
+    a:after,
+    a:before,
+    a:hover:after {
+      color: $white;
+      border-color: $white;
+    }
+  }
+  .navbar-brand,
+  .navbar-brand:hover,
+  .navbar-toggle .icon-bar {
+    color: $white;
+  }
+
+  .navbar-nav {
+    li {
+      a {
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+
+  .app-fontAwesome {
+    margin-left: $externalIconMarginLeft;
+  }
+
+  // These styles set the active and focus state for MainNavbar's child
+  // links and buttons.
+  a:focus,
+  a:active,
+  button:focus,
+  button:active {
+    outline: 2px solid $theme-primary-light;
+  }
+}

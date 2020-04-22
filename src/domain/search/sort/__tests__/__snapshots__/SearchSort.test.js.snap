@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchSort renders correctly 1`] = `
+<div
+  className="app-SearchSort"
+>
+  <div
+    className="sr-only"
+    data-testid="sort-order-announcer"
+    role="status"
+  >
+    SearchSort.sortingStyleSearchSort.premiseLabel
+  </div>
+  <InjectT(SelectFilter)
+    id="app-Sort"
+    isSearchable={false}
+    label="SearchSort.label"
+    onChange={[Function]}
+    options={
+      Array [
+        Object {
+          "label": "SearchSort.nameLabel",
+          "value": "resource_name_en",
+        },
+        Object {
+          "label": "SearchSort.typeLabel",
+          "value": "type_name_en",
+        },
+        Object {
+          "label": "SearchSort.premiseLabel",
+          "value": "unit_name_en",
+        },
+        Object {
+          "label": "SearchSort.peopleLabel",
+          "value": "people_capacity",
+        },
+      ]
+    }
+  />
+</div>
+`;

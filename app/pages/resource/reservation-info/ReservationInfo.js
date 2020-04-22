@@ -4,11 +4,11 @@ import { FormattedHTMLMessage } from 'react-intl';
 import moment from 'moment';
 import iconUser from 'hel-icons/dist/shapes/user-o.svg';
 
-import iconCalendar from 'assets/icons/calendar.svg';
-import iconClock from 'assets/icons/clock-o.svg';
-import WrappedText from 'shared/wrapped-text';
-import { getMaxPeriodText } from 'utils/resourceUtils';
-import { injectT } from 'i18n';
+import iconCalendar from '../../../assets/icons/calendar.svg';
+import iconClock from '../../../assets/icons/clock-o.svg';
+import WrappedText from '../../../shared/wrapped-text/WrappedText';
+import { getMaxPeriodText, getMinPeriodText } from '../../../utils/resourceUtils';
+import injectT from '../../../i18n/injectT';
 
 function renderLoginText(isLoggedIn, resource) {
   if (isLoggedIn || !resource.reservable) {
@@ -22,17 +22,40 @@ function renderLoginText(isLoggedIn, resource) {
   );
 }
 
-function renderEarliestResDay(date, t) {
-  if (!date) {
+
+function renderEarliestResDay(resource, t) {
+  if (!resource.reservableAfter && !resource.reservableMinDaysInAdvance) {
     return null;
   }
+  const time = resource.reservableAfter
+    ? moment(resource.reservableAfter).toNow(true)
+    : moment().add(resource.reservableMinDaysInAdvance, 'days').toNow(true);
   return (
     <p className="reservable-after-text">
       <img alt="" className="app-ResourceHeader__info-icon" src={iconCalendar} />
-      <strong>{t('ReservationInfo.reservationEarliestDays', { time: moment(date).toNow(true) })}</strong>
+      <strong>{t('ReservationInfo.reservationEarliestDays', { time })}</strong>
     </p>
   );
 }
+
+const renderLastResDay = (resource, t) => {
+  if (!resource.reservableBefore && !resource.reservableMaxDaysInAdvance) {
+    return null;
+  }
+  const time = resource.reservableBefore
+    ? moment(resource.reservableBefore).toNow(true)
+    : moment().add(resource.reservableMaxDaysInAdvance, 'days').toNow(true);
+
+  const date = resource.reservableBefore
+    ? moment(resource.reservableBefore).format('DD.MM.YYYY')
+    : moment().add(resource.reservableMaxDaysInAdvance, 'days').format('DD.MM.YYYY');
+  return (
+    <p className="reservable-before-text">
+      <img alt="" className="app-ResourceHeader__info-icon" src={iconCalendar} />
+      <strong>{t('ReservationInfo.reservationLatestDays', { time, date })}</strong>
+    </p>
+  );
+};
 
 function renderMaxPeriodText(resource, t) {
   if (!resource.maxPeriod) {
@@ -44,6 +67,20 @@ function renderMaxPeriodText(resource, t) {
       <img alt="" className="app-ResourceHeader__info-icon" src={iconClock} />
       <strong>{t('ReservationInfo.reservationMaxLength')}</strong>
       {` ${maxPeriodText}`}
+    </p>
+  );
+}
+
+function renderMinPeriodText(resource, t) {
+  if (!resource.minPeriod) {
+    return null;
+  }
+  const minPeriodText = getMinPeriodText(t, resource);
+  return (
+    <p className="app-ResourcePage__content-min-period">
+      <img alt="" className="app-ResourceHeader__info-icon" src={iconClock} />
+      <strong>{t('ReservationInfo.reservationMinLength')}</strong>
+      {` ${minPeriodText}`}
     </p>
   );
 }
@@ -65,7 +102,9 @@ function ReservationInfo({ isLoggedIn, resource, t }) {
   return (
     <div className="app-ReservationInfo">
       <WrappedText openLinksInNewTab text={resource.reservationInfo} />
-      {renderEarliestResDay(resource.reservableAfter, t)}
+      {renderEarliestResDay(resource, t)}
+      {renderLastResDay(resource, t)}
+      {renderMinPeriodText(resource, t)}
       {renderMaxPeriodText(resource, t)}
       {renderMaxReservationsPerUserText(resource.maxReservationsPerUser, t)}
       {renderLoginText(isLoggedIn, resource)}

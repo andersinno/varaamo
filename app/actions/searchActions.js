@@ -1,19 +1,17 @@
-import types from 'constants/ActionTypes';
-import constants from 'constants/AppConstants';
-
 import { createAction } from 'redux-actions';
 import { RSAA } from 'redux-api-middleware';
 
-
-import schemas from 'store/middleware/Schemas';
+import types from '../constants/ActionTypes';
+import constants from '../constants/AppConstants';
+import schemas from '../store/middleware/Schemas';
 import {
   buildAPIUrl,
   getErrorTypeDescriptor,
   getHeadersCreator,
   getRequestTypeDescriptor,
   getSuccessTypeDescriptor,
-} from 'utils/apiUtils';
-import { getFetchParamsFromFilters } from 'utils/searchUtils';
+} from '../utils/apiUtils';
+import { getFetchParamsFromFilters } from '../utils/searchUtils';
 
 const clearSearchResults = createAction(types.UI.CLEAR_SEARCH_FILTERS);
 const toggleMap = createAction(types.UI.TOGGLE_SEARCH_SHOW_MAP);
@@ -51,11 +49,11 @@ function searchResources(filters = {}) {
                 ],
               },
             },
-          }
+          },
         ),
         getSuccessTypeDescriptor(
           types.API.SEARCH_RESULTS_GET_SUCCESS,
-          { schema: schemas.paginatedResourcesSchema }
+          { schema: schemas.paginatedResourcesSchema },
         ),
         getErrorTypeDescriptor(types.API.SEARCH_RESULTS_GET_ERROR),
       ],

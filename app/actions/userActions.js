@@ -1,14 +1,13 @@
-import types from 'constants/ActionTypes';
-
 import { RSAA } from 'redux-api-middleware';
 
+import types from '../constants/ActionTypes';
 import {
   buildAPIUrl,
   getErrorTypeDescriptor,
   getHeadersCreator,
   getRequestTypeDescriptor,
   getSuccessTypeDescriptor,
-} from 'utils/apiUtils';
+} from '../utils/apiUtils';
 
 function fetchUser(id, params = {}) {
   return {
@@ -23,7 +22,7 @@ function fetchUser(id, params = {}) {
                 args: ['User', 'user-get', id],
               },
             },
-          }
+          },
         ),
         getSuccessTypeDescriptor(types.API.USER_GET_SUCCESS),
         getErrorTypeDescriptor(types.API.USER_GET_ERROR),

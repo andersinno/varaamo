@@ -1,10 +1,9 @@
-import constants from 'constants/AppConstants';
-
 import omit from 'lodash/omit';
 import pick from 'lodash/pick';
 import queryString from 'query-string';
 
-import { getDateStartAndEndTimes, getDateString } from 'utils/timeUtils';
+import constants from '../constants/AppConstants';
+import { getDateStartAndEndTimes, getDateString } from './timeUtils';
 
 function getFetchParamsFromFilters(filters) {
   const all = Object.assign(
@@ -15,10 +14,10 @@ function getFetchParamsFromFilters(filters) {
       filters.useTimeRange,
       filters.start,
       filters.end,
-      filters.duration
+      filters.duration,
     ),
     { purpose: filters.purpose === 'all' ? '' : filters.purpose },
-    { page: filters.page || 1 }
+    { page: filters.page || 1 },
   );
 
   return omit(all, 'date', 'duration', 'useTimeRange');
@@ -26,7 +25,7 @@ function getFetchParamsFromFilters(filters) {
 
 function getSearchPageUrl(filters = {}) {
   const query = queryString.stringify(
-    Object.assign({}, filters, { date: getDateString(filters.date) })
+    Object.assign({}, filters, { date: getDateString(filters.date) }),
   );
 
   return `/search?${query}`;
@@ -41,5 +40,5 @@ function textBoolean(value) {
 }
 
 export {
-  getFetchParamsFromFilters, getSearchPageUrl, pickSupportedFilters, textBoolean
+  getFetchParamsFromFilters, getSearchPageUrl, pickSupportedFilters, textBoolean,
 };

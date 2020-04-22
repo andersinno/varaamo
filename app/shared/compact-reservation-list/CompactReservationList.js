@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
-import TimeRange from 'shared/time-range';
+import TimeRange from '../time-range/TimeRange';
 
 class CompactReservationList extends Component {
   renderFixedReservation = reservation => this.renderReservation(reservation);
@@ -43,7 +43,7 @@ class CompactReservationList extends Component {
       <ul className="compact-reservation-list">
         {this.props.reservations.map(this.renderFixedReservation)}
         {this.props.removableReservations && this.props.removableReservations.map(
-          this.renderRemovableReservation
+          this.renderRemovableReservation,
         )}
       </ul>
     );
