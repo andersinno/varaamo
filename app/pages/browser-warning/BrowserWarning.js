@@ -5,9 +5,8 @@ function BrowserWarning() {
     <div>
       <p className="alert alert-warning">
 
-        Currently, Varaamo does not support Internet Explorer.
-        We are investigating this issue and finding a solution.
-        Meanwhile, use another browser (such as
+        Varaamo doesn’t support Internet Explorer any more.
+        Please use a newer browser such as
         <a href="https://www.google.com/chrome/"> Chrome</a>
 
         ,
@@ -16,13 +15,12 @@ function BrowserWarning() {
         or
         <a href="https://www.microsoft.com/en-us/windows/microsoft-edge"> Edge</a>
 
-        ).
+        .
       </p>
       <p className="alert alert-warning">
 
-        Varaamo ei tue Internet Explorer selainta tällä hetkellä.
-        Selvitämme ongelmaa sen ratkaisemiseksi.
-        Sillä välin, käytä toista selainta (kuten
+        Varaamo ei tue enää Internet Explorer -selainta.
+        Käytä jotain uudempaa selainta, kuten
         <a href="https://www.google.com/chrome/"> Chrome</a>
 
         ,
@@ -31,13 +29,12 @@ function BrowserWarning() {
         tai
         <a href="https://www.microsoft.com/en-us/windows/microsoft-edge"> Edge</a>
 
-        ).
+        .
       </p>
       <p className="alert alert-warning">
 
         Varaamo fungerar inte längre med Internet Explorer.
-        Vi arbetar med att lösa problemet.
-        Under tiden så var vänlig och använd någon annan browser (t.ex
+        Så var vänlig och använd en nyare  browser som
         <a href="https://www.google.com/chrome/"> Chrome</a>
 
         ,
@@ -46,7 +43,7 @@ function BrowserWarning() {
         eller
         <a href="https://www.microsoft.com/en-us/windows/microsoft-edge"> Edge</a>
 
-        ).
+        .
       </p>
     </div>
   );
