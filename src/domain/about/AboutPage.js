@@ -21,13 +21,6 @@ function AboutPage({ t }) {
           <FeedbackLink>{t('AboutPageContent.feedbackLink')}</FeedbackLink>
         </p>
 
-        {city !== 'default' && (
-        <div>
-          <h3>{t(`AboutPageContent.${city}PartnersHeader`)}</h3>
-          <AboutPartners />
-        </div>
-        )}
-
         <h3>{t('AboutPageContent.customerRegisterHeader')}</h3>
         <p>
           {t('AboutPageContent.customerRegisterParagraph')}
