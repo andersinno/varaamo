@@ -28,7 +28,7 @@ exports[`pages/about/AboutPage render normally 1`] = `
     <p>
       AboutPageContent.customerRegisterParagraph
       <a
-        href="https://app.helmet-kirjasto.fi/varaamo/rekisteriseloste.php"
+        href="https://www.tampere.fi/tampereen-kaupunki/yhteystiedot-ja-asiointi/verkkoasiointi/tietosuoja.html"
       >
         AboutPageContent.customerRegisterLink
       </a>

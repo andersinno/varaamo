@@ -24,7 +24,7 @@ function AboutPage({ t }) {
         <h3>{t('AboutPageContent.customerRegisterHeader')}</h3>
         <p>
           {t('AboutPageContent.customerRegisterParagraph')}
-          <a href="https://app.helmet-kirjasto.fi/varaamo/rekisteriseloste.php">
+          <a href="https://www.tampere.fi/tampereen-kaupunki/yhteystiedot-ja-asiointi/verkkoasiointi/tietosuoja.html">
             {t('AboutPageContent.customerRegisterLink')}
           </a>
         </p>
