@@ -66,7 +66,7 @@ class ReservationConfirmation extends Component {
     } = this.props;
     const { reservationPrice } = this.state;
     const refUrl = window.location.href;
-    const href = `${constants.FEEDBACK_URL}&ref=${refUrl}`;
+    const href = `${constants.FEEDBACK_URL}`;
     let email = '';
     if (reservation.reserverEmailAddress) {
       email = reservation.reserverEmailAddress;
