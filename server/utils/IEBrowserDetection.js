@@ -15,7 +15,7 @@ export default function IEBrowserDetection() {
     if (msie > 0 || trident > 0) {
 
       var style = 'background-color: #ffec77; padding: .75rem 1.25rem; margin-bottom: 1rem;' +
-      'border: 1px solid transparent; font-size: 1rem; font-family: "Times"';
+      'border: 1px solid transparent; font-size: 16px; font-family: "Times"';
 
       var eng = 'Varaamo doesn’t support Internet Explorer any more. Please use a ' +
       'newer browser such as <a href="https://www.google.com/chrome/"> Chrome</a>, ' +
