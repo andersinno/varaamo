@@ -1,3 +1,7 @@
 .app-Header {
   z-index: 4;
+
+  .sticky {
+    z-index: 10;
+  }
 }
