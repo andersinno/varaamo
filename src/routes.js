@@ -15,6 +15,7 @@ import AboutPage from './domain/about/AboutPage';
 import ManageReservationsPage from './domain/reservation/manage/page/ManageReservationsPage';
 import HomePage from './domain/home/HomePage';
 import CreateNotifications from './common/notificator/create/CreateNotifications';
+import AccessibilityPage from './domain/accessibility/AccessibilityPage';
 
 export default () => (
   <AppContainer>
@@ -22,6 +23,7 @@ export default () => (
       <Route component={HomePage} componentName="Home" exact path="/" />
       <Route component={SearchPage} componentName="Search" path="/search" />
       <Route component={AboutPage} componentName="About" path="/about" />
+      <Route component={AccessibilityPage} componentName="Accessibility" path="/accessibility-info" />
       <Route component={ResourcePage} componentName="Resource" path="/resources/:id" />
 
       <PrivateRoute
