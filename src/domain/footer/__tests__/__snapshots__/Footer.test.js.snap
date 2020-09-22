@@ -39,6 +39,15 @@ exports[`domain/footer/Footer When there is no customization in use renders corr
         </p>
         <InjectT(MunicipalityLogos) />
         <p>
+          <Link
+            className="feedback-link"
+            replace={false}
+            to="/accessibility-info"
+          >
+            AccessibilityPage.pageLink
+          </Link>
+        </p>
+        <p>
           <FeedbackLink>
             Footer.feedbackLink
           </FeedbackLink>
@@ -104,6 +113,15 @@ exports[`domain/footer/Footer renders correctly 1`] = `
           Footer.helsinkiText
         </p>
         <InjectT(MunicipalityLogos) />
+        <p>
+          <Link
+            className="feedback-link"
+            replace={false}
+            to="/accessibility-info"
+          >
+            AccessibilityPage.pageLink
+          </Link>
+        </p>
         <p>
           <FeedbackLink>
             Footer.feedbackLink

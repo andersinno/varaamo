@@ -14,6 +14,7 @@ import { getCurrentCustomization } from '../../../app/utils/customizationUtils';
 
 function Footer({ t }) {
   const feedbackLink = <FeedbackLink>{t('Footer.feedbackLink')}</FeedbackLink>;
+  const accessibilityPage = <Link className="feedback-link" to="/accessibility-info">{t('AccessibilityPage.pageLink')}</Link>;
 
   let cityNameId;
   switch (getCurrentCustomization()) {
@@ -46,6 +47,9 @@ function Footer({ t }) {
               {t(cityNameId)}
             </p>
             <MunicipalityLogos />
+            <p>
+              {accessibilityPage}
+            </p>
             <p>
               {feedbackLink}
             </p>
