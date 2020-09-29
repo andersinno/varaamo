@@ -66,9 +66,12 @@ class ReservationConfirmation extends Component {
     } = this.props;
     const { reservationPrice } = this.state;
     const refUrl = window.location.href;
-    const href = `${constants.FEEDBACK_URL}`;
+    const href = `${constants.FEEDBACK_URL}&ref=${refUrl}`;
+    const isBillable = reservationPrice > 0;
     let email = '';
-    if (reservation.reserverEmailAddress) {
+    if (isBillable && reservation.billingEmailAddress) {
+      email = reservation.billingEmailAddress;
+    } else if (reservation.reserverEmailAddress) {
       email = reservation.reserverEmailAddress;
     } else if (reservation.user && reservation.user.email) {
       email = reservation.user.email;

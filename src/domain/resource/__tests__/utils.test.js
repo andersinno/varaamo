@@ -453,5 +453,43 @@ describe('domain resource utility function', () => {
       const price = resourceUtils.getReservationPrice(`${DATE}T08:00:00Z`, `${DATE}T10:00:00Z`, resource);
       expect(price).toBe(0);
     });
+
+    test('returns the correct price when price type is fixed', () => {
+      const resource = resourceFixture.build({
+        products: [{
+          price: { amount: 200, type: 'fixed' },
+
+        }],
+      });
+
+      const price = resourceUtils.getReservationPrice(`${DATE}T08:00:00Z`, `${DATE}T10:00:00Z`, resource);
+      expect(price).toBe(200);
+    });
+  });
+
+  describe('getHasOnlinePaymentSupport', () => {
+    test('returns true when resource has products of type RENT', () => {
+      const resource = {
+        products: [
+          {
+            type: 'rent',
+          },
+        ],
+      };
+
+      expect(resourceUtils.getHasOnlinePaymentSupport(resource)).toEqual(true);
+    });
+
+    test('otherwise returns false', () => {
+      const resource = {
+        products: [
+          {
+            type: 'random',
+          },
+        ],
+      };
+
+      expect(resourceUtils.getHasOnlinePaymentSupport(resource)).toEqual(false);
+    });
   });
 });

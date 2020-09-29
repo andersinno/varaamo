@@ -10,6 +10,7 @@ $reservation-list-label-height: 20px;
     position: relative;
     margin-bottom: 50px;
     min-height: 180px;
+    padding: 0;
 
     @media (max-width: $screen-xs-max) {
       min-height: 230px;
@@ -37,7 +38,7 @@ $reservation-list-label-height: 20px;
       min-height: 180px;
 
       .reservation-state-label-container {
-        font-size: 18px;
+        font-size: 1.8rem;
         margin-bottom: 8px;
         margin-top: -8px;
         width: 100%;

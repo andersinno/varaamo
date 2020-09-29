@@ -21,14 +21,19 @@ import { getCustomizationClassName } from '../utils/customizationUtils';
 import Notifications from '../shared/notifications/NotificationsContainer';
 import UserNotificator from '../../src/common/notificator/user/UserNotificator';
 import AccessibilityShortcuts from '../shared/accessibility-shortcuts/AccessibilityShortcuts';
+import FontSizes from '../constants/FontSizes';
 
 const userIdSelector = state => state.auth.userId;
 const languageSelector = state => state.intl && state.intl.locale;
+const fontSizeSelector = state => state.ui.accessibility.fontSize;
+const isHighContrastSelector = state => state.ui.accessibility.isHighContrast;
 
 export const selector = createStructuredSelector({
   isStaff: isAdminSelector,
   language: languageSelector,
   userId: userIdSelector,
+  fontSize: fontSizeSelector,
+  isHighContrast: isHighContrastSelector,
 });
 
 export class UnconnectedAppContainer extends Component {
@@ -61,14 +66,23 @@ export class UnconnectedAppContainer extends Component {
   }
 
   render() {
-    const { isStaff, language } = this.props;
+    const {
+      isStaff, language, fontSize, isHighContrast,
+    } = this.props;
     const mainContentId = 'main-content';
 
     return (
       <>
         <AccessibilityShortcuts mainContentId={mainContentId} />
         <div className={classNames('app', getCustomizationClassName())}>
-          <Helmet htmlAttributes={{ lang: this.props.language }}>
+          <Helmet
+            htmlAttributes={{
+              lang: this.props.language,
+              class: classNames(fontSize, {
+                'is-high-contrast': isHighContrast,
+              }),
+            }}
+          >
             <title>Varaamo</title>
           </Helmet>
 
@@ -76,10 +90,7 @@ export class UnconnectedAppContainer extends Component {
             <Favicon />
             <TestSiteMessage />
             {firebase.apps.length > 0 && (
-              <UserNotificator
-                isStaff={isStaff}
-                language={language}
-              />
+              <UserNotificator isStaff={isStaff} language={language} />
             )}
           </Header>
           <div className="app-content" id={mainContentId}>
@@ -99,18 +110,15 @@ export class UnconnectedAppContainer extends Component {
 UnconnectedAppContainer.propTypes = {
   children: PropTypes.node,
   enableGeoposition: PropTypes.func.isRequired,
+  isHighContrast: PropTypes.bool.isRequired,
   isStaff: PropTypes.bool,
   language: PropTypes.string,
   fetchUser: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   userId: PropTypes.string,
+  fontSize: PropTypes.oneOf(Object.values(FontSizes)),
 };
 
 const actions = { enableGeoposition, fetchUser };
 
-export default withRouter(
-  connect(
-    selector,
-    actions,
-  )(UnconnectedAppContainer),
-);
+export default withRouter(connect(selector, actions)(UnconnectedAppContainer));
