@@ -21,7 +21,7 @@ function AboutPage({ t }) {
           <FeedbackLink>{t('AboutPageContent.feedbackLink')}</FeedbackLink>
         </p>
 
-        <h3>{t('AboutPageContent.customerRegisterHeader')}</h3>
+        <h2>{t('AboutPageContent.customerRegisterHeader')}</h2>
         <p>
           {t('AboutPageContent.customerRegisterParagraph')}
           <a href="https://www.tampere.fi/tampereen-kaupunki/yhteystiedot-ja-asiointi/verkkoasiointi/tietosuoja.html">
