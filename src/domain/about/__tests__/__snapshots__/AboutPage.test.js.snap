@@ -22,9 +22,9 @@ exports[`pages/about/AboutPage render normally 1`] = `
         AboutPageContent.feedbackLink
       </FeedbackLink>
     </p>
-    <h3>
+    <h2>
       AboutPageContent.customerRegisterHeader
-    </h3>
+    </h2>
     <p>
       AboutPageContent.customerRegisterParagraph
       <a
