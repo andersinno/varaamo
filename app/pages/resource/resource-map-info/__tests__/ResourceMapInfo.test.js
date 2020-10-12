@@ -24,14 +24,6 @@ describe('pages/resource/resource-map-info/ResourceMapInfo', () => {
     return shallowWithIntl(<ResourceMapInfo {...defaultProps} {...props} />);
   }
 
-  test('renders Service map link as a Button with correct url', () => {
-    const button = getWrapper().find(Button);
-    const expected = 'https://palvelukartta.hel.fi/unit/123';
-
-    expect(button).toHaveLength(1);
-    expect(button.prop('href')).toBe(expected);
-  });
-
   test('renders address text', () => {
     const { addressZip, streetAddress } = defaultProps.unit;
     const resource = Immutable(Resource.build({ distance: 11500 }));

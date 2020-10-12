@@ -93,33 +93,6 @@ describe('pages/resource/resource-info/ResourceInfo', () => {
     expect(link.prop('target')).toBe('_blank');
   });
 
-  test('renders service map link', () => {
-    const unit = Unit.build({
-      id: 'abc:123',
-      addressZip: '99999',
-      municipality: 'helsinki',
-      name: 'Unit name',
-      streetAddress: 'Test street 12',
-      wwwUrl: 'some-url',
-    });
-    const expected = 'https://palvelukartta.hel.fi/unit/123';
-    const link = getWrapper({ unit })
-      .find('.app-ResourceInfo__servicemap')
-      .find('a');
-
-    expect(link).toHaveLength(1);
-    expect(link.prop('href')).toBe(expected);
-    expect(link.prop('target')).toBe('_blank');
-  });
-
-  test('does not render service map link if unit empty', () => {
-    const link = getWrapper({ unit: {} })
-      .find('.app-ResourceInfo__servicemap')
-      .find('a');
-
-    expect(link).toHaveLength(0);
-  });
-
   test('renders payment terms when resource has products and a paymentTerms field', () => {
     const resource = Resource.build({
       description: 'Some description',
