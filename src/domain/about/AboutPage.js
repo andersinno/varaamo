@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedHTMLMessage } from 'react-intl';
 
-import AboutPartners from './AboutPartners';
 import PageWrapper from '../../../app/pages/PageWrapper';
 import FeedbackLink from '../../../app/shared/feedback-link/FeedbackLink';
 import injectT from '../../../app/i18n/injectT';

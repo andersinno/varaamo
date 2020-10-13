@@ -5,7 +5,6 @@ import iconMapMarker from 'hel-icons/dist/shapes/map-marker.svg';
 import upperFirst from 'lodash/upperFirst';
 
 import injectT from '../../../i18n/injectT';
-import { getServiceMapUrl } from '../../../utils/unitUtils';
 
 function formatAddress({ addressZip, municipality, streetAddress }) {
   const parts = [streetAddress, `${addressZip} ${upperFirst(municipality)}`.trim()];
