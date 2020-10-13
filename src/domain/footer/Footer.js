@@ -14,7 +14,11 @@ import { getCurrentCustomization } from '../../../app/utils/customizationUtils';
 
 function Footer({ t }) {
   const feedbackLink = <FeedbackLink>{t('Footer.feedbackLink')}</FeedbackLink>;
-  const accessibilityPage = <Link className="feedback-link" to="/accessibility-info">{t('AccessibilityPage.pageLink')}</Link>;
+  const accessibilityPage = (
+    <Link className="feedback-link" to="/accessibility-info">
+      {t('AccessibilityPage.pageLink')}
+    </Link>
+  );
 
   let cityNameId;
   switch (getCurrentCustomization()) {

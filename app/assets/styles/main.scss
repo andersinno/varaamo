@@ -1,3 +1,18 @@
+/* Import HDS first so it doesn't override heading and other such */
+/* sizes defined in bootstrap. */
+@import '~hds-design-tokens/lib/spacing/all';
+@import '~hds-core/lib/base.css';
+@import '~hds-core/lib/icons/icon.css';
+@import '~hds-core/lib/icons/ui/icon-alert-circle.css';
+@import '~hds-core/lib/components/notification/notification.css';
+@import '~hds-core/lib/components/text-input/text-input.css';
+/* Import all HDS components before integration file to ensure that  */
+/* they do not re-apply vanilla HDS CSS variables that assume 16px root */
+/* font size, when Varaamo uses 10px and may change the root font size */
+/* to allow a more accessible experience. */
+@import './hds_integration.scss';
+@import './_hds-integration.css';
+
 @import '~hel-bootstrap-3/src/sass/helsinki-variables';
 @import './application-variables';
 @import '~hel-bootstrap-3/src/sass/theme-bootstrap-variables';
@@ -17,6 +32,8 @@
 @import '~@fullcalendar/daygrid/main.css';
 @import '~@fullcalendar/timegrid/main.css';
 
+@import './rem-text-size';
+
 @import './layout';
 @import './mixins';
 
@@ -30,3 +47,5 @@
 @import './modals';
 @import './react-select';
 @import './react-toggle';
+
+@import './high-contrast-theme';

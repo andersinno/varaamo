@@ -5,10 +5,24 @@ import Navbar from 'react-bootstrap/lib/Navbar';
 import NavItem from 'react-bootstrap/lib/NavItem';
 import Nav from 'react-bootstrap/lib/Nav';
 
+import getIsFeatureEnabled from '../feature-flags/getIsFeatureEnabled';
+import FeatureFlags from '../feature-flags/FeatureFlags';
 import injectT from '../../../app/i18n/injectT';
 import { SUPPORTED_LANGUAGES } from '../../../app/i18n/TranslationConstants';
 import TabbableNavDropdown from '../../../app/shared/tabbable-nav-dropdown/TabbableNavDropdown';
 import TabbableNavItem from '../../../app/shared/tabbable-nav-dropdown/TabbableNavItem';
+import HeaderFontSizeControl from './HeaderFontSizeControl';
+import HeaderContrastControl from './HeaderContrastControl';
+import HeaderUniversalAccessIcon from './HeaderUniversalAccessIcon';
+
+// Bootstrap uses magic to force props on child elements based on
+// element type. Because our vanilla elements don't make use of those
+// props, they end up in the DOM and raise errors. For that reason, we
+// blocking bootstrap from applying these props.
+const BootstrapGuardedLI = (props) => {
+  // eslint-disable-next-line react/prop-types
+  return <li className={props.className}>{props.children}</li>;
+};
 
 class TopNavbar extends Component {
   static propTypes = {
@@ -32,6 +46,10 @@ class TopNavbar extends Component {
     const {
       currentLanguage, isLoggedIn, t, userName,
     } = this.props;
+    const isFontSizeControlEnabled = getIsFeatureEnabled(FeatureFlags.FONT_SIZE_CONTROLS);
+    const isContrastEnabled = getIsFeatureEnabled(FeatureFlags.CONTRAST_CONTROL);
+    const contrastControl = isContrastEnabled ? <HeaderContrastControl /> : null;
+    const fontSizeControl = isFontSizeControlEnabled ? <HeaderFontSizeControl /> : null;
 
     return (
       <Navbar className="app-TopNavbar" fluid>
@@ -44,19 +62,53 @@ class TopNavbar extends Component {
         </Navbar.Header>
 
         <Nav activeKey="none" pullRight>
+          {(contrastControl || fontSizeControl) && (
+            <TabbableNavDropdown
+              as="li"
+              className="app-TopNavbar__mobile-accessibility-menu-toggle"
+              renderToggle={props => (
+                <LinkButton
+                  {...props}
+                  aria-label={t('Navbar.accessibilityMenuToggle.label')}
+                >
+                  <HeaderUniversalAccessIcon />
+                </LinkButton>
+              )}
+            >
+              {() => (
+                <>
+                  {contrastControl}
+                  {fontSizeControl}
+                </>
+              )}
+            </TabbableNavDropdown>
+          )}
+          {contrastControl && (
+            <BootstrapGuardedLI className="app-TopNavbar__non-mobile-accessibility-control">
+              {contrastControl}
+            </BootstrapGuardedLI>
+          )}
+          {fontSizeControl && (
+            <BootstrapGuardedLI className="app-TopNavbar__non-mobile-accessibility-control">
+              {fontSizeControl}
+            </BootstrapGuardedLI>
+          )}
           <TabbableNavDropdown
             as="li"
             className="app-TopNavbar__language"
             id="language-nav-dropdown"
             renderToggle={props => (
-              <LinkButton {...props} aria-label={t(`common.language.${currentLanguage}`)}>
+              <LinkButton
+                {...props}
+                aria-label={t(`common.language.${currentLanguage}`)}
+              >
                 {currentLanguage.toUpperCase()}
               </LinkButton>
             )}
           >
-            {({ closeMenu }) => Object
-              .values(SUPPORTED_LANGUAGES)
-              .filter(language => language !== currentLanguage).map(language => (
+            {({ closeMenu }) => Object.values(SUPPORTED_LANGUAGES)
+              .filter(language => language !== currentLanguage)
+              .map(language => (
                 <TabbableNavItem
                   href="#"
                   key={language}
@@ -69,7 +121,8 @@ class TopNavbar extends Component {
                 >
                   {t(`common.language.${language}`)}
                 </TabbableNavItem>
-              ))}
+              ))
+            }
           </TabbableNavDropdown>
 
           {isLoggedIn && (
@@ -77,10 +130,15 @@ class TopNavbar extends Component {
               as="li"
               className="app-TopNavbar__name"
               id="user-nav-dropdown"
-              renderToggle={props => <LinkButton {...props}>{userName}</LinkButton>}
+              renderToggle={props => (
+                <LinkButton {...props}>{userName}</LinkButton>
+              )}
             >
               {({ closeMenu }) => (
-                <TabbableNavItem href={`/logout?next=${window.location.origin}`} onClick={closeMenu}>
+                <TabbableNavItem
+                  href={`/logout?next=${window.location.origin}`}
+                  onClick={closeMenu}
+                >
                   {t('Navbar.logout')}
                 </TabbableNavItem>
               )}
@@ -101,7 +159,9 @@ class TopNavbar extends Component {
 // Due to style rules, which expect an a element, we have to use an anchor
 // instead of a button.
 const LinkButton = ({ children, ...props }) => (
-  <a href="#" type="button" {...props}>{children}</a>
+  <a href="#" type="button" {...props}>
+    {children}
+  </a>
 );
 
 LinkButton.propTypes = {

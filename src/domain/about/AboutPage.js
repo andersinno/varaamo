@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedHTMLMessage } from 'react-intl';
 
-import AboutPartners from './AboutPartners';
 import PageWrapper from '../../../app/pages/PageWrapper';
 import FeedbackLink from '../../../app/shared/feedback-link/FeedbackLink';
 import injectT from '../../../app/i18n/injectT';
@@ -21,7 +20,7 @@ function AboutPage({ t }) {
           <FeedbackLink>{t('AboutPageContent.feedbackLink')}</FeedbackLink>
         </p>
 
-        <h3>{t('AboutPageContent.customerRegisterHeader')}</h3>
+        <h2>{t('AboutPageContent.customerRegisterHeader')}</h2>
         <p>
           {t('AboutPageContent.customerRegisterParagraph')}
           <a href="https://www.tampere.fi/tampereen-kaupunki/yhteystiedot-ja-asiointi/verkkoasiointi/tietosuoja.html">

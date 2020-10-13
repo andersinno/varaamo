@@ -1,5 +1,36 @@
 # Unreleased
 
+# 0.12.0
+  **MINOR CHANGES**
+  - Fixed availability view lacking status colors in Espoo's and Vantaa's Varaamo ([#1164](https://github.com/City-of-Helsinki/varaamo/pull/1164))
+  - Fixed notifications overflowing on mobile and with long notifications ([#1163](https://github.com/City-of-Helsinki/varaamo/pull/1163))
+  - Fixed notification close control not being clickable with long notifications ([#1163](https://github.com/City-of-Helsinki/varaamo/pull/1163))
+  - Added number validation to reservation form's number of participants field ([#1165](https://github.com/City-of-Helsinki/varaamo/pull/1165))
+  - Fixed service map link on resource page ([#1167](https://github.com/City-of-Helsinki/varaamo/pull/1167))
+  - Changed search map styling ([#1168](https://github.com/City-of-Helsinki/varaamo/pull/1168))
+  - Added a high contrast mode, but toggled it off in feature flags ([#1171](https://github.com/City-of-Helsinki/varaamo/pull/1171))
+
+  **CHANGELOG**
+  - [#1162](https://github.com/City-of-Helsinki/varaamo/pull/1162) Added font size controls (the implementation was added in a previous version, but the feature was enabled in this one after fixes were implemented)
+  - [#1166](https://github.com/City-of-Helsinki/varaamo/pull/1166) Change search view to search for resources for resources from the municipality it's for by default
+  - [#1170](https://github.com/City-of-Helsinki/varaamo/pull/1170) Added a required checkbox for specific terms when making reservation
+
+# 0.11.0
+  **MINOR CHANGES**
+  - Fixed fixed prices always being zero ([#1151](https://github.com/City-of-Helsinki/varaamo/pull/1151))
+  - Fixed some buttons being enabled on first load on user reservations page when they should not have been ([#1156](https://github.com/City-of-Helsinki/varaamo/pull/1156))
+  - Removed link to resource unit in search results ([#1153](https://github.com/City-of-Helsinki/varaamo/pull/1153))
+  
+  **CHANGELOG**
+  - [#1155](https://github.com/City-of-Helsinki/varaamo/pull/1155) Added keyboard friendly form into resource page for making reservations
+
+# 0.10.1
+  **MINOR CHANGES**
+  - Fixed refund policy test being visible to regular users
+  - Fixed enabled edit button for paid reservations when the user does not have admin level privileges
+  - Updated refund policy related descriptions
+  - Changed billing email to be shown in reservation confirmation view
+
 # 0.10.0
   **MINOR CHANGES**
   - Changed search count to be announced when a search is made

@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from 'react-bootstrap/lib/Button';
 import Immutable from 'seamless-immutable';
 
 import Resource from '../../../../utils/fixtures/Resource';
