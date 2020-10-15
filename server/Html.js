@@ -6,7 +6,7 @@ import serialize from 'serialize-javascript';
 import isPlainObject from 'lodash/isPlainObject';
 import pick from 'lodash/pick';
 
-import IEBrowserDetection from './utils/IEBrowserDetection';
+import BrowserDetection from './utils/BrowserDetection';
 import settings, { ENV_NAMESPACE } from '../config/settings';
 
 const CLIENT_ENV = [
@@ -115,7 +115,7 @@ class Html extends Component {
               __html: stringifyStateIntoWindow(ENV_NAMESPACE, pick(settings, CLIENT_ENV)),
             }}
           />
-          {IEBrowserDetection()}
+          {BrowserDetection()}
           <script dangerouslySetInnerHTML={{ __html: initialStateHtml }} />
           {/* eslint-disable-next-line max-len */}
           <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en-gb,Intl.~locale.fi,Intl.~locale.sv" />
