@@ -38,9 +38,9 @@ exports[`ResourceCard renders correctly 1`] = `
         }
       }
     >
-      <h3>
+      <h4>
         Resource (en) - 1
-      </h3>
+      </h4>
       <div
         className="app-resourceCard2__unit-name"
       >
