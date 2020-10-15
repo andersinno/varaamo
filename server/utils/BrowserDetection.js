@@ -1,18 +1,21 @@
 import React from 'react';
 
 /**
- * @description Check if user is using IE browser and if that's the case show browser unsupported messages
+ * @description Check if user is using IE browser or old versions of Edge and if that's the case show browser unsupported messages
  *
- * @returns {boolean}
+ * @returns {JSX.Element}
  */
-export default function IEBrowserDetection() {
+export default function BrowserDetection() {
   const scriptString = `
 
     var ua = window.navigator.userAgent;
     var msie = ua.indexOf('MSIE ');
     var trident = ua.indexOf('Trident/');
+    // 'Edge' is the user agent for old version of Edge
+    // In new versions of Edge user agent is 'Edg'
+    var edge = ua.indexOf('Edge');
 
-    if (msie > 0 || trident > 0) {
+    if (msie > 0 || trident > 0 || edge > 0) {
 
       var style = 'background-color: #ffec77; padding: .75rem 1.25rem; margin-bottom: 1rem;' +
       'border: 1px solid transparent; font-size: 16px; font-family: "Times"';
