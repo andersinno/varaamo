@@ -20,20 +20,20 @@ export default function BrowserDetection() {
       var style = 'background-color: #ffec77; padding: .75rem 1.25rem; margin-bottom: 1rem;' +
       'border: 1px solid transparent; font-size: 16px; font-family: "Times"';
 
-      var eng = 'Varaamo doesn’t support Internet Explorer any more. Please use a ' +
+      var eng = 'Varaamo doesn’t support Internet Explorer or Edge Legacy browsers any more. Please use a ' +
       'newer browser such as <a href="https://www.google.com/chrome/"> Chrome</a>, ' +
       '<a href="https://www.mozilla.org/en-US/firefox/new/"> Firefox </a> or ' +
-      '<a href="https://www.microsoft.com/en-us/windows/microsoft-edge"> Edge</a>.';
+      '<a href="https://www.microsoft.com/en-us/windows/microsoft-edge"> Edge (Chromium)</a>.';
 
-      var fin = 'Varaamo ei tue enää Internet Explorer -selainta. Käytä jotain ' +
+      var fin = 'Varaamo ei tue enää Internet Explorer tai Edge Legacy -selaimia. Käytä ' +
       'uudempaa selainta, kuten <a href="https://www.google.com/chrome/"> Chrome</a>, ' +
       '<a href="https://www.mozilla.org/en-US/firefox/new/"> Firefox </a> tai ' +
-      '<a href="https://www.microsoft.com/en-us/windows/microsoft-edge"> Edge</a>.';
+      '<a href="https://www.microsoft.com/en-us/windows/microsoft-edge"> Edge (Chromium)</a>.';
 
-      var swe = 'Varaamo fungerar inte längre med Internet Explorer. Så var vänlig' +
-      'och använd en nyare  browser som <a href="https://www.google.com/chrome/"> Chrome</a>,' +
+      var swe = 'Varaamo fungerar inte längre med Internet Explorer eller Edge Legacy. Så var vänligoch' +
+      'använd en nyare browser som <a href="https://www.google.com/chrome/"> Chrome</a>,' +
       '<a href="https://www.mozilla.org/en-US/firefox/new/"> Firefox </a> eller' +
-      '<a href="https://www.microsoft.com/en-us/windows/microsoft-edge"> Edge</a>.';
+      '<a href="https://www.microsoft.com/en-us/windows/microsoft-edge"> Edge (Chromium)</a>.';
 
       var array = [fin, eng, swe];
       array.forEach(function (text, index) {
