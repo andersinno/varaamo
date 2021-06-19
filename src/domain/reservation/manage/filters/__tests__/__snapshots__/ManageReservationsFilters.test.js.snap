@@ -40,6 +40,10 @@ exports[`ManageReservationsFilters renders correctly 1`] = `
                 "label": "Reservation.stateLabelRequested",
                 "value": "requested",
               },
+              Object {
+                "label": "Reservation.stateLabelWaitingForPayment",
+                "value": "waiting_for_payment",
+              },
             ]
           }
           type="checkbox"
