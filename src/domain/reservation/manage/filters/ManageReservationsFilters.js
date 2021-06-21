@@ -101,6 +101,7 @@ class ManageReservationsFilters extends React.Component {
       { value: RESERVATION_STATE.CANCELLED, label: t('Reservation.stateLabelCancelled') },
       { value: RESERVATION_STATE.DENIED, label: t('Reservation.stateLabelDenied') },
       { value: RESERVATION_STATE.REQUESTED, label: t('Reservation.stateLabelRequested') },
+      { value: RESERVATION_STATE.WAITING_FOR_PAYMENT, label: t('Reservation.stateLabelWaitingForPayment') },
     ];
   };
 

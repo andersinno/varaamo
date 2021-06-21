@@ -48,6 +48,10 @@ export default {
       labelBsStyle: 'primary',
       labelTextId: 'common.requested',
     },
+    waiting_for_payment: {
+      labelBsStyle: 'primary',
+      labelTextId: 'common.waiting',
+    },
   },
   RESERVATION_PAYMENT_LABELS: {
     confirmed: {
@@ -57,6 +61,10 @@ export default {
     waiting: {
       labelBsStyle: 'warning',
       labelTextId: 'payment.processing',
+    },
+    waiting_for_payment: {
+      labelBsStyle: 'warning',
+      labelTextId: 'payment.waiting',
     },
     rejected: {
       labelBsStyle: 'danger',

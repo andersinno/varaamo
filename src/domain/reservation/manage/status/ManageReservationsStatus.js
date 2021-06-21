@@ -1,7 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
-import capitalize from 'lodash/capitalize';
 import Label from 'react-bootstrap/lib/Label';
 
 import injectT from '../../../../../app/i18n/injectT';
@@ -17,13 +16,28 @@ export const getLabelStyle = (status) => {
       return 'danger';
     case RESERVATION_STATE.REQUESTED:
       return 'warning';
+    case RESERVATION_STATE.WAITING_FOR_PAYMENT:
+      return 'warning';
     default:
       return '';
   }
 };
 
 export const getLabelText = (status, t) => {
-  return t(`Reservation.stateLabel${capitalize(status)}`);
+  switch (status) {
+    case RESERVATION_STATE.CANCELLED:
+      return t('Reservation.stateLabelCancelled');
+    case RESERVATION_STATE.CONFIRMED:
+      return t('Reservation.stateLabelConfirmed');
+    case RESERVATION_STATE.DENIED:
+      return t('Reservation.stateLabelDenied');
+    case RESERVATION_STATE.REQUESTED:
+      return t('Reservation.stateLabelRequested');
+    case RESERVATION_STATE.WAITING_FOR_PAYMENT:
+      return t('Reservation.stateLabelWaitingForPayment');
+    default:
+      return '';
+  }
 };
 
 const ManageReservationsStatus = ({ reservation, t }) => {
