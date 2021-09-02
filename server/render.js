@@ -25,7 +25,6 @@ function render(req, res) {
       gtagId={config.gtagId}
       initialState={initialState}
       isProduction={config.isProduction}
-      piwikSiteId={config.piwikSiteId}
     />,
   );
   const html = `<!DOCTYPE html>${htmlContent}`;
