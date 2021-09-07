@@ -249,68 +249,72 @@ class UnconnectedResourcePage extends Component {
                 <Col lg={8} md={8} xs={12}>
                   <div className="app-ResourcePage__content">
                     {mainImage
-                    && this.renderImage(mainImage, mainImageIndex, {
-                      mainImageMobileVisibility: true,
-                    })}
+                      && this.renderImage(mainImage, mainImageIndex, {
+                        mainImageMobileVisibility: true,
+                      })}
                     <ResourceInfo
                       isLoggedIn={isLoggedIn}
                       resource={resource}
                       unit={unit}
                     />
 
-                    <ResourcePanel header={t('ResourceInfo.reserveTitle')}>
-                      <>
-                        {resource.externalReservationUrl && (
-                        <form action={resource.externalReservationUrl}>
-                          <input
-                            className="btn btn-primary"
-                            type="submit"
-                            value="Siirry ulkoiseen ajanvarauskalenteriin"
-                          />
-                        </form>
-                        )}
-                        {!resource.externalReservationUrl && (
-                        <div>
-                          {window.innerWidth < 768 && (
-                            <React.Fragment>
-                              <div className="app-ResourcePage__content-selection-directions">
-                                {t('ReservationInfo.selectionStartDirections')}
-                              </div>
-                              <div className="app-ResourcePage__content-selection-directions">
-                                {t('ReservationInfo.selectionEditDirections')}
-                              </div>
-                            </React.Fragment>
-                          )
-                          }
+                    {
+                      resource.reservable && (
+                        <ResourcePanel header={t('ResourceInfo.reserveTitle')}>
+                          <>
+                            {resource.externalReservationUrl && (
+                              <form action={resource.externalReservationUrl}>
+                                <input
+                                  className="btn btn-primary"
+                                  type="submit"
+                                  value="Siirry ulkoiseen ajanvarauskalenteriin"
+                                />
+                              </form>
+                            )}
+                            {!resource.externalReservationUrl && (
+                              <div>
+                                {window.innerWidth < 768 && (
+                                  <React.Fragment>
+                                    <div className="app-ResourcePage__content-selection-directions">
+                                      {t('ReservationInfo.selectionStartDirections')}
+                                    </div>
+                                    <div className="app-ResourcePage__content-selection-directions">
+                                      {t('ReservationInfo.selectionEditDirections')}
+                                    </div>
+                                  </React.Fragment>
+                                )
+                                }
 
-                          <ResourceCalendar
-                            isDayReservable={this.isDayReservable}
-                            onDateChange={this.handleDateChange}
-                            resourceId={resource.id}
-                            selectedDate={date}
-                          />
-                          <div className="app-ResourcePage__keyboard-reservation">
-                            <ResourceKeyboardReservation
-                              onDateChange={this.handleDateChange}
-                              onTimeChange={this.handleTimeChange}
-                              resource={resource}
-                              selectedDate={date}
-                              selectedTime={selected}
-                            />
-                            {resourceReservationButton}
-                          </div>
-                          <ResourceReservationCalendar
-                            date={date}
-                            isStaff={isStaff}
-                            onDateChange={newDate => this.handleDateChange(moment(newDate).toDate())}
-                            onTimeChange={this.handleTimeChange}
-                            resource={decamelizeKeys(resource)}
-                          />
-                          {resourceReservationButton}
-                        </div>
-                        )}
-                      </>
-                    </ResourcePanel>
+                                <ResourceCalendar
+                                  isDayReservable={this.isDayReservable}
+                                  onDateChange={this.handleDateChange}
+                                  resourceId={resource.id}
+                                  selectedDate={date}
+                                />
+                                <div className="app-ResourcePage__keyboard-reservation">
+                                  <ResourceKeyboardReservation
+                                    onDateChange={this.handleDateChange}
+                                    onTimeChange={this.handleTimeChange}
+                                    resource={resource}
+                                    selectedDate={date}
+                                    selectedTime={selected}
+                                  />
+                                  {resourceReservationButton}
+                                </div>
+                                <ResourceReservationCalendar
+                                  date={date}
+                                  isStaff={isStaff}
+                                  onDateChange={newDate => this.handleDateChange(moment(newDate).toDate())}
+                                  onTimeChange={this.handleTimeChange}
+                                  resource={decamelizeKeys(resource)}
+                                />
+                                {resourceReservationButton}
+                              </div>
+                            )}
+                          </>
+                        </ResourcePanel>
+                      )
+                    }
                   </div>
                 </Col>
                 <Col lg={3} md={3} xs={12}>
