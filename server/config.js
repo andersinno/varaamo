@@ -33,7 +33,7 @@ module.exports = {
   },
   isProduction,
   piwikSiteId: settings.PIWIK_SITE_ID,
-  gtagId: settings.GTAG_ID,
+  gtagId: settings.GTAGID,
   port,
   webpackStylesExtensions: ['css', 'scss'],
 };
