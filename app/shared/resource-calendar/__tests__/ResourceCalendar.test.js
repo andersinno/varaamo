@@ -169,6 +169,15 @@ describe('shared/resource-calendar/ResourceCalendar', () => {
     });
   });
   describe('modifiers', () => {
+    beforeAll(() => {
+      const now = new Date('2020-12-01');
+      mockDate.set(now);
+    });
+
+    afterAll(() => {
+      mockDate.reset();
+    });
+
     test('is available if percentage is greater than 80', () => {
       const func = dayWrapper.prop('modifiers').available;
       expect(func(new Date('2020-12-01'))).toBe(false);
