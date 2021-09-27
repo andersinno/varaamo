@@ -1,0 +1,42 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [ tre ]
+  pull_request:
+    branches: [ tre ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [10.x]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install dependencies
+      run: yarn install
+
+    - name: Lint code
+      run: yarn lint
+
+    - name: Run the tests
+      run: yarn test:ci
+      env:
+        TZ: Europe/Helsinki
+        DISPLAY: :99.0
+
+    - name: Codecov
+      uses: codecov/codecov-action@v2
+      with:
+        verbose: true
