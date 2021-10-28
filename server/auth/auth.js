@@ -49,6 +49,8 @@ router.get('/login/tampere/return',
 
 router.get('/logout', (req, res) => {
   req.logOut();
+  res.clearCookie('sso-sessionid');
+  res.clearCookie('sso-csrftoken');
   const redirectUrl = req.query.next || 'https://varaamo.tampere.fi';
   res.redirect(`https://auth.tampere.fi/logout/?next=${redirectUrl}`);
 });
