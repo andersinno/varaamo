@@ -1,17 +1,25 @@
 
 # Pull node image with locked node version
-FROM node:10.15.1
+FROM andersinnovations/python-node:3.8-12-slim AS app-base
 
-# Make guest app dir
-RUN mkdir -p /usr/src/app
 
-# Set workdir
-WORKDIR /usr/src/app
+COPY package.json /app/package.json 
+COPY yarn.lock /app/yarn.lock
 
-COPY package.json package.json
+COPY . /app/
 
-COPY yarn.lock yarn.lock
+RUN yarn install
 
-RUN yarn install --silent
+# ============================
+FROM app-base AS development
+# ============================
 
 CMD ["yarn", "start"]
+
+# ==============================================
+FROM app-base AS production
+# ==============================================
+RUN yarn build
+CMD ["npm", "run", "start:production"]
+
+EXPOSE 8080

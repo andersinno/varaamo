@@ -4,6 +4,7 @@ services:
   web:
     container_name: varaamo-frontend
     build:
+      target: development
       context: .
       dockerfile: Dockerfile
     volumes:
@@ -13,5 +14,6 @@ services:
       - '3000:3000'
       - '5858:5858'
       - '9229:9229'
+      - '8080:8080'
     environment:
       - NODE_ENV='development'
