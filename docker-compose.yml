@@ -4,7 +4,7 @@ services:
   web:
     container_name: varaamo-frontend
     build:
-      target: development
+      target: production
       context: .
       dockerfile: Dockerfile
     volumes:
@@ -17,3 +17,4 @@ services:
       - '8080:8080'
     environment:
       - NODE_ENV='development'
+      - API_URL='https://dev-respa.tampere.fi/v1'
