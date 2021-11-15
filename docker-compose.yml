@@ -4,9 +4,16 @@ services:
   web:
     container_name: varaamo-frontend
     build:
-      target: production
+      target: development
       context: .
       dockerfile: Dockerfile
+      args:
+        API_URL: https://dev-respa.tampere.fi/v1
+        RESPA_ADMIN_URL: https://dev-respa.tampere.fi/ra/
+        LOGIN_CALLBACK_URL: https://dev-varaamo.tampere.fi/login/tampere/return
+        AUTH_LOGOUT_URL: https://dev-auth.tampere.fi/logout/
+        PORT: 3000
+
     volumes:
       - '.:/usr/src/app'
       - '/usr/src/app/node_modules'
@@ -14,7 +21,6 @@ services:
       - '3000:3000'
       - '5858:5858'
       - '9229:9229'
-      - '8080:8080'
     environment:
       - NODE_ENV='development'
-      - API_URL='https://dev-respa.tampere.fi/v1'
+      
