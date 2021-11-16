@@ -15,6 +15,8 @@ FROM app-base AS development
 # ============================
 CMD ["yarn", "start"]
 
+EXPOSE 3000
+
 # ==============================================
 FROM app-base AS production
 # ==============================================
@@ -32,4 +34,4 @@ ARG CUSTOM_MUNICIPALITY_OPTIONS
 RUN yarn build
 CMD ["npm", "run", "start:production"]
 
-EXPOSE 3000
+EXPOSE 8080
