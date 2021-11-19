@@ -44,6 +44,23 @@ class Html extends Component {
     );
   }
 
+  renderMatomo() {
+    if (!settings.MATOMO_CONTAINER_ID) {
+      return null;
+    }
+    const scriptString = `
+    var _mtm = window._mtm = window._mtm || [];
+    _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src='https://cdn.matomo.cloud/tamperecity.matomo.cloud/container_${settings.MATOMO_CONTAINER_ID}.js'; s.parentNode.insertBefore(g,s);
+    `;
+    return (
+      <>
+        <script dangerouslySetInnerHTML={{ __html: scriptString }} />
+      </>
+    );
+  }
+
   renderStylesLink(appCssSrc, isProduction) {
     if (!isProduction) {
       return null;
@@ -88,6 +105,7 @@ class Html extends Component {
           <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en-gb,Intl.~locale.fi,Intl.~locale.sv" />
           <script src={appScriptSrc} />
           {this.renderGtagCode(gtagId)}
+          {this.renderMatomo()}
         </body>
       </html>
     );

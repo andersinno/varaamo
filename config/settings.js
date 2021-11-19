@@ -43,6 +43,7 @@ function getSettings() {
   return {
     PORT: process.env.PORT,
     NODE_ENV: process.env.NODE_ENV,
+    MATOMO_CONTAINER_ID: process.env.MATOMO_CONTAINER_ID,
     PIWIK_SITE_ID: process.env.PIWIK_SITE_ID,
     GTAGID: process.env.GTAGID,
     API_URL: process.env.API_URL || DEFAULT_API_URL,
