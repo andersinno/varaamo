@@ -263,7 +263,7 @@ class UnconnectedResourcePage extends Component {
                         <ResourcePanel header={t('ResourceInfo.reserveTitle')}>
                           <>
                             {resource.externalReservationUrl && (
-                              <form action={resource.externalReservationUrl} method="post">
+                              <form action={resource.externalReservationUrl} method="post" target="_blank">
                                 <input
                                   className="btn btn-primary"
                                   type="submit"
