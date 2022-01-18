@@ -7,16 +7,10 @@ services:
       target: development
       context: .
       dockerfile: Dockerfile
-      args:
-        API_URL: https://dev-respa.tampere.fi/v1
-        RESPA_ADMIN_URL: https://dev-respa.tampere.fi/ra/
-        LOGIN_CALLBACK_URL: https://dev-varaamo.tampere.fi/login/tampere/return
-        AUTH_LOGOUT_URL: https://dev-auth.tampere.fi/logout/
-        PORT: 3000
 
     volumes:
-      - '.:/usr/src/app'
-      - '/usr/src/app/node_modules'
+      - '.:/app'
+      - '/app/node_modules'
     ports:
       - '3000:3000'
       - '5858:5858'

@@ -1,7 +1,6 @@
 
 # Pull node image with locked node version
-FROM andersinnovations/python-node:3.8-12-slim AS app-base
-
+FROM andersinnovations/node:12-slim AS app-base
 
 COPY package.json /app/package.json
 COPY yarn.lock /app/yarn.lock
