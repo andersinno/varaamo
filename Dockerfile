@@ -5,9 +5,9 @@ FROM andersinnovations/node:12-slim AS app-base
 COPY package.json /app/package.json
 COPY yarn.lock /app/yarn.lock
 
-COPY . /app/
-
 RUN yarn install
+
+COPY . /app/
 
 # ============================
 FROM app-base AS development
