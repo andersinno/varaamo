@@ -8,7 +8,7 @@ export default {
     'varaamotest-espoo.hel.ninja': 'ESPOO',
     'varaamo.vantaa.fi': 'VANTAA',
     'varaamotest-vantaa.hel.ninja': 'VANTAA',
-    'localhost:3000': 'TAMPERE', // PROD
+    'varaamo.tampere.fi': 'TAMPERE', // PROD
     'dev-varaamo.tampere.fi': 'TAMPERE', // QA
     'varaamotest-tampere.temp:3000': 'TAMPERE', // LOCAL DEV
   },
