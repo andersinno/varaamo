@@ -30,6 +30,12 @@
       margin-right: 8px;
       vertical-align: bottom;
     }
+    &-area-icon {
+      border: 2px solid black;
+      padding: 3px;
+      font-size: 10px;
+      vertical-align: middle !important;
+    }
   }
   &__buttons {
     display: inline-block;

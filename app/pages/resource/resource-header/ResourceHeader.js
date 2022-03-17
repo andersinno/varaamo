@@ -81,6 +81,19 @@ function ResourceHeader({
               <img alt={t('ResourceHeader.price')} className="app-ResourceHeader__info-icon" src={iconTicket} />
               <span className="app-ResourceHeader__info-label">{priceText}</span>
             </div>
+            {resource.area && (
+              <div className="app-ResourceHeader__info">
+                <span className="app-ResourceHeader__info-icon app-ResourceHeader__info-area-icon">
+                  <span>m2</span>
+                </span>
+                <span className="app-ResourceHeader__info-label">
+                  {resource.area}
+                  <span>m</span>
+                  <sup>2</sup>
+                </span>
+              </div>
+            )
+            }
             <div className="app-ResourceHeader__info" id="app-ResourceHeader__info--unit-name">
               <img
                 alt={distance ? t('ResourceHeader.distanceAndPremise') : t('ResourceHeader.premise')}

@@ -18,5 +18,6 @@ const Resource = new Factory()
   .attr('userPermissions', { isAdmin: false, canMakeReservations: true })
   .attr('isFavorite', false)
   .attr('slotSize', DEFAULT_SLOT_SIZE)
-  .attr('products', []);
+  .attr('products', [])
+  .attr('area', 13);
 export default Resource;
