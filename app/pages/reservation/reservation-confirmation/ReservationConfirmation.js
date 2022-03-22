@@ -65,6 +65,8 @@ class ReservationConfirmation extends Component {
       failedReservations, isEdited, reservation, resource, t, user,
     } = this.props;
     const { reservationPrice } = this.state;
+    const { needManualConfirmation } = reservation;
+
     const href = `${constants.FEEDBACK_URL}`;
     const isBillable = reservationPrice > 0;
     let email = '';
@@ -78,12 +80,26 @@ class ReservationConfirmation extends Component {
       email = user.email;
     }
 
+    const getReservationTitle = () => {
+      let action = '';
+
+      if (isEdited) {
+        action = 'Edited';
+      } else if (needManualConfirmation) {
+        action = 'ManualConfirmationCreated';
+      } else {
+        action = 'Created';
+      }
+
+      return `ReservationConfirmation.reservation${action}Title`;
+    };
+
     return (
       <Row className="app-ReservationConfirmation">
         <Col md={6} xs={12}>
           <div className="app-ReservationDetails">
             <h2 className="app-ReservationPage__title app-ReservationPage__title--big app-ReservationPage__header">
-              {t(`ReservationConfirmation.reservation${isEdited ? 'Edited' : 'Created'}Title`)}
+              {t(getReservationTitle())}
             </h2>
             <div className="app-ReservationConfirmation__highlight">
               <ReservationDate
@@ -100,10 +116,19 @@ class ReservationConfirmation extends Component {
                 <span>{resource.name}</span>
               </p>
             </div>
-            {!isEdited && (
+
+            {!isEdited && !needManualConfirmation && (
             <p>
               <FormattedHTMLMessage
                 id="ReservationConfirmation.confirmationText"
+                values={{ email }}
+              />
+            </p>
+            )}
+            {!isEdited && needManualConfirmation && (
+            <p>
+              <FormattedHTMLMessage
+                id="ReservationConfirmation.confirmationForManualReservationText"
                 values={{ email }}
               />
             </p>
