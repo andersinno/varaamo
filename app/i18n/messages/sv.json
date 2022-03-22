@@ -477,7 +477,7 @@
   "TimePickerCalendar.info.displayedMessage": "För tillfället kan resursen inte bokas",
 
   "CalendarLegend.closed": "Inte tillgänglig",
-  "CalendarLegend.selection": "Vald",
+  "CalendarLegend.selection": "Min reservation",
   "CalendarLegend.taken": "Tagen",
   "CalendarLegend.available": "Tillgängligt"
 }

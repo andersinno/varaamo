@@ -47,11 +47,7 @@ exports[`CalendarLegend Legend render normally 1`] = `
   >
     <div
       className="color-box color-box__available"
-    >
-      <span
-        className="dash"
-      />
-    </div>
+    />
     <p>
       CalendarLegend.available
     </p>

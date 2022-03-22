@@ -19,7 +19,7 @@
   }
 
   &__event {
-    color: $hel-coat !important;
+    color: white !important;
     border-radius: 0 !important;
 
     &--reserved {
@@ -95,13 +95,13 @@
   .fc-event:hover {
     font-size: 1.75rem;
     font-weight: bold;
-    background-color: #bddbf0;
+    background-color: #29549A;
     border: 1px solid $hel-coat;
     color: $hel-coat;
   }
 
   .fc-event.fc-selected::after {
-    background-color: #bddbf0;
+    background-color: #29549A;
     color: $hel-coat;
   }
 
@@ -195,7 +195,9 @@
     }
   }
 
-
+  .fc td.fc-today {
+    background: white;
+  }
 
   @media (max-width: $screen-xs-max) {
     .fc-time-grid .fc-slats td {

@@ -475,7 +475,7 @@
   "TimePickerCalendar.info.displayedMessage": "The resource cannot be reserved at this time",
 
   "CalendarLegend.closed": "Unavailable",
-  "CalendarLegend.selection": "Selected",
+  "CalendarLegend.selection": "My reservation",
   "CalendarLegend.taken": "Taken",
   "CalendarLegend.available": "Available"
 }
