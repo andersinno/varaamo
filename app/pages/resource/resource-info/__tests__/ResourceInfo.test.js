@@ -17,6 +17,7 @@ describe('pages/resource/resource-info/ResourceInfo', () => {
         genericTerms: 'some generic terms',
         specificTerms: 'some specific terms',
         paymentTerms: 'some payment terms',
+        accessibilitySummaries: [{}],
         maxPricePerHour: '30',
         peopleCapacity: '16',
         type: {
@@ -99,6 +100,7 @@ describe('pages/resource/resource-info/ResourceInfo', () => {
       genericTerms: 'some generic terms',
       specificTerms: 'some specific terms',
       paymentTerms: 'some payment terms',
+      accessibilitySummaries: [{}],
       products: [{}],
       maxPricePerHour: '30',
       peopleCapacity: '16',

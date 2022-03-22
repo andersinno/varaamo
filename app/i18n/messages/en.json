@@ -340,6 +340,7 @@
   "ReservationTermsModal.resourceTermsSubTitle": "User regulations of {name}:",
   "ReservingRestrictedText.reservationAvailableBetween": "At the moment, you can reserve the premises from {today} to {until}.",
   "ReservingRestrictedText.reservationRestricted": "You can reserve the space at the earliest {days} in advance.",
+  "ResourceAccessibility.headingText": "Accessibility",
   "ResourceAvailability.available": "Available right now ",
   "ResourceAvailability.availableAt": "Available at {time}",
   "ResourceAvailability.availableTime": "{hours} {hours, plural, one {hour} other {hours}} available",

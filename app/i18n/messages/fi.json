@@ -341,6 +341,7 @@
   "ReservingRestrictedText.reservationAvailableBetween": "Tällä hetkellä voit tehdä varauksen ajalle {today} – {until}.",
   "ReservingRestrictedText.reservationRestricted": "Voit varata tilan aikaisintaan {days} päivää etukäteen.",
   "ResourceAvailability.available": "Heti vapaa",
+  "ResourceAccessibility.headingText": "Esteettömyys",
   "ResourceAvailability.availableAt": "Vapautuu klo {time}",
   "ResourceAvailability.availableTime": "Vapaata {hours} {hours, plural, one {tunti} other {tuntia}}",
   "ResourceAvailability.closed": "Suljettu",
