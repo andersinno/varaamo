@@ -538,7 +538,7 @@ export const getAvailabilityDataForNow = (resource, date) => {
     if (nextAvailableTime < closesMoment) {
       return {
         status: 'availableAt',
-        bsStyle: 'danger',
+        bsStyle: 'info',
         values: { time: nextAvailableTime.format(constants.TIME_FORMAT) },
       };
     }

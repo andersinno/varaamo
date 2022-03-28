@@ -344,7 +344,7 @@
   "ReservingRestrictedText.reservationRestricted": "Voit varata tilan aikaisintaan {days} päivää etukäteen.",
   "ResourceAvailability.available": "Heti vapaa",
   "ResourceAccessibility.headingText": "Esteettömyys",
-  "ResourceAvailability.availableAt": "Vapautuu klo {time}",
+  "ResourceAvailability.availableAt": "Vapaata {time} alkaen",
   "ResourceAvailability.availableTime": "Vapaata {closesAt} asti",
   "ResourceAvailability.closed": "Suljettu",
   "ResourceAvailability.reserved": "Varattu koko päivän",
