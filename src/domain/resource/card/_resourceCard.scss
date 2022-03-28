@@ -95,6 +95,10 @@ $resourceCardTitleBottomMargin: 6px;
 
   .resource-availability {
     color: $white;
+
+    span.label.label-info {
+      background-color: #ABC872;
+    }
   }
 
   .controls {

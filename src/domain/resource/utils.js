@@ -591,8 +591,8 @@ export const getAvailabilityDataForWholeDay = (resource, date) => {
 
   return {
     status: 'availableTime',
-    bsStyle: 'success',
-    values: { hours: rounded },
+    bsStyle: 'info',
+    values: { closesAt: closesMoment.format('HH:mm') },
   };
 };
 

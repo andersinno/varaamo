@@ -348,7 +348,7 @@
   "ResourceAvailability.available": "Ledigt nu",
   "ResourceAccessibility.headingText": "Tillgänglighet",
   "ResourceAvailability.availableAt": "Ledig kl. {time}",
-  "ResourceAvailability.availableTime": "Ledig {hours} {hours, plural, one {timme} other {timmar}}",
+  "ResourceAvailability.availableTime": "Tillgänglig till {closesAt}",
   "ResourceAvailability.closed": "Stängt",
   "ResourceAvailability.reserved": "Bokat hela dagen",
   "ResourceAvailability.reservingRestricted": "Kan inte bokas",

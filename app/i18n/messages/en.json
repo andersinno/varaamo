@@ -345,7 +345,7 @@
   "ResourceAccessibility.headingText": "Accessibility",
   "ResourceAvailability.available": "Available right now ",
   "ResourceAvailability.availableAt": "Available at {time}",
-  "ResourceAvailability.availableTime": "{hours} {hours, plural, one {hour} other {hours}} available",
+  "ResourceAvailability.availableTime": "Available until {closesAt}",
   "ResourceAvailability.closed": "Closed",
   "ResourceAvailability.reserved": "Reserved for the whole day",
   "ResourceAvailability.reservingRestricted": "Not available for reservation",
