@@ -349,6 +349,7 @@
   "ResourceAvailability.closed": "Suljettu",
   "ResourceAvailability.reserved": "Varattu koko päivän",
   "ResourceAvailability.reservingRestricted": "Ei varattavissa",
+  "ResourceAvailability.temporarilyClosed": "Suljettu tilapäisesti",
   "ResourceCard.peopleCapacity": "{people} henkilöä",
   "ResourceEquipment.headingText": "Varustelu",
   "ResourceHeader.purpose": "Käyttötarkoitus",

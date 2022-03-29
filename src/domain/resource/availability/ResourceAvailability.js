@@ -12,6 +12,14 @@ const ResourceAvailability = ({ date, resource, t }) => {
     return <span />;
   }
 
+  if (resource.temporarily_closed) {
+    return (
+      <Label bsStyle="danger" className="resource-availability">
+        {t('ResourceAvailability.temporarilyClosed')}
+      </Label>
+    );
+  }
+
   const availabilityData = moment(date).isSame(now, 'day')
     ? resourceUtils.getAvailabilityDataForNow(resource, date)
     : resourceUtils.getAvailabilityDataForWholeDay(resource, date);

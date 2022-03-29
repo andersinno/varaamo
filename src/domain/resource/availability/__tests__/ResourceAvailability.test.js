@@ -17,4 +17,17 @@ describe('ResourceAvailability', () => {
 
     expect(toJSON(wrapper)).toMatchSnapshot();
   });
+  test('renders temporarily closed correctly', () => {
+    const props = {
+      resource: resource.build(
+        { temporarily_closed: true },
+      ),
+    };
+
+    const wrapper = shallowWithIntl(<ResourceAvailability {...props} />);
+    const resourceAvailibility = wrapper.find('Label');
+    const resourceAvailibilityHtmlText = resourceAvailibility.html();
+
+    expect(resourceAvailibilityHtmlText).toContain('ResourceAvailability.temporarilyClosed');
+  });
 });

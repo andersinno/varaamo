@@ -13,6 +13,7 @@ import { shallowWithIntl } from '../../../utils/testUtils';
 import { UnconnectedResourcePage as ResourcePage } from '../ResourcePage';
 import ResourceHeader from '../resource-header/ResourceHeader';
 import ResourceInfo from '../resource-info/ResourceInfo';
+import ResourcePanel from '../resource-info/ResourcePanel';
 import ResourceMapInfo from '../resource-map-info/ResourceMapInfo';
 
 describe('pages/resource/ResourcePage', () => {
@@ -368,6 +369,18 @@ describe('pages/resource/ResourcePage', () => {
 
       const lightbox = wrapper.find(Lightbox);
       expect(lightbox.length).toBe(1);
+    });
+  });
+
+  describe('temporarily closed resource', () => {
+    const temporarilyClosedResource = Resource.build({ temporarilyClosed: true });
+
+    test('calendar is not rendered for temporarily closed resource', () => {
+      const wrapper = getWrapper({ resource: Immutable(temporarilyClosedResource) });
+      const resourceInfo = wrapper.find(ResourceInfo);
+
+      expect(resourceInfo).toHaveLength(1);
+      expect(wrapper.find('.app-ResourcePage__content').children().length).toEqual(1);
     });
   });
 });

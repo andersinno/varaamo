@@ -352,6 +352,7 @@
   "ResourceAvailability.closed": "Stängt",
   "ResourceAvailability.reserved": "Bokat hela dagen",
   "ResourceAvailability.reservingRestricted": "Kan inte bokas",
+  "ResourceAvailability.temporarilyClosed": "Tillfälligt stängt",
   "ResourceCard.peopleCapacity": "{people} personer",
   "ResourceEquipment.headingText": "Utrustning",
   "ResourceHeader.purpose": "Ändamål",

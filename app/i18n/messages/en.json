@@ -349,6 +349,7 @@
   "ResourceAvailability.closed": "Closed",
   "ResourceAvailability.reserved": "Reserved for the whole day",
   "ResourceAvailability.reservingRestricted": "Not available for reservation",
+  "ResourceAvailability.temporarilyClosed": "Temporarily closed",
   "ResourceCard.peopleCapacity": "{people} people",
   "ResourceEquipment.headingText": "Equipment",
   "ResourceHeader.purpose": "Purpose",

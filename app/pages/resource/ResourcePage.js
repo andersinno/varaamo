@@ -259,7 +259,7 @@ class UnconnectedResourcePage extends Component {
                     />
 
                     {
-                      resource.reservable && (
+                      resource.reservable && !resource.temporarilyClosed && (
                         <ResourcePanel header={t('ResourceInfo.reserveTitle')}>
                           <>
                             {resource.externalReservationUrl && (
