@@ -484,7 +484,7 @@
   "TimePickerCalendar.info.displayedMessage": "Kohde ei ole varattavissa",
 
   "CalendarLegend.closed": "Ei varattavissa",
-  "CalendarLegend.selection": "Varauksesi",
+  "CalendarLegend.selection": "Oma varaus",
   "CalendarLegend.taken": "Varattu",
-  "CalendarLegend.available": "Varattavissa"
+  "CalendarLegend.available": "Vapaa"
 }

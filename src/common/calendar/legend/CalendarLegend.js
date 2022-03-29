@@ -24,9 +24,7 @@ const CalendarLegend = (props) => {
       </Col>
 
       <Col md={3}>
-        <div className="color-box color-box__available">
-          <span className="dash" />
-        </div>
+        <div className="color-box color-box__available" />
         <p>{t('CalendarLegend.available')}</p>
       </Col>
     </div>
