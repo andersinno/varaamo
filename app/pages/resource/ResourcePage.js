@@ -263,13 +263,20 @@ class UnconnectedResourcePage extends Component {
                         <ResourcePanel header={t('ResourceInfo.reserveTitle')}>
                           <>
                             {resource.externalReservationUrl && (
-                              <form action={resource.externalReservationUrl} method="post" target="_blank">
-                                <input
-                                  className="btn btn-primary"
-                                  type="submit"
-                                  value="Siirry ulkoiseen ajanvarauskalenteriin"
-                                />
-                              </form>
+                              <div>
+                                <div className="app-ResourcePage__external_reservation_text">
+                                  <span>
+                                    {resource.externalReservationText}
+                                  </span>
+                                </div>
+                                <form action={resource.externalReservationUrl} method="post" target="_blank">
+                                  <input
+                                    className="btn btn-primary"
+                                    type="submit"
+                                    value="Siirry ulkoiseen ajanvarauskalenteriin"
+                                  />
+                                </form>
+                              </div>
                             )}
                             {!resource.externalReservationUrl && (
                               <div>

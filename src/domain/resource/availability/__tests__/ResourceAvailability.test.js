@@ -17,6 +17,20 @@ describe('ResourceAvailability', () => {
 
     expect(toJSON(wrapper)).toMatchSnapshot();
   });
+  test('renders external reservation correctly', () => {
+    const props = {
+      resource: resource.build(
+        { external_reservation_url: 'https://somewhere.external.com' },
+      ),
+    };
+
+    const wrapper = shallowWithIntl(<ResourceAvailability {...props} />);
+    const resourceAvailibility = wrapper.find('Label');
+    const resourceAvailibilityHtmlText = resourceAvailibility.html();
+
+    expect(resourceAvailibilityHtmlText).toContain('ResourceAvailability.externalReservation');
+  });
+
   test('renders temporarily closed correctly', () => {
     const props = {
       resource: resource.build(

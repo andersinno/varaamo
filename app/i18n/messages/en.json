@@ -348,6 +348,7 @@
   "ResourceAvailability.availableTime": "Available until {closesAt}",
   "ResourceAvailability.closed": "Closed on selected day",
   "ResourceAvailability.closedToday": "Closed today",
+  "ResourceAvailability.externalReservation": "Reservations externally",
   "ResourceAvailability.reserved": "Reserved for the whole day",
   "ResourceAvailability.reservingRestricted": "Not available for reservation",
   "ResourceAvailability.temporarilyClosed": "Temporarily closed",

@@ -351,6 +351,7 @@
   "ResourceAvailability.availableTime": "Tillgänglig till {closesAt}",
   "ResourceAvailability.closed": "Stängt på den valda dagen",
   "ResourceAvailability.closedToday": "Stängt idag",
+  "ResourceAvailability.externalReservation": "Bokningar externt",
   "ResourceAvailability.reserved": "Bokat hela dagen",
   "ResourceAvailability.reservingRestricted": "Kan inte bokas",
   "ResourceAvailability.temporarilyClosed": "Tillfälligt stängt",

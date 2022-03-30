@@ -175,6 +175,9 @@ $content-padding: 10px;
       }
     }
   }
+  &__external_reservation_text {
+    padding-bottom: 10px;
+  }
 
   &__keyboard-reservation {
     &:not(:focus-within) {

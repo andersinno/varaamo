@@ -372,6 +372,20 @@ describe('pages/resource/ResourcePage', () => {
     });
   });
 
+  describe('external reservation', () => {
+    const resourceReservableExternally = Resource.build({
+      externalReservationUrl: 'https://external-service.com',
+      externalReservationText: 'Reserve this resource externally in above url',
+    });
+
+    test('external reservation text description is rendered', () => {
+      const wrapper = getWrapper({ resource: Immutable(resourceReservableExternally) });
+      const externalReservationDiv = wrapper.find('.app-ResourcePage__external_reservation_text');
+
+      expect(externalReservationDiv).toHaveLength(1);
+    });
+  });
+
   describe('temporarily closed resource', () => {
     const temporarilyClosedResource = Resource.build({ temporarilyClosed: true });
 

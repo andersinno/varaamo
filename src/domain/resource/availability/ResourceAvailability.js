@@ -8,8 +8,16 @@ import * as resourceUtils from '../utils';
 
 const ResourceAvailability = ({ date, resource, t }) => {
   const now = moment();
-  if (moment(date).isBefore(now, 'day') || !!resource.external_reservation_url) {
+  if (moment(date).isBefore(now, 'day')) {
     return <span />;
+  }
+
+  if (resource.external_reservation_url || resource.external_reservation_text) {
+    return (
+      <Label bsStyle="primary" className="resource-availability">
+        {t('ResourceAvailability.externalReservation')}
+      </Label>
+    );
   }
 
   if (resource.temporarily_closed) {
