@@ -520,7 +520,7 @@ export const getAvailabilityDataForNow = (resource, date) => {
   const reservations = getOpenReservations(resource);
 
   if (!openingHours || !openingHours.closes || !openingHours.opens) {
-    return { status: 'closed', bsStyle: 'danger' };
+    return { status: 'closedToday', bsStyle: 'danger' };
   }
 
   const nowMoment = moment();
@@ -529,7 +529,7 @@ export const getAvailabilityDataForNow = (resource, date) => {
   const beginMoment = nowMoment > opensMoment ? nowMoment : opensMoment;
 
   if (nowMoment > closesMoment) {
-    return { status: 'closed', bsStyle: 'danger' };
+    return { status: 'closedToday', bsStyle: 'danger' };
   }
 
   const currentReservation = reservationUtils.getCurrentReservation(reservations);
