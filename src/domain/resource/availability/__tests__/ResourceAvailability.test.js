@@ -17,6 +17,22 @@ describe('ResourceAvailability', () => {
 
     expect(toJSON(wrapper)).toMatchSnapshot();
   });
+
+  test('renders free to use correctly', () => {
+    const props = {
+      resource: resource.build({
+        can_use_without_reservation: true,
+        reservable: false,
+      }),
+    };
+
+    const wrapper = shallowWithIntl(<ResourceAvailability {...props} />);
+    const resourceAvailibility = wrapper.find('Label');
+    const resourceAvailibilityHtmlText = resourceAvailibility.html();
+
+    expect(resourceAvailibilityHtmlText).toContain('ResourceAvailability.canUseWithoutReservation');
+  });
+
   test('renders external reservation correctly', () => {
     const props = {
       resource: resource.build(

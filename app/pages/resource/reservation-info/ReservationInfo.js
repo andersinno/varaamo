@@ -99,6 +99,14 @@ function renderMaxReservationsPerUserText(maxReservationsPerUser, t) {
 }
 
 function ReservationInfo({ isLoggedIn, resource, t }) {
+  if (resource.canUseWithoutReservation) {
+    return (
+      <div className="app-ReservationInfo">
+        <p>{t('ReservationInfo.canUseWithoutReservation')}</p>
+      </div>
+    );
+  }
+
   return (
     <div className="app-ReservationInfo">
       <WrappedText openLinksInNewTab text={resource.reservationInfo} />
@@ -118,6 +126,7 @@ ReservationInfo.propTypes = {
     maxPeriod: PropTypes.string,
     maxReservationsPerUser: PropTypes.number,
     reservable: PropTypes.bool,
+    canUseWithoutReservation: PropTypes.bool,
     reservationInfo: PropTypes.string,
   }).isRequired,
   t: PropTypes.func.isRequired,

@@ -12,6 +12,14 @@ const ResourceAvailability = ({ date, resource, t }) => {
     return <span />;
   }
 
+  if (!resource.reservable && resource.can_use_without_reservation) {
+    return (
+      <Label bsStyle="primary" className="resource-availability">
+        {t('ResourceAvailability.canUseWithoutReservation')}
+      </Label>
+    );
+  }
+
   if (resource.external_reservation_url || resource.external_reservation_text) {
     return (
       <Label bsStyle="primary" className="resource-availability">
