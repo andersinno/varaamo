@@ -96,6 +96,15 @@ describe('pages/resource/resource-header/ResourceHeader', () => {
       });
     });
 
+    describe('Resource area', () => {
+      test('renders resource area', () => {
+        const infos = getWrapper().find('.app-ResourceHeader__info');
+        const areaSpan = infos.find('.app-ResourceHeader__info-area-icon');
+
+        expect(areaSpan.text()).toBe('m2');
+      });
+    });
+
 
     describe('Unit info', () => {
       function createProps(resourceProps) {
