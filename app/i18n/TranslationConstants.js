@@ -1,5 +1,6 @@
 export const SUPPORTED_LANGUAGES = {
   FI: 'fi',
-  SV: 'sv',
-  EN: 'en',
+  // TODO: TAM-117: Enable other language when the translation files are up to date.
+  // SV: 'sv',
+  // EN: 'en',
 };
