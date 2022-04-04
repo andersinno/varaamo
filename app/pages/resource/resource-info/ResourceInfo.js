@@ -25,15 +25,15 @@ function ResourceInfo({
         </ResourcePanel>
       )}
 
-      {resource.specificTerms && (
-        <ResourcePanel header={t('ResourcePage.specificTerms')}>
-          <WrappedText text={resource.specificTerms} />
-        </ResourcePanel>
-      )}
-
       {resource.genericTerms && (
         <ResourcePanel defaultExpanded={false} header={t('ResourcePage.genericTermsHeader')}>
           <WrappedText text={resource.genericTerms} />
+        </ResourcePanel>
+      )}
+
+      {resource.specificTerms && (
+        <ResourcePanel header={t('ResourcePage.specificTerms')}>
+          <WrappedText text={resource.specificTerms} />
         </ResourcePanel>
       )}
 
