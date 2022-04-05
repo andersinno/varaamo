@@ -4,40 +4,18 @@ exports[`pages/resource/resource-equipment/ResourceEquipment 1`] = `
 <ResourcePanel
   header="ResourceEquipment.headingText"
 >
-  <Row
-    bsClass="row"
-    componentClass="div"
+  <div
+    className="equipmentRow"
   >
-    <Col
-      bsClass="col"
-      componentClass="div"
-      key="0"
-      lg={6}
-      md={6}
-      xs={12}
-    >
+    <div>
       Karaoke
-    </Col>
-    <Col
-      bsClass="col"
-      componentClass="div"
-      key="1"
-      lg={6}
-      md={6}
-      xs={12}
-    >
-      Projector
-    </Col>
-    <Col
-      bsClass="col"
-      componentClass="div"
-      key="2"
-      lg={6}
-      md={6}
-      xs={12}
-    >
+    </div>
+    <div>
       Printer
-    </Col>
-  </Row>
+    </div>
+    <div>
+      Projector
+    </div>
+  </div>
 </ResourcePanel>
 `;

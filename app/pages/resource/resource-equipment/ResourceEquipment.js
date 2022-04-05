@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Col from 'react-bootstrap/lib/Col';
-import Row from 'react-bootstrap/lib/Row';
+import { sortBy } from 'lodash';
 
 import injectT from '../../../i18n/injectT';
 import ResourcePanel from '../resource-info/ResourcePanel';
@@ -10,14 +9,14 @@ function ResourceEquipment({
   equipment = [],
   t,
 }) {
-  const equipmentColumns = equipment.map(
-    (item, i) => <Col key={i} lg={6} md={6} xs={12}>{item.name}</Col>,
+  const equipmentColumns = sortBy(equipment, 'name').map(
+    item => <div key={item.id}>{item.name}</div>,
   );
   return (
     <ResourcePanel header={t('ResourceEquipment.headingText')}>
-      <Row>
-        {equipmentColumns}
-      </Row>
+      <div className="equipmentRow">
+        { equipmentColumns }
+      </div>
     </ResourcePanel>
   );
 }
