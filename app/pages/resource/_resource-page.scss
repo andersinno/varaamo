@@ -169,6 +169,10 @@ $content-padding: 10px;
 
     .panel-body {
       padding: 0;
+
+      .equipmentRow {
+        column-count: 2;
+      }
     }
   }
 
@@ -204,6 +208,9 @@ $content-padding: 10px;
     }
     .app-ResourcePage__content {
       padding: 0;
+    }
+    .panel div.panel-body .equipmentRow {
+      column-count: 1;
     }
   }
 }
