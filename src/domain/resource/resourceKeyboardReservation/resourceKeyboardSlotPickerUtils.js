@@ -117,3 +117,19 @@ export function getNextFreeSlot(slots, reservations) {
     end: null,
   };
 }
+
+
+export function getSlotCount(time, slotSize) {
+  let duration = time;
+  // If the resource doesn't have max reservable period (max_period), manually assign
+  // it the max possible value so we get max slots available
+  if (!duration) {
+    duration = '23:30:00';
+  }
+  const [timeHours, timeMinutes] = duration.split(':');
+  const timeInMs = getInMs(timeHours, timeMinutes);
+  const [slotHours, slotMinutes] = slotSize.split(':');
+  const slotSizeInMs = getInMs(slotHours, slotMinutes);
+
+  return timeInMs / slotSizeInMs;
+}

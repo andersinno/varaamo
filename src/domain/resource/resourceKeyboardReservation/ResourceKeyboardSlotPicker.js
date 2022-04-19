@@ -4,7 +4,7 @@ import moment from 'moment';
 
 import Constants from '../../../../app/constants/AppConstants';
 import injectT from '../../../../app/i18n/injectT';
-import { getIsSlotReserved, getIsSlotInPast, getInMs } from './resourceKeyboardSlotPickerUtils';
+import { getIsSlotReserved, getIsSlotInPast, getSlotCount } from './resourceKeyboardSlotPickerUtils';
 
 const rootClass = 'app-ResourcePageKeyboardTimePicker';
 
@@ -21,15 +21,6 @@ function getTime(dateTime) {
   const dateTimeInAppTimeZone = moment(dateTime).tz(Constants.TIME_ZONE);
 
   return dateTimeInAppTimeZone.format('HH:mm');
-}
-
-function getSlotCount(time, slotSize) {
-  const [timeHours, timeMinutes] = time.split(':');
-  const timeInMs = getInMs(timeHours, timeMinutes);
-  const [slotHours, slotMinutes] = slotSize.split(':');
-  const slotSizeInMs = getInMs(slotHours, slotMinutes);
-
-  return timeInMs / slotSizeInMs;
 }
 
 function labelStartTimeOptions(
