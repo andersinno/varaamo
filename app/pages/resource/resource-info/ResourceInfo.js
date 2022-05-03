@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
+import isEmpty from 'redux-actions/lib/utils/isEmpty';
 
 import injectT from '../../../i18n/injectT';
 import WrappedText from '../../../shared/wrapped-text/WrappedText';
@@ -14,6 +15,15 @@ function ResourceInfo({
   isLoggedIn, resource, unit, t,
 }) {
   const hasProducts = resource.products && resource.products.length > 0;
+  const { accessibilitySummaries, accessibilityDescription } = resource;
+  const accessibilitySummariesArray = accessibilitySummaries.map(accessibility => accessibility.viewpointName);
+  let accessibilityDescriptionArray = [];
+
+  if (accessibilityDescription) {
+    const accessibilityDescriptions = accessibilityDescription.split('\r\n');
+    accessibilityDescriptionArray = accessibilityDescriptions.map(accessibility => accessibility.trim());
+  }
+  const accessibilitySummariesAndDescription = [...accessibilitySummariesArray, ...accessibilityDescriptionArray];
 
   return (
     <section className="app-ResourceInfo">
@@ -61,6 +71,16 @@ function ResourceInfo({
           </Col>
         </Row>
       </ResourcePanel>
+
+      {!isEmpty(accessibilitySummariesAndDescription) && (
+        <ResourcePanel header={t('ResourceAccessibility.headingText')}>
+          <ul>
+            {accessibilitySummariesAndDescription.map(accessibility => (
+              <li>{accessibility}</li>
+            ))}
+          </ul>
+        </ResourcePanel>
+      )}
 
       { Array.isArray(resource.equipment)
       && resource.equipment.length > 0 && (<Equipment equipment={resource.equipment} />) }

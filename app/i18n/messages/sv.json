@@ -346,6 +346,7 @@
   "ReservingRestrictedText.reservationAvailableBetween": "För närvarande kan du göra en bokning för tiden {today} – {until}.",
   "ReservingRestrictedText.reservationRestricted": "Du kan boka utrymmet tidigast {days} dagar i förväg.",
   "ResourceAvailability.available": "Ledigt nu",
+  "ResourceAccessibility.headingText": "Tillgänglighet",
   "ResourceAvailability.availableAt": "Ledig kl. {time}",
   "ResourceAvailability.availableTime": "Ledig {hours} {hours, plural, one {timme} other {timmar}}",
   "ResourceAvailability.closed": "Stängt",
