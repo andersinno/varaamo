@@ -1,4 +1,4 @@
-import { getSlots } from '../resourceKeyboardSlotPickerUtils';
+import { getSlots, getSlotCount } from '../resourceKeyboardSlotPickerUtils';
 
 describe('resourcePageKeyboardTimPickerUtils', () => {
   describe('getSlots', () => {
@@ -17,6 +17,13 @@ describe('resourcePageKeyboardTimPickerUtils', () => {
           end: new Date(2017, 6, 7, 11, 59, 59, 999).toJSON(),
         },
       ]);
+    });
+  });
+
+  describe('slotSize', () => {
+    test('should return max slot size if end time is empty', () => {
+      const slotCount = getSlotCount(null, '1:00:00');
+      expect(slotCount).toBe(23.5);
     });
   });
 });
