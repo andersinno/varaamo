@@ -480,7 +480,7 @@
   "ResourceReservationCalendar.selectedDateLabel": "Valittu aika:",
   "ResourceReservationCalendar.selectedDateValue": "{date} klo {start} - klo {end} ({duration})",
   "ResourceReservationCalendar.selectedDateValueWithPrice": "{date} klo {start} - klo {end} ({duration}) yht {price}€",
-
+  "TimePickerCalendar.info.calendarSelectionMovedText": "Ajankohdan valinta on sovitettu kalenteriasetuksia vastaavaksi",
   "TimePickerCalendar.info.minPeriodText": "Varauksen on kestettävä vähintään {duration} tuntia.",
   "TimePickerCalendar.info.maxPeriodText": "Varaus saa kestää enimmillään {duration} tuntia.",
   "TimePickerCalendar.info.today": "Tänään",
