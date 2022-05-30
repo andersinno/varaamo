@@ -19,5 +19,6 @@ const Resource = new Factory()
   .attr('isFavorite', false)
   .attr('slotSize', DEFAULT_SLOT_SIZE)
   .attr('products', [])
+  .attr('shouldBeReservedWholeDay', false)
   .attr('area', 13);
 export default Resource;

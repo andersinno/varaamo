@@ -42,6 +42,25 @@ describe('Calendar reservation selection', () => {
     expect(bouncedSlot.start.toJSON()).toBe('2019-12-17T16:30:00.000Z');
     expect(bouncedSlot.end.toJSON()).toBe('2019-12-17T18:00:00.000Z');
   });
+
+  test('fills entire opening hours if resource should be reserved for whole day', () => {
+    const wholeDayResourceOpeningHours = [{
+      date: '2019-12-17',
+      opens: '2019-12-17T09:00:00.000Z',
+      closes: '2019-12-17T17:00:00.000Z',
+    }];
+    const wholeDayResource = resource.build({
+      should_be_reserved_whole_day: true,
+      min_period: '04:30:00',
+      opening_hours: wholeDayResourceOpeningHours,
+    });
+    const wholeDayResourceWrapper = getWrapper({ resource: wholeDayResource, date: '2019-12-17' });
+    const instance = wholeDayResourceWrapper.instance();
+    const wholeDayReservationHours = instance.getSelectableTimeRange(selectedInvalidSlot);
+
+    expect(wholeDayReservationHours.start.toJSON()).toBe(wholeDayResourceOpeningHours[0].opens);
+    expect(wholeDayReservationHours.end.toJSON()).toBe(wholeDayResourceOpeningHours[0].closes);
+  });
 });
 
 

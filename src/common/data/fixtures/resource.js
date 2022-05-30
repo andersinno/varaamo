@@ -19,4 +19,5 @@ export default new Factory()
   .attr('user_permissions', { isAdmin: false, canMakeReservations: true })
   .attr('is_favorite', false)
   .attr('slot_size', DEFAULT_SLOT_SIZE)
+  .attr('should_be_reserved_whole_day', false)
   .attr('products', []);

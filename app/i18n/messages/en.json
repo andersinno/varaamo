@@ -375,6 +375,7 @@
   "ResourceInfo.loginMessage": "You must <a href=”/login”>log in</a> to reserve these premises.",
   "ResourceInfo.reservationTitle": "Reservation details",
   "ResourceInfo.reserveTitle": "Reserve",
+  "ReservationInfo.wholeDayReservation": "Whole day reservation __english__",
   "ResourceInfoContainer.unpublishedLabel": "unpublished",
   "ResourceKeyboardReservation.dateLabel": "Date",
   "ResourceKeyboardSlotPicker.startTimeLabel": "Reservation starting time",
@@ -474,6 +475,7 @@
   "TimePickerCalendar.info.calendarSelectionMovedText": "Your selection is not available. Selection moved to nearest available slot.",
   "TimePickerCalendar.info.minPeriodText": "Reservation must be at least {duration}h long",
   "TimePickerCalendar.info.maxPeriodText": "Reservation must be shorter than {duration}h",
+  "TimePickerCalendar.info.shouldBeReservedWholeDayText": "Resource should be reserved whole day.",
   "TimePickerCalendar.info.today": "Today",
   "TimePickerCalendar.info.displayedMessage": "The resource cannot be reserved at this time",
 

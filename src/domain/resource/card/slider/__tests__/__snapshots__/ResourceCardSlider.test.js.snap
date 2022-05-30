@@ -29,6 +29,7 @@ exports[`ResourceCardSlider renders correctly 1`] = `
         "required_reservation_extra_fields": Array [],
         "reservable": true,
         "reservable_after": null,
+        "should_be_reserved_whole_day": false,
         "slot_size": "00:30:00",
         "supported_reservation_extra_fields": Array [],
         "unit": 1,

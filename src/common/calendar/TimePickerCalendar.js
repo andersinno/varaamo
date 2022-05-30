@@ -171,6 +171,25 @@ class TimePickerCalendar extends Component {
       end: selected.end,
     };
 
+    // If the resource can be reserved for whole day then, then fill all
+    // available hours for that day.
+    if (resource.should_be_reserved_whole_day) {
+      if (eventCallback) {
+        eventCallback.revert();
+        createNotification(
+          NOTIFICATION_TYPE.INFO, t('TimePickerCalendar.info.shouldBeReservedWholeDayText'),
+        );
+      }
+      const startMoment = moment(selected.start).toJSON();
+      const selectedDate = startMoment.split('T')[0];
+      const slots = this.getSlotsForDate(selectedDate, resource);
+      selectable = {
+        start: moment(slots[slots.length - 1].start).toDate(),
+        // Add 1 millisecond to round the hour/minute
+        end: moment(slots[0].end).add('1', 'millisecond').toDate(),
+      };
+    }
+
     const isUnderMinPeriod = calendarUtils.isTimeRangeUnderMinPeriod(
       resource, selectable.start, selectable.end,
     );
