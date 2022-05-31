@@ -1,10 +1,49 @@
 import React from 'react';
 import toJson from 'enzyme-to-json';
+import moment from 'moment';
 
 import TimePickerCalendar from '../TimePickerCalendar';
 import resource from '../../data/fixtures/resource';
 import reservation from '../../data/fixtures/reservation';
 import { globalDateMock, shallowWithIntl } from '../../../../app/utils/testUtils';
+
+describe('Calendar reservation selection', () => {
+  // Change the date so that test runs with this 'now'.
+  Date.now = jest.fn(() => new Date('2019-12-17T11:00:00+03:00'));
+  const defaultProps = {
+    resource: resource.build(),
+    date: '2019-08-15',
+    isStaff: false,
+    onDateChange: jest.fn(),
+    onReserve: jest.fn(),
+    onTimeChange: jest.fn(),
+  };
+  const selectedInvalidSlot = {
+    start: moment('2019-12-17T17:00:00.000Z').toDate(),
+    end: moment('2019-12-17T18:00:00.000Z').toDate(),
+  };
+  const resourceOpeningHours = [{
+    date: '2019-12-17',
+    opens: '2019-12-17T09:00:00.000Z',
+    closes: '2019-12-17T18:00:00.000Z',
+  }];
+  const userResource = resource.build({
+    opening_hours: resourceOpeningHours,
+    min_period: '01:30:00',
+  });
+  const getWrapper = props => shallowWithIntl(<TimePickerCalendar {...defaultProps} {...props} />);
+  const wrapper = getWrapper({ resource: userResource, date: '2019-12-17' });
+
+  test('bounces to valid avalilable slot if selection is not valid', () => {
+    // The valid slot is from 16:30 - 18:00 if user's selected slot starts from 17:00
+    const instance = wrapper.instance();
+    const bouncedSlot = instance.getSelectableTimeRange(selectedInvalidSlot);
+
+    expect(bouncedSlot.start.toJSON()).toBe('2019-12-17T16:30:00.000Z');
+    expect(bouncedSlot.end.toJSON()).toBe('2019-12-17T18:00:00.000Z');
+  });
+});
+
 
 describe('TimePickerCalendar', () => {
   globalDateMock();

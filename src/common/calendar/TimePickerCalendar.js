@@ -9,6 +9,7 @@ import svLocale from '@fullcalendar/core/locales/sv';
 import fiLocale from '@fullcalendar/core/locales/fi';
 import moment from 'moment';
 import get from 'lodash/get';
+import { orderBy, find } from 'lodash';
 import classNames from 'classnames';
 import isEmpty from 'lodash/isEmpty';
 
@@ -19,6 +20,9 @@ import injectT from '../../../app/i18n/injectT';
 import * as calendarUtils from './utils';
 import { createNotification } from '../notification/utils';
 import { NOTIFICATION_TYPE } from '../notification/constants';
+import { getOpeningHours } from '../../../app/utils/resourceUtils';
+import { getSlots } from '../../domain/resource/resourceKeyboardReservation/resourceKeyboardSlotPickerUtils';
+import { toCamelCase } from '../data/utils';
 
 const NEW_RESERVATION = 'NEW_RESERVATION';
 
@@ -186,8 +190,22 @@ class TimePickerCalendar extends Component {
         );
       }
 
-      selectable = calendarUtils.getMinPeriodTimeRange(resource, selected.start, selected.end);
       // Make sure selected time will always bigger than min period
+      selectable = calendarUtils.getMinPeriodTimeRange(resource, selected.start, selected.end);
+
+      // Move the selection to nearest available slot
+      if (!this.isSelectionValid(selectable)) {
+        const nearestSlot = this.getNearestValidSlot(selectable, resource);
+        selectable = nearestSlot[0];
+        const nearestSlotIsValid = nearestSlot[1];
+
+        if (nearestSlotIsValid) {
+          createNotification(
+            NOTIFICATION_TYPE.INFO,
+            t('TimePickerCalendar.info.calendarSelectionMovedText'),
+          );
+        }
+      }
     }
 
     if (isOverMaxPeriod) {
@@ -209,6 +227,43 @@ class TimePickerCalendar extends Component {
     }
 
     return selectable;
+  }
+
+  getSlotsForDate = (date, resource) => {
+    const { opens, closes } = getOpeningHours(toCamelCase(resource), date);
+    const slots = getSlots(opens, closes, resource.slot_size);
+    const sortedSlots = orderBy(slots, 'start', 'desc');
+    return sortedSlots;
+  }
+
+  getNearestValidSlot = (selected) => {
+    const { resource } = this.props;
+    const startMoment = moment(selected.start).toJSON();
+    const selectedDate = startMoment.split('T')[0];
+    const slots = this.getSlotsForDate(selectedDate, resource);
+    const indexOfSelectedSlot = slots.indexOf(find(slots, { start: startMoment }));
+    const lowerSlotsFromSelectedStart = slots.slice(0, indexOfSelectedSlot + 1);
+    const upperSlotsFromSelectedStart = slots.slice(indexOfSelectedSlot + 1);
+    const arrangedSlots = [
+      ...upperSlotsFromSelectedStart,
+      ...(orderBy(lowerSlotsFromSelectedStart, 'start', 'asc')),
+    ];
+    const minPeriod = get(resource, 'min_period', null);
+    const minPeriodDuration = moment.duration(minPeriod).asMinutes();
+    let selectable = { start: '', end: '' };
+
+    for (let x = 0; x < arrangedSlots.length; x++) {
+      const adjustedStart = moment(arrangedSlots[x].start);
+      selectable = {
+        start: adjustedStart.toDate(),
+        end: adjustedStart.add(minPeriodDuration, 'minutes').toDate(),
+      };
+
+      if (this.isSelectionValid(selectable)) {
+        return [selectable, true];
+      }
+    }
+    return [selected, false];
   }
 
   getDurationText = (selected) => {
