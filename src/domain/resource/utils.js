@@ -92,7 +92,7 @@ export const getPrice = (minPriceString, maxPriceString, priceType, t) => {
     week: t('common.unit.time.week'),
   });
 
-  if (minPrice && maxPrice && minPrice !== maxPrice) {
+  if (minPrice >= 0 && maxPrice && minPrice !== maxPrice) {
     return `${Number(minPrice)} - ${Number(maxPrice)} ${priceEnding}`;
   }
 
