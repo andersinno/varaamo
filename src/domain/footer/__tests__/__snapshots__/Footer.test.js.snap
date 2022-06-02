@@ -53,23 +53,6 @@ exports[`domain/footer/Footer When there is no customization in use renders corr
           </FeedbackLink>
         </p>
       </Col>
-      <Col
-        bsClass="col"
-        componentClass="div"
-        lg={3}
-        md={3}
-        xs={12}
-      >
-        <div
-          className="app-varaamo-version-wrapper"
-        >
-          <span
-            className="app-varaamo-version"
-          >
-            v0.12.0
-          </span>
-        </div>
-      </Col>
     </Row>
   </Grid>
 </footer>
@@ -127,23 +110,6 @@ exports[`domain/footer/Footer renders correctly 1`] = `
             Footer.feedbackLink
           </FeedbackLink>
         </p>
-      </Col>
-      <Col
-        bsClass="col"
-        componentClass="div"
-        lg={3}
-        md={3}
-        xs={12}
-      >
-        <div
-          className="app-varaamo-version-wrapper"
-        >
-          <span
-            className="app-varaamo-version"
-          >
-            v0.12.0
-          </span>
-        </div>
       </Col>
     </Row>
   </Grid>

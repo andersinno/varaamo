@@ -58,11 +58,6 @@ function Footer({ t }) {
               {feedbackLink}
             </p>
           </Col>
-          <Col lg={3} md={3} xs={12}>
-            <div className="app-varaamo-version-wrapper">
-              <span className="app-varaamo-version">{`v${version}`}</span>
-            </div>
-          </Col>
         </Row>
       </Grid>
     </footer>
