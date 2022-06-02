@@ -19,6 +19,11 @@ function Footer({ t }) {
       {t('AccessibilityPage.pageLink')}
     </Link>
   );
+  const clientRegisterDescriptionLink = (
+    <a href="https://www.tampere.fi/tietosuoja-ja-tiedonhallinta/tietosuojaselosteet">
+      {t('AboutPageContent.customerRegisterLink')}
+    </a>
+  );
 
   let cityNameId;
   switch (getCurrentCustomization()) {
@@ -51,6 +56,9 @@ function Footer({ t }) {
               {t(cityNameId)}
             </p>
             <MunicipalityLogos />
+            <p>
+              {clientRegisterDescriptionLink}
+            </p>
             <p>
               {accessibilityPage}
             </p>

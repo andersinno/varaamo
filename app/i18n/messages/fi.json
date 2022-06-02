@@ -1,9 +1,7 @@
 {
   "AboutPage.title": "Tietoa palvelusta",
   "AboutPageContent.basedOnParagraph": "Varaamo perustuu Helsingin kaupungin avoimeen <a href=\"http://dev.hel.fi/apis/respa\"> tilavarausrajapintaan</a>, joka on toteutettu osana Suomen suurimpien kaupunkien yhteistä <a href=\"http://6aika.fi\">6aika - Avoimet ja älykkäät palvelut</a> -hanketta.",
-  "AboutPageContent.customerRegisterHeader": "Asiakasrekisteriseloste",
-  "AboutPageContent.customerRegisterLink": "Asiakasrekisteriseloste",
-  "AboutPageContent.customerRegisterParagraph": "Palveluun liittyvän asiakasrekisteriselosteen näet täältä: ",
+  "AboutPageContent.customerRegisterLink": "Tietosuojaseloste",
   "AboutPageContent.defaultHeader": "Tietoa varaamo.hel.fi –palvelusta",
   "AboutPageContent.defaultLead": "Varaamo on Helsingin kaupungin ylläpitämä verkkopalvelu, jonka kautta voi varata kaupungin julkisia tiloja sekä työpisteitä yksityiseen käyttöön.",
   "AboutPageContent.defaultReservableParagraph": "Pilottivaiheessa palvelun kautta on varattavissa kaupunginkirjaston, nuorisoasiainkeskuksen sekä varhaiskasvatusviraston tiloja, työpisteitä ja laitteita.",

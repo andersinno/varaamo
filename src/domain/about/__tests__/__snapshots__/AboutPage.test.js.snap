@@ -22,17 +22,6 @@ exports[`pages/about/AboutPage render normally 1`] = `
         AboutPageContent.feedbackLink
       </FeedbackLink>
     </p>
-    <h2>
-      AboutPageContent.customerRegisterHeader
-    </h2>
-    <p>
-      AboutPageContent.customerRegisterParagraph
-      <a
-        href="https://www.tampere.fi/tampereen-kaupunki/yhteystiedot-ja-asiointi/verkkoasiointi/tietosuoja.html"
-      >
-        AboutPageContent.customerRegisterLink
-      </a>
-    </p>
     <br />
   </div>
 </PageWrapper>

@@ -39,6 +39,13 @@ exports[`domain/footer/Footer When there is no customization in use renders corr
         </p>
         <InjectT(MunicipalityLogos) />
         <p>
+          <a
+            href="https://www.tampere.fi/tietosuoja-ja-tiedonhallinta/tietosuojaselosteet"
+          >
+            AboutPageContent.customerRegisterLink
+          </a>
+        </p>
+        <p>
           <Link
             className="feedback-link"
             replace={false}
@@ -96,6 +103,13 @@ exports[`domain/footer/Footer renders correctly 1`] = `
           Footer.helsinkiText
         </p>
         <InjectT(MunicipalityLogos) />
+        <p>
+          <a
+            href="https://www.tampere.fi/tietosuoja-ja-tiedonhallinta/tietosuojaselosteet"
+          >
+            AboutPageContent.customerRegisterLink
+          </a>
+        </p>
         <p>
           <Link
             className="feedback-link"
