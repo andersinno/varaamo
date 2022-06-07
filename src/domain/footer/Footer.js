@@ -19,6 +19,11 @@ function Footer({ t }) {
       {t('AccessibilityPage.pageLink')}
     </Link>
   );
+  const clientRegisterDescriptionLink = (
+    <a href="https://www.tampere.fi/tietosuoja-ja-tiedonhallinta/tietosuojaselosteet">
+      {t('AboutPageContent.customerRegisterLink')}
+    </a>
+  );
 
   let cityNameId;
   switch (getCurrentCustomization()) {
@@ -52,16 +57,14 @@ function Footer({ t }) {
             </p>
             <MunicipalityLogos />
             <p>
+              {clientRegisterDescriptionLink}
+            </p>
+            <p>
               {accessibilityPage}
             </p>
             <p>
               {feedbackLink}
             </p>
-          </Col>
-          <Col lg={3} md={3} xs={12}>
-            <div className="app-varaamo-version-wrapper">
-              <span className="app-varaamo-version">{`v${version}`}</span>
-            </div>
           </Col>
         </Row>
       </Grid>

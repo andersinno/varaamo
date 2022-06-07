@@ -1,9 +1,7 @@
 {
   "AboutPage.title": "Information om tjänsten",
   "AboutPageContent.basedOnParagraph": "Varaamo baserar sig på Helsingfors stads öppna <a href=\"http://dev.hel.fi/apis/respa”> gränssnitt för utrymmesbokning</a>, som genomförts genom projektet <a href=”http://6aika.fi”>6aika - Avoimet ja älykkäät palvelut</a> som är gemensamt för Finlands största städer.",
-  "AboutPageContent.customerRegisterHeader": "Kundregisterbeskrivning",
   "AboutPageContent.customerRegisterLink": "Kundregisterbeskrivning",
-  "AboutPageContent.customerRegisterParagraph": "Tjänstens kundregisterbeskrivning finns här: ",
   "AboutPageContent.defaultHeader": "Information om tjänsten varaamo.hel.fi",
   "AboutPageContent.defaultLead": "Varaamo är en webbtjänst som upprätthålls av Helsingfors stad. Genom den kan man boka stadens offentliga utrymmen och arbetspunkter för privat bruk.",
   "AboutPageContent.defaultReservableParagraph": "I pilotskedet kan man boka stadsbibliotekets, ungdomscentralens och barnomsorgsverkets utrymmen, arbetspunkter och apparater.",
@@ -154,7 +152,7 @@
   "Footer.espooText": "Varaamo är Helsingfors stads utrymmesbokningstjänst, som kommer att provas i vissa av Esbo stadsbiblioteks utrymmen. Det är frågan om en pilotversion och vi hoppas att Du ger oss respons på den.",
   "Footer.feedbackLink": "Du kan ge din respons här.",
   "Footer.helsinkiText": "Varaamo är Helsingfors stads utrymmesbokningstjänst. Det är frågan om en pilotversion och vi hoppas att Du  ger oss respons på den.",
-  "Footer.tampereText": "Varaamo är Tammerfors stads utrymmesbokningstjänst. Det är frågan om en pilotversion och vi hoppas att Du ger oss respons på den.",
+  "Footer.tampereText": "Varaamo är Tammerfors stads utrymmesbokningstjänst.",
   "Footer.vantaaText": "Varaamo är Helsingfors stads utrymmesbokningstjänst, som kommer att provas under ett års tid i vissa av Vanda biblioteks utrymmen. Det är frågan om en pilotversion och vi hoppas att Du ger oss respons på den.",
   "HeaderContrastControl.label": "Kontrast",
   "HeaderFontSizeControl.label": "Textstorlek",
