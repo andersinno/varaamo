@@ -373,6 +373,7 @@
   "ResourceInfo.loginMessage": "Sinun täytyy <a href=\"/login\">kirjautua sisään</a>, jotta voit tehdä varauksen tähän tilaan.",
   "ResourceInfo.reservationTitle": "Varauksen tiedot",
   "ResourceInfo.reserveTitle": "Varaa",
+  "ReservationInfo.wholeDayReservation": "Varauksen pituus: koko päivä",
   "ResourceInfoContainer.unpublishedLabel": "ei julkaistu",
   "ResourceKeyboardReservation.dateLabel": "Päivämäärä",
   "ResourceKeyboardSlotPicker.startTimeLabel": "Varauksen aloitusaika",
@@ -481,6 +482,7 @@
   "TimePickerCalendar.info.calendarSelectionMovedText": "Ajankohdan valinta on sovitettu kalenteriasetuksia vastaavaksi",
   "TimePickerCalendar.info.minPeriodText": "Varauksen on kestettävä vähintään {duration} tuntia.",
   "TimePickerCalendar.info.maxPeriodText": "Varaus saa kestää enimmillään {duration} tuntia.",
+  "TimePickerCalendar.info.shouldBeReservedWholeDayText": "Tähän tilaan voi tehdä ainoastaan koko päivän varauksia.",
   "TimePickerCalendar.info.today": "Tänään",
   "TimePickerCalendar.info.displayedMessage": "Kohde ei ole varattavissa",
 

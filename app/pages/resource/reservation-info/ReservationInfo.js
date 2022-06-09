@@ -57,7 +57,7 @@ const renderLastResDay = (resource, t) => {
   );
 };
 
-function renderMaxPeriodText(resource, t) {
+function getMaximumPeriodText(resource, t) {
   if (!resource.maxPeriod) {
     return null;
   }
@@ -71,7 +71,7 @@ function renderMaxPeriodText(resource, t) {
   );
 }
 
-function renderMinPeriodText(resource, t) {
+function getMinimumPeriodText(resource, t) {
   if (!resource.minPeriod) {
     return null;
   }
@@ -98,14 +98,32 @@ function renderMaxReservationsPerUserText(maxReservationsPerUser, t) {
   );
 }
 
+function renderReservationPeriodInfo(resource, t) {
+  if (resource.shouldBeReservedWholeDay) {
+    return (
+      <p className="app-ResourcePage__content-whole-day-reservation">
+        <img alt="" className="app-ResourceHeader__info-icon" src={iconClock} />
+        <strong>{t('ReservationInfo.wholeDayReservation')}</strong>
+      </p>
+    );
+  }
+  const minPeriodText = getMinimumPeriodText(resource, t);
+  const maxPeriodText = getMaximumPeriodText(resource, t);
+  return (
+    <>
+      {minPeriodText}
+      {maxPeriodText}
+    </>
+  );
+}
+
 function ReservationInfo({ isLoggedIn, resource, t }) {
   return (
     <div className="app-ReservationInfo">
       <WrappedText openLinksInNewTab text={resource.reservationInfo} />
       {renderEarliestResDay(resource, t)}
       {renderLastResDay(resource, t)}
-      {renderMinPeriodText(resource, t)}
-      {renderMaxPeriodText(resource, t)}
+      {renderReservationPeriodInfo(resource, t)}
       {renderMaxReservationsPerUserText(resource.maxReservationsPerUser, t)}
       {renderLoginText(isLoggedIn, resource)}
     </div>

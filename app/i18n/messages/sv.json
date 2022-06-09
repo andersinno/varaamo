@@ -379,6 +379,7 @@
   "ResourceKeyboardSlotPicker.endTimeLabel": "Bokningens sluttid",
   "ResourceInfo.reservationTitle": "Bokningsinformation",
   "ResourceInfo.reserveTitle": "Boka",
+  "ReservationInfo.wholeDayReservation": "Whole day reservation __swedish__",
   "ResourceInfoContainer.unpublishedLabel": "opublicerad",
   "ResourcePage.back": "Tillbaka till sökresultat",
   "ResourcePage.reservationStatusHeader": "Bokningsläget",
@@ -474,6 +475,7 @@
   "TimePickerCalendar.info.calendarSelectionMovedText": "__swedish__",
   "TimePickerCalendar.info.minPeriodText": "Bokningen måste vara minst {duration} timmar lång.",
   "TimePickerCalendar.info.maxPeriodText": "Bokningen får vara högst {duration} timmar lång.",
+  "TimePickerCalendar.info.shouldBeReservedWholeDayText": "Resource should be reserved whole day __swedish__",
   "TimePickerCalendar.info.today": "Idag",
   "TimePickerCalendar.info.displayedMessage": "För tillfället kan resursen inte bokas",
 

@@ -118,4 +118,34 @@ describe('pages/resource/reservation-info/ReservationInfo', () => {
       expect(loginText).toHaveLength(1);
     });
   });
+
+  describe('reservation period text', () => {
+    test(
+      'has minimum and maximum hours rendered if not reservable for whole day',
+      () => {
+        const resource = { maxPeriod: '04:00:00', minPeriod: '03:00:00' };
+        const wrapper = getWrapper({ resource });
+        const minReservationPeriodParagraph = wrapper.find('.app-ResourcePage__content-min-period');
+        const maxReservationPeriodParagraph = wrapper.find('.max-length-text');
+        const wholeDayReservationParagraph = wrapper.find('.app-ResourcePage__content-whole-day-reservation');
+
+        expect(minReservationPeriodParagraph).toHaveLength(1);
+        expect(maxReservationPeriodParagraph).toHaveLength(1);
+        expect(wholeDayReservationParagraph).toHaveLength(0);
+      },
+    );
+
+    test(
+      'reservation for whole day info rendered if reservable for whole day',
+      () => {
+        const resource = { minPeriod: '03:00:00', shouldBeReservedWholeDay: true };
+        const wrapper = getWrapper({ resource });
+        const maxReservationPeriodParagraph = wrapper.find('.max-length-text');
+        const wholeDayReservationParagraph = wrapper.find('.app-ResourcePage__content-whole-day-reservation');
+
+        expect(wholeDayReservationParagraph).toHaveLength(1);
+        expect(maxReservationPeriodParagraph).toHaveLength(0);
+      },
+    );
+  });
 });
