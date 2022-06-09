@@ -51,8 +51,15 @@ export const getApiParamsFromFilters = (filters) => {
   return params;
 };
 
-export const getUnitOptions = (units, locale) => {
-  const options = units.map((unit) => {
+export const getUnitOptions = (units, locale, municipality) => {
+  let unitsFilteredByMunicipality = units;
+
+  if (municipality) {
+    const municipalities = municipality.split(',');
+    unitsFilteredByMunicipality = units.filter(unit => municipalities.includes(unit.municipality));
+  }
+
+  const options = unitsFilteredByMunicipality.map((unit) => {
     const finnishName = get(unit, 'name.fi');
 
     return ({

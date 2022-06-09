@@ -49,6 +49,27 @@ describe('src/domain/search/utils.js', () => {
 
       expect(option.label).toEqual(units[0].name.fi);
     });
+
+    test('resources are filtered if municipality is selected', () => {
+      const turkuUnits = [
+        { id: 2, name: { fi: 'C' }, municipality: 'Turku' },
+      ];
+      const tampereUnits = [
+        { id: 1, name: { fi: 'B' }, municipality: 'Tampere' },
+        { id: 3, name: { fi: 'A' }, municipality: 'Tampere' },
+      ];
+      const units = [...turkuUnits, ...tampereUnits];
+
+      let options = searchUtils.getUnitOptions(units, 'fi', 'Turku');
+      expect(options.length).toBe(1);
+      expect(options[0]).toMatchObject({ value: 2 });
+
+      options = searchUtils.getUnitOptions(units, 'fi', 'Tampere');
+      expect(options.length).toBe(2);
+
+      options = searchUtils.getUnitOptions(units, 'fi', 'Turku,Tampere');
+      expect(options.length).toBe(3);
+    });
   });
 
   test('getPurposeOptions', () => {
