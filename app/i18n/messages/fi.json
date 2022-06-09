@@ -194,6 +194,7 @@
   "Navbar.logout": "Kirjaudu ulos",
   "Navbar.manageReservations": " Varausten hallinta",
   "Navbar.search": "Haku",
+  "Navbar.usedLoginMethod": "Kirjautumistapa {loginMethod}",
   "Navbar.userResources": "Omat varaukset",
   "Navbar.accessibilityMenuToggle.label": "Saavutettavuusasetukset",
   "NotFoundPage.checkAddress": "Jos syötit sivun osoitteen käsin, tarkista että se on oikein.",

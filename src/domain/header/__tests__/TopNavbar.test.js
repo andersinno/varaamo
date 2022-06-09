@@ -70,6 +70,18 @@ describe('shared/top-navbar/TopNavbar', () => {
       expect(logoutLink).toHaveLength(1);
     });
 
+    test.skip('renders a logged in method', () => {
+      const userNavDropdown = getLoggedInNotAdminWrapper().find('#user-nav-dropdown').dive();
+      const renderToggle = userNavDropdown.children().first();
+
+      renderToggle.simulate('click', { preventDefault: () => {} });
+
+      const logoutLink = userNavDropdown
+        .find(TappableNavItem);
+
+      expect(logoutLink).toHaveLength(1);
+    });
+
     test('does not render a link to login page', () => {
       const loginLink = getLoggedInNotAdminWrapper()
         .find(NavItem)
