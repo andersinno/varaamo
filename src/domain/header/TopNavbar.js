@@ -31,6 +31,7 @@ class TopNavbar extends Component {
     isLoggedIn: PropTypes.bool.isRequired,
     t: PropTypes.func.isRequired,
     userName: PropTypes.string.isRequired,
+    loginMethod: PropTypes.string.isRequired,
   };
 
   onLanguageItemClick(nextLocale) {
@@ -44,7 +45,7 @@ class TopNavbar extends Component {
 
   render() {
     const {
-      currentLanguage, isLoggedIn, t, userName,
+      currentLanguage, isLoggedIn, t, userName, loginMethod,
     } = this.props;
     const isFontSizeControlEnabled = getIsFeatureEnabled(FeatureFlags.FONT_SIZE_CONTROLS);
     const isContrastEnabled = getIsFeatureEnabled(FeatureFlags.CONTRAST_CONTROL);
@@ -134,14 +135,23 @@ class TopNavbar extends Component {
                 <LinkButton {...props}>{userName}</LinkButton>
               )}
             >
-              {({ closeMenu }) => (
-                <TabbableNavItem
-                  href={`/logout?next=${window.location.origin}`}
-                  onClick={closeMenu}
-                >
-                  {t('Navbar.logout')}
-                </TabbableNavItem>
-              )}
+              {({ closeMenu }) => {
+                return (
+                  <>
+                    {loginMethod && (
+                      <li className="logged-in-method">
+                        { t('Navbar.usedLoginMethod', { loginMethod }) }
+                      </li>
+                    )}
+                    <TabbableNavItem
+                      href={`/logout?next=${window.location.origin}`}
+                      onClick={closeMenu}
+                    >
+                      {t('Navbar.logout')}
+                    </TabbableNavItem>
+                  </>
+                );
+              }}
             </TabbableNavDropdown>
           )}
 

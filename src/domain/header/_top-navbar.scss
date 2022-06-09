@@ -68,6 +68,11 @@
       padding-left: 0;
       margin-right: 0;
     }
+
+    li.logged-in-method {
+      padding-left: 2px;
+      margin-left: 2px;
+    }
   }
 
   // Start: Remove responsive features from bootstrap nav to create a single-line top nav
