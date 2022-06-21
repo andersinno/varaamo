@@ -253,7 +253,7 @@ class SearchFilters extends React.Component {
                     label={t('SearchFilters.unitLabel')}
                     name="app-SearchControls-unit-select"
                     onChange={item => this.onFilterChange('unit', item.value)}
-                    options={searchUtils.getUnitOptions(units, intl.locale)}
+                    options={searchUtils.getUnitOptions(units, intl.locale, municipality)}
                     value={filters.unit}
                   />
                 </Col>
