@@ -29,7 +29,7 @@ class MainNavbar extends React.Component {
 
   render() {
     const {
-      activeLink, clearSearchResults, isAdmin, isLoggedIn, t,
+      activeLink, clearSearchResults, isAdmin, isLoggedIn, t, respaAdminUrl,
     } = this.props;
 
     return (
@@ -80,7 +80,7 @@ class MainNavbar extends React.Component {
                       {t('Navbar.manageReservations')}
                     </NavItem>
                   </LinkContainer>
-                  <NavItem eventKey="adminMaintenance" href="https://respa.tampere.fi/ra/" target="_blank">
+                  <NavItem eventKey="adminMaintenance" href={respaAdminUrl} target="_blank">
                     {t('Navbar.adminMaintenance')}
                     <FAIcon icon={faExternalLinkAlt} />
                   </NavItem>
@@ -110,6 +110,7 @@ MainNavbar.propTypes = {
   isAdmin: PropTypes.bool.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired,
+  respaAdminUrl: PropTypes.string.isRequired,
 };
 
 export default injectT(MainNavbar);
