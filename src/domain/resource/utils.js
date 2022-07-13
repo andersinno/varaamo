@@ -12,6 +12,7 @@ import * as dataUtils from '../../common/data/utils';
 import * as reservationUtils from '../reservation/utils';
 import constants from '../../../app/constants/AppConstants';
 import { resourcePriceTypes, resourceProductTypes, productPriceType } from './constants';
+import { RESOURCE_AUTHENTICATION_GROUPING } from '../../../app/pages/resource/resource-auth-mapping';
 
 /**
  * getResourcePageLink();
@@ -705,4 +706,15 @@ export const getHasOnlinePaymentSupport = (resource) => {
   const resourceProducts = get(resource, 'products', []);
 
   return resourceProducts.some(product => product.type === resourceProductTypes.RENT);
+};
+
+export const getRequiredLoginMethod = (resource) => {
+  const resourceAuth = resource.authentication;
+  const resourceRequiredLoginMethod = RESOURCE_AUTHENTICATION_GROUPING[resourceAuth];
+  const allowedLoginMethodNamesList = resourceRequiredLoginMethod && resourceRequiredLoginMethod.loginMethodNames;
+  if (allowedLoginMethodNamesList) {
+    const allowedLoginMethodNames = allowedLoginMethodNamesList.join('/');
+    return allowedLoginMethodNames;
+  }
+  return undefined;
 };

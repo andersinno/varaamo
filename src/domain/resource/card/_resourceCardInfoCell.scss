@@ -32,3 +32,11 @@ $cellHeight: 50%;
     text-transform: capitalize;
   }
 }
+
+.loginMethods {
+  width: 65%;
+}
+
+.app-ResourceCardInfoCell__loginMethods {
+  flex-direction: row;
+}

@@ -26,6 +26,7 @@ import ResourceAvailability from '../availability/ResourceAvailability';
 import UnpublishedLabel from '../../../../app/shared/label/unpublished/UnpublishedLabel';
 import ResourceCardInfoCell from './ResourceCardInfoCell';
 import { isLoggedInSelector } from '../../../../app/state/selectors/authSelectors';
+import { RESOURCE_AUTHENTICATION_GROUPING } from '../../../../app/pages/resource/resource-auth-mapping';
 
 class ResourceCard extends React.Component {
   static propTypes = {
@@ -56,6 +57,35 @@ class ResourceCard extends React.Component {
     const { history } = this.props;
     history.push(searchUtils.getSearchPageLink(filters));
   };
+
+  getAllowedLoginMethodsIcons = (t) => {
+    const resourceAuthenticationLevel = this.props.resource.authentication;
+    if (resourceAuthenticationLevel && resourceAuthenticationLevel !== 'none') {
+      const resourceRequiredLoginMethod = RESOURCE_AUTHENTICATION_GROUPING[resourceAuthenticationLevel];
+      const allowedLoginMethodIconsList = resourceRequiredLoginMethod && resourceRequiredLoginMethod.loginMethodIcons;
+      const allowedLoginMethodNamesList = resourceRequiredLoginMethod && resourceRequiredLoginMethod.loginMethodNames;
+      const iconslist = (
+        <span className="app-resourceCardInfoCell loginMethods">
+          <span className="app-ResourceCardInfoCell__loginMethods">
+            {allowedLoginMethodIconsList.map((icon, index) => (
+              <img
+                alt={allowedLoginMethodNamesList[index]}
+                className="app-resourceCardInfoCell__icon"
+                key={allowedLoginMethodNamesList[index]}
+                src={icon}
+                title={allowedLoginMethodNamesList[index]}
+              />
+            ))}
+          </span>
+          <span>
+            {t('ResourceCard.requiredLoginMethods', { loginMethodCount: allowedLoginMethodNamesList.length })}
+          </span>
+        </span>
+      );
+      return iconslist;
+    }
+    return undefined;
+  }
 
   render() {
     const {
@@ -162,6 +192,7 @@ class ResourceCard extends React.Component {
               text={resourceUtils.getResourceDistance(resource)}
             />
           )}
+          {this.getAllowedLoginMethodsIcons(t)}
           {isLoggedIn && (
             <ResourceCardInfoCell
               alt={typeName}

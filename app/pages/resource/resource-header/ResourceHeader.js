@@ -14,6 +14,7 @@ import iconTicket from '../../../assets/icons/ticket.svg';
 import iconUser from '../../../assets/icons/user-o.svg';
 import iconClock from '../../../assets/icons/clock-o.svg';
 import iconMap from '../../../assets/icons/map.svg';
+import { RESOURCE_AUTHENTICATION_GROUPING } from '../resource-auth-mapping';
 
 function ResourceHeader({
   onBackClick,
@@ -38,6 +39,34 @@ function ResourceHeader({
         {' km'}
       </span>
     );
+  };
+
+  const getAllowedLoginMethodsIcons = () => {
+    const resourceAuthenticationLevel = resource.authentication;
+    if (resourceAuthenticationLevel && resourceAuthenticationLevel !== 'none') {
+      const resourceRequiredLoginMethod = RESOURCE_AUTHENTICATION_GROUPING[resourceAuthenticationLevel];
+      const allowedLoginMethodIconsList = resourceRequiredLoginMethod && resourceRequiredLoginMethod.loginMethodIcons;
+      const allowedLoginMethodNamesList = resourceRequiredLoginMethod && resourceRequiredLoginMethod.loginMethodNames;
+      const iconslist = (
+        <span>
+          {t('ResourceCard.requiredLoginMethods', { loginMethodCount: allowedLoginMethodNamesList.length })}
+          :&nbsp;
+          <span>
+            {allowedLoginMethodIconsList.map((icon, index) => (
+              <img
+                alt={allowedLoginMethodNamesList[index]}
+                className="app-resourceCardInfoCell__icon"
+                key={allowedLoginMethodNamesList[index]}
+                src={icon}
+                title={allowedLoginMethodNamesList[index]}
+              />
+            ))}
+          </span>
+        </span>
+      );
+      return iconslist;
+    }
+    return undefined;
   };
 
   const peopleCapacityText = t('ResourceCard.peopleCapacity', { people: resource.peopleCapacity });
@@ -105,6 +134,9 @@ function ResourceHeader({
                 {distance && ', '}
                 {unit.name}
               </span>
+            </div>
+            <div className="app-ResourceHeader__info">
+              {getAllowedLoginMethodsIcons()}
             </div>
             <div className="app-ResourceHeader__buttons">
               {!showMap && (

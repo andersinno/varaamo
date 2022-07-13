@@ -10,6 +10,7 @@ exports[`ResourceReservationCalendar renders correctly 1`] = `
     onDateChange={[MockFunction]}
     resource={
       Object {
+        "authentication": "none",
         "available_hours": Array [],
         "equipment": Array [],
         "id": 1,

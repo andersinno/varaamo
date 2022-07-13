@@ -20,5 +20,6 @@ const Resource = new Factory()
   .attr('slotSize', DEFAULT_SLOT_SIZE)
   .attr('products', [])
   .attr('shouldBeReservedWholeDay', false)
+  .attr('authentication', 'none')
   .attr('area', 13);
 export default Resource;
