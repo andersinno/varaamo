@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { createSelector, createStructuredSelector } from 'reselect';
 
 import ActionTypes from '../../../constants/ActionTypes';
@@ -17,15 +18,27 @@ const resourceIdSelector = createSelector(
   reservation => reservation.resource,
 );
 
+function userCanCancelReservation(resource, reservation) {
+  const { cancellationMinDaysInAdvance, ownerCanCancelReservation } = resource;
+  const { begin } = reservation;
+  const cancellationDayisWithInRange = (
+    moment.duration(moment(begin).diff(moment.now())).asDays() > cancellationMinDaysInAdvance
+  );
+  return ownerCanCancelReservation && cancellationDayisWithInRange;
+}
+
 const cancelAllowedSelector = createSelector(
   isAdminSelector,
   createResourceSelector(resourceIdSelector),
   reservationSelector,
-  (isAdmin, resource, reservation) => (
-    isAdmin
-    || (!reservation.needManualConfirmation && !hasProducts(resource))
-    || (reservation.state !== 'confirmed' && !hasProducts(resource))
-  ),
+  (isAdmin, resource, reservation) => {
+    return (
+      isAdmin
+      || userCanCancelReservation(resource, reservation)
+      || (!reservation.needManualConfirmation && !hasProducts(resource))
+      || (reservation.state !== 'confirmed' && !hasProducts(resource))
+    );
+  },
 );
 
 const reservationCancelModalSelector = createStructuredSelector({
