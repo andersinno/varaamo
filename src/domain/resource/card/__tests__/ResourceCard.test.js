@@ -13,7 +13,7 @@ describe('ResourceCard', () => {
       key: 'foo',
       onFavoriteClick: jest.fn(),
       onFilterClick: jest.fn(),
-      resource: resource.build(),
+      resource: resource.build({ authentication: 'weak' }),
       unit: unit.build(),
       t: () => {},
     };

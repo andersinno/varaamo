@@ -492,4 +492,30 @@ describe('domain resource utility function', () => {
       expect(resourceUtils.getHasOnlinePaymentSupport(resource)).toEqual(false);
     });
   });
+
+  describe('Required login method names', () => {
+    test('are rendered correctly for strong auth', () => {
+      const resource = { authentication: 'strong' };
+      const allowedLoginMethodNamesString = 'Suomi.fi';
+      expect(resourceUtils.getRequiredLoginMethod(resource)).toEqual(allowedLoginMethodNamesString);
+    });
+
+    test('are rendered correctly for piki auth', () => {
+      const resource = { authentication: 'piki' };
+      const allowedLoginMethodNamesString = 'PIKI-kirjastokortti';
+      expect(resourceUtils.getRequiredLoginMethod(resource)).toEqual(allowedLoginMethodNamesString);
+    });
+
+    test('are rendered correctly for mid auth', () => {
+      const resource = { authentication: 'mid' };
+      const allowedLoginMethodNamesString = 'Suomi.fi/Phone/PIKI-kirjastokortti';
+      expect(resourceUtils.getRequiredLoginMethod(resource)).toEqual(allowedLoginMethodNamesString);
+    });
+
+    test('are rendered correctly for weak auth', () => {
+      const resource = { authentication: 'weak' };
+      const allowedLoginMethodNamesString = 'Suomi.fi/PIKI-kirjastokortti/Phone/Google/Facebook/Yle Tunnus';
+      expect(resourceUtils.getRequiredLoginMethod(resource)).toEqual(allowedLoginMethodNamesString);
+    });
+  });
 });

@@ -20,4 +20,5 @@ export default new Factory()
   .attr('is_favorite', false)
   .attr('slot_size', DEFAULT_SLOT_SIZE)
   .attr('should_be_reserved_whole_day', false)
+  .attr('authentication', 'none')
   .attr('products', []);

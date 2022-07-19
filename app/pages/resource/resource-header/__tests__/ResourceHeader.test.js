@@ -10,7 +10,7 @@ import ResourceHeader from '../ResourceHeader';
 
 describe('pages/resource/resource-header/ResourceHeader', () => {
   const unit = Unit.build({ name: 'Test Unit' });
-  const resource = Resource.build({ unit: Unit.id });
+  const resource = Resource.build({ unit: Unit.id, authentication: 'strong' });
   const defaultProps = {
     onBackClick: () => null,
     onMapClick: () => null,
@@ -57,7 +57,7 @@ describe('pages/resource/resource-header/ResourceHeader', () => {
         const infos = getWrapper().find('.app-ResourceHeader__info');
         const images = infos.find('img');
 
-        expect(images).toHaveLength(5);
+        expect(images).toHaveLength(6);
 
         expect(images.at(0).prop('alt')).toBe('ResourceHeader.purpose');
       });
@@ -68,7 +68,7 @@ describe('pages/resource/resource-header/ResourceHeader', () => {
         const infos = getWrapper().find('.app-ResourceHeader__info');
         const images = infos.find('img');
 
-        expect(images).toHaveLength(5);
+        expect(images).toHaveLength(6);
 
         expect(images.at(1).prop('alt')).toBe('ResourceHeader.capacity');
       });
@@ -79,7 +79,7 @@ describe('pages/resource/resource-header/ResourceHeader', () => {
         const infos = getWrapper().find('.app-ResourceHeader__info');
         const images = infos.find('img');
 
-        expect(images).toHaveLength(5);
+        expect(images).toHaveLength(6);
 
         expect(images.at(2).prop('alt')).toBe('ResourceHeader.maxTime');
       });
@@ -90,7 +90,7 @@ describe('pages/resource/resource-header/ResourceHeader', () => {
         const infos = getWrapper().find('.app-ResourceHeader__info');
         const images = infos.find('img');
 
-        expect(images).toHaveLength(5);
+        expect(images).toHaveLength(6);
 
         expect(images.at(3).prop('alt')).toBe('ResourceHeader.price');
       });
@@ -128,7 +128,7 @@ describe('pages/resource/resource-header/ResourceHeader', () => {
         const infos = getWrapper().find('.app-ResourceHeader__info');
         const images = infos.find('img');
 
-        expect(images).toHaveLength(5);
+        expect(images).toHaveLength(6);
 
         expect(images.at(4).prop('alt')).toBe('ResourceHeader.premise');
       });
@@ -192,6 +192,12 @@ describe('pages/resource/resource-header/ResourceHeader', () => {
       expect(img.prop('alt')).toBe('');
       expect(span).toHaveLength(1);
       expect(span.text()).toBe('ResourceHeader.resourceButton');
+    });
+
+    test('renders allowed login method icons', () => {
+      const infos = getWrapper().find('.app-ResourceHeader__info');
+      const images = infos.find('img');
+      expect(images.at(5).prop('alt')).toBe('Suomi.fi');
     });
 
     describe('FavoriteButton', () => {

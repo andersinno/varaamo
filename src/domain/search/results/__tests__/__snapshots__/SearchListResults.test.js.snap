@@ -41,6 +41,7 @@ exports[`SearchListResults renders correctly 1`] = `
         onFilterClick={[Function]}
         resource={
           Object {
+            "authentication": "none",
             "available_hours": Array [],
             "equipment": Array [],
             "id": 1,

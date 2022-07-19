@@ -54,6 +54,7 @@ exports[`ResourceCard renders correctly 1`] = `
             date="30-07-2019"
             resource={
               Object {
+                "authentication": "weak",
                 "available_hours": Array [],
                 "equipment": Array [],
                 "id": 1,
@@ -105,6 +106,59 @@ exports[`ResourceCard renders correctly 1`] = `
       icon="test-file-stub"
       text="null"
     />
+    <span
+      className="app-resourceCardInfoCell loginMethods"
+    >
+      <span
+        className="app-ResourceCardInfoCell__loginMethods"
+      >
+        <img
+          alt="Suomi.fi"
+          className="app-resourceCardInfoCell__icon"
+          key="Suomi.fi"
+          src="test-file-stub"
+          title="Suomi.fi"
+        />
+        <img
+          alt="PIKI-kirjastokortti"
+          className="app-resourceCardInfoCell__icon"
+          key="PIKI-kirjastokortti"
+          src="test-file-stub"
+          title="PIKI-kirjastokortti"
+        />
+        <img
+          alt="Phone"
+          className="app-resourceCardInfoCell__icon"
+          key="Phone"
+          src="test-file-stub"
+          title="Phone"
+        />
+        <img
+          alt="Google"
+          className="app-resourceCardInfoCell__icon"
+          key="Google"
+          src="test-file-stub"
+          title="Google"
+        />
+        <img
+          alt="Facebook"
+          className="app-resourceCardInfoCell__icon"
+          key="Facebook"
+          src="test-file-stub"
+          title="Facebook"
+        />
+        <img
+          alt="Yle Tunnus"
+          className="app-resourceCardInfoCell__icon"
+          key="Yle Tunnus"
+          src="test-file-stub"
+          title="Yle Tunnus"
+        />
+      </span>
+      <span>
+        ResourceCard.requiredLoginMethods
+      </span>
+    </span>
   </div>
 </div>
 `;

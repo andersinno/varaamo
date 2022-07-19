@@ -50,6 +50,7 @@ exports[`SearchMapResults renders correctly 1`] = `
         resources={
           Array [
             Object {
+              "authentication": "none",
               "available_hours": Array [],
               "equipment": Array [],
               "id": 1,

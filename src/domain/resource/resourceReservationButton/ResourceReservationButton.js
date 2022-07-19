@@ -62,6 +62,16 @@ function getSelectedDateText(resource, selected, t) {
   return '';
 }
 
+function renderRequiredLoginMethod(resource, t) {
+  const allowedLoginMethodNames = resourceUtils.getRequiredLoginMethod(resource);
+  if (allowedLoginMethodNames) {
+    return (
+      t('ResourceReservationCalendar.requiredLoginMethods', { allowedLoginMethodNames })
+    );
+  }
+  return undefined;
+}
+
 const ResourceReservationCalendar = ({
   isLoggedIn,
   resource,
@@ -88,7 +98,8 @@ const ResourceReservationCalendar = ({
   return !isLoggedIn ? (
     <div className="app-ResourceReservationButton__selectedInfo">
       <div className="app-ResourceReservationButton__loginInfo">
-        {t('ReservationInfo.loginText')}
+        <div>{t('ReservationInfo.loginText')}</div>
+        <div>{renderRequiredLoginMethod(resource, t)}</div>
       </div>
       <Button
         bsStyle="primary"
