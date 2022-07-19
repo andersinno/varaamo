@@ -21,6 +21,7 @@ describe('shared/main-navbar/MainNavbar', () => {
       isAdmin: false,
       isLoggedIn: false,
       userName: 'Luke Skywalker',
+      respaAdminUrl: 'https://respa.tampere.fi/ra/',
     };
     return shallowWithIntl(<MainNavbar {...defaults} {...props} />);
   }
