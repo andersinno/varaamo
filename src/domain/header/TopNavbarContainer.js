@@ -20,10 +20,16 @@ const userNameSelector = createSelector(
   },
 );
 
+const loginMethodSelector = createSelector(
+  currentUserSelector,
+  user => user.loginMethod || '',
+);
+
 export const selector = createStructuredSelector({
   isLoggedIn: isLoggedInSelector,
   currentLanguage: currentLanguageSelector,
   userName: userNameSelector,
+  loginMethod: loginMethodSelector,
 });
 
 const actions = {

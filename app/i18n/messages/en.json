@@ -194,6 +194,7 @@
   "Navbar.logout": "Log out",
   "Navbar.manageReservations": "Manage Reservations",
   "Navbar.search": "Search",
+  "Navbar.usedLoginMethod": "Logged in with {loginMethod}",
   "Navbar.userResources": "Your reservations",
   "Navbar.accessibilityMenuToggle.label": "Accessibility settings",
   "NotFoundPage.checkAddress": "If you entered the address manually, please check it is written correctly.",
