@@ -50,6 +50,7 @@
     "moment-timezone": "0.5.25",
     "nocache": "2.0.0",
     "normalizr": "2.2.1",
+    "pannellum-react": "^1.2.4",
     "passport": "0.3.2",
     "passport-tampere": "https://github.com/Tampere/passport-tampere.git",
     "query-string": "4.2.3",

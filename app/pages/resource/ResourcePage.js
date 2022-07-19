@@ -12,6 +12,7 @@ import Col from 'react-bootstrap/lib/Col';
 import Lightbox from 'lightbox-react';
 import { decamelizeKeys } from 'humps';
 import 'lightbox-react/style.css';
+import { Pannellum } from 'pannellum-react';
 
 import { addNotification } from '../../actions/notificationsActions';
 import constants from '../../constants/AppConstants';
@@ -107,32 +108,69 @@ class UnconnectedResourcePage extends Component {
     this.setState(() => ({ isOpen: true, photoIndex }));
   };
 
-  orderImages = (images) => {
+  getOrderdNormalImages = (images) => {
     return [].concat(
       images.filter(image => image.type === 'main'),
-      images.filter(image => image.type !== 'main'),
+      images.filter(image => (image.type !== 'main' && image.type !== 'panoroma')),
     );
   };
 
+  getPanoromaImages = (images) => {
+    const panoromaImages = images.filter(image => image.type === 'panoroma');
+    return panoromaImages.map(image => (
+      <Pannellum
+        autoLoad
+        height="98%"
+        hfov={100}
+        image={image.url}
+        imageCaption={image.caption}
+        imageType="panoroma"
+        key={image.url}
+        pitch={10}
+        width="100%"
+        yaw={180}
+      />
+    ));
+  }
+
   renderImage = (image, index, { mainImageMobileVisibility = false }) => {
     const isMainImage = image.type === 'main';
+    const isPanoromaImage = this.imageIsPanoroma(image);
     const className = classNames('app-ResourceInfo__image-wrapper', {
       'app-ResourceInfo__image-wrapper--main-image': isMainImage,
       'app-ResourceInfo__image-wrapper--mobile-main-image':
         isMainImage && mainImageMobileVisibility,
     });
 
+    // Panoroma/360 are not normal images, they are react component. Thus, build the
+    // image props for panoroma images to match with rest of the images.
+    let caption;
+    let imageThumbnailUrl;
+    let url = '';
+
+    if (isPanoromaImage) {
+      const panoromaImgProps = image.props;
+      url = panoromaImgProps.image;
+      caption = panoromaImgProps.imageCaption;
+      const panoromaImage = { url, caption, image: panoromaImgProps.image };
+      imageThumbnailUrl = this.getImageThumbnailUrl(panoromaImage);
+    } else {
+      url = image.url;
+      caption = image.caption;
+      imageThumbnailUrl = this.getImageThumbnailUrl(image);
+    }
+
     return (
-      <div className={className} key={image.url}>
+      <div className={className} key={url}>
         <button
           className="app-ResourceInfo__image-button"
           onClick={() => this.handleImageClick(index)}
           type="button"
         >
           <img
-            alt={image.caption}
+            alt={caption}
             className="app-ResourceInfo__image"
-            src={this.getImageThumbnailUrl(image)}
+            src={imageThumbnailUrl}
           />
         </button>
       </div>
@@ -190,6 +228,38 @@ class UnconnectedResourcePage extends Component {
     });
   }
 
+  imageIsPanoroma = image => image && typeof image.type === 'function';
+
+  getImageUrlOrPannellumComponent = (image) => {
+    if (this.imageIsPanoroma(image)) {
+      return image;
+    }
+    return image.url;
+  }
+
+  getCurrentImageSrc = (images, photoIndex) => {
+    const currentImage = images[photoIndex];
+    return this.getImageUrlOrPannellumComponent(currentImage);
+  }
+
+  getNextImageSrc = (images, photoIndex) => {
+    const nextImage = images[(photoIndex + 1) % images.length];
+    return this.getImageUrlOrPannellumComponent(nextImage);
+  }
+
+  getPrevImageSrc = (images, photoIndex) => {
+    const prevImage = images[(photoIndex + (images.length - 1)) % images.length];
+    return this.getImageUrlOrPannellumComponent(prevImage);
+  }
+
+  getImageCaption = (images, photoIndex) => {
+    const currentImage = images[photoIndex];
+    if (this.imageIsPanoroma(currentImage)) {
+      return currentImage.props.imageCaption;
+    }
+    return currentImage.caption;
+  }
+
   render() {
     const {
       actions,
@@ -210,8 +280,8 @@ class UnconnectedResourcePage extends Component {
     if (isEmpty(resource) && !isFetchingResource) {
       return <NotFoundPage />;
     }
-
-    const images = this.orderImages(resource.images || []);
+    const resourceImages = resource.images || [];
+    const images = [...this.getOrderdNormalImages(resourceImages), ...this.getPanoromaImages(resourceImages)];
     const mainImageIndex = findIndex(images, image => image.type === 'main');
     const mainImage = mainImageIndex != null ? images[mainImageIndex] : null;
     const showBackButton = !!location.state && !!location.state.fromSearchResults;
@@ -331,9 +401,9 @@ class UnconnectedResourcePage extends Component {
         <div>
           {isOpen && (
             <Lightbox
-              imageCaption={images[photoIndex].caption}
-              mainSrc={images[photoIndex].url}
-              nextSrc={images[(photoIndex + 1) % images.length].url}
+              imageCaption={this.getImageCaption(images, photoIndex)}
+              mainSrc={this.getCurrentImageSrc(images, photoIndex)}
+              nextSrc={this.getNextImageSrc(images, photoIndex)}
               onCloseRequest={() => this.setState(() => ({ isOpen: false }))}
               onMoveNextRequest={() => this.setState(state => ({
                 photoIndex: (state.photoIndex + 1) % images.length,
@@ -343,7 +413,7 @@ class UnconnectedResourcePage extends Component {
                 photoIndex: (state.photoIndex + (images.length - 1)) % images.length,
               }))
               }
-              prevSrc={images[(photoIndex + (images.length - 1)) % images.length].url}
+              prevSrc={this.getPrevImageSrc(images, photoIndex)}
               reactModalStyle={{ overlay: { zIndex: 2000 } }}
             />
           )}
