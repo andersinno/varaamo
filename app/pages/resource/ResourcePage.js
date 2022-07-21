@@ -111,12 +111,12 @@ class UnconnectedResourcePage extends Component {
   getOrderdNormalImages = (images) => {
     return [].concat(
       images.filter(image => image.type === 'main'),
-      images.filter(image => (image.type !== 'main' && image.type !== 'panoroma')),
+      images.filter(image => (image.type !== 'main' && image.type !== 'panorama')),
     );
   };
 
   getPanoromaImages = (images) => {
-    const panoromaImages = images.filter(image => image.type === 'panoroma');
+    const panoromaImages = images.filter(image => image.type === 'panorama');
     return panoromaImages.map(image => (
       <Pannellum
         autoLoad
@@ -124,7 +124,7 @@ class UnconnectedResourcePage extends Component {
         hfov={100}
         image={image.url}
         imageCaption={image.caption}
-        imageType="panoroma"
+        imageType="panorama"
         key={image.url}
         pitch={10}
         width="100%"
