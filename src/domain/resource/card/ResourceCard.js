@@ -65,7 +65,7 @@ class ResourceCard extends React.Component {
       const allowedLoginMethodIconsList = resourceRequiredLoginMethod && resourceRequiredLoginMethod.loginMethodIcons;
       const allowedLoginMethodNamesList = resourceRequiredLoginMethod && resourceRequiredLoginMethod.loginMethodNames;
       const iconslist = (
-        <span className="app-resourceCardInfoCell loginMethods">
+        <span className="app-resourceCardInfoCell">
           <span className="app-ResourceCardInfoCell__loginMethods">
             {allowedLoginMethodIconsList.map((icon, index) => (
               <img
