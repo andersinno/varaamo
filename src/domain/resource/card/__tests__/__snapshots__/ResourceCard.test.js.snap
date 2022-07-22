@@ -107,7 +107,7 @@ exports[`ResourceCard renders correctly 1`] = `
       text="null"
     />
     <span
-      className="app-resourceCardInfoCell loginMethods"
+      className="app-resourceCardInfoCell"
     >
       <span
         className="app-ResourceCardInfoCell__loginMethods"
