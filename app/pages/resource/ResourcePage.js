@@ -47,6 +47,7 @@ class UnconnectedResourcePage extends Component {
     isLargeFontSize: PropTypes.bool.isRequired,
     isStaff: PropTypes.bool.isRequired,
     location: PropTypes.object.isRequired,
+    loginMethod: PropTypes.string.isRequired,
     resource: PropTypes.object.isRequired,
     showMap: PropTypes.bool.isRequired,
     t: PropTypes.func.isRequired,
@@ -269,6 +270,7 @@ class UnconnectedResourcePage extends Component {
       isLargeFontSize,
       isStaff,
       location,
+      loginMethod,
       resource,
       showMap,
       t,
@@ -288,6 +290,7 @@ class UnconnectedResourcePage extends Component {
     const resourceReservationButton = (
       <ResourceReservationButton
         isLoggedIn={isLoggedIn}
+        loginMethod={loginMethod}
         onReserve={this.onReserve}
         resource={resource}
         selected={selected}

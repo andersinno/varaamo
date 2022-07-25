@@ -78,6 +78,7 @@ const ResourceReservationCalendar = ({
   t,
   selected,
   onReserve,
+  loginMethod,
 }) => {
   const handleReserveButtonClick = () => {
     onReserve(selected, resource);
@@ -94,6 +95,7 @@ const ResourceReservationCalendar = ({
     false,
   );
   const selectedDateText = getSelectedDateText(resource, selected, t);
+  const canReserveResourceWithCurrentLogin = resourceUtils.canReserveWithCurrentLogin(resource, loginMethod);
 
   return !isLoggedIn ? (
     <div className="app-ResourceReservationButton__selectedInfo">
@@ -110,7 +112,9 @@ const ResourceReservationCalendar = ({
       </Button>
     </div>
   ) : (
-    selected.start !== null && selected.end !== null && (
+    <div>
+      {canReserveResourceWithCurrentLogin ? '' : renderRequiredLoginMethod(resource, t)}
+      {selected.start !== null && selected.end !== null && (
       <div className="app-ResourceReservationButton__selectedInfo">
         <div className="app-ResourceReservationButton__selectedDate">
           <strong className="app-ResourceReservationButton__selectedDateLabel">
@@ -130,7 +134,8 @@ const ResourceReservationCalendar = ({
           {t('ResourceReservationCalendar.reserveButton')}
         </Button>
       </div>
-    )
+      )}
+    </div>
   );
 };
 
@@ -140,6 +145,7 @@ ResourceReservationCalendar.propTypes = {
   resource: PropTypes.object.isRequired,
   t: PropTypes.func.isRequired,
   selected: PropTypes.object,
+  loginMethod: PropTypes.string,
 };
 
 export default injectT(ResourceReservationCalendar);

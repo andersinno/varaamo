@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ResourceReservationButton renders correctly 1`] = `
+<div>
+  ResourceReservationCalendar.requiredLoginMethods
+  <div
+    className="app-ResourceReservationButton__selectedInfo"
+  >
+    <div
+      className="app-ResourceReservationButton__selectedDate"
+    >
+      <strong
+        className="app-ResourceReservationButton__selectedDateLabel"
+      >
+        ResourceReservationCalendar.selectedDateLabel
+      </strong>
+       
+      <span
+        className="app-ResourceReservationButton__selectedDateValue"
+      >
+        ResourceReservationCalendar.selectedDateValue
+      </span>
+    </div>
+    <Button
+      active={false}
+      block={false}
+      bsClass="btn"
+      bsStyle="primary"
+      className="app-ResourceReservationButton__reserveButton"
+      disabled={true}
+      onClick={[Function]}
+    >
+      ResourceReservationCalendar.reserveButton
+    </Button>
+  </div>
+</div>
+`;
