@@ -501,7 +501,7 @@ describe('domain resource utility function', () => {
     });
 
     test('are rendered correctly for piki auth', () => {
-      const resource = { authentication: 'piki' };
+      const resource = { authentication: 'PIKI' };
       const allowedLoginMethodNamesString = 'PIKI-kirjastokortti';
       expect(resourceUtils.getRequiredLoginMethod(resource)).toEqual(allowedLoginMethodNamesString);
     });

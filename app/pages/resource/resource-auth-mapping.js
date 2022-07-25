@@ -23,7 +23,7 @@ export const RESOURCE_AUTHENTICATION_GROUPING = {
     loginMethodNames: ['Suomi.fi'],
     loginMethodIcons: [suomiFiIcon],
   },
-  'piki': {
+  'PIKI': {
     loginMethodNames: ['PIKI-kirjastokortti'],
     loginMethodIcons: [pikiIcon],
   },
