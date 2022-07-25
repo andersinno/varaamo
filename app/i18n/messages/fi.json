@@ -397,6 +397,8 @@
   "SearchFilters.resetButton": "Tyhjennä suodattimet",
   "SearchFilters.searchButton": "Hae",
   "SearchFilters.unitLabel": "Toimipiste",
+  "ManageReservationsFilters.downloadReservationData": "Lataa",
+  "ManageReservationsFilters.downloadReservationData.title": "Lataa tiedostoksi",
   "SearchFilters.searchLabel": "Etsi tilaa syöttämällä tilaan liittyvää tietoa",
   "SelectFilter.noOptionsMessage": "Ei valintoja",
   "SearchBox.buttonText": "Hae",

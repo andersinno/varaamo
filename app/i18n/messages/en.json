@@ -449,6 +449,8 @@
   "ManageReservationsList.actionLabel.deny": "Deny",
   "ManageReservationsList.actionLabel.edit": "Edit",
   "ManageReservationsList.actionLabel.cancel": "Cancel",
+  "ManageReservationsFilters.downloadReservationData": "Download",
+  "ManageReservationsFilters.downloadReservationData.title": "Export reservation data",
   "ManageReservationsFilters.searchLabel": "Search",
   "ManageReservationsFilters.searchPlaceholder": "Search",
   "ManageReservationsFilters.statusLabel": "Reservation status",

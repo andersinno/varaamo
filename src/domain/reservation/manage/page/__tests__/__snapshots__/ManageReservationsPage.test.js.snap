@@ -33,6 +33,7 @@ exports[`ManageReservationsPage renders correctly 1`] = `
           "date": "2017-12-10",
         }
       }
+      onReservationDownload={[Function]}
       onSearchChange={[Function]}
       onShowOnlyFiltersChange={[Function]}
       showOnlyFilters={

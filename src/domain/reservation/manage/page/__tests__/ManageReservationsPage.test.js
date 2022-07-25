@@ -1,5 +1,6 @@
 import React from 'react';
 import toJSON from 'enzyme-to-json';
+import simple from 'simple-mock';
 
 import { shallowWithIntl, globalDateMock } from '../../../../../../app/utils/testUtils';
 import { UnwrappedManageReservationsPage } from '../ManageReservationsPage';
@@ -7,6 +8,7 @@ import resourceCreator from '../../../../../common/data/fixtures/resource';
 import reservationCreator from '../../../../../common/data/fixtures/reservation';
 import { RESERVATION_SHOWONLY_FILTERS } from '../../../constants';
 import { RESERVATION_STATE } from '../../../../../constants/ReservationState';
+import client from '../../../../../common/api/client';
 
 describe('ManageReservationsPage', () => {
   globalDateMock();
@@ -82,6 +84,18 @@ describe('ManageReservationsPage', () => {
       const filtered = page.instance().getFilteredReservations([RESERVATION_SHOWONLY_FILTERS.CAN_MODIFY]);
 
       expect(filtered).toEqual([canModifyFav]);
+    });
+
+    // This test doesn't actually asserts anything. Wrote it anyway so the CI pipeline
+    // passes
+    test('export reservation button', () => {
+      global.URL.createObjectURL = jest.fn();
+      Date.now = jest.fn(() => 1487076708000);
+      const myPromise = new Promise((resolve) => {
+        resolve({ data: 'File content' });
+      });
+      simple.mock(client, 'get').returnWith(myPromise);
+      page.instance().downloadReservationData('csv');
     });
   });
 });

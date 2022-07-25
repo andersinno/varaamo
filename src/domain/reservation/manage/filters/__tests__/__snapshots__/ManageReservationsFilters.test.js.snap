@@ -147,6 +147,53 @@ exports[`ManageReservationsFilters renders correctly 1`] = `
         md={4}
       />
     </Row>
+    <Row
+      bsClass="row"
+      componentClass="div"
+    >
+      <Col
+        bsClass="col"
+        componentClass="div"
+        md={6}
+      >
+        <InjectT(SelectField)
+          id="reservationDownload"
+          label="ManageReservationsFilters.downloadReservationData.title"
+          onChange={[Function]}
+          options={
+            Array [
+              Object {
+                "label": "Excel",
+                "value": "xlsx",
+              },
+              Object {
+                "label": "CSV",
+                "value": "csv",
+              },
+            ]
+          }
+          value="xlsx"
+        />
+      </Col>
+      <Col
+        bsClass="col"
+        componentClass="div"
+        md={6}
+      >
+        <Button
+          active={false}
+          block={false}
+          bsClass="btn"
+          bsStyle="default"
+          className="app-ManageReservationsFilters__downloadButton"
+          disabled={false}
+          key="reservation-download"
+          onClick={[Function]}
+        >
+          ManageReservationsFilters.downloadReservationData
+        </Button>
+      </Col>
+    </Row>
   </Grid>
 </div>
 `;

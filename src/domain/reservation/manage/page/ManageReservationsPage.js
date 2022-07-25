@@ -288,6 +288,39 @@ class ManageReservationsPage extends React.Component {
     }));
   }
 
+  downloadReservationData = (downloadType) => {
+    const { location } = this.props;
+    const filters = searchUtils.getFiltersFromUrl(location, false);
+    const params = { ...filters, excludeReservationExtraFields: 1 };
+    const fileName = `reservation_${Date.now()}`;
+
+    let contentType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+    let downloadFile = `${fileName}.xlsx`;
+    if (downloadType === 'csv') {
+      contentType = 'text/csv';
+      downloadFile = `${fileName}.csv`;
+    }
+
+    const config = {
+      headers: {
+        'Content-Type': contentType,
+        'Accept': contentType,
+        'responseType': 'blob',
+      },
+    };
+    client.get('reservation', params, config).then(
+      (response) => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', downloadFile);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      },
+    );
+  }
+
   render() {
     const {
       isAdmin,
@@ -321,6 +354,7 @@ class ManageReservationsPage extends React.Component {
           </Grid>
           <ManageReservationsFilters
             filters={filters}
+            onReservationDownload={this.downloadReservationData}
             onSearchChange={this.onSearchFiltersChange}
             onShowOnlyFiltersChange={this.onShowOnlyFiltersChange}
             showOnlyFilters={showOnlyFilters}
