@@ -62,3 +62,12 @@ export const RESOURCE_AUTHENTICATION_GROUPING = {
     ],
   },
 };
+
+export const LOGIN_METHODS_NAMES = {
+  'suomifi': 'Suomifi',
+  'axiell_aurora': 'PIKI',
+  'tampere_adfs': 'Tampere Adfs',
+  'google': 'Google',
+  'facebook': 'Facebook',
+  'yletunnus': 'Yletunnus',
+};
