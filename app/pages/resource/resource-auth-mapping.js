@@ -22,14 +22,17 @@ export const RESOURCE_AUTHENTICATION_GROUPING = {
   'strong': {
     loginMethodNames: ['Suomi.fi'],
     loginMethodIcons: [suomiFiIcon],
+    canReserveWith: ['suomifi', 'tampere_adfs'],
   },
-  'piki': {
+  'PIKI': {
     loginMethodNames: ['PIKI-kirjastokortti'],
     loginMethodIcons: [pikiIcon],
+    canReserveWith: ['axiell_aurora', 'tampere_adfs'],
   },
   'mid': {
     loginMethodNames: ['Suomi.fi', 'Phone', 'PIKI-kirjastokortti'],
     loginMethodIcons: [suomiFiIcon, mobileIcon, pikiIcon],
+    canReserveWith: ['suomifi', 'mobile', 'axiell_aurora', 'tampere_adfs'],
   },
   'weak': {
     loginMethodNames: [
@@ -48,5 +51,23 @@ export const RESOURCE_AUTHENTICATION_GROUPING = {
       facebookIcon,
       yleIcon,
     ],
+    canReserveWith: [
+      'suomifi',
+      'axiell_aurora',
+      'mobile',
+      'google',
+      'facebook',
+      'yletunnus',
+      'tampere_adfs',
+    ],
   },
+};
+
+export const LOGIN_METHODS_NAMES = {
+  'suomifi': 'Suomifi',
+  'axiell_aurora': 'PIKI',
+  'tampere_adfs': 'Tampere Adfs',
+  'google': 'Google',
+  'facebook': 'Facebook',
+  'yletunnus': 'Yletunnus',
 };

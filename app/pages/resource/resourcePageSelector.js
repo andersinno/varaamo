@@ -2,7 +2,12 @@ import { createSelector, createStructuredSelector } from 'reselect';
 
 import FontSizes from '../../constants/FontSizes';
 import ActionTypes from '../../constants/ActionTypes';
-import { createIsStaffSelector, isAdminSelector, isLoggedInSelector } from '../../state/selectors/authSelectors';
+import {
+  createIsStaffSelector,
+  currentUserSelector,
+  isAdminSelector,
+  isLoggedInSelector,
+} from '../../state/selectors/authSelectors';
 import { createResourceSelector, unitsSelector } from '../../state/selectors/dataSelectors';
 import dateSelector from '../../state/selectors/dateSelector';
 import requestIsActiveSelectorFactory from '../../state/selectors/factories/requestIsActiveSelectorFactory';
@@ -16,6 +21,10 @@ const unitSelector = createSelector(
   (resource, units) => units[resource.unit] || {},
 );
 const isLargeFontSizeSelector = state => state.ui.accessibility.fontSize === FontSizes.LARGE;
+const loginMethodSelector = createSelector(
+  currentUserSelector,
+  user => user.loginMethod || '',
+);
 
 const resourcePageSelector = createStructuredSelector({
   date: dateSelector,
@@ -28,6 +37,7 @@ const resourcePageSelector = createStructuredSelector({
   resource: resourceSelector,
   showMap: showMapSelector,
   unit: unitSelector,
+  loginMethod: loginMethodSelector,
 });
 
 export default resourcePageSelector;

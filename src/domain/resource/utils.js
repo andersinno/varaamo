@@ -718,3 +718,13 @@ export const getRequiredLoginMethod = (resource) => {
   }
   return undefined;
 };
+
+export const canReserveWithCurrentLogin = (resource, loginMethod) => {
+  const resourceAuth = resource.authentication;
+  const resourceRequiredLoginMethod = RESOURCE_AUTHENTICATION_GROUPING[resourceAuth];
+  const allowedLoginBackends = resourceRequiredLoginMethod && resourceRequiredLoginMethod.canReserveWith;
+  if (allowedLoginBackends) {
+    return allowedLoginBackends.includes(loginMethod);
+  }
+  return false;
+};

@@ -501,7 +501,7 @@ describe('domain resource utility function', () => {
     });
 
     test('are rendered correctly for piki auth', () => {
-      const resource = { authentication: 'piki' };
+      const resource = { authentication: 'PIKI' };
       const allowedLoginMethodNamesString = 'PIKI-kirjastokortti';
       expect(resourceUtils.getRequiredLoginMethod(resource)).toEqual(allowedLoginMethodNamesString);
     });
@@ -516,6 +516,15 @@ describe('domain resource utility function', () => {
       const resource = { authentication: 'weak' };
       const allowedLoginMethodNamesString = 'Suomi.fi/PIKI-kirjastokortti/Phone/Google/Facebook/Yle Tunnus';
       expect(resourceUtils.getRequiredLoginMethod(resource)).toEqual(allowedLoginMethodNamesString);
+    });
+
+    test('returns correct boolean if current login method can reserve resource', () => {
+      const resource = { authentication: 'mid' };
+      let loginMethod = 'suomifi'; // Strong authentication
+      expect(resourceUtils.canReserveWithCurrentLogin(resource, loginMethod)).toBeTruthy();
+
+      loginMethod = 'google'; // Weak authentication
+      expect(resourceUtils.canReserveWithCurrentLogin(resource, loginMethod)).toBeFalsy();
     });
   });
 });

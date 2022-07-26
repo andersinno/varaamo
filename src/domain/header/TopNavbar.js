@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import NavItem from 'react-bootstrap/lib/NavItem';
 import Nav from 'react-bootstrap/lib/Nav';
+import { FormattedHTMLMessage } from 'react-intl';
 
 import getIsFeatureEnabled from '../feature-flags/getIsFeatureEnabled';
 import FeatureFlags from '../feature-flags/FeatureFlags';
@@ -14,6 +15,7 @@ import TabbableNavItem from '../../../app/shared/tabbable-nav-dropdown/TabbableN
 import HeaderFontSizeControl from './HeaderFontSizeControl';
 import HeaderContrastControl from './HeaderContrastControl';
 import HeaderUniversalAccessIcon from './HeaderUniversalAccessIcon';
+import { LOGIN_METHODS_NAMES } from '../../../app/pages/resource/resource-auth-mapping';
 
 // Bootstrap uses magic to force props on child elements based on
 // element type. Because our vanilla elements don't make use of those
@@ -47,6 +49,7 @@ class TopNavbar extends Component {
     const {
       currentLanguage, isLoggedIn, t, userName, loginMethod,
     } = this.props;
+    const loginMethodName = LOGIN_METHODS_NAMES[loginMethod];
     const isFontSizeControlEnabled = getIsFeatureEnabled(FeatureFlags.FONT_SIZE_CONTROLS);
     const isContrastEnabled = getIsFeatureEnabled(FeatureFlags.CONTRAST_CONTROL);
     const contrastControl = isContrastEnabled ? <HeaderContrastControl /> : null;
@@ -140,14 +143,14 @@ class TopNavbar extends Component {
                   <>
                     {loginMethod && (
                       <li className="logged-in-method">
-                        { t('Navbar.usedLoginMethod', { loginMethod }) }
+                        <FormattedHTMLMessage id="Navbar.usedLoginMethod" values={{ loginMethodName }} />
                       </li>
                     )}
                     <TabbableNavItem
                       href={`/logout?next=${window.location.origin}`}
                       onClick={closeMenu}
                     >
-                      {t('Navbar.logout')}
+                      <FormattedHTMLMessage id="Navbar.logout" />
                     </TabbableNavItem>
                   </>
                 );
