@@ -12,8 +12,8 @@ export const selector = createStructuredSelector({
   isLoggedIn: isLoggedInSelector,
   respaAdminUrl: () => {
     return constants.SHOW_TEST_SITE_MESSAGE
-      ? 'https://respa.tampere.fi/ra/'
-      : 'https://dev-respa.tampere.fi/ra/';
+      ? 'https://dev-respa.tampere.fi/ra/'
+      : 'https://respa.tampere.fi/ra/';
   },
 });
 
