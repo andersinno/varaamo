@@ -33,6 +33,20 @@ describe('domain/common/api/client.js', () => {
     // TODO: Check that headers include auth token when logged in.
   });
 
+  test('request resonseType', () => {
+    const headers = { testHeader: 'foo', responseType: 'blob' };
+    axios.request.mockResolvedValue({ data: [] });
+
+    client.request({
+      endpoint: 'endpoint',
+      method: 'GET',
+      data,
+      headers,
+    });
+
+    expect(axios.request.mock.calls[0][0].responseType).toBe('blob');
+  });
+
   test('request', () => {
     const headers = { testHeader: 'foo' };
     axios.request.mockResolvedValue({ data: [] });

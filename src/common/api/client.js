@@ -76,17 +76,22 @@ export class ApiClient {
     headers = {},
   }) => {
     const dataOrParams = ['GET', 'DELETE'].includes(method.toUpperCase()) ? 'params' : 'data';
+    const { responseType, ...configHeader } = headers;
+    let config = {
+      method,
+      url: this.getUrl(endpoint),
+      headers: {
+        ...this.getHeaders(),
+        ...configHeader,
+      },
+      [dataOrParams]: data,
+    };
+    if (responseType) {
+      config = { ...config, responseType };
+    }
 
     return axios
-      .request({
-        method,
-        url: this.getUrl(endpoint),
-        headers: {
-          ...this.getHeaders(),
-          ...headers,
-        },
-        [dataOrParams]: data,
-      })
+      .request(config)
       .then(response => ({
         data: get(response, 'data'),
         error: null,

@@ -402,6 +402,8 @@
   "SearchFilters.searchButton": "Sök",
   "SearchFilters.unitLabel": "Utrymmet",
   "SearchFilters.dateLabel": "När?",
+  "ManageReservationsFilters.downloadReservationData": "Ladda ner",
+  "ManageReservationsFilters.downloadReservationData.title": "Exportera reservationsdata",
   "SearchFilters.searchLabel": "Sök utrymmen eller ar",
   "SelectFilter.noOptionsMessage": "Inga val",
   "SearchPage.title": "Sök",

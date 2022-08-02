@@ -29,9 +29,16 @@ class ManageReservationsFilters extends React.Component {
     units: PropTypes.array,
     onSearchChange: PropTypes.func.isRequired,
     onShowOnlyFiltersChange: PropTypes.func.isRequired,
+    onReservationDownload: PropTypes.func.isRequired,
     showOnlyFilters: PropTypes.array,
     intl: intlShape,
   };
+
+  constructor(props) {
+    super(props);
+
+    this.state = { selectedReservationDownloadOption: 'xlsx' };
+  }
 
   onDateFilterChange = (start, end) => {
     const { onSearchChange, filters } = this.props;
@@ -122,6 +129,17 @@ class ManageReservationsFilters extends React.Component {
     ];
   };
 
+  getReservationDownloadOptions = () => {
+    return [
+      { value: 'xlsx', label: 'Excel' },
+      { value: 'csv', label: 'CSV' },
+    ];
+  };
+
+  onReservationDownloadOptionChange = (selectedReservationDownloadOption) => {
+    this.setState({ selectedReservationDownloadOption });
+  }
+
   render() {
     const {
       t,
@@ -136,6 +154,7 @@ class ManageReservationsFilters extends React.Component {
     const startDate = get(filters, 'start', null);
     const endDate = get(filters, 'end', null);
     const locale = intl.locale;
+    const reservationDownloadType = this.state.selectedReservationDownloadOption;
 
     return (
       <div className="app-ManageReservationsFilters">
@@ -220,6 +239,27 @@ class ManageReservationsFilters extends React.Component {
                   {t('ManageReservationsFilters.resetButton')}
                 </Button>
               )}
+            </Col>
+          </Row>
+          <Row>
+            <Col md={6}>
+              <SelectField
+                id="reservationDownload"
+                label={t('ManageReservationsFilters.downloadReservationData.title')}
+                onChange={item => this.onReservationDownloadOptionChange(item.value)}
+                options={this.getReservationDownloadOptions()}
+                value={reservationDownloadType}
+              />
+            </Col>
+            <Col md={6}>
+              <Button
+                bsStyle="default"
+                className="app-ManageReservationsFilters__downloadButton"
+                key="reservation-download"
+                onClick={() => this.props.onReservationDownload(reservationDownloadType)}
+              >
+                {t('ManageReservationsFilters.downloadReservationData')}
+              </Button>
             </Col>
           </Row>
         </Grid>
