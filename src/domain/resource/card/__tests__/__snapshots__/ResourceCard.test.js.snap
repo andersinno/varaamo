@@ -100,7 +100,7 @@ exports[`ResourceCard renders correctly 1`] = `
     <ResourceCardInfoCell
       icon="test-file-stub"
       onClick={[Function]}
-      text="ResourceIcons.free"
+      text="ResourceHeader.payable"
     />
     <ResourceCardInfoCell
       icon="test-file-stub"

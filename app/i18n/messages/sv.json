@@ -357,6 +357,7 @@
   "ResourceHeader.purpose": "Ändamål",
   "ResourceHeader.capacity": "Kapacitet",
   "ResourceHeader.maxTime": "max reserveringstid",
+  "ResourceHeader.payable": "Betala",
   "ResourceHeader.price": "Pris",
   "ResourceHeader.premise": "Utrymmet",
   "ResourceHeader.distanceAndPremise": "Avstånd och utrymmet",

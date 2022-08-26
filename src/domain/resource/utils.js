@@ -75,7 +75,7 @@ function getPriceEnding(resourcePriceType, labels) {
   return resourcePriceUnit ? `€/${translatedPriceUnit}` : '€';
 }
 
-export const getPrice = (minPriceString, maxPriceString, priceType, t) => {
+export const getPrice = (minPriceString, maxPriceString, priceType, t, freeToUse) => {
   const minPrice = !isNaN(minPriceString)
     ? Number(minPriceString)
     : minPriceString;
@@ -83,6 +83,11 @@ export const getPrice = (minPriceString, maxPriceString, priceType, t) => {
     ? Number(maxPriceString)
     : maxPriceString;
 
+  /* TODO: When the pricelist feature is implemented, this code needs the
+       modification */
+  if (!freeToUse && !(minPrice || maxPrice)) {
+    return t('ResourceHeader.payable');
+  }
   if (!(minPrice || maxPrice)) {
     return t('ResourceIcons.free');
   }
@@ -114,10 +119,10 @@ export const getPrice = (minPriceString, maxPriceString, priceType, t) => {
  * @returns {string|*}
  */
 export const getPriceFromSnakeCaseResource = (resource, t) => {
-  // eslint-disable-next-line camelcase
-  const { min_price, max_price, price_type } = resource;
+  // eslint-disable-next-line camelcase, object-curly-newline
+  const { min_price, max_price, price_type, free_to_use } = resource;
 
-  return getPrice(min_price, max_price, price_type, t);
+  return getPrice(min_price, max_price, price_type, t, free_to_use);
 };
 
 /**

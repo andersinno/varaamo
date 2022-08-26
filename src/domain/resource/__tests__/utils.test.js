@@ -127,14 +127,20 @@ describe('domain resource utility function', () => {
   describe('getPriceFromSnakeCaseResource', () => {
     const fakeT = foo => foo;
     test('return free text if there is no price', () => {
-      const price = resourceUtils.getPriceFromSnakeCaseResource({}, fakeT);
+      const price = resourceUtils.getPriceFromSnakeCaseResource({ free_to_use: true }, fakeT);
       expect(price).toContain('free');
+    });
+
+    test('return payable text if resource is not free and prices are not set', () => {
+      const price = resourceUtils.getPriceFromSnakeCaseResource({ free_to_use: false }, fakeT);
+      expect(price).toBe('ResourceHeader.payable');
     });
 
     test('return free text if price is 0', () => {
       const price = resourceUtils.getPriceFromSnakeCaseResource({
         min_price: '0.00',
         price_type: 'hourly',
+        free_to_use: true,
       }, fakeT);
 
       expect(price).toContain('free');
