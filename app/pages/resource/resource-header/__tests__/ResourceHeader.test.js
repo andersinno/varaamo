@@ -10,7 +10,11 @@ import ResourceHeader from '../ResourceHeader';
 
 describe('pages/resource/resource-header/ResourceHeader', () => {
   const unit = Unit.build({ name: 'Test Unit' });
-  const resource = Resource.build({ unit: Unit.id, authentication: 'strong' });
+  const resource = Resource.build({
+    unit: Unit.id,
+    authentication: 'strong',
+    maxPeriod: 2,
+  });
   const defaultProps = {
     onBackClick: () => null,
     onMapClick: () => null,
@@ -83,6 +87,15 @@ describe('pages/resource/resource-header/ResourceHeader', () => {
 
         expect(images.at(2).prop('alt')).toBe('ResourceHeader.maxTime');
       });
+
+      test('does not render max reservation info if it is empty', () => {
+        const props = { resource: Immutable(Resource.build({})) };
+        const infos = getWrapper(props).find('.app-ResourceHeader__info');
+        const images = infos.find('img');
+
+        expect(images).toHaveLength(4);
+        images.map(item => expect(item.prop('alt')).not.toEqual('ResourceHeader.maxTime'));
+      });
     });
 
     describe('Price info', () => {
@@ -114,7 +127,7 @@ describe('pages/resource/resource-header/ResourceHeader', () => {
       }
 
       test('renders unit image with correct props when distance is used', () => {
-        const props = createProps({ distance: 11500 });
+        const props = createProps({ distance: 11500, maxPeriod: 2 });
 
         const infos = getWrapper(props).find('.app-ResourceHeader__info');
         const images = infos.find('img');
