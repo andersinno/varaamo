@@ -354,6 +354,7 @@
   "ResourceHeader.purpose": "Purpose",
   "ResourceHeader.capacity": "Capacity",
   "ResourceHeader.maxTime": "Max reservation time",
+  "ResourceHeader.payable": "Payable",
   "ResourceHeader.price": "Price",
   "ResourceHeader.premise": "Premise",
   "ResourceHeader.distanceAndPremise": "Distance and premise",

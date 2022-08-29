@@ -354,6 +354,7 @@
   "ResourceHeader.purpose": "Käyttötarkoitus",
   "ResourceHeader.capacity": "Kapasiteetti",
   "ResourceHeader.maxTime": "Enimmäisvarausaika",
+  "ResourceHeader.payable": "Maksullinen",
   "ResourceHeader.price": "Hinta",
   "ResourceHeader.premise": "Toimipiste",
   "ResourceHeader.distanceAndPremise": "Etäisyys ja toimipiste",

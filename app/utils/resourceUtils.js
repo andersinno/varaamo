@@ -97,8 +97,9 @@ function getAvailabilityDataForWholeDay(resource = {}, date = null) {
   };
 }
 
-function getPrice(t, { minPrice, maxPrice, priceType }) {
-  return genericGetPrice(minPrice, maxPrice, priceType, t);
+// eslint-disable-next-line object-curly-newline
+function getPrice(t, { minPrice, maxPrice, priceType, freeToUse }) {
+  return genericGetPrice(minPrice, maxPrice, priceType, t, freeToUse);
 }
 
 function getHumanizedPeriod(period) {

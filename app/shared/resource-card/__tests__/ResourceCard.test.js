@@ -220,6 +220,7 @@ describe('shared/resource-card/ResourceCard', () => {
           maxPrice: 0,
           minPrice: 0,
           priceType: 'hourly',
+          freeToUse: true,
         });
         const hourlyPriceSpan = getWrapper({ resource }).find('.app-ResourceCard__hourly-price');
 
@@ -234,11 +235,27 @@ describe('shared/resource-card/ResourceCard', () => {
         const resource = getResource({
           maxPrice: '',
           minPrice: '',
+          freeToUse: true,
         });
         const hourlyPriceSpan = getWrapper({ resource }).find('.app-ResourceCard__hourly-price');
 
         expect(hourlyPriceSpan.is('span')).toBe(true);
         expect(hourlyPriceSpan.text()).toContain('ResourceIcons.free');
+      },
+    );
+
+    test(
+      'renders correct text if resource needs payment but prices are not set',
+      () => {
+        const resource = getResource({
+          maxPrice: '',
+          minPrice: '',
+          freeToUse: false,
+        });
+        const hourlyPriceSpan = getWrapper({ resource }).find('.app-ResourceCard__hourly-price');
+
+        expect(hourlyPriceSpan.is('span')).toBe(true);
+        expect(hourlyPriceSpan.text()).toContain('ResourceHeader.payable');
       },
     );
   });
