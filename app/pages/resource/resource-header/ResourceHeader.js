@@ -102,10 +102,12 @@ function ResourceHeader({
               />
               <span className="app-ResourceHeader__info-label">{peopleCapacityText}</span>
             </div>
-            <div className="app-ResourceHeader__info">
-              <img alt={t('ResourceHeader.maxTime')} className="app-ResourceHeader__info-icon" src={iconClock} />
-              <span className="app-ResourceHeader__info-label">{maxPeriodText}</span>
-            </div>
+            {resource.maxPeriod && (
+              <div className="app-ResourceHeader__info">
+                <img alt={t('ResourceHeader.maxTime')} className="app-ResourceHeader__info-icon" src={iconClock} />
+                <span className="app-ResourceHeader__info-label">{maxPeriodText}</span>
+              </div>
+            )}
             <div className="app-ResourceHeader__info">
               <img alt={t('ResourceHeader.price')} className="app-ResourceHeader__info-icon" src={iconTicket} />
               <span className="app-ResourceHeader__info-label">{priceText}</span>
