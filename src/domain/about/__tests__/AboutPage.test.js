@@ -1,13 +1,22 @@
 import React from 'react';
-import toJson from 'enzyme-to-json';
 
 import { shallowWithIntl } from '../../../../app/utils/testUtils';
-import AboutPage from '../AboutPage';
+import { UnconnectedAboutPage as AboutPage } from '../AboutPage';
 
 describe('pages/about/AboutPage', () => {
-  test('render normally', () => {
-    const wrapper = shallowWithIntl(<AboutPage />);
+  const defaultProps = { currentLanguage: 'fi' };
+  function getWrapper(props) {
+    return shallowWithIntl(<AboutPage {...defaultProps} {...props} />);
+  }
 
-    expect(toJson(wrapper)).toMatchSnapshot();
+  test('render normally', () => {
+    const wrapper = getWrapper();
+    const instance = wrapper.instance();
+    instance.fetchInstructions = jest.fn().mockImplementation(() => (
+      [{ id: 1, content: { fi: 'Finnish content' } }]
+    ));
+    instance.componentDidMount();
+
+    expect(wrapper.html()).toContain('class="about-page"');
   });
 });
