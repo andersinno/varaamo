@@ -37,6 +37,17 @@ describe('pages/resource/resource-info/ResourceInfo', () => {
     ],
   };
 
+  const getResourceWithPlacement = (placement) => {
+    const resource = Immutable(
+      Resource.build({
+        description: 'Some description',
+        accessibilitySummaries: [{}],
+        placement,
+      }),
+    );
+    return resource;
+  };
+
   function getWrapper(extraProps) {
     return shallowWithIntl(<ResourceInfo {...defaultProps} {...extraProps} />);
   }
@@ -111,5 +122,32 @@ describe('pages/resource/resource-info/ResourceInfo', () => {
     const wrapper = getWrapper({ resource });
 
     expect(wrapper.find({ header: 'paymentTerms.title' }).length).toEqual(1);
+  });
+
+  test('renders inside resource placement', () => {
+    const resource = getResourceWithPlacement('inside');
+    const wrapper = getWrapper({ resource });
+    const placementInfo = wrapper.find('span.app-ResourceInfo__placement');
+
+    expect(placementInfo).toHaveLength(1);
+    expect(placementInfo.text()).toContain('ResourceInfo.resourcePlacementInside');
+  });
+
+  test('renders outside resource placement', () => {
+    const resource = getResourceWithPlacement('outside');
+    const wrapper = getWrapper({ resource });
+    const placementInfo = wrapper.find('span.app-ResourceInfo__placement');
+
+    expect(placementInfo).toHaveLength(1);
+    expect(placementInfo.text()).toContain('ResourceInfo.resourcePlacementOutside');
+  });
+
+  test('renders inside and outside resource placement', () => {
+    const resource = getResourceWithPlacement('both');
+    const wrapper = getWrapper({ resource });
+    const placementInfo = wrapper.find('span.app-ResourceInfo__placement');
+
+    expect(placementInfo).toHaveLength(1);
+    expect(placementInfo.text()).toContain('ResourceInfo.resourcePlacementBoth');
   });
 });

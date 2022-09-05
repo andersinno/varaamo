@@ -25,6 +25,19 @@ function ResourceInfo({
   }
   const accessibilitySummariesAndDescription = [...accessibilitySummariesArray, ...accessibilityDescriptionArray];
 
+  const getResourcePlacement = () => {
+    const { placement } = resource;
+    let resourcePlacementText = '';
+    if (placement === 'inside') {
+      resourcePlacementText = t('ResourceInfo.resourcePlacementInside');
+    } else if (placement === 'outside') {
+      resourcePlacementText = t('ResourceInfo.resourcePlacementOutside');
+    } else if (placement === 'both') {
+      resourcePlacementText = t('ResourceInfo.resourcePlacementBoth');
+    }
+    return `${t('ResourceInfo.resourcePlacementText')} ${resourcePlacementText}`;
+  };
+
   return (
     <section className="app-ResourceInfo">
       {resource.description && (
@@ -33,6 +46,12 @@ function ResourceInfo({
             <WrappedText openLinksInNewTab text={resource.description} />
           </div>
         </ResourcePanel>
+      )}
+
+      {resource.placement && (
+        <span className="app-ResourceInfo__placement">
+          {getResourcePlacement()}
+        </span>
       )}
 
       {resource.genericTerms && (
