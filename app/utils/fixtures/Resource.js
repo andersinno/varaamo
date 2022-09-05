@@ -22,5 +22,6 @@ const Resource = new Factory()
   .attr('products', [])
   .attr('shouldBeReservedWholeDay', false)
   .attr('authentication', 'none')
+  .attr('placement', '')
   .attr('area', 13);
 export default Resource;
