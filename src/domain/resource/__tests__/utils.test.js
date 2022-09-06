@@ -230,6 +230,35 @@ describe('domain resource utility function', () => {
     });
   });
 
+  describe('resource availibility status', () => {
+    test('renders external reservation status correctly', () => {
+      const resource = {
+        id: 1,
+        can_only_be_reserved_externally: true,
+        reservations: [],
+        reservable: true,
+      };
+      const availabilityforNow = resourceUtils.getAvailabilityDataForNow(resource);
+      expect(availabilityforNow).toStrictEqual({ status: 'externalReservation', bsStyle: 'warning' });
+
+      const availabilityForWholeDay = resourceUtils.getAvailabilityDataForWholeDay(resource);
+      expect(availabilityForWholeDay).toStrictEqual({ status: 'externalReservation', bsStyle: 'warning' });
+    });
+
+    test('renders temporarily closed status correctly', () => {
+      const resource = {
+        id: 1,
+        reservable: false,
+        reservations: [],
+      };
+      const availabilityforNow = resourceUtils.getAvailabilityDataForNow(resource);
+      expect(availabilityforNow).toStrictEqual({ status: 'closedTemporarily', bsStyle: 'danger' });
+
+      const availabilityForWholeDay = resourceUtils.getAvailabilityDataForWholeDay(resource);
+      expect(availabilityForWholeDay).toStrictEqual({ status: 'closedTemporarily', bsStyle: 'danger' });
+    });
+  });
+
   test('getOpeningHours', () => {
     const resource = resourceFixture.build({
       opening_hours: OPENING_HOURS,
