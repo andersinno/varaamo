@@ -525,6 +525,14 @@ export const getAvailabilityDataForNow = (resource, date) => {
   const openingHours = getOpeningHours(resource, date);
   const reservations = getOpenReservations(resource);
 
+  if (!resource.reservable) {
+    return { status: 'closedTemporarily', bsStyle: 'danger' };
+  }
+
+  if (resource.can_only_be_reserved_externally) {
+    return { status: 'externalReservation', bsStyle: 'warning' };
+  }
+
   if (!openingHours || !openingHours.closes || !openingHours.opens) {
     return { status: 'closed', bsStyle: 'danger' };
   }
@@ -551,6 +559,15 @@ export const getAvailabilityDataForNow = (resource, date) => {
     return { status: 'reserved', bsStyle: 'danger' };
   }
 
+  const nextReservationForToday = reservationUtils.getNextReservationForToday(reservations);
+  if (!currentReservation && nextReservationForToday) {
+    return {
+      status: 'freeUntil',
+      bsStyle: 'success',
+      values: { time: moment(nextReservationForToday.begin).format(constants.TIME_FORMAT) },
+    };
+  }
+
   return { status: 'available', bsStyle: 'success' };
 };
 
@@ -562,6 +579,14 @@ export const getAvailabilityDataForNow = (resource, date) => {
  */
 export const getAvailabilityDataForWholeDay = (resource, date) => {
   const openingHours = getOpeningHours(resource, date);
+
+  if (!resource.reservable) {
+    return { status: 'closedTemporarily', bsStyle: 'danger' };
+  }
+
+  if (resource.can_only_be_reserved_externally) {
+    return { status: 'externalReservation', bsStyle: 'warning' };
+  }
 
   if (!openingHours || !openingHours.closes || !openingHours.opens) {
     return { status: 'closed', bsStyle: 'danger' };

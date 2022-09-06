@@ -1,4 +1,9 @@
-import { canUserModifyReservation, canUserCancelReservation, getShowRefundPolicy } from '../utils';
+import {
+  canUserModifyReservation,
+  canUserCancelReservation,
+  getNextReservationForToday,
+  getShowRefundPolicy,
+} from '../utils';
 import reservationGenerator from '../../../common/data/fixtures/reservation';
 import { RESERVATION_STATE } from '../../../constants/ReservationState';
 
@@ -85,6 +90,19 @@ describe('Reservation utils function ', () => {
       };
 
       expect(getShowRefundPolicy(true, reservation, resource));
+    });
+  });
+
+  describe('reservations', () => {
+    test('get next reservation for today', () => {
+      Date.now = jest.fn(() => new Date('2019-12-17T11:00:00+03:00'));
+      const nextReservation = { begin: '2019-12-17T12:00:00+03:00', end: '2019-12-17T13:00:00+03:00' };
+      const reservations = [
+        { begin: '2019-12-17T09:00:00+03:00', end: '2019-12-17T10:00:00+03:00' },
+        nextReservation,
+      ];
+      const nextReservationForToday = getNextReservationForToday(reservations);
+      expect(nextReservationForToday).toBe(nextReservation);
     });
   });
 });
