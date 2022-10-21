@@ -49,6 +49,21 @@ export const getCurrentReservation = (reservations) => {
   });
 };
 
+export const getNextReservationForToday = (reservations) => {
+  const now = moment();
+  const today = now.day();
+  const sortedReservations = sortBy(reservations, 'begin');
+  return find(sortedReservations, (reservation) => {
+    return (
+      moment(reservation.begin).day() === today
+      && moment(reservation.end).day() === today
+      && now < moment(reservation.begin)
+      && now < moment(reservation.end)
+    );
+  });
+};
+
+
 /**
  * Edit existing reservation API helper
  * @param {Object} reservation Original reservation data

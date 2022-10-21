@@ -8,7 +8,7 @@ import * as resourceUtils from '../utils';
 
 const ResourceAvailability = ({ date, resource, t }) => {
   const now = moment();
-  if (moment(date).isBefore(now, 'day') || !!resource.external_reservation_url) {
+  if (moment(date).isBefore(now, 'day')) {
     return <span />;
   }
 
