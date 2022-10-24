@@ -67,15 +67,20 @@ class ResourceCard extends React.Component {
       const iconslist = (
         <span className="app-resourceCardInfoCell">
           <span className="app-ResourceCardInfoCell__loginMethods">
-            {allowedLoginMethodIconsList.map((icon, index) => (
-              <img
-                alt={allowedLoginMethodNamesList[index]}
-                className="app-resourceCardInfoCell__icon"
-                key={allowedLoginMethodNamesList[index]}
-                src={icon}
-                title={allowedLoginMethodNamesList[index]}
-              />
-            ))}
+            {allowedLoginMethodIconsList.map((icon, index) => {
+              if (allowedLoginMethodNamesList[index] == 'Suomi.fi') {
+                return undefined;
+              }
+              return (
+                <img
+                  alt={allowedLoginMethodNamesList[index]}
+                  className="app-resourceCardInfoCell__icon"
+                  key={allowedLoginMethodNamesList[index]}
+                  src={icon}
+                  title={allowedLoginMethodNamesList[index]}
+                />
+              );
+            })}
           </span>
           <span>
             {t('ResourceCard.requiredLoginMethods', { loginMethodCount: allowedLoginMethodNamesList.length })}

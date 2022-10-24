@@ -284,3 +284,4 @@ class ReservationConfirmation extends Component {
 }
 
 export default injectT(ReservationConfirmation);
+// http://localhost:3000/reservation-payment-return?payment_status=success&reservation_id=393
