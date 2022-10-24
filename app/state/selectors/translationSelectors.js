@@ -58,5 +58,4 @@ function createTranslatedSelector(toTranslateSelector) {
 export {
   createTranslatedSelector,
   currentLanguageSelector,
-  translateItem,
 };
