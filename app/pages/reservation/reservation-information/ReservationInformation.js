@@ -3,6 +3,7 @@ import uniq from 'lodash/uniq';
 import camelCase from 'lodash/camelCase';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import React, { Component, Fragment } from 'react';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
@@ -31,23 +32,30 @@ class ReservationInformation extends Component {
   };
 
   state = {
-    reservationPrice: null,
+    reservationPriceInfo: {
+      total_price: null,
+      amount: null,
+      period: null,
+      tax_percentage: null,
+      type: null,
+    },
   }
 
-  componentDidMount() {
-    if (!hasProducts(this.props.resource)) {
-      return;
-    }
-    const products = get(this.props.resource, 'products');
-    const {
-      begin,
-      end,
-    } = this.props.selectedTime;
-
-    getReservationPrice(apiClient, begin, end, products)
-      .then(price => this.setState({ reservationPrice: price }))
-      .catch(() => this.setState({ reservationPrice: null }));
-  }
+  // TODO: Remove this!!
+  // componentDidMount() {
+  //   if (!hasProducts(this.props.resource)) {
+  //     return;
+  //   }
+  //   const products = get(this.props.resource, 'products');
+  //   const {
+  //     begin,
+  //     end,
+  //   } = this.props.selectedTime;
+  //
+  //   getReservationPrice(apiClient, begin, end, products)
+  //     .then(price => this.setState({ reservationPrice: price }))
+  //     .catch(() => this.setState({ reservationPrice: null }));
+  // }
 
   onConfirm = (values) => {
     const { onConfirm } = this.props;
@@ -89,6 +97,8 @@ class ReservationInformation extends Component {
       formFields.push('billingLastName');
       formFields.push('billingPhoneNumber');
       formFields.push('billingEmailAddress');
+      formFields.push('userGroup');
+      formFields.push('eventType');
     }
 
     return uniq(formFields);
@@ -124,6 +134,7 @@ class ReservationInformation extends Component {
 
     if (hasProducts(resource)) {
       requiredFormFields.push('paymentTermsAndConditions');
+      requiredFormFields.push('userGroup');
       if (!isAdmin) {
         requiredFormFields.push('billingFirstName');
         requiredFormFields.push('billingLastName');
@@ -133,6 +144,12 @@ class ReservationInformation extends Component {
 
     return requiredFormFields;
   }
+
+  getValue = (value, options) => options.find(option => option.value === value);
+
+  setPriceAndSelectedProduct = reservationPriceInfo => (
+    this.setState({ reservationPriceInfo })
+  );
 
   render() {
     const {
@@ -146,18 +163,14 @@ class ReservationInformation extends Component {
       unit,
       isStaff,
     } = this.props;
-    const {
-      reservationPrice,
-    } = this.state;
-
-    const taxPercentage = get(resource, 'products[0].price.taxPercentage');
+    const { reservationPriceInfo } = this.state;
 
     const termsAndConditions = getTermsAndConditions(resource);
     const specificTerms = resource.specificTerms;
     const beginText = moment(selectedTime.begin).format('D.M.YYYY HH:mm');
     const endText = moment(selectedTime.end).format('HH:mm');
     const hours = moment(selectedTime.end).diff(selectedTime.begin, 'minutes') / 60;
-
+    const productNeedsPayment = !resource.freeToUse && hasProducts(resource);
     return (
       <div className="app-ReservationInformation">
         <Col md={7} sm={12}>
@@ -172,11 +185,14 @@ class ReservationInformation extends Component {
             onConfirm={this.onConfirm}
             requiredFields={this.getRequiredFormFields(resource, termsAndConditions, specificTerms)}
             resource={resource}
+            selectedTime={selectedTime}
+            setPriceAndSelectedProduct={this.setPriceAndSelectedProduct}
+            setReservationPrice={this.setReservationPrice}
             termsAndConditions={termsAndConditions}
           />
         </Col>
         <Col md={5} sm={12}>
-          <div className="app-ReservationDetails">
+          <div className={classNames('app-ReservationDetails', { 'fixedPaymentSummary': productNeedsPayment })}>
             <h2 className="app-ReservationPage__title">{t('ReservationPage.detailsTitle')}</h2>
             <Row>
               <Col md={4}>
@@ -192,7 +208,7 @@ class ReservationInformation extends Component {
                 </span>
               </Col>
             </Row>
-            {hasProducts(resource) && (
+            {!resource.freeToUse && hasProducts(resource) && (
               <Fragment>
                 <Row>
                   <Col md={4}>
@@ -202,7 +218,7 @@ class ReservationInformation extends Component {
                   </Col>
                   <Col md={8}>
                     <span className="app-ReservationDetails__value">
-                      {getReservationPricePerPeriod(resource)}
+                      {getReservationPricePerPeriod(reservationPriceInfo)}
                     </span>
                   </Col>
                 </Row>
@@ -214,7 +230,7 @@ class ReservationInformation extends Component {
                   </Col>
                   <Col md={8}>
                     <span className="app-ReservationDetails__value">
-                      {t('common.priceWithVAT', { price: reservationPrice, vat: taxPercentage })}
+                      {t('common.priceWithVAT', { price: reservationPriceInfo.total_price, vat: reservationPriceInfo.tax_percentage })}
                     </span>
                   </Col>
                 </Row>

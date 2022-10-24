@@ -113,6 +113,7 @@ function getEditReservationUrl(reservation) {
  * @param {Array} products Resource product data.
  * @returns {Promise<string|null} Price or no price.
  */
+// TODO: Remove this ??
 async function getReservationPrice(apiClient, begin, end, products) {
   const productId = get(products, '[0].id');
   if (!begin || !end || !productId) {
@@ -132,10 +133,24 @@ async function getReservationPrice(apiClient, begin, end, products) {
   }
 }
 
-function getReservationPricePerPeriod(resource) {
-  const price = get(resource, 'products[0].price.amount');
-  const pricePeriod = get(resource, 'products[0].price.period');
-  const priceType = get(resource, 'products[0].price.type');
+async function getResourceReservationPrice(apiClient, id, begin, end, userGroup, eventType, productId) {
+  if (!begin || !end || !userGroup) {
+    return null;
+  }
+  try {
+    let payload = { begin, end, user_group: userGroup, product: productId };
+    payload = eventType ? { ...payload, event_type: eventType } : payload;
+    const result = await apiClient.post(`resource/${id}/get_price`, payload);
+    return result;
+  } catch (e) {
+    return null;
+  }
+}
+
+function getReservationPricePerPeriod(priceInfo) {
+  const price = get(priceInfo, 'amount');
+  const pricePeriod = get(priceInfo, 'period');
+  const priceType = get(priceInfo, 'type');
   const duration = moment.duration(pricePeriod);
   const hours = duration.asHours();
   const period = hours >= 1
@@ -157,4 +172,5 @@ export {
   getReservationResourceId,
   getReservationPrice,
   getReservationPricePerPeriod,
+  getResourceReservationPrice,
 };

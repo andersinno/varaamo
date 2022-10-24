@@ -52,12 +52,16 @@ class ReservationListItem extends Component {
 
     const paymentLabel = constants.RESERVATION_PAYMENT_LABELS[reservation.state];
     const statusLabel = constants.RESERVATION_STATE_LABELS[reservation.state];
-    const price = getReservationPrice(
-      reservation.begin,
-      reservation.end,
-      resource,
-    );
-    const vat = getTaxPercentage(resource);
+    let price;
+    let vat;
+    if (reservation.price_info) {
+      price = getReservationPrice(
+        reservation.begin,
+        reservation.end,
+        reservation.price_info,
+      );
+      vat = reservation.price_info.tax_percentage;
+    }
     const tVariables = {
       price,
       vat,

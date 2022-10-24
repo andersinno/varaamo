@@ -143,19 +143,22 @@ class UnconnectedReservationPage extends Component {
       } else {
         const allReservations = [...recurringReservations, { begin, end }];
 
-        const isOrder = hasProducts(resource);
-        const order = isOrder
-          ? {
-            order: {
-              order_lines: [{
-                product: get(resource, 'products[0].id'),
-              }],
-              return_url: this.createPaymentReturnUrl(),
-            },
-          } : {};
+        const isOrder = !resource.freeToUse && hasProducts(resource);
+        let order = {};
 
         if (isOrder) {
           this.setState({ view: 'payment' });
+          const { product, userGroup, eventType } = values;
+          let orderLineData = { product, user_group: userGroup };
+          if (eventType) {
+            orderLineData = { ...orderLineData, event_type: eventType };
+          }
+          order = {
+            order: {
+              order_lines: [orderLineData],
+              return_url: this.createPaymentReturnUrl(),
+            },
+          };
         }
         allReservations.forEach(reservation => actions.postReservation({
           ...values,

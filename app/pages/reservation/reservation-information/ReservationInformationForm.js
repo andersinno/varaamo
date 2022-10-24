@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/lib/Button';
 import Form from 'react-bootstrap/lib/Form';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, change } from 'redux-form';
 import isEmail from 'validator/lib/isEmail';
 import { connect } from 'react-redux';
 
@@ -11,6 +11,7 @@ import TermsField from '../../../shared/form-fields/TermsField';
 import constants from '../../../constants/AppConstants';
 import FormTypes from '../../../constants/FormTypes';
 import ReservationMetadataField from './ReservationMetadataField';
+import DropdownField from './DropdownField';
 import injectT from '../../../i18n/injectT';
 import { hasProducts } from '../../../utils/resourceUtils';
 import WrappedText from '../../../shared/wrapped-text/WrappedText';
@@ -18,6 +19,10 @@ import InternalReservationFields from './InternalReservationFields';
 import { toCamelCase } from '../../../../src/common/data/utils';
 import { INPUT_PURPOSES } from '../../../../src/constants/InputPurposes';
 import ReservationInformationNotification from './ReservationInformationNotification';
+
+import apiClient from '../../../../src/common/api/client';
+import { getResourceReservationPrice } from '../../../utils/reservationUtils';
+import { isEmpty } from 'lodash/lang';
 
 const validators = {
   reserverEmailAddress: (t, { reserverEmailAddress }) => {
@@ -116,6 +121,11 @@ export function validate(values, { fields, requiredFields, t }) {
 }
 
 class UnconnectedReservationInformationForm extends Component {
+    state = {
+      selectedUserGroup: null,
+      selectedEventType: null,
+    }
+
   getAsteriskExplanation = () => {
     const { resource, t } = this.props;
     const maybeBillable = resource.minPricePerHour && resource.maxPricePerHour;
@@ -174,6 +184,54 @@ class UnconnectedReservationInformationForm extends Component {
     );
   }
 
+  handleUserGroupChange  = async (e) => {
+    // TODO: Simplify this using selector. Selector had issue of not
+    // updating the values the first time.
+    let userGroup = null;
+    let eventType = null;
+    if (e.target.name === 'userGroup') {
+      this.setState({ selectedUserGroup: e.target.value });
+      userGroup = e.target.value;
+      eventType = this.state.selectedEventType;
+    } else if (e.target.name === 'eventType') {
+      this.setState({ selectedEventType: e.target.value });
+      userGroup = this.state.selectedUserGroup;
+      eventType = e.target.value;
+    }
+    const { begin, end } = this.props.selectedTime;
+    const resourceId = this.props.resource.id;
+    const productId = this.props.resource.products[0].id;
+    try {
+      const result = await getResourceReservationPrice(
+        apiClient,
+        resourceId,
+        begin,
+        end,
+        userGroup,
+        eventType,
+        productId,
+      );
+      const data = result.data;
+      this.props.setPriceAndSelectedProduct(data);
+      // this.props.dispatch(change(FormTypes.RESERVATION, 'product', data.product));
+    } catch (e) {
+      // TODO: Handle the error
+    }
+  }
+
+  renderDropDown(name, options) {
+    return (
+      <Field
+        component={DropdownField}
+        dropdownItems={options}
+        key={name}
+        name={name}
+        onChange={this.handleUserGroupChange}
+        type={name}
+      />
+    );
+  }
+
   renderPaymentTermsField = () => {
     const { t, isStaff } = this.props;
     // eslint-disable-next-line max-len
@@ -227,6 +285,25 @@ class UnconnectedReservationInformationForm extends Component {
     );
   }
 
+  getReservationUserGroups = (resource) => {
+    const reservationUserGroups = resource.pricingUserGroup ? [...resource.pricingUserGroup] : [];
+    const reservationUserGroupOptions = [...reservationUserGroups].map(userGroup => (
+      { value: userGroup.id, label: userGroup.name }
+    ));
+    return reservationUserGroupOptions;
+  }
+
+  getReservationEventTypes = (resource) => {
+    const reservationEventTypes = resource.pricingEventGroup ? [...resource.pricingEventGroup] : [];
+    if (isEmpty(reservationEventTypes)) {
+      return [];
+    }
+    const eventTypeOptions = [...reservationEventTypes].map(eventType => (
+      { value: eventType.id, label: eventType.name }
+    ));
+    return eventTypeOptions;
+  }
+
   render() {
     const {
       isEditing,
@@ -240,6 +317,8 @@ class UnconnectedReservationInformationForm extends Component {
       isStaff,
       valid,
     } = this.props;
+    const userGroupOptions = this.getReservationUserGroups(resource);
+    const eventTypeOptions = this.getReservationEventTypes(resource);
 
     this.requiredFields = isStaff
       ? constants.REQUIRED_STAFF_EVENT_FIELDS
@@ -413,6 +492,24 @@ class UnconnectedReservationInformationForm extends Component {
               },
             )
           }
+
+          {!resource.freeToUse && hasProducts(resource) && (
+            <div className="app-ReservationPage__user_group_and_event">
+              {includes(fields, 'userGroup') && (
+                <div>
+                  <h2 className="app-ReservationPage__title">Usergroup</h2>
+                  {this.renderDropDown('userGroup', userGroupOptions)}
+                </div>
+              )}
+              {includes(fields, 'eventType') && (
+                <div>
+                  <h2 className="app-ReservationPage__title">EventType</h2>
+                  {this.renderDropDown('eventType', eventTypeOptions)}
+                </div>
+              )}
+            </div>
+          )}
+
           <h2 className="app-ReservationPage__title">{t('ReservationInformationForm.eventInformationTitle')}</h2>
           {includes(fields, 'eventSubject') && (
             <ReservationInformationNotification
@@ -485,7 +582,7 @@ class UnconnectedReservationInformationForm extends Component {
               </Button>
               )
             }
-            {hasProducts(resource) && !isStaff
+            {!resource.freeToUse && hasProducts(resource) && !isStaff
               ? this.renderPayButton()
               : this.renderSaveButton()
             }
@@ -527,12 +624,14 @@ ConnectedReservationInformationForm = connect(
     const resource = state.ui.reservations.toEdit.length > 0
       ? state.ui.reservations.toEdit[0].resource
       : state.ui.reservations.selected[0].resource;
-
+    const products = state.data.resources[resource].products;
+    const product = !isEmpty(products) && products[0].id;
     return {
       initialValues: {
         internalReservation: true,
         reservationExtraQuestionsDefault: state.data.resources[resource].reservationExtraQuestions,
         reservationExtraQuestions: state.data.resources[resource].reservationExtraQuestions,
+        product,
         ...toCamelCase(state.ui.reservations.toEdit[0]),
       },
       onChange: (obj) => {

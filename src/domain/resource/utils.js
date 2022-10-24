@@ -634,27 +634,21 @@ export const getAvailabilityDataForWholeDay = (resource, date) => {
  * @param resource {object} Resource object.
  * @returns {number}
  */
-export const getReservationPrice = (start, end, resource) => {
-  const products = get(resource, 'products', []);
-
-  if (!products.length) {
-    return 0;
-  }
-
+// TODO: Fix the docs
+export const getReservationPrice = (start, end, priceInfo) => {
   const startMoment = moment(start);
   const endMoment = moment(end);
 
   // TODO: Replace those getter with generic data when price
   // product is more than 1.
 
-  const currentProduct = products[0];
-  const currentProductPriceType = get(currentProduct, 'price.type', null);
-  const currentProductPriceAmount = get(currentProduct, 'price.amount', 0);
+  const currentProductPriceType = get(priceInfo, 'type', null);
+  const currentProductPriceAmount = get(priceInfo, 'amount', 0);
 
   switch (currentProductPriceType) {
     case productPriceType.PER_PERIOD: {
       const timeDiff = endMoment.diff(startMoment, 'hours', true);
-      const duration = moment.duration(currentProduct.price.period).as('hours');
+      const duration = moment.duration(priceInfo.period).as('hours');
 
       if (!duration || !currentProductPriceAmount) {
         return 0;
