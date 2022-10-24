@@ -7,6 +7,12 @@ import settings from '../../config/settings';
 function configurePassport() {
   const tampereStrategy = new Strategy(
     {
+      // These are required for tunnistamo to work locally
+      authorizationURL: 'http://127.0.0.1:8001/oauth2/authorize/',
+      tokenURL:  'http://127.0.0.1:8001/oauth2/token/',
+      userProfileURL: 'http://127.0.0.1:8001/user/',
+      appTokenURL: 'http://127.0.0.1:8001/jwt-token/',
+
       clientID: settings.CLIENT_ID,
       clientSecret: settings.CLIENT_SECRET,
       callbackURL: settings.LOGIN_CALLBACK_URL || '/login/tampere/return',
