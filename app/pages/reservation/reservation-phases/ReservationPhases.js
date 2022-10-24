@@ -25,7 +25,7 @@ function ReservationPhases({
   isEditing,
   t,
 }) {
-  let stepMessageIds = hasProducts(resource)
+  let stepMessageIds = !resource.freeToUse && hasProducts(resource)
     ? ['information', 'payment', 'confirmation']
     : ['information', 'confirmation'];
 

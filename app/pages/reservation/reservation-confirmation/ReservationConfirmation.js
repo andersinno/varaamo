@@ -27,17 +27,14 @@ class ReservationConfirmation extends Component {
     user: PropTypes.object.isRequired,
   };
 
-  state = {
-    reservationPrice: null,
-  }
-
-  componentDidMount() {
-    const { reservation, resource } = this.props;
-    if (hasProducts(resource)) {
-      getReservationPrice(apiClient, reservation.begin, reservation.end, resource.products)
-        .then(reservationPrice => this.setState({ reservationPrice }));
-    }
-  }
+  // TODO: Remove this
+  // componentDidMount() {
+  //   const { reservation, resource } = this.props;
+  //   if (hasProducts(resource)) {
+  //     getReservationPrice(apiClient, reservation.begin, reservation.end, reservation.products)
+  //       .then(reservationPrice => this.setState({ reservationPrice }));
+  //   }
+  // }
 
   getReturnUrl = (isEdited) => {
     const { location } = this.props;
@@ -64,7 +61,7 @@ class ReservationConfirmation extends Component {
     const {
       failedReservations, isEdited, reservation, resource, t, user,
     } = this.props;
-    const { reservationPrice } = this.state;
+    const reservationPrice = reservation.priceInfo && reservation.priceInfo.totalPrice;
     const { needManualConfirmation } = reservation;
 
     const href = `${constants.FEEDBACK_URL}`;
@@ -168,7 +165,7 @@ class ReservationConfirmation extends Component {
               && this.renderField(
                 'pricePerPeriod',
                 t('common.priceLabel'),
-                getReservationPricePerPeriod(resource),
+                getReservationPricePerPeriod(reservation.priceInfo),
               )}
             {reservationPrice
               && this.renderField(

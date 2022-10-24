@@ -30,6 +30,7 @@ export default {
     'eventDescription',
     'reserverName',
     'reservationExtraQuestions',
+    'userGroup',
   ],
   RESERVATION_STATE_LABELS: {
     cancelled: {
