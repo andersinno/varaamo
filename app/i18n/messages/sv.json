@@ -289,6 +289,7 @@
   "ReservationForm.internalReservationDescription": "Avdelnings egna evenemang. Avmarkera kryssrutan för att göra en extern reservation på användarens vägnar.",
   "ReservationForm.markAsClosed": "Markera som stängd",
   "ReservationForm.markAsClosedDescription": "Markera kryssrutan om du stänger resursen genom att reservera.",
+  "ReservationInfo.externalReservationText": "Kontrollera tillgänglighet från extern kalender",
   "ReservationInfo.loginMessage": "För att kunna boka detta utrymme måste du <a href='/login?next={next}'>logga in</a>.",
   "ReservationInfo.loginText": "För att kunna boka detta utrymme måste du logga in.",
   "ReservationInfo.selectionStartDirections": "Tryck och håll på skärmen för att välja.",

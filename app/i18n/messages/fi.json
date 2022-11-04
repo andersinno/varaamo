@@ -287,6 +287,7 @@
   "ReservationForm.internalReservationDescription": "Toimipisteen sisäinen varaus. Poista ruksi jos olet tekemässä ulkoista varausta asiakkaan puolesta.",
   "ReservationForm.markAsClosed": "Merkitse suljetuksi.",
   "ReservationForm.markAsClosedDescription": "Valitse jos olet sulkemassa tilaa varaamalla.",
+  "ReservationInfo.externalReservationText": "Tarkista saatavuus ulkoisesta kalenterista",
   "ReservationInfo.loginMessage": "Sinun täytyy <a href='/login?next={next}'>kirjautua sisään</a>, jotta voit tehdä varauksen tähän tilaan.",
   "ReservationInfo.loginText": "Sinun täytyy kirjautua sisään, jotta voit tehdä varauksen tähän tilaan.",
   "ReservationInfo.maxNumberOfReservations": "Maksimimäärä varauksia per käyttäjä:",
