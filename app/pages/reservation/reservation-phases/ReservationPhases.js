@@ -25,7 +25,7 @@ function ReservationPhases({
   isEditing,
   t,
 }) {
-  let stepMessageIds = !resource.freeToUse && hasProducts(resource)
+  let stepMessageIds = !resource.freeToUse && hasProducts(resource) && !resource.needManualConfirmation
     ? ['information', 'payment', 'confirmation']
     : ['information', 'confirmation'];
 
