@@ -61,6 +61,7 @@ class ReservationConfirmation extends Component {
     const {
       failedReservations, isEdited, reservation, resource, t, user,
     } = this.props;
+    console.log('The reservation is --->>>>', reservation);
     const reservationPrice = reservation.priceInfo && reservation.priceInfo.totalPrice;
     const { needManualConfirmation } = reservation;
 
@@ -284,4 +285,3 @@ class ReservationConfirmation extends Component {
 }
 
 export default injectT(ReservationConfirmation);
-// http://localhost:3000/reservation-payment-return?payment_status=success&reservation_id=393

@@ -80,6 +80,7 @@
   "common.priceLabel": "Hinta",
   "common.totalPriceLabel": "Hinta yhteensä",
   "common.priceWithVAT": "{price}€ (sis. alv. {vat}%)",
+  "payment.paid": "Paid __finnnish__",
   "payment.success": "Maksu suoritettu",
   "payment.processing": "Käsitellään maksua",
   "payment.failed": "Maksu epäonnistui",

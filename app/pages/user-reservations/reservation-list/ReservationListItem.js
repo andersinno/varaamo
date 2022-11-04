@@ -50,8 +50,11 @@ class ReservationListItem extends Component {
 
     const nameSeparator = isEmpty(resource) || isEmpty(unit) ? '' : ', ';
 
-    const paymentLabel = constants.RESERVATION_PAYMENT_LABELS[reservation.state];
+    let paymentLabel = constants.RESERVATION_PAYMENT_LABELS[reservation.state];
     const statusLabel = constants.RESERVATION_STATE_LABELS[reservation.state];
+    // if (reservation.state === 'confirmed' && resource.price_list && resource.need_manual_confirmation) {
+    //   paymentLabel = constants.RESERVATION_PAYMENT_LABELS.waiting_for_payment;
+    // }
     let price;
     let vat;
     if (reservation.price_info) {

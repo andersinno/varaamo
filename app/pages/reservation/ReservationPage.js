@@ -71,13 +71,13 @@ class UnconnectedReservationPage extends Component {
 
   componentWillUpdate(nextProps) {
     const { reservationCreated: nextCreated, reservationEdited: nextEdited } = nextProps;
-    const { reservationCreated, reservationEdited } = this.props;
+    const { reservationCreated, reservationEdited, resource } = this.props;
     if (
       (!isEmpty(nextCreated) || !isEmpty(nextEdited))
       && (nextCreated !== reservationCreated || nextEdited !== reservationEdited)
     ) {
       // Reservation created for resource with product/order: proceed to payment!
-      if (has(nextCreated, 'order.paymentUrl')) {
+      if (has(nextCreated, 'order.paymentUrl') && !resource.needManualConfirmation) {
         const paymentUrl = get(nextCreated, 'order.paymentUrl');
         window.location = paymentUrl;
         return;
@@ -147,7 +147,9 @@ class UnconnectedReservationPage extends Component {
         let order = {};
 
         if (isOrder) {
-          this.setState({ view: 'payment' });
+          if (!resource.needManualConfirmation) {
+            this.setState({ view: 'payment' });
+          }
           const { product, userGroup, eventType } = values;
           let orderLineData = { product, user_group: userGroup };
           if (eventType) {

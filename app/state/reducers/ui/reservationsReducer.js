@@ -131,6 +131,7 @@ function reservationsReducer(state = initialState, action) {
     }
 
     case types.UI.SELECT_RESERVATION_TO_EDIT: {
+      console.log('Who am I');
       return selectReservationToEdit(state, action);
     }
 

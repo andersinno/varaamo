@@ -80,6 +80,7 @@
   "common.priceLabel": "Price",
   "common.totalPriceLabel": "Total price",
   "common.priceWithVAT": "{price}€ (VAT {vat}% inc.)",
+  "payment.paid": "Paid",
   "payment.success": "Payment successful",
   "payment.processing": "Processing payment",
   "payment.failed": "Payment failed",
