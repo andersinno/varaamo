@@ -62,6 +62,7 @@
   "CommentModal.title": "Varauksen kommentit",
   "common.accessCodeLabel": "PIN-koodi",
   "common.addressCityLabel": "Kaupunki",
+  "common.addressCompanyLabel": "Yritys",
   "common.addressStreetLabel": "Katuosoite",
   "common.addressZipLabel": "Postinumero",
   "common.back": "Takaisin",

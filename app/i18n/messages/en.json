@@ -62,6 +62,7 @@
   "CommentModal.title": "Comments concerning the reservation",
   "common.accessCodeLabel": "PIN code",
   "common.addressCityLabel": "City",
+  "common.addressCompanyLabel": "Company",
   "common.addressStreetLabel": "Street address",
   "common.addressZipLabel": "Postal code",
   "common.back": "Back",
