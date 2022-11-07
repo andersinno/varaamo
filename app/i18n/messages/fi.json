@@ -348,7 +348,7 @@
   "ResourceAvailability.closed": "Suljettu",
   "ResourceAvailability.closedTemporarily": "Suljettu tilapäisesti",
   "ResourceAvailability.freeUntil": "Vappa {time} asti",
-  "ResourceAvailability.externalReservation": "Tarkista saatavuus",
+  "ResourceAvailability.externalReservation": "Varaukset muualta",
   "ResourceAvailability.reserved": "Varattu koko päivän",
   "ResourceAvailability.reservingRestricted": "Ei varattavissa",
   "ResourceCard.peopleCapacity": "{people} henkilöä",
