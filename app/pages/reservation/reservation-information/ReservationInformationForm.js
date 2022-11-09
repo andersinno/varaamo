@@ -359,6 +359,15 @@ class UnconnectedReservationInformationForm extends Component {
               { autoComplete: ['billing', INPUT_PURPOSES.ADDRESS_LEVEL_2].join(' '), externalName: 'billing-city' },
             )
           }
+          {includes(fields, 'company')
+            && this.renderField(
+              'company',
+              'text',
+              t('common.addressCompanyLabel'),
+              null,
+              { autoComplete: ['company', INPUT_PURPOSES.ORGANIZATION].join(' '), externalName: 'company' },
+            )
+          }
           {includes(fields, 'billingFirstName')
             && <h2 className="app-ReservationPage__title">{t('common.paymentInformationLabel')}</h2>
           }

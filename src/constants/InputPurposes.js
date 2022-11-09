@@ -23,4 +23,5 @@ export const INPUT_PURPOSES = Object.freeze({
   POSTAL_CODE: 'postal-code',
   TEL: 'tel', // Full telephone number, including country code
   EMAIL: 'email', // E-mail address
+  ORGANIZATION: 'organization',
 });

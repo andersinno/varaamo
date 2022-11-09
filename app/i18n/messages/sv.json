@@ -62,6 +62,7 @@
   "CommentModal.title": "Kommentarer till bokningen",
   "common.accessCodeLabel": "PIN-kod",
   "common.addressCityLabel": "Stad",
+  "common.addressCompanyLabel": "Företag",
   "common.addressStreetLabel": "Gatuadress",
   "common.addressZipLabel": "Postnummer",
   "common.back": "Tillbaka",

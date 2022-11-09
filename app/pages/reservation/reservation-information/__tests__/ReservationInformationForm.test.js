@@ -148,11 +148,11 @@ describe('pages/reservation/reservation-information/ReservationInformationForm',
 
     describe('form fields', () => {
       const fieldName = 'eventSubject';
-
+      const companyField = 'company';
       test('renders a field if it is included in props.fields', () => {
-        const fields = [fieldName];
+        const fields = [fieldName, companyField];
         const input = getWrapper({ fields }).find(Field);
-        expect(input.length).toBe(1);
+        expect(input.length).toBe(2);
       });
 
       test('does not render a field if it is not included in props.fields', () => {
