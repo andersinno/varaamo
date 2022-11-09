@@ -340,7 +340,7 @@ class UnconnectedResourcePage extends Component {
                                 <input
                                   className="btn btn-primary"
                                   type="submit"
-                                  value="Siirry ulkoiseen ajanvarauskalenteriin"
+                                  value={t('ReservationInfo.externalReservationText')}
                                 />
                               </form>
                             )}

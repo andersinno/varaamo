@@ -61,6 +61,12 @@ describe('pages/resource/ResourcePage', () => {
     return shallowWithIntl(<ResourcePage {...defaultProps} {...props} />);
   }
 
+  test('external reservation button is rendred correctly', () => {
+    const externallyReservableResource = Resource.build({ externalReservationUrl: 'external_link', unit: Unit.id });
+    const externalLink = getWrapper({ resource: externallyReservableResource }).find('form').find('input');
+    expect(externalLink.prop('value')).toContain('ReservationInfo.externalReservationText');
+  });
+
   test('renders without error without window', () => {
     const originalWindow = window;
     global.window = undefined;
