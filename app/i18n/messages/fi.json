@@ -487,6 +487,7 @@
 
   "Reservation.stateLabelCancelled": "Peruttu",
   "Reservation.stateLabelConfirmed": "Hyväksytty",
+  "Reservation.stateLabelConfirmedButNotPaid": "Approved; not paid __finnish__",
   "Reservation.stateLabelDenied": "Evätty",
   "Reservation.stateLabelRequested": "Käsiteltävänä",
   "Reservation.stateLabelWaitingForPayment": "Odottaa maksua",

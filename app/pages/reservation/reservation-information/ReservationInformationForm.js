@@ -582,7 +582,7 @@ class UnconnectedReservationInformationForm extends Component {
               </Button>
               )
             }
-            {!resource.freeToUse && hasProducts(resource) && !isStaff
+            {!resource.freeToUse && hasProducts(resource) && !isStaff && !resource.needManualConfirmation
               ? this.renderPayButton()
               : this.renderSaveButton()
             }
