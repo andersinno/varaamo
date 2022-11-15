@@ -471,6 +471,7 @@
 
   "Reservation.stateLabelCancelled": "Avbokad",
   "Reservation.stateLabelConfirmed": "Godkänd",
+  "Reservation.stateLabelConfirmedButNotPaid": "Approved; not paid __swedish__",
   "Reservation.stateLabelDenied": "Nekad",
   "Reservation.stateLabelRequested": "Begärda",
   "Reservation.stateLabelWaitingForPayment": "Väntar på utbetalning",

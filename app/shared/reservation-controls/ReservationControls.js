@@ -98,6 +98,10 @@ class ReservationControls extends Component {
         }
         return [buttons.cancel];
       }
+      // TODO: Is it possible to edit paid reservation ??
+      case 'paid': {
+        return [buttons.cancel];
+      }
 
       case 'denied': {
         return [];

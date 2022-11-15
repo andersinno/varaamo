@@ -469,6 +469,7 @@
 
   "Reservation.stateLabelCancelled": "Cancelled",
   "Reservation.stateLabelConfirmed": "Approved",
+  "Reservation.stateLabelConfirmedButNotPaid": "Approved; not paid",
   "Reservation.stateLabelDenied": "Denied",
   "Reservation.stateLabelRequested": "Requested",
   "Reservation.stateLabelWaitingForPayment": "Waiting for payment",

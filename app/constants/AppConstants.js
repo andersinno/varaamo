@@ -54,6 +54,10 @@ export default {
       labelBsStyle: 'primary',
       labelTextId: 'common.waiting',
     },
+    confirmed_but_not_paid: {
+      labelBsStyle: 'success',
+      labelTextId: 'common.confirmed',
+    },
     paid: {
       labelBsStyle: 'success',
       labelTextId: 'common.confirmed',
@@ -73,6 +77,10 @@ export default {
       labelTextId: 'payment.processing',
     },
     waiting_for_payment: {
+      labelBsStyle: 'warning',
+      labelTextId: 'payment.waiting',
+    },
+    confirmed_but_not_paid: {
       labelBsStyle: 'warning',
       labelTextId: 'payment.waiting',
     },
