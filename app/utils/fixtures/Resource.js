@@ -24,5 +24,6 @@ const Resource = new Factory()
   .attr('shouldBeReservedWholeDay', false)
   .attr('authentication', 'none')
   .attr('placement', '')
+  .attr('canOnlyBeReservedExternally', false)
   .attr('area', 13);
 export default Resource;
