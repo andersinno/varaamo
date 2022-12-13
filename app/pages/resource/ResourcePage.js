@@ -344,7 +344,7 @@ class UnconnectedResourcePage extends Component {
                                 />
                               </form>
                             )}
-                            {!resource.externalReservationUrl && (
+                            {!resource.canOnlyBeReservedExternally && (
                               <div>
                                 {window.innerWidth < 768 && (
                                   <React.Fragment>
