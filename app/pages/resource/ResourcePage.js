@@ -287,6 +287,10 @@ class UnconnectedResourcePage extends Component {
     const mainImageIndex = findIndex(images, image => image.type === 'main');
     const mainImage = mainImageIndex != null ? images[mainImageIndex] : null;
     const showBackButton = !!location.state && !!location.state.fromSearchResults;
+    const showResourcePanel = resource.reservable && (
+      (resource.canOnlyBeReservedExternally && resource.externalReservationUrl)
+      || (!resource.canOnlyBeReservedExternally)
+    );
     const resourceReservationButton = (
       <ResourceReservationButton
         isLoggedIn={isLoggedIn}
@@ -332,7 +336,7 @@ class UnconnectedResourcePage extends Component {
                     />
 
                     {
-                      resource.reservable && (
+                      showResourcePanel && (
                         <ResourcePanel header={t('ResourceInfo.reserveTitle')}>
                           <>
                             {resource.externalReservationUrl && (
