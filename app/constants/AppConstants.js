@@ -15,7 +15,7 @@ export default {
   DATE_FORMAT: 'YYYY-MM-DD',
   DATETIME_FORMAT: 'YYYY-MM-DD[T]HH:mmZZ',
   DEFAULT_LOCALE: 'fi',
-  FEEDBACK_URL: 'https://palvelut2.tampere.fi/e3/lomakkeet/15701/lomake.html',
+  FEEDBACK_URL: 'https://elomake.tampere.fi/lomakkeet/15701/lomake.html',
   FILTER: {
     timeFormat: 'HH:mm',
     timePeriod: 30,
