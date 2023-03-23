@@ -286,7 +286,7 @@ class UnconnectedReservationInformationForm extends Component {
   }
 
   getReservationUserGroups = (resource) => {
-    const reservationUserGroups = resource.pricingUserGroup ? [...resource.pricingUserGroup] : [];
+    const reservationUserGroups = resource.pricingUserGroups ? [...resource.pricingUserGroups] : [];
     const reservationUserGroupOptions = [...reservationUserGroups].map(userGroup => (
       { value: userGroup.id, label: userGroup.name }
     ));
@@ -294,7 +294,7 @@ class UnconnectedReservationInformationForm extends Component {
   }
 
   getReservationEventTypes = (resource) => {
-    const reservationEventTypes = resource.pricingEventGroup ? [...resource.pricingEventGroup] : [];
+    const reservationEventTypes = resource.pricingEventTypes ? [...resource.pricingEventTypes] : [];
     if (isEmpty(reservationEventTypes)) {
       return [];
     }
