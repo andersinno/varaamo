@@ -53,7 +53,7 @@ const ReservationInformationModal = ({
   const payerLastName = get(reservation, 'billing_last_name', '');
   const payerEmail = get(reservation, 'billing_email_address', '');
   const isRequestedReservation = reservation.state === RESERVATION_STATE.REQUESTED;
-  const showRefundPolicy = resource !== null && getShowRefundPolicy(isAdmin, reservation, resource);
+  const showRefundPolicy = resource !== null && getShowRefundPolicy(isAdmin, reservation);
 
   return (
     <Modal

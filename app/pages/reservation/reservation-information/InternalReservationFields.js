@@ -4,6 +4,7 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { isEmpty } from 'lodash/lang';
 
 import { RESERVATION_TYPE } from '../../../../src/domain/reservation/constants';
 import injectT from '../../../i18n/injectT';
@@ -105,13 +106,15 @@ ConnectedReservationFields = connect(
     const resource = state.ui.reservations.toEdit.length > 0
       ? state.ui.reservations.toEdit[0].resource
       : state.ui.reservations.selected[0].resource;
-
+    const products = state.data.resources[resource].products;
+    const product = !isEmpty(products) && products[0].id;
     return {
       initialValues: {
         staffEvent: true,
         type: RESERVATION_TYPE.NORMAL,
         reservationExtraQuestionsDefault: state.data.resources[resource].reservationExtraQuestions,
         reservationExtraQuestions: state.data.resources[resource].reservationExtraQuestions,
+        product,
         ...toCamelCase(state.ui.reservations.toEdit[0]),
       },
     };

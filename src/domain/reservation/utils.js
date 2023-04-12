@@ -142,12 +142,11 @@ export const canUserCancelReservation = (reservation) => {
  *
  * @param {Boolean} isAdmin
  * @param {Object} reservation
- * @param {Object} resource
  * @returns {Boolean}
  */
-export const getShowRefundPolicy = (isAdmin, reservation, resource) => {
+export const getShowRefundPolicy = (isAdmin, reservation) => {
   const isStaffEvent = get(reservation, 'staffEvent', false);
-  const price = getReservationPrice(reservation.begin, reservation.end, resource);
+  const price = getReservationPrice(reservation.begin, reservation.end, reservation.price_info);
 
   return isAdmin && !isStaffEvent && price > 0;
 };

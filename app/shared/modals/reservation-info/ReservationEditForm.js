@@ -171,8 +171,16 @@ class UnconnectedReservationEditForm extends Component {
 
     if (isEmpty(reservation)) return <span />;
 
-    const price = getReservationPrice(reservation.begin, reservation.end, resource);
-    const tax = getTaxPercentage(resource);
+    let price;
+    let tax;
+    if (reservation.priceInfo) {
+      price = getReservationPrice(
+        reservation.begin,
+        reservation.end,
+        reservation.priceInfo,
+      );
+      tax = reservation.priceInfo.taxPercentage;
+    }
     const tVariables = {
       price,
       tax,
@@ -187,7 +195,7 @@ class UnconnectedReservationEditForm extends Component {
     } = reservation;
 
     const isAdminOrOwner = (isAdmin || isOwn);
-    const showRefundPolicy = getShowRefundPolicy(isAdmin, reservation, resource);
+    const showRefundPolicy = getShowRefundPolicy(isAdmin, reservation);
 
     return (
       <Form
