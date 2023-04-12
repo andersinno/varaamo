@@ -81,6 +81,7 @@
   "common.priceLabel": "Pris",
   "common.totalPriceLabel": "Total pris",
   "common.priceWithVAT": "{price}€ (inkl. moms {vat}%)",
+  "payment.paid": "Betald",
   "payment.success": "Betalning genomförd",
   "payment.processing": "Behandlar betalning",
   "payment.failed": "Betalning misslyckades",
@@ -479,6 +480,7 @@
 
   "Reservation.stateLabelCancelled": "Avbokad",
   "Reservation.stateLabelConfirmed": "Godkänd",
+  "Reservation.stateLabelConfirmedButNotPaid": "Godkänd men ej betald",
   "Reservation.stateLabelDenied": "Nekad",
   "Reservation.stateLabelRequested": "Begärda",
   "Reservation.stateLabelWaitingForPayment": "Väntar på utbetalning",

@@ -11,6 +11,7 @@ export const getLabelStyle = (status) => {
     case RESERVATION_STATE.CANCELLED:
       return 'default';
     case RESERVATION_STATE.CONFIRMED:
+    case RESERVATION_STATE.CONFIRMED_BUT_NOT_PAID:
       return 'success';
     case RESERVATION_STATE.DENIED:
       return 'danger';
@@ -35,6 +36,8 @@ export const getLabelText = (status, t) => {
       return t('Reservation.stateLabelRequested');
     case RESERVATION_STATE.WAITING_FOR_PAYMENT:
       return t('Reservation.stateLabelWaitingForPayment');
+    case RESERVATION_STATE.CONFIRMED_BUT_NOT_PAID:
+      return t('Reservation.stateLabelConfirmedButNotPaid');
     default:
       return '';
   }

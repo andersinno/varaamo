@@ -81,6 +81,7 @@
   "common.priceLabel": "Hinta",
   "common.totalPriceLabel": "Hinta yhteensä",
   "common.priceWithVAT": "{price}€ (sis. alv. {vat}%)",
+  "payment.paid": "Maksettu",
   "payment.success": "Maksu suoritettu",
   "payment.processing": "Käsitellään maksua",
   "payment.failed": "Maksu epäonnistui",
@@ -486,6 +487,7 @@
 
   "Reservation.stateLabelCancelled": "Peruttu",
   "Reservation.stateLabelConfirmed": "Hyväksytty",
+  "Reservation.stateLabelConfirmedButNotPaid": "Hyväksytty, mutta ei maksettu",
   "Reservation.stateLabelDenied": "Evätty",
   "Reservation.stateLabelRequested": "Käsiteltävänä",
   "Reservation.stateLabelWaitingForPayment": "Odottaa maksua",
