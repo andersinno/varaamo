@@ -12,8 +12,7 @@ import constants from '../../../constants/AppConstants';
 import injectT from '../../../i18n/injectT';
 import ReservationDate from '../../../shared/reservation-date/ReservationDate';
 import { hasProducts } from '../../../utils/resourceUtils';
-import { getReservationPrice, getReservationPricePerPeriod } from '../../../utils/reservationUtils';
-import apiClient from '../../../../src/common/api/client';
+import { getReservationPricePerPeriod } from '../../../utils/reservationUtils';
 import CompactReservationList from '../../../shared/compact-reservation-list/CompactReservationList';
 
 class ReservationConfirmation extends Component {
@@ -26,18 +25,6 @@ class ReservationConfirmation extends Component {
     t: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired,
   };
-
-  state = {
-    reservationPrice: null,
-  }
-
-  componentDidMount() {
-    const { reservation, resource } = this.props;
-    if (hasProducts(resource)) {
-      getReservationPrice(apiClient, reservation.begin, reservation.end, resource.products)
-        .then(reservationPrice => this.setState({ reservationPrice }));
-    }
-  }
 
   getReturnUrl = (isEdited) => {
     const { location } = this.props;
@@ -64,7 +51,7 @@ class ReservationConfirmation extends Component {
     const {
       failedReservations, isEdited, reservation, resource, t, user,
     } = this.props;
-    const { reservationPrice } = this.state;
+    const reservationPrice = reservation.priceInfo && reservation.priceInfo.totalPrice;
     const { needManualConfirmation } = reservation;
 
     const href = `${constants.FEEDBACK_URL}`;
@@ -168,7 +155,7 @@ class ReservationConfirmation extends Component {
               && this.renderField(
                 'pricePerPeriod',
                 t('common.priceLabel'),
-                getReservationPricePerPeriod(resource),
+                getReservationPricePerPeriod(reservation.priceInfo),
               )}
             {reservationPrice
               && this.renderField(

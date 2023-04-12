@@ -25,12 +25,13 @@ function PaymentSuccess({
   user,
   intl: { locale },
 }) {
+  // TODO: Check if this is needed.
   const translatedReservation = translateEntity(reservation, locale);
   const translatedResource = translateEntity(resource, locale);
   return (
     <div>
       <ReservationConfirmation
-        reservation={translatedReservation}
+        reservation={reservation}
         resource={translatedResource}
         user={user}
       />
