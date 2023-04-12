@@ -99,6 +99,10 @@ class ReservationControls extends Component {
         return [buttons.cancel];
       }
 
+      case 'paid': {
+        return [buttons.cancel];
+      }
+
       case 'denied': {
         return [];
       }

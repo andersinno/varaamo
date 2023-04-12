@@ -1,4 +1,5 @@
 import React from 'react';
+import { isEmpty } from 'lodash';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
@@ -13,7 +14,8 @@ const UntranslatedManageReservationsDropdown = ({
   userCanCancel,
 }) => {
   const isRequestedReservation = reservation.state === RESERVATION_STATE.REQUESTED;
-
+  const isPaidReservationWithManualConfirmation = reservation.need_manual_confirmation && !isEmpty(reservation.price_info);
+  const reservationConfirmationState = isPaidReservationWithManualConfirmation ? RESERVATION_STATE.CONFIRMED_BUT_NOT_PAID : RESERVATION_STATE.CONFIRMED;
   return (
     <div className="app-ManageReservationDropdown">
       {userCanModify && (
@@ -28,7 +30,7 @@ const UntranslatedManageReservationsDropdown = ({
           {isRequestedReservation && (
             <>
               <MenuItem
-                onClick={() => onEditReservation(reservation, RESERVATION_STATE.CONFIRMED)}
+                onClick={() => onEditReservation(reservation, reservationConfirmationState)}
               >
                 {t('ManageReservationsList.actionLabel.approve')}
               </MenuItem>

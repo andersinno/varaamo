@@ -52,8 +52,20 @@ export default {
       labelBsStyle: 'primary',
       labelTextId: 'common.waiting',
     },
+    confirmed_but_not_paid: {
+      labelBsStyle: 'success',
+      labelTextId: 'common.confirmed',
+    },
+    paid: {
+      labelBsStyle: 'success',
+      labelTextId: 'common.confirmed',
+    },
   },
   RESERVATION_PAYMENT_LABELS: {
+    paid: {
+      labelBsStyle: 'success',
+      labelTextId: 'payment.paid',
+    },
     confirmed: {
       labelBsStyle: 'success',
       labelTextId: 'payment.success',
@@ -64,6 +76,14 @@ export default {
     },
     waiting_for_payment: {
       labelBsStyle: 'warning',
+      labelTextId: 'payment.waiting',
+    },
+    confirmed_but_not_paid: {
+      labelBsStyle: 'warning',
+      labelTextId: 'payment.waiting',
+    },
+    requested: {
+      labelBsStyle: 'primary',
       labelTextId: 'payment.waiting',
     },
     rejected: {
