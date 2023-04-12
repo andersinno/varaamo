@@ -66,17 +66,12 @@ describe('ReservationInformationModal', () => {
           isStaffEvent: false,
           begin: new Date(2017, 10, 1, 9, 0, 0, 0).toJSON(),
           end: new Date(2017, 10, 1, 11, 0, 0, 0).toJSON(),
-        },
-        resource: {
-          products: [
-            {
-              price: {
-                type: 'per_period',
-                period: '01:00',
-                amount: 100,
-              },
-            },
-          ],
+          price_info: {
+            total_price: 20.00,
+            amount: 20.00,
+            tax_percentage: 24.00,
+            type: 'fixed',
+          },
         },
       });
 

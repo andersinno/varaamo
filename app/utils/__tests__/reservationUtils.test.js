@@ -1,8 +1,6 @@
 import MockDate from 'mockdate';
 import moment from 'moment';
-import axios from 'axios';
 
-import apiClient from '../../../src/common/api/client';
 import constants from '../../constants/AppConstants';
 import Reservation from '../fixtures/Reservation';
 import {
@@ -13,7 +11,6 @@ import {
   getNextAvailableTime,
   getNextReservation,
   getReservationResourceId,
-  getReservationPrice,
 } from '../reservationUtils';
 
 jest.mock('axios');
@@ -318,51 +315,6 @@ describe('Utils: reservationUtils', () => {
 
     test('should return undefined when resource is undefined', () => {
       expect(getReservationResourceId()).toEqual(undefined);
-    });
-  });
-
-  describe('getReservationPrice', () => {
-    const begin = '2015-10-09T08:00:00+03:00';
-    const end = '2015-10-09T10:00:00+03:00';
-    const products = [{
-      id: 'foo',
-      type: 'rent',
-      name: {
-        fi: 'testivuokra',
-        en: 'test rent',
-      },
-      description: {
-        fi: 'Testivuokran kuvaus.',
-        en: 'Test rent description.',
-      },
-      pretaxPrice: 10.00,
-      taxPercentage: 24.00,
-      price: { amount: 12.40, type: 'per_period', period: '01:00:00' },
-    }];
-    const reservationMockData = {
-      begin: '2019-09-06T15:00:00+03:00',
-      end: '2019-09-06T16:00:00+03:00',
-      price: '12.40',
-    };
-
-    afterAll(() => {
-      jest.mock.resetAll();
-    });
-
-    axios.request.mockResolvedValue({
-      data: reservationMockData,
-    });
-
-    test('return the price', () => {
-      expect.assertions(1);
-      const result = getReservationPrice(apiClient, begin, end, products);
-      return expect(result).resolves.toEqual(reservationMockData.price);
-    });
-
-    test('return Promise<null> if no products data', () => {
-      expect.assertions(1);
-      const result = getReservationPrice(apiClient, begin, end);
-      return expect(result).resolves.toEqual(null);
     });
   });
 });

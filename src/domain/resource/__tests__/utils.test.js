@@ -442,63 +442,63 @@ describe('domain resource utility function', () => {
 
   describe('getReservationPrice', () => {
     test('return the correct price when the period is one hour', () => {
-      const resource = resourceFixture.build({
-        products: [{
-          price: { amount: 20, type: 'per_period', period: '01:00:00' },
-
-        }],
-      });
-
-      const price = resourceUtils.getReservationPrice(`${DATE}T08:00:00Z`, `${DATE}T10:00:00Z`, resource);
-      expect(price).toBe(40);
+      const priceInfo = {
+        total_price: 40.00,
+        amount: 20.00,
+        period: '01:00:00',
+        tax_percentage: 24.00,
+        type: 'per_period',
+      };
+      const price = resourceUtils.getReservationPrice(`${DATE}T08:00:00Z`, `${DATE}T10:00:00Z`, priceInfo);
+      expect(price).toBe(priceInfo.total_price);
     });
 
     test('return the correct price when the supplied period is more than an hour', () => {
-      const resource = resourceFixture.build({
-        products: [{
-          price: { amount: 20, type: 'per_period', period: '02:00:00' },
-
-        }],
-      });
-
-      const price = resourceUtils.getReservationPrice(`${DATE}T08:00:00Z`, `${DATE}T10:00:00Z`, resource);
-      expect(price).toBe(20);
+      const priceInfo = {
+        total_price: 20.00,
+        amount: 20.00,
+        period: '02:00:00',
+        tax_percentage: 24.00,
+        type: 'per_period',
+      };
+      const price = resourceUtils.getReservationPrice(`${DATE}T08:00:00Z`, `${DATE}T10:00:00Z`, priceInfo);
+      expect(price).toBe(priceInfo.total_price);
     });
 
     test('return the correct price when the supplied period is less than an hour', () => {
-      const resource = resourceFixture.build({
-        products: [{
-          price: { amount: 20, type: 'per_period', period: '00:30:00' },
-
-        }],
-      });
-
-      const price = resourceUtils.getReservationPrice(`${DATE}T08:00:00Z`, `${DATE}T10:00:00Z`, resource);
-      expect(price).toBe(80);
+      const priceInfo = {
+        total_price: 80.00,
+        amount: 20.00,
+        period: '00:30:00',
+        tax_percentage: 24.00,
+        type: 'per_period',
+      };
+      const price = resourceUtils.getReservationPrice(`${DATE}T08:00:00Z`, `${DATE}T10:00:00Z`, priceInfo);
+      expect(price).toBe(priceInfo.total_price);
     });
 
     test('return 0 if the supplied period is 0', () => {
-      const resource = resourceFixture.build({
-        products: [{
-          price: { amount: 20, type: 'per_period', period: '00:00:00' },
-
-        }],
-      });
-
-      const price = resourceUtils.getReservationPrice(`${DATE}T08:00:00Z`, `${DATE}T10:00:00Z`, resource);
-      expect(price).toBe(0);
+      const priceInfo = {
+        total_price: 0.00,
+        amount: 20.00,
+        period: '00:00:00',
+        tax_percentage: 24.00,
+        type: 'per_period',
+      };
+      const price = resourceUtils.getReservationPrice(`${DATE}T08:00:00Z`, `${DATE}T10:00:00Z`, priceInfo);
+      expect(price).toBe(priceInfo.total_price);
     });
 
     test('returns the correct price when price type is fixed', () => {
-      const resource = resourceFixture.build({
-        products: [{
-          price: { amount: 200, type: 'fixed' },
-
-        }],
-      });
-
-      const price = resourceUtils.getReservationPrice(`${DATE}T08:00:00Z`, `${DATE}T10:00:00Z`, resource);
-      expect(price).toBe(200);
+      const priceInfo = {
+        total_price: 200.00,
+        amount: 200.00,
+        period: '00:00:00',
+        tax_percentage: 24.00,
+        type: 'fixed',
+      };
+      const price = resourceUtils.getReservationPrice(`${DATE}T08:00:00Z`, `${DATE}T10:00:00Z`, priceInfo);
+      expect(price).toBe(priceInfo.total_price);
     });
   });
 

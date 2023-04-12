@@ -104,38 +104,27 @@ function getEditReservationUrl(reservation) {
 
   return `/reservation?begin=${beginStr}&date=${date}&end=${endStr}&id=${id || ''}&resource=${resourceId}`;
 }
-/**
- * Get reservation price from resource. Get time conver
- *
- * @param {ApiClient} apiClient
- * @param {String} begin Begin timestamp in ISO string
- * @param {String} end End timestamp in ISO string
- * @param {Array} products Resource product data.
- * @returns {Promise<string|null} Price or no price.
- */
-async function getReservationPrice(apiClient, begin, end, products) {
-  const productId = get(products, '[0].id');
-  if (!begin || !end || !productId) {
+
+async function getResourceReservationPrice(apiClient, id, begin, end, userGroup, eventType, productId) {
+  if (!begin || !end || !userGroup) {
     return null;
   }
   try {
-    const payload = {
-      begin,
-      end,
-      order_lines: [{ product: productId }],
+    let payload = {
+      begin, end, user_group: userGroup, product: productId,
     };
-    const result = await apiClient.post('order/check_price', payload);
-    const price = get(result, 'data.price');
-    return price;
+    payload = eventType ? { ...payload, event_type: eventType } : payload;
+    const result = await apiClient.post(`resource/${id}/get_price`, payload);
+    return result;
   } catch (e) {
     return null;
   }
 }
 
-function getReservationPricePerPeriod(resource) {
-  const price = get(resource, 'products[0].price.amount');
-  const pricePeriod = get(resource, 'products[0].price.period');
-  const priceType = get(resource, 'products[0].price.type');
+function getReservationPricePerPeriod(priceInfo) {
+  const price = get(priceInfo, 'amount') || 0;
+  const pricePeriod = get(priceInfo, 'period');
+  const priceType = get(priceInfo, 'type');
   const duration = moment.duration(pricePeriod);
   const hours = duration.asHours();
   const period = hours >= 1
@@ -143,7 +132,7 @@ function getReservationPricePerPeriod(resource) {
     : `${duration.asMinutes()} min`;
   const priceEnding = priceType === 'fixed' ? '' : ` / ${period}`;
 
-  return `${price}€${priceEnding}`;
+  return pricePeriod ? `${price}€${priceEnding}` : `${price}€`;
 }
 
 export {
@@ -155,6 +144,6 @@ export {
   getNextAvailableTime,
   getNextReservation,
   getReservationResourceId,
-  getReservationPrice,
   getReservationPricePerPeriod,
+  getResourceReservationPrice,
 };

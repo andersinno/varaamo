@@ -254,6 +254,12 @@ describe('shared/modals/reservation-info/ReservationEditForm', () => {
                 isStaffEvent: false,
                 begin: new Date(2017, 10, 1, 9, 0, 0, 0).toJSON(),
                 end: new Date(2017, 10, 1, 11, 0, 0, 0).toJSON(),
+                price_info: {
+                  total_price: 20.00,
+                  amount: 20.00,
+                  tax_percentage: 24.00,
+                  type: 'fixed',
+                },
               },
               resource: {
                 ...resource,

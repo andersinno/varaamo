@@ -76,20 +76,15 @@ describe('Reservation utils function ', () => {
         staffEvent: false,
         begin: new Date(2017, 6, 7, 10, 0, 0, 0),
         end: new Date(2017, 6, 7, 11, 0, 0, 0),
-      };
-      const resource = {
-        products: [
-          {
-            price: {
-              type: 'per_period',
-              period: '01:00',
-              amount: 100,
-            },
-          },
-        ],
+        price_info: {
+          total_price: 20.00,
+          amount: 20.00,
+          tax_percentage: 24.00,
+          type: 'fixed',
+        },
       };
 
-      expect(getShowRefundPolicy(true, reservation, resource));
+      expect(getShowRefundPolicy(true, reservation));
     });
   });
 
