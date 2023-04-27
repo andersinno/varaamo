@@ -13,6 +13,10 @@ import iconGuidance from './images/frontpage_guidance.svg';
 import iconMeetingsAndWorking from './images/frontpage_work.svg';
 import iconOrganizeEvents from './images/frontpage_event.svg';
 import iconSauna from './images/frontpage_sauna.svg';
+import iconBed from './images/frontpage_bed.svg';
+import iconSell from './images/frontpage_vendor.svg';
+import iconBackpack from './images/frontpage_backpack.svg';
+import iconExhibition from './images/frontpage_exhibition.svg';
 import client from '../../common/api/client';
 import FAIcon from '../../../app/shared/fontawesome-icon/FontAwesomeIcon';
 import PageWrapper from '../../../app/pages/PageWrapper';
@@ -29,6 +33,10 @@ const purposeIcons = {
   meetingsAndWorking: iconMeetingsAndWorking,
   events: iconOrganizeEvents,
   sauna: iconSauna,
+  majoittua: iconBed,
+  myydaTaiEsitellaTuotteita: iconSell,
+  kouluJaPaivakotivierailut: iconBackpack,
+  osallistuaNayttelykierrokselle: iconExhibition,
 };
 
 class HomePage extends Component {
