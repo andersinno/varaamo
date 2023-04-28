@@ -83,12 +83,7 @@ export const getPrice = (minPriceString, maxPriceString, priceType, t, freeToUse
     ? Number(maxPriceString)
     : maxPriceString;
 
-  /* TODO: When the pricelist feature is implemented, this code needs the
-       modification */
-  if (!freeToUse && !(minPrice || maxPrice)) {
-    return t('ResourceHeader.payable');
-  }
-  if (!(minPrice || maxPrice)) {
+  if (freeToUse || !(minPrice || maxPrice)) {
     return t('ResourceIcons.free');
   }
 
