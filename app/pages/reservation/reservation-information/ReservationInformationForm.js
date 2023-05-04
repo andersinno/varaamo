@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/lib/Button';
 import Form from 'react-bootstrap/lib/Form';
-import { Field, reduxForm, change } from 'redux-form';
+import { Field, SubmissionError, reduxForm } from 'redux-form';
 import isEmail from 'validator/lib/isEmail';
 import { connect } from 'react-redux';
 import { isEmpty } from 'lodash/lang';
@@ -200,7 +200,7 @@ class UnconnectedReservationInformationForm extends Component {
     if (!includes(this.props.fields, name)) {
       return null;
     }
-    const isRequired = includes(this.requiredFields, name);
+    const isRequired = includes(this.props.requiredFields, name);
 
     return (
       <Field
@@ -266,40 +266,30 @@ class UnconnectedReservationInformationForm extends Component {
     );
   }
 
-  renderSaveButton() {
+  renderSubmitButton() {
     const {
       isMakingReservations,
-      handleSubmit,
-      onConfirm,
+      isPaymentRequired,
       t,
     } = this.props;
-    return (
-      <Button
-        bsStyle="primary"
-        disabled={isMakingReservations}
-        onClick={handleSubmit(onConfirm)}
-        type="submit"
-      >
-        {isMakingReservations ? t('common.saving') : t('common.save')}
-      </Button>
-    );
-  }
 
-  renderPayButton() {
-    const {
-      isMakingReservations,
-      handleSubmit,
-      onConfirm,
-      t,
-    } = this.props;
+    let buttonText;
+
+    if (isPaymentRequired) {
+      buttonText = t('common.pay');
+    } else if (isMakingReservations) {
+      buttonText = t('common.saving');
+    } else {
+      buttonText = t('common.save');
+    }
+
     return (
       <Button
         bsStyle="primary"
         disabled={isMakingReservations}
-        onClick={handleSubmit(onConfirm)}
         type="submit"
       >
-        {t('common.pay')}
+        {buttonText}
       </Button>
     );
   }
@@ -308,9 +298,10 @@ class UnconnectedReservationInformationForm extends Component {
     const {
       isEditing,
       fields,
+      handleSubmit,
       onBack,
       onCancel,
-      requiredFields,
+      onConfirm,
       resource,
       t,
       termsAndConditions,
@@ -320,13 +311,27 @@ class UnconnectedReservationInformationForm extends Component {
     const userGroupOptions = this.getReservationUserGroups(resource);
     const eventTypeOptions = this.getReservationEventTypes(resource);
 
-    this.requiredFields = isStaff
-      ? constants.REQUIRED_STAFF_EVENT_FIELDS
-      : requiredFields;
-
     return (
       <div>
-        <Form className="reservation-form reservation-form-top-bottom" horizontal noValidate>
+        <Form
+          className="reservation-form reservation-form-top-bottom"
+          horizontal
+          noValidate
+          onSubmit={handleSubmit((values) => {
+            // enforce validation on submit:
+            // as fields can be dynamically added/removed, the usual validation on change
+            // may not be run as expected
+            // https://github.com/redux-form/redux-form/issues/3949
+            return new Promise((resolve, reject) => {
+              const errors = validate(values, this.props);
+              if (!isEmpty(errors)) {
+                reject(new SubmissionError(errors));
+              } else {
+                resolve(onConfirm(values));
+              }
+            });
+          })}
+        >
           {
             /**
              * Naming is a bit misleading in this case.
@@ -592,10 +597,7 @@ class UnconnectedReservationInformationForm extends Component {
               </Button>
               )
             }
-            {!resource.freeToUse && hasProducts(resource) && !isStaff && !resource.needManualConfirmation
-              ? this.renderPayButton()
-              : this.renderSaveButton()
-            }
+            {this.renderSubmitButton()}
           </div>
         </Form>
       </div>
@@ -608,6 +610,7 @@ UnconnectedReservationInformationForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   isEditing: PropTypes.bool.isRequired,
   isMakingReservations: PropTypes.bool.isRequired,
+  isPaymentRequired: PropTypes.bool.isRequired,
   onBack: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
