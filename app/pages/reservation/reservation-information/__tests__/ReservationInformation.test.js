@@ -192,7 +192,7 @@ describe('pages/reservation/reservation-information/ReservationInformation', () 
       const instance = getWrapper().instance();
       const actual = instance.getRequiredFormFields(resource, 'terms and conditions');
 
-      expect(actual).toEqual(['someField1', 'someField2', 'termsAndConditions']);
+      expect(actual).toEqual(['someField1', 'someField2', 'termsAndConditions'].concat(paymentFields, billingFields));
     });
   });
 });
