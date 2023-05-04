@@ -2,9 +2,9 @@ name: Continuous Integration
 
 on:
   push:
-    branches: [ tre ]
+    branches: [ tre, tre-qa ]
   pull_request:
-    branches: [ tre ]
+    branches: [ tre, tre-qa ]
 
 jobs:
   build:
