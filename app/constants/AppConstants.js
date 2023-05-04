@@ -4,7 +4,6 @@ export default {
   API_URL: settings.API_URL,
   RESPA_ADMIN_URL: settings.RESPA_ADMIN_URL,
   CUSTOMIZATIONS: {
-    'localhost:3000': 'TAMPERE',
     'varaamo.espoo.fi': 'ESPOO',
     'varaamotest-espoo.hel.ninja': 'ESPOO',
     'varaamo.vantaa.fi': 'VANTAA',

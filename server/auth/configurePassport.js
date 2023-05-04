@@ -11,10 +11,6 @@ function configurePassport() {
       clientSecret: settings.CLIENT_SECRET,
       callbackURL: settings.LOGIN_CALLBACK_URL || '/login/tampere/return',
       proxy: Boolean(settings.PROXY),
-      authorizationURL: 'http://localhost:8007/oauth2/authorize/',
-      tokenURL: 'http://localhost:8007/oauth2/token/',
-      userProfileURL: 'http://localhost:8007/user/',
-      appTokenURL: 'http://localhost:8007/jwt-token/',
     },
     (accessToken, refreshToken, profile, cb) => {
       tampereStrategy.getAPIToken(accessToken, settings.TARGET_APP, (token) => {
