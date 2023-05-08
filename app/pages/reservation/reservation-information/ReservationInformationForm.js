@@ -266,6 +266,15 @@ class UnconnectedReservationInformationForm extends Component {
     );
   }
 
+  renderPaymentTimeLimitNote = () => {
+    const { t } = this.props;
+    return (
+      <div className="wrapped-text">
+        {t('common.paymentTimeLimitNote')}
+      </div>
+    );
+  }
+
   renderSubmitButton() {
     const {
       isMakingReservations,
@@ -305,6 +314,7 @@ class UnconnectedReservationInformationForm extends Component {
       resource,
       t,
       termsAndConditions,
+      isPaymentRequired,
       isStaff,
       valid,
     } = this.props;
@@ -581,6 +591,7 @@ class UnconnectedReservationInformationForm extends Component {
               {this.renderTermsField('specificTerms')}
             </div>
           )}
+          {isPaymentRequired && this.renderPaymentTimeLimitNote()}
           <div>
             <Button
               onClick={onCancel}
