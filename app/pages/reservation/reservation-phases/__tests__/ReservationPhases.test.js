@@ -9,7 +9,7 @@ describe('pages/reservation/reservation-phases/ReservationPhases', () => {
   const defaultProps = {
     currentPhase: 'information',
     isEditing: false,
-    resource: null,
+    isPaymentRequired: false,
   };
 
   function getWrapper(extraProps) {
@@ -33,8 +33,8 @@ describe('pages/reservation/reservation-phases/ReservationPhases', () => {
   test('renders three phases when editing', () => {
     const wrapper = getWrapper({
       currentPhase: 'information',
-      resource: null,
       isEditing: true,
+      isPaymentRequired: false,
     });
     const steps = wrapper.find(NumericalStep);
     expect(steps).toHaveLength(3);
@@ -44,12 +44,13 @@ describe('pages/reservation/reservation-phases/ReservationPhases', () => {
     expect(steps.at(0).prop('label')).toBe('ReservationPhase.timeTitle');
   });
 
-  test('renders payment phase when resource has products', () => {
+  test('renders payment phase when payment required', () => {
     const wrapper = getWrapper({
       currentPhase: 'information',
       resource: {
         products: [{}],
       },
+      isPaymentRequired: true,
       isEditing: false,
     });
     const steps = wrapper.find(NumericalStep);

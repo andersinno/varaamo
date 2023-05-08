@@ -39,6 +39,13 @@ class UnconnectedReservationPage extends Component {
     const { reservationToEdit } = this.props;
     this.state = {
       view: !isEmpty(reservationToEdit) ? 'time' : 'information',
+      reservationPriceInfo: {
+        total_price: null,
+        amount: null,
+        period: null,
+        tax_percentage: null,
+        type: null,
+      },
     };
   }
 
@@ -197,6 +204,24 @@ class UnconnectedReservationPage extends Component {
     }
   }
 
+  isPaymentRequired() {
+    // If resource is free to use. The resource may still be free if the selected
+    // pricing is zero: see isPayableAmount()
+    const { resource, isStaff } = this.props;
+    return !resource.freeToUse
+      && hasProducts(resource)
+      && !isStaff
+      && !resource.needManualConfirmation;
+  }
+
+  isPayableAmount() {
+    // If resource has a pricing > zero, depending on the selected price list options.
+    // The resource may still be free depending on other settings: see isPaymentRequired()
+    const { reservationPriceInfo } = this.state;
+    const totalPrice = reservationPriceInfo.total_price;
+    return !isNaN(totalPrice) && parseFloat(totalPrice) > 0;
+  }
+
   renderRecurringReservations = () => {
     const {
       resource,
@@ -251,7 +276,7 @@ class UnconnectedReservationPage extends Component {
       failedReservations,
       date,
     } = this.props;
-    const { view } = this.state;
+    const { view, reservationPriceInfo } = this.state;
 
     if (
       isEmpty(resource)
@@ -272,6 +297,13 @@ class UnconnectedReservationPage extends Component {
       `ReservationPage.${isEditing || isEdited ? 'editReservationTitle' : 'newReservationTitle'}`,
     );
 
+    const isPaymentRequired = this.isPaymentRequired();
+    const isPayableAmount = this.isPayableAmount();
+
+    const setReservationPriceInfo = (info) => {
+      this.setState({ reservationPriceInfo: info });
+    };
+
     return (
       <div className="app-ReservationPage">
         <PageWrapper title={title} transparent>
@@ -284,7 +316,7 @@ class UnconnectedReservationPage extends Component {
                 <ReservationPhases
                   currentPhase={view}
                   isEditing={isEditing || isEdited}
-                  resource={resource}
+                  isPaymentRequired={isPaymentRequired && isPayableAmount}
                 />
                 {view === 'time' && isEditing && (
                   <ReservationTime
@@ -307,13 +339,17 @@ class UnconnectedReservationPage extends Component {
                       isAdmin={isAdmin}
                       isEditing={isEditing}
                       isMakingReservations={isMakingReservations}
+                      isPayableAmount={isPayableAmount}
+                      isPaymentRequired={isPaymentRequired}
                       isStaff={isStaff}
                       onBack={this.handleBack}
                       onCancel={this.handleCancel}
                       onConfirm={this.handleReservation}
                       reservation={reservationToEdit}
+                      reservationPriceInfo={reservationPriceInfo}
                       resource={resource}
                       selectedTime={selectedTime}
+                      setReservationPriceInfo={setReservationPriceInfo}
                       unit={unit}
                     />
                   </>

@@ -11,7 +11,7 @@ import moment from 'moment';
 import injectT from '../../../i18n/injectT';
 import constants from '../../../constants/AppConstants';
 import { isStaffEvent, getReservationPricePerPeriod } from '../../../utils/reservationUtils';
-import { getTermsAndConditions, hasProducts } from '../../../utils/resourceUtils';
+import { getTermsAndConditions } from '../../../utils/resourceUtils';
 import ReservationInformationForm from './ReservationInformationForm';
 
 class ReservationInformation extends Component {
@@ -19,26 +19,20 @@ class ReservationInformation extends Component {
     isAdmin: PropTypes.bool.isRequired,
     isEditing: PropTypes.bool.isRequired,
     isMakingReservations: PropTypes.bool.isRequired,
+    isPaymentRequired: PropTypes.bool.isRequired,
+    isPayableAmount: PropTypes.bool.isRequired,
     isStaff: PropTypes.bool.isRequired,
     onBack: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onConfirm: PropTypes.func.isRequired,
     reservation: PropTypes.object,
+    reservationPriceInfo: PropTypes.object.isRequired,
     resource: PropTypes.object.isRequired,
     selectedTime: PropTypes.object.isRequired,
+    setReservationPriceInfo: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
     unit: PropTypes.object.isRequired,
   };
-
-  state = {
-    reservationPriceInfo: {
-      total_price: null,
-      amount: null,
-      period: null,
-      tax_percentage: null,
-      type: null,
-    },
-  }
 
   onConfirm = (values) => {
     const { onConfirm } = this.props;
@@ -49,6 +43,8 @@ class ReservationInformation extends Component {
   getFormFields = (termsAndConditions, specificTerms) => {
     const {
       isAdmin,
+      isPaymentRequired,
+      isPayableAmount,
       isStaff,
       resource,
     } = this.props;
@@ -78,8 +74,8 @@ class ReservationInformation extends Component {
     // NOTE: these fields may still be included in the metadata,
     // as they may be required for non-payment related reasons.
 
-    if (this.isPaymentRequired()) {
-      if (this.isPayableAmount()) {
+    if (isPaymentRequired) {
+      if (isPayableAmount) {
         formFields.push('paymentTermsAndConditions');
         formFields.push('billingFirstName');
         formFields.push('billingLastName');
@@ -144,53 +140,28 @@ class ReservationInformation extends Component {
 
   getValue = (value, options) => options.find(option => option.value === value);
 
-  setPriceAndSelectedProduct = reservationPriceInfo => (
-    // TBD: the price info should be passed up to parent component, as we
-    // want to update other components e.g. reservation steps if the pricing
-    // changes.
-    this.setState({ reservationPriceInfo })
-  );
-
-  isPaymentRequired() {
-    // If resource is free to use. The resource may still be free if the selected
-    // pricing is zero: see isPayableAmount()
-    const { resource, isStaff } = this.props;
-    return !resource.freeToUse
-      && hasProducts(resource)
-      && !isStaff
-      && !resource.needManualConfirmation;
-  }
-
-  isPayableAmount() {
-    // If resource has a pricing > zero, depending on the selected price list options.
-    // The resource may still be free depending on other settings: see isPaymentRequired()
-    const { reservationPriceInfo } = this.state;
-    const totalPrice = reservationPriceInfo.total_price;
-    return !isNaN(totalPrice) && parseFloat(totalPrice) > 0;
-  }
-
   render() {
     const {
       isEditing,
       isMakingReservations,
+      isPayableAmount,
+      isPaymentRequired,
       onBack,
       onCancel,
       resource,
+      reservationPriceInfo,
       selectedTime,
+      setReservationPriceInfo,
       t,
       unit,
       isStaff,
     } = this.props;
-    const { reservationPriceInfo } = this.state;
 
     const termsAndConditions = getTermsAndConditions(resource);
     const specificTerms = resource.specificTerms;
     const beginText = moment(selectedTime.begin).format('D.M.YYYY HH:mm');
     const endText = moment(selectedTime.end).format('HH:mm');
     const hours = moment(selectedTime.end).diff(selectedTime.begin, 'minutes') / 60;
-
-    const isPayableAmount = this.isPayableAmount();
-    const isPaymentRequired = isPayableAmount && this.isPaymentRequired();
 
     return (
       <div className="app-ReservationInformation">
@@ -208,8 +179,7 @@ class ReservationInformation extends Component {
             requiredFields={this.getRequiredFormFields(resource, termsAndConditions, specificTerms)}
             resource={resource}
             selectedTime={selectedTime}
-            setPriceAndSelectedProduct={this.setPriceAndSelectedProduct}
-            setReservationPrice={this.setReservationPrice}
+            setReservationPriceInfo={setReservationPriceInfo}
             termsAndConditions={termsAndConditions}
           />
         </Col>
@@ -230,7 +200,7 @@ class ReservationInformation extends Component {
                 </span>
               </Col>
             </Row>
-            {!resource.freeToUse && hasProducts(resource) && (
+            {isPaymentRequired && (
               <Fragment>
                 <Row>
                   <Col md={4}>

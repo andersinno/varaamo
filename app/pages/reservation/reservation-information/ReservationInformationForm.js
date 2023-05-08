@@ -187,7 +187,7 @@ class UnconnectedReservationInformationForm extends Component {
         productId,
       );
       const data = result.data;
-      this.props.setPriceAndSelectedProduct(data);
+      this.props.setReservationPriceInfo(data);
       // this.props.dispatch(change(FormTypes.RESERVATION, 'product', data.product));
     } catch (error) {
       // TODO: Handle the error
@@ -632,7 +632,7 @@ UnconnectedReservationInformationForm.propTypes = {
   isStaff: PropTypes.bool.isRequired,
   valid: PropTypes.bool.isRequired,
   selectedTime: PropTypes.object.isRequired,
-  setPriceAndSelectedProduct: PropTypes.func.isRequired,
+  setReservationPriceInfo: PropTypes.func.isRequired,
 };
 UnconnectedReservationInformationForm = injectT(UnconnectedReservationInformationForm);  // eslint-disable-line
 
