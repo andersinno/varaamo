@@ -3,12 +3,11 @@ import React from 'react';
 
 import NumericalProgressSteps from '../../../shared/progress-steps/NumericalProgressSteps';
 import injectT from '../../../i18n/injectT';
-import { hasProducts } from '../../../utils/resourceUtils';
 
 ReservationPhases.propTypes = {
   currentPhase: PropTypes.string.isRequired,
-  resource: PropTypes.object,
   isEditing: PropTypes.bool,
+  isPaymentRequired: PropTypes.bool,
   t: PropTypes.func.isRequired,
 };
 
@@ -20,12 +19,12 @@ const phases = {
 };
 
 function ReservationPhases({
-  resource,
   currentPhase,
   isEditing,
+  isPaymentRequired,
   t,
 }) {
-  let stepMessageIds = hasProducts(resource) && !resource.freeToUse && !resource.needManualConfirmation
+  let stepMessageIds = isPaymentRequired
     ? ['information', 'payment', 'confirmation']
     : ['information', 'confirmation'];
 
