@@ -52,6 +52,7 @@ class ReservationConfirmation extends Component {
       failedReservations, isEdited, reservation, resource, t, user,
     } = this.props;
     const reservationPrice = reservation.priceInfo && reservation.priceInfo.totalPrice;
+    const reservationTaxPct = reservation.priceInfo && reservation.priceInfo.taxPercentage;
     const { needManualConfirmation } = reservation;
 
     const href = `${constants.FEEDBACK_URL}`;
@@ -161,7 +162,10 @@ class ReservationConfirmation extends Component {
               && this.renderField(
                 'reservationPrice',
                 t('common.totalPriceLabel'),
-                `${reservationPrice}€`,
+                t('common.priceWithVAT', {
+                  price: reservationPrice,
+                  vat: reservationTaxPct,
+                }),
               )}
             {reservation.reserverName
               && this.renderField(
