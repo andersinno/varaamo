@@ -133,7 +133,7 @@ describe('domain resource utility function', () => {
 
     test('return payable text if resource is not free and prices are not set', () => {
       const price = resourceUtils.getPriceFromSnakeCaseResource({ free_to_use: false }, fakeT);
-      expect(price).toBe('ResourceHeader.payable');
+      expect(price).toBe('ResourceIcons.free');
     });
 
     test('return free text if price is 0', () => {

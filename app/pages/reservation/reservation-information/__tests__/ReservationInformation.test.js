@@ -165,13 +165,24 @@ describe('pages/reservation/reservation-information/ReservationInformation', () 
   });
 
   describe('getRequiredFormFields', () => {
+    const billingFields = [
+      'billingFirstName',
+      'billingLastName',
+      'billingEmailAddress',
+    ];
+
+    const paymentFields = [
+      'paymentTermsAndConditions',
+      'userGroup',
+    ];
+
     test('returns correct required form fields', () => {
       const resource = Resource.build({
         requiredReservationExtraFields: ['some_field_1', 'some_field_2'],
       });
       const actual = getWrapper().instance().getRequiredFormFields(resource);
 
-      expect(actual).toEqual(['someField1', 'someField2']);
+      expect(actual).toEqual(['someField1', 'someField2'].concat(paymentFields, billingFields));
     });
 
     test('returns required form fields and termsAndConditions', () => {
@@ -181,7 +192,7 @@ describe('pages/reservation/reservation-information/ReservationInformation', () 
       const instance = getWrapper().instance();
       const actual = instance.getRequiredFormFields(resource, 'terms and conditions');
 
-      expect(actual).toEqual(['someField1', 'someField2', 'termsAndConditions']);
+      expect(actual).toEqual(['someField1', 'someField2', 'termsAndConditions'].concat(paymentFields, billingFields));
     });
   });
 });

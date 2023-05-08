@@ -204,7 +204,7 @@ describe('pages/reservation/reservation-information/ReservationInformationForm',
               const fields = [nonRequiredFieldName];
               const props = {
                 fields,
-                requiredFields: [nonRequiredFieldName],
+                requiredFields: [],
                 staffEventSelected,
               };
               const input = getWrapper(props).find(Field);

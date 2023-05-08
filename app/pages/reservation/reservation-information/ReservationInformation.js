@@ -9,6 +9,7 @@ import Row from 'react-bootstrap/lib/Row';
 import moment from 'moment';
 
 import injectT from '../../../i18n/injectT';
+import constants from '../../../constants/AppConstants';
 import { isStaffEvent, getReservationPricePerPeriod } from '../../../utils/reservationUtils';
 import { getTermsAndConditions, hasProducts } from '../../../utils/resourceUtils';
 import ReservationInformationForm from './ReservationInformationForm';
@@ -44,6 +45,7 @@ class ReservationInformation extends Component {
     onConfirm(values);
   }
 
+
   getFormFields = (termsAndConditions, specificTerms) => {
     const {
       isAdmin,
@@ -73,12 +75,17 @@ class ReservationInformation extends Component {
       formFields.push('specificTerms');
     }
 
-    if (hasProducts(resource)) {
-      formFields.push('paymentTermsAndConditions');
-      formFields.push('billingFirstName');
-      formFields.push('billingLastName');
-      formFields.push('billingPhoneNumber');
-      formFields.push('billingEmailAddress');
+    // NOTE: these fields may still be included in the metadata,
+    // as they may be required for non-payment related reasons.
+
+    if (this.isPaymentRequired()) {
+      if (this.isPayableAmount()) {
+        formFields.push('paymentTermsAndConditions');
+        formFields.push('billingFirstName');
+        formFields.push('billingLastName');
+        formFields.push('billingPhoneNumber');
+        formFields.push('billingEmailAddress');
+      }
       formFields.push('userGroup');
       formFields.push('eventType');
     }
@@ -100,11 +107,15 @@ class ReservationInformation extends Component {
   }
 
   getRequiredFormFields(resource, termsAndConditions, specificTerms) {
+    const { isAdmin, isStaff } = this.props;
+
+    if (isStaff) {
+      return constants.REQUIRED_STAFF_EVENT_FIELDS;
+    }
+
     const requiredFormFields = [...resource.requiredReservationExtraFields.map(
       field => camelCase(field),
     )];
-
-    const { isAdmin } = this.props;
 
     if (termsAndConditions) {
       if (!isAdmin) requiredFormFields.push('termsAndConditions');
@@ -114,14 +125,18 @@ class ReservationInformation extends Component {
       requiredFormFields.push('specificTerms');
     }
 
-    if (hasProducts(resource)) {
-      requiredFormFields.push('paymentTermsAndConditions');
-      requiredFormFields.push('userGroup');
-      if (!isAdmin) {
-        requiredFormFields.push('billingFirstName');
-        requiredFormFields.push('billingLastName');
-        requiredFormFields.push('billingEmailAddress');
-      }
+    // NOTE: these fields are still assumed to be required even if
+    // the resource is free to use, if the fields are in the metadata.
+    // For example, we may wish to collect billing info from users for other
+    // reasons than payment.
+
+    requiredFormFields.push('paymentTermsAndConditions');
+    requiredFormFields.push('userGroup');
+
+    if (!isAdmin) {
+      requiredFormFields.push('billingFirstName');
+      requiredFormFields.push('billingLastName');
+      requiredFormFields.push('billingEmailAddress');
     }
 
     return requiredFormFields;
@@ -130,8 +145,29 @@ class ReservationInformation extends Component {
   getValue = (value, options) => options.find(option => option.value === value);
 
   setPriceAndSelectedProduct = reservationPriceInfo => (
+    // TBD: the price info should be passed up to parent component, as we
+    // want to update other components e.g. reservation steps if the pricing
+    // changes.
     this.setState({ reservationPriceInfo })
   );
+
+  isPaymentRequired() {
+    // If resource is free to use. The resource may still be free if the selected
+    // pricing is zero: see isPayableAmount()
+    const { resource, isStaff } = this.props;
+    return !resource.freeToUse
+      && hasProducts(resource)
+      && !isStaff
+      && !resource.needManualConfirmation;
+  }
+
+  isPayableAmount() {
+    // If resource has a pricing > zero, depending on the selected price list options.
+    // The resource may still be free depending on other settings: see isPaymentRequired()
+    const { reservationPriceInfo } = this.state;
+    const totalPrice = reservationPriceInfo.total_price;
+    return !isNaN(totalPrice) && parseFloat(totalPrice) > 0;
+  }
 
   render() {
     const {
@@ -152,7 +188,10 @@ class ReservationInformation extends Component {
     const beginText = moment(selectedTime.begin).format('D.M.YYYY HH:mm');
     const endText = moment(selectedTime.end).format('HH:mm');
     const hours = moment(selectedTime.end).diff(selectedTime.begin, 'minutes') / 60;
-    const productNeedsPayment = !resource.freeToUse && hasProducts(resource);
+
+    const isPayableAmount = this.isPayableAmount();
+    const isPaymentRequired = isPayableAmount && this.isPaymentRequired();
+
     return (
       <div className="app-ReservationInformation">
         <Col md={7} sm={12}>
@@ -161,6 +200,7 @@ class ReservationInformation extends Component {
             initialValues={this.getFormInitialValues()}
             isEditing={isEditing}
             isMakingReservations={isMakingReservations}
+            isPaymentRequired={isPaymentRequired}
             isStaff={isStaff}
             onBack={onBack}
             onCancel={onCancel}
@@ -204,7 +244,7 @@ class ReservationInformation extends Component {
                     </span>
                   </Col>
                 </Row>
-                {reservationPriceInfo.total_price && (
+                {isPayableAmount && (
                   <Row>
                     <Col md={4}>
                       <span className="app-ReservationDetails__name">
@@ -213,7 +253,10 @@ class ReservationInformation extends Component {
                     </Col>
                     <Col md={8}>
                       <span className="app-ReservationDetails__value">
-                        {t('common.priceWithVAT', { price: reservationPriceInfo.total_price, vat: reservationPriceInfo.tax_percentage })}
+                        {t('common.priceWithVAT', {
+                          price: reservationPriceInfo.total_price,
+                          vat: reservationPriceInfo.tax_percentage,
+                        })}
                       </span>
                     </Col>
                   </Row>
