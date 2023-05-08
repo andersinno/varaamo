@@ -278,13 +278,14 @@ class UnconnectedReservationInformationForm extends Component {
   renderSubmitButton() {
     const {
       isMakingReservations,
+      isPayableAmount,
       isPaymentRequired,
       t,
     } = this.props;
 
     let buttonText;
 
-    if (isPaymentRequired) {
+    if (isPaymentRequired && isPayableAmount) {
       buttonText = t('common.pay');
     } else if (isMakingReservations) {
       buttonText = t('common.saving');
@@ -314,6 +315,7 @@ class UnconnectedReservationInformationForm extends Component {
       resource,
       t,
       termsAndConditions,
+      isPayableAmount,
       isPaymentRequired,
       isStaff,
       valid,
@@ -591,7 +593,7 @@ class UnconnectedReservationInformationForm extends Component {
               {this.renderTermsField('specificTerms')}
             </div>
           )}
-          {isPaymentRequired && this.renderPaymentTimeLimitNote()}
+          {isPaymentRequired && isPayableAmount && this.renderPaymentTimeLimitNote()}
           <div>
             <Button
               onClick={onCancel}
@@ -621,6 +623,7 @@ UnconnectedReservationInformationForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   isEditing: PropTypes.bool.isRequired,
   isMakingReservations: PropTypes.bool.isRequired,
+  isPayableAmount: PropTypes.bool.isRequired,
   isPaymentRequired: PropTypes.bool.isRequired,
   onBack: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
