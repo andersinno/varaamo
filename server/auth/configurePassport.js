@@ -3,7 +3,6 @@ import { Strategy } from 'passport-tampere';
 
 import settings from '../../config/settings';
 
-
 function configurePassport() {
   const tampereStrategy = new Strategy(
     {
@@ -11,6 +10,10 @@ function configurePassport() {
       clientSecret: settings.CLIENT_SECRET,
       callbackURL: settings.LOGIN_CALLBACK_URL || '/login/tampere/return',
       proxy: Boolean(settings.PROXY),
+      authorizationURL: settings.AUTH_URL,
+      tokenURL: settings.TOKEN_URL,
+      appTokenURL: settings.JWT_TOKEN_URL,
+      userProfileURL: settings.PROFILE_URL,
     },
     (accessToken, refreshToken, profile, cb) => {
       tampereStrategy.getAPIToken(accessToken, settings.TARGET_APP, (token) => {

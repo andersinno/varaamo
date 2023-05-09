@@ -17,6 +17,7 @@ describe('domain/footer/Footer', () => {
     expect(footer.length).toBe(1);
   });
   test('renders correctly', () => {
+    simple.mock(customizationUtils, 'getCurrentCustomization').returnWith(undefined);
     const wrapper = shallowWithIntl(
       <Footer />,
     );
@@ -27,6 +28,7 @@ describe('domain/footer/Footer', () => {
     let content;
 
     beforeAll(() => {
+      simple.mock(customizationUtils, 'getCurrentCustomization').returnWith(undefined);
       content = getWrapper();
     });
 

@@ -39,7 +39,7 @@ function getSettings() {
   // useful in a local development context.
   dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
-  // process.env is eeded in server run context and with jest tests
+  // process.env is needed in server run context and with jest tests
   return {
     PORT: process.env.PORT,
     NODE_ENV: process.env.NODE_ENV,
@@ -50,6 +50,8 @@ function getSettings() {
     RESPA_ADMIN_URL: process.env.RESPA_ADMIN_URL || DEFAULT_RESPA_ADMIN_URL,
     SHOW_TEST_SITE_MESSAGE: Boolean(process.env.SHOW_TEST_SITE_MESSAGE),
     TRACKING: Boolean(process.env.PIWIK_SITE_ID),
+    // example: 'TAMPERE' or 'ESPOO'
+    DEFAULT_CUSTOMIZATION: process.env.DEFAULT_CUSTOMIZATION,
     // The state does not accept array values, so arrays should get casted into
     // strings. If we want to use them as arrays, we have to parse the string
     // into an array value.
@@ -63,6 +65,10 @@ function getSettings() {
     LOGIN_CALLBACK_URL:
       process.env.LOGIN_CALLBACK_URL || DEFAULT_LOGIN_CALLBACK_URL,
     TARGET_APP: process.env.TARGET_APP,
+    AUTH_URL: process.env.AUTH_URL,
+    TOKEN_URL: process.env.TOKEN_URL,
+    JWT_TOKEN_URL: process.env.JWT_TOKEN_URL,
+    PROFILE_URL: process.env.PROFILE_URL,
     FIREBASE: {
       API_KEY: process.env.FIREBASE_API_KEY,
       AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN,

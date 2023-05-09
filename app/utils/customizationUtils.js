@@ -17,7 +17,7 @@ function getDefaultMunicipality() {
 
 function getCurrentCustomization() {
   const host = window.location.host;
-  return constants.CUSTOMIZATIONS[host] || null;
+  return constants.CUSTOMIZATIONS[host] || constants.DEFAULT_CUSTOMIZATION;
 }
 
 function getCustomizationClassName() {
