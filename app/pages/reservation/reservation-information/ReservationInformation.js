@@ -171,6 +171,7 @@ class ReservationInformation extends Component {
             initialValues={this.getFormInitialValues()}
             isEditing={isEditing}
             isMakingReservations={isMakingReservations}
+            isPayableAmount={isPayableAmount}
             isPaymentRequired={isPaymentRequired}
             isStaff={isStaff}
             onBack={onBack}
