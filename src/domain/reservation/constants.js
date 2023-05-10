@@ -26,4 +26,6 @@ export const RESERVATION_SHOWONLY_FILTERS = {
 export const RESERVATION_TYPE = {
   NORMAL: 'normal',
   BLOCKED: 'blocked',
+  INTERNAL_USE: 'internal_use',
+  FOR_CUSTOMER: 'for_customer',
 };

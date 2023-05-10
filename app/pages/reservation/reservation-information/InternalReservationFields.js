@@ -22,43 +22,91 @@ class InternalReservationFields extends Component {
     return (
       <div className="app-ReservationDetails">
         <h2 className="app-ReservationPage__title">{t('ReservationForm.premiseStaffOnly')}</h2>
+
         <Row>
           <Col md={1}>
             <Field
               component="input"
-              id="internalReservationChecked"
-              label="internalReservation"
-              name="staffEvent"
-              type="checkbox"
-            />
-          </Col>
-          <Col md={11}>
-            <span className="app-ReservationDetails__value">
-              {t('ReservationForm.internalReservation')}
-              <br />
-              {t('ReservationForm.internalReservationDescription')}
-            </span>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={1}>
-            <Field
-              component="input"
-              format={value => value === RESERVATION_TYPE.BLOCKED}
-              label="markAsClosed"
+              id="type__internalUse"
+              label="type__internalUse"
               name="type"
-              normalize={value => (value ? RESERVATION_TYPE.BLOCKED : RESERVATION_TYPE.NORMAL)}
-              type="checkbox"
+              type="radio"
+              value={RESERVATION_TYPE.INTERNAL_USE}
             />
           </Col>
           <Col md={11}>
-            <span className="app-ReservationDetails__value">
-              {t('ReservationForm.markAsClosed')}
+            <label className="app-ReservationDetails__value" htmlFor="type__internalUse">
+              {t('ReservationForm.typeInternalUse')}
               <br />
-              {t('ReservationForm.markAsClosedDescription')}
-            </span>
+              {t('ReservationForm.typeInternalUseDescription')}
+            </label>
           </Col>
         </Row>
+
+        <Row>
+          <Col md={1}>
+            <Field
+              component="input"
+              id="type__blocked"
+              label="type__blocked"
+              name="type"
+              type="radio"
+              value={RESERVATION_TYPE.BLOCKED}
+            />
+          </Col>
+          <Col md={11}>
+            <label className="app-ReservationDetails__value" htmlFor="type__blocked">
+              {t('ReservationForm.typeBlocked')}
+              <br />
+              {t('ReservationForm.typeBlockedDescription')}
+            </label>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col md={1}>
+            <Field
+              component="input"
+              id="type__forCustomer"
+              label="type__forCustomer"
+              name="type"
+              type="radio"
+              value={RESERVATION_TYPE.FOR_CUSTOMER}
+            />
+          </Col>
+          <Col md={11}>
+            <label className="app-ReservationDetails__value" htmlFor="type__forCustomer">
+              {t('ReservationForm.typeForCustomer')}
+              <br />
+              {t('ReservationForm.typeForCustomerDescription')}
+            </label>
+          </Col>
+        </Row>
+
+        {/* }
+
+        <Row>
+          <Col md={1}>
+            <Field
+              component="input"
+              id="type__normal"
+              label="type__normal"
+              name="type"
+              type="radio"
+              value="normal"
+            />
+          </Col>
+          <Col md={11}>
+            <label className="app-ReservationDetails__value" htmlFor="type__normal">
+              {t('ReservationForm.typeNormal')}
+              <br />
+              {t('ReservationForm.typeNormalDescription')}
+            </label>
+          </Col>
+        </Row>
+
+        { */}
+
         <Row>
           <Col md={12}>
             <div className="app-ReservationPage__formfield">
@@ -111,7 +159,7 @@ ConnectedReservationFields = connect(
     return {
       initialValues: {
         staffEvent: true,
-        type: RESERVATION_TYPE.NORMAL,
+        type: RESERVATION_TYPE.INTERNAL_USE,
         reservationExtraQuestionsDefault: state.data.resources[resource].reservationExtraQuestions,
         reservationExtraQuestions: state.data.resources[resource].reservationExtraQuestions,
         product,

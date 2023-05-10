@@ -1,5 +1,6 @@
 import settings from '../../config/settings';
 
+
 export default {
   API_URL: settings.API_URL,
   RESPA_ADMIN_URL: settings.RESPA_ADMIN_URL,
@@ -12,6 +13,7 @@ export default {
     'dev-varaamo.tampere.fi': 'TAMPERE', // QA
     'varaamotest-tampere.temp:3000': 'TAMPERE', // LOCAL DEV
   },
+  DEFAULT_CUSTOMIZATION: settings.DEFAULT_CUSTOMIZATION,
   DATE_FORMAT: 'YYYY-MM-DD',
   DATETIME_FORMAT: 'YYYY-MM-DD[T]HH:mmZZ',
   DEFAULT_LOCALE: 'fi',

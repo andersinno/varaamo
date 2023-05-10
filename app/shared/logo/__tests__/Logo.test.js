@@ -18,6 +18,7 @@ describe('shared/logo/Logo', () => {
     let logo;
 
     beforeAll(() => {
+      simple.mock(customizationUtils, 'getCurrentCustomization').returnWith(undefined);
       logo = getWrapper();
     });
 
