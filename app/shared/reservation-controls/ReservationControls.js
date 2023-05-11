@@ -9,6 +9,9 @@ import { getUnitRoleFromResource, getIsUnitStaff } from '../../../src/domain/res
 
 class ReservationControls extends Component {
   get buttons() {
+    const { reservation } = this.props;
+    const paymentLink = reservation.payment_link;
+
     return {
       cancel: (
         <Button
@@ -62,6 +65,16 @@ class ReservationControls extends Component {
           {this.props.t('ReservationControls.info')}
         </Button>
       ),
+      pay: paymentLink && (
+        <Button
+          bsStyle="success"
+          href={paymentLink}
+          key="payButton"
+        >
+          {this.props.t('ReservationControls.pay')}
+        </Button>
+      ),
+
     };
   }
 
@@ -82,7 +95,7 @@ class ReservationControls extends Component {
       }
       return isAdmin
         ? [buttons.edit, buttons.cancel]
-        : [buttons.edit, buttons.cancel];
+        : [buttons.pay, buttons.edit, buttons.cancel];
     }
 
     switch (reservation.state) {

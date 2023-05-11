@@ -16,7 +16,6 @@ import { getMainImage } from '../../../utils/imageUtils';
 import { getResourcePageUrl, hasProducts } from '../../../utils/resourceUtils';
 import {
   getReservationPrice,
-  getTaxPercentage,
 } from '../../../../src/domain/resource/utils';
 
 class ReservationListItem extends Component {
