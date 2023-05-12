@@ -263,6 +263,7 @@
   "ReservationControls.deny": "Deny",
   "ReservationControls.edit": "Edit",
   "ReservationControls.info": "Information",
+  "ReservationControls.pay": "Pay",
   "ReservationEditForm.priceWithTax": "{price}€ (inc VAT {tax}%)",
   "ReservationEditForm.cancelEdit": "Cancel editing",
   "ReservationEditForm.saveChanges": "Save changes",
