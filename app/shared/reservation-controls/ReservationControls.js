@@ -98,6 +98,7 @@ class ReservationControls extends Component {
         : [buttons.pay, buttons.edit, buttons.cancel];
     }
 
+    // TODO: use RESERVATION_STATE constants
     switch (reservation.state) {
       case 'cancelled': {
         return [];
@@ -112,6 +113,16 @@ class ReservationControls extends Component {
         return [buttons.cancel];
       }
 
+      case 'waiting_for_payment': {
+        if (isAdmin) {
+          return isStaff
+            ? [buttons.cancel, buttons.edit]
+            : [buttons.cancel];
+        }
+        return [buttons.cancel, buttons.pay];
+      }
+
+      // does this state exist?
       case 'paid': {
         return [buttons.cancel];
       }

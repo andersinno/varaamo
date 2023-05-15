@@ -205,6 +205,16 @@ function getState(extraState = {}) {
   return merge({}, state, newState);
 }
 
+function makeButtonLinkTests(button, name, expectedText, expectedUrl) {
+  test(`is an ${name} button`, () => {
+    expect(button.props().children).toBe(expectedText);
+  });
+
+  test(`${name} has correct link`, () => {
+    expect(button.prop('href')).toBe(expectedUrl);
+  });
+}
+
 function makeButtonTests(button, name, expectedText, expectedOnClickFunction) {
   test(`is an ${name} button`, () => {
     expect(button.props().children).toBe(expectedText);
@@ -253,6 +263,7 @@ export {
   getDefaultRouterProps,
   getInitialState,
   getState,
+  makeButtonLinkTests,
   makeButtonTests,
   shallowWithIntl,
   mountWithIntl,
