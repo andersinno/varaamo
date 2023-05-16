@@ -14,9 +14,9 @@ export default {
     'varaamotest-tampere.temp:3000': 'TAMPERE', // LOCAL DEV
   },
   DEFAULT_CUSTOMIZATION: settings.DEFAULT_CUSTOMIZATION,
+  DEFAULT_LOCALE: settings.DEFAULT_LOCALE,
   DATE_FORMAT: 'YYYY-MM-DD',
   DATETIME_FORMAT: 'YYYY-MM-DD[T]HH:mmZZ',
-  DEFAULT_LOCALE: 'fi',
   FEEDBACK_URL: 'https://elomake.tampere.fi/lomakkeet/15701/lomake.html',
   FILTER: {
     timeFormat: 'HH:mm',
