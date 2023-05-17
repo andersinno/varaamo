@@ -395,7 +395,7 @@
   "ResourceInfo.serviceWebLink": "Website",
   "ResourceInfo.loginMessage": "You must <a href=”/login”>log in</a> to reserve these premises.",
   "ResourceInfo.reservationTitle": "Reservation details",
-  "ResourceInfo.reserveTitle": "Reserve",
+  "ResourceInfo.reserveTitle": "Reserve/Check availability",
   "ReservationInfo.wholeDayReservation": "Whole day reservation __english__",
   "ResourceInfoContainer.unpublishedLabel": "unpublished",
   "ResourceKeyboardReservation.dateLabel": "Date",

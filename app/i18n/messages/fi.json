@@ -395,7 +395,7 @@
   "ResourceInfo.serviceWebLink": "Verkkosivu",
   "ResourceInfo.loginMessage": "Sinun täytyy <a href=\"/login\">kirjautua sisään</a>, jotta voit tehdä varauksen tähän tilaan.",
   "ResourceInfo.reservationTitle": "Varauksen tiedot",
-  "ResourceInfo.reserveTitle": "Varaa",
+  "ResourceInfo.reserveTitle": "Varaa/Tarkista saatavuus",
   "ReservationInfo.wholeDayReservation": "Varauksen pituus: koko päivä",
   "ResourceInfoContainer.unpublishedLabel": "ei julkaistu",
   "ResourceKeyboardReservation.dateLabel": "Päivämäärä",
