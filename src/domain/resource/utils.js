@@ -41,7 +41,7 @@ export const getUnitAddress = (unit, locale) => {
     postal = postal ? `${postal} ${unit.municipality}` : unit.municipality;
   }
 
-  return `${streetAddress}${postal ? ` ${postal}` : ''}`;
+  return `${streetAddress || ''}${postal ? ` ${postal}` : ''}`;
 };
 
 /**

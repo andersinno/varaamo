@@ -104,7 +104,7 @@ exports[`ResourceCard renders correctly 1`] = `
     />
     <ResourceCardInfoCell
       icon="test-file-stub"
-      text="null"
+      text=""
     />
     <span
       className="app-resourceCardInfoCell"
