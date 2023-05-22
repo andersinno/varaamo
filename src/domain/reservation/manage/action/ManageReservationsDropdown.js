@@ -14,8 +14,12 @@ const UntranslatedManageReservationsDropdown = ({
   userCanCancel,
 }) => {
   const isRequestedReservation = reservation.state === RESERVATION_STATE.REQUESTED;
-  const isPaidReservationWithManualConfirmation = reservation.need_manual_confirmation && !isEmpty(reservation.price_info);
-  const reservationConfirmationState = isPaidReservationWithManualConfirmation ? RESERVATION_STATE.CONFIRMED_BUT_NOT_PAID : RESERVATION_STATE.CONFIRMED;
+  const isPaidReservationWithManualConfirmation = reservation.need_manual_confirmation
+    && !isEmpty(reservation.price_info);
+
+  const reservationConfirmationState = isPaidReservationWithManualConfirmation
+    ? RESERVATION_STATE.WAITING_FOR_PAYMENT
+    : RESERVATION_STATE.CONFIRMED;
   return (
     <div className="app-ManageReservationDropdown">
       {userCanModify && (

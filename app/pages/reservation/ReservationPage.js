@@ -27,7 +27,7 @@ import ReservationInformation from './reservation-information/ReservationInforma
 import ReservationPhases from './reservation-phases/ReservationPhases';
 import ReservationTime from './reservation-time/ReservationTime';
 import reservationPageSelector from './reservationPageSelector';
-import { hasProducts } from '../../utils/resourceUtils';
+import { hasProducts, createPaymentReturnUrl } from '../../utils/resourceUtils';
 import RecurringReservationControls from '../../shared/recurring-reservation-controls/RecurringReservationControls';
 import CompactReservationList from '../../shared/compact-reservation-list/CompactReservationList';
 import recurringReservationsConnector from '../../state/recurringReservations';
@@ -124,12 +124,6 @@ class UnconnectedReservationPage extends Component {
     window.scrollTo(0, 0);
   };
 
-  createPaymentReturnUrl = () => {
-    const { protocol, hostname } = window.location;
-    const port = window.location.port ? `:${window.location.port}` : '';
-    return `${protocol}//${hostname}${port}/reservation-payment-return`;
-  };
-
   handleReservation = (values = {}) => {
     const {
       actions, reservationToEdit, resource, selected, recurringReservations = [],
@@ -165,7 +159,7 @@ class UnconnectedReservationPage extends Component {
           order = {
             order: {
               order_lines: [orderLineData],
-              return_url: this.createPaymentReturnUrl(),
+              return_url: createPaymentReturnUrl(),
             },
           };
         }
@@ -210,8 +204,7 @@ class UnconnectedReservationPage extends Component {
     const { resource, isStaff } = this.props;
     return !resource.freeToUse
       && hasProducts(resource)
-      && !isStaff
-      && !resource.needManualConfirmation;
+      && !isStaff;
   }
 
   isPayableAmount() {

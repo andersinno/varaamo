@@ -26,6 +26,7 @@ import { RESERVATION_SHOWONLY_FILTERS } from '../../constants';
 import { userFavouriteResourcesSelector } from '../../../../../app/state/selectors/dataSelectors';
 import { isAdminSelector } from '../../../../../app/state/selectors/authSelectors';
 import ConnectedReservationCancelModal from '../../modal/ReservationCancelModal';
+import { createPaymentReturnUrl } from '../../../../../app/utils/resourceUtils';
 
 export const PAGE_SIZE = 50;
 const INITIAL_SELECTED_RESERVATION_RESOURCE = {
@@ -227,7 +228,12 @@ class ManageReservationsPage extends React.Component {
           this.parentToggle(false);
         }
       } else {
-        await reservationUtils.putReservation(reservation, { state: status });
+        const payload = { state: status };
+        // if payment required we should include the payment return URL in the payload
+        if (status === RESERVATION_STATE.WAITING_FOR_PAYMENT) {
+          payload.payment_return_url = createPaymentReturnUrl();
+        }
+        await reservationUtils.putReservation(reservation, payload);
       }
       this.loadReservations();
     } catch (error) {

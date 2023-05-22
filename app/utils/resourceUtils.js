@@ -9,6 +9,15 @@ import constants from '../constants/AppConstants';
 import { getCurrentReservation, getNextAvailableTime } from './reservationUtils';
 import { getPrice as genericGetPrice } from '../../src/domain/resource/utils';
 
+
+function createPaymentReturnUrl() {
+  // Provides absolute URL to pass to payments API.
+  // On completion should redirect back to this URL.
+  const { protocol, hostname } = window.location;
+  const port = window.location.port ? `:${window.location.port}` : '';
+  return `${protocol}//${hostname}${port}/reservation-payment-return`;
+}
+
 function hasMaxReservations(resource) {
   let isMaxReservations = false;
   if (resource.maxReservationsPerUser && resource.reservations) {
@@ -202,6 +211,7 @@ function hasProducts(resource) {
 }
 
 export {
+  createPaymentReturnUrl,
   hasMaxReservations,
   getAvailabilityDataForNow,
   getAvailabilityDataForWholeDay,

@@ -6,7 +6,7 @@ import snakeCaseKeys from 'snakecase-keys';
 
 import Reservation from '../../../utils/fixtures/Reservation';
 import Resource from '../../../utils/fixtures/Resource';
-import { makeButtonTests, shallowWithIntl } from '../../../utils/testUtils';
+import { makeButtonTests, makeButtonLinkTests, shallowWithIntl } from '../../../utils/testUtils';
 import ReservationControls from '../ReservationControls';
 
 // This project handles API responses differently based on the method
@@ -21,12 +21,15 @@ import ReservationControls from '../ReservationControls';
 const makeReservation = (...args) => snakeCaseKeys(Reservation.build(...args));
 const makeResource = (...args) => snakeCaseKeys(Resource.build(...args));
 
+const paymentLink = 'https://dummy-payment-link.com/';
+
 describe('shared/reservation-controls/ReservationControls', () => {
   const onCancelClick = simple.stub();
   const onConfirmClick = simple.stub();
   const onDenyClick = simple.stub();
   const onEditClick = simple.stub();
   const onInfoClick = simple.stub();
+  const onPayClick = simple.stub();
 
   function getWrapper(reservation, isAdmin = false, isStaff = false) {
     const defaultResource = makeResource();
@@ -41,6 +44,7 @@ describe('shared/reservation-controls/ReservationControls', () => {
       onDenyClick,
       onEditClick,
       onInfoClick,
+      onPayClick,
       reservation: Immutable(reservation),
       resource,
     };
@@ -52,6 +56,31 @@ describe('shared/reservation-controls/ReservationControls', () => {
 
     describe('with regular reservation', () => {
       const reservation = makeReservation({ needManualConfirmation: false, state: 'confirmed' });
+      const buttons = getWrapper(reservation, isAdmin).find(Button);
+
+      test('renders three buttons', () => {
+        expect(buttons.length).toBe(3);
+      });
+
+      describe('the first button', () => {
+        makeButtonTests(buttons.at(0), 'info', 'ReservationControls.info', onInfoClick);
+      });
+
+      describe('the second button', () => {
+        makeButtonTests(buttons.at(1), 'edit', 'ReservationControls.edit', onEditClick);
+      });
+
+      describe('the third button', () => {
+        makeButtonTests(buttons.at(2), 'cancel', 'ReservationControls.cancel', onCancelClick);
+      });
+    });
+
+    describe('with payment required', () => {
+      const reservation = makeReservation({
+        payment_link: paymentLink,
+        needManualConfirmation: false,
+        state: 'waiting_for_payment',
+      });
       const buttons = getWrapper(reservation, isAdmin).find(Button);
 
       test('renders three buttons', () => {
@@ -207,6 +236,36 @@ describe('shared/reservation-controls/ReservationControls', () => {
 
       describe('the third button', () => {
         makeButtonTests(buttons.at(2), 'cancel', 'ReservationControls.cancel', onCancelClick);
+      });
+    });
+
+    describe('with payment required', () => {
+      const reservation = makeReservation({
+        needManualConfirmation: false,
+        payment_link: paymentLink,
+        state: 'waiting_for_payment',
+      });
+
+      const buttons = getWrapper(reservation, isAdmin).find(Button);
+
+      test('renders three buttons', () => {
+        expect(buttons.length).toBe(4);
+      });
+
+      describe('the first button', () => {
+        makeButtonTests(buttons.at(0), 'info', 'ReservationControls.info', onInfoClick);
+      });
+
+      describe('the second button', () => {
+        makeButtonLinkTests(buttons.at(1), 'pay', 'ReservationControls.pay', paymentLink);
+      });
+
+      describe('the third button', () => {
+        makeButtonTests(buttons.at(2), 'edit', 'ReservationControls.edit', onEditClick);
+      });
+
+      describe('the fourth button', () => {
+        makeButtonTests(buttons.at(3), 'cancel', 'ReservationControls.cancel', onCancelClick);
       });
     });
 
