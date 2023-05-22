@@ -122,11 +122,6 @@ class ReservationControls extends Component {
         return [buttons.cancel, buttons.pay];
       }
 
-      // does this state exist?
-      case 'paid': {
-        return [buttons.cancel];
-      }
-
       case 'denied': {
         return [];
       }
