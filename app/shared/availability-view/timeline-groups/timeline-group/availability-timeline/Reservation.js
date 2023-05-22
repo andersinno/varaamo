@@ -38,7 +38,7 @@ function Reservation({ onClick, ...reservation }) {
   const width = utils.getTimeSlotWidth({ startTime, endTime });
   const reserverName = getReserverName(reservation.reserverName, reservation.user);
   // This value is zero when no price is found.
-  const price = getReservationPrice(reservation.begin, reservation.end, { products: reservation.products });
+  const price = getReservationPrice(reservation.begin, reservation.end, reservation.priceInfo);
   const showPrice = getHasOnlinePaymentSupport(reservation);
 
   const popover = (
