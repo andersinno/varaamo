@@ -50,6 +50,7 @@ function getSettings() {
     RESPA_ADMIN_URL: process.env.RESPA_ADMIN_URL || DEFAULT_RESPA_ADMIN_URL,
     SHOW_TEST_SITE_MESSAGE: Boolean(process.env.SHOW_TEST_SITE_MESSAGE),
     TRACKING: Boolean(process.env.PIWIK_SITE_ID),
+    DEFAULT_LOCALE: process.env.DEFAULT_LOCALE || 'fi',
     // example: 'TAMPERE' or 'ESPOO'
     DEFAULT_CUSTOMIZATION: process.env.DEFAULT_CUSTOMIZATION,
     // The state does not accept array values, so arrays should get casted into

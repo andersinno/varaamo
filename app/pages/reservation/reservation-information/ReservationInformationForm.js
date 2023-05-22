@@ -364,12 +364,12 @@ class UnconnectedReservationInformationForm extends Component {
 
           {!resource.freeToUse && hasProducts(resource) && (
             <div>
-              <h2 className="app-ReservationPage__title">Käyttäjä ja käyttötarkoitus</h2>
+              <h2 className="app-ReservationPage__title">{t('ReservationInformationForm.userAndPurpose')}</h2>
               {includes(fields, 'userGroup') && (
                 <div>
                   {this.renderDropDown(
                     'userGroup',
-                    'Käyttäjäryhmä',
+                    t('ReservationInformationForm.userGroup'),
                     userGroupOptions,
                     true,
                   )}
@@ -379,7 +379,7 @@ class UnconnectedReservationInformationForm extends Component {
                 <div>
                   {this.renderDropDown(
                     'eventType',
-                    'Käyttötarkoitus',
+                    t('ReservationInformationForm.eventType'),
                     eventTypeOptions,
                     false,
                   )}

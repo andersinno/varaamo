@@ -3,14 +3,24 @@ import values from 'lodash/values';
 import pickBy from 'lodash/pickBy';
 import camelCase from 'lodash/camelCase';
 
+import constants from '../../../app/constants/AppConstants';
+
 export const getLocalizedFieldValue = (field, locale, fallback = false) => {
   const localeValue = get(field, locale, null);
 
-  if (localeValue || !fallback) {
+  if (localeValue) {
     return localeValue;
   }
 
-  return values(field).find(fallbackValue => !!fallbackValue);
+  if (fallback) {
+    return values(field).find(fallbackValue => !!fallbackValue);
+  }
+
+  if (locale !== constants.DEFAULT_LOCALE) {
+    return getLocalizedFieldValue(field, constants.DEFAULT_LOCALE, false);
+  }
+
+  return localeValue;
 };
 
 /**
