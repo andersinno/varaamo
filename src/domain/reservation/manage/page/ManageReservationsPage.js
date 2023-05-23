@@ -29,6 +29,7 @@ import ConnectedReservationCancelModal from '../../modal/ReservationCancelModal'
 import { createPaymentReturnUrl } from '../../../../../app/utils/resourceUtils';
 
 export const PAGE_SIZE = 50;
+
 const INITIAL_SELECTED_RESERVATION_RESOURCE = {
   data: null,
   isLoading: false,
@@ -296,6 +297,7 @@ class ManageReservationsPage extends React.Component {
 
   downloadReservationData = (downloadType) => {
     const { location } = this.props;
+    const { totalCount } = this.state;
     const filters = searchUtils.getFiltersFromUrl(location, false);
     const params = { ...filters, excludeReservationExtraFields: 1 };
     const fileName = `reservation_${Date.now()}`;
@@ -314,7 +316,11 @@ class ManageReservationsPage extends React.Component {
         'responseType': 'blob',
       },
     };
-    client.get('reservation', params, config).then(
+
+    client.get('reservation', {
+      ...params,
+      page_size: totalCount,
+    }, config).then(
       (response) => {
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement('a');
