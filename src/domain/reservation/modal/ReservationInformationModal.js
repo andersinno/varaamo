@@ -55,6 +55,13 @@ const ReservationInformationModal = ({
   const isRequestedReservation = reservation.state === RESERVATION_STATE.REQUESTED;
   const showRefundPolicy = resource !== null && getShowRefundPolicy(isAdmin, reservation);
 
+  const priceInfo = get(reservation, 'price_info', {});
+
+  const priceDetails = priceInfo ? t('common.priceWithVAT', {
+    price: get(priceInfo, 'total_price', 0),
+    vat: get(priceInfo, 'tax_percentage', 0),
+  }) : null;
+
   return (
     <Modal
       className="app-ReservationInformationModal"
@@ -77,6 +84,7 @@ const ReservationInformationModal = ({
           {payerEmail && renderField('payment_email', payerEmail)}
           {renderField('reservation_time', getDateAndTime(reservation))}
           {renderField('resource', get(reservation, 'resource.name.fi', ''))}
+          {priceDetails && renderField('price', priceDetails)}
 
           {/* Render reservation metadata (extra) fields */}
           <ReservationMetadata
