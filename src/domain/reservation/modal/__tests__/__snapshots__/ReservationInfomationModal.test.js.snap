@@ -122,6 +122,19 @@ exports[`ReservationInformationModal renders correctly 1`] = `
           </span>
         }
       />
+      <ReservationInformationModalContentRow
+        content={
+          <span>
+            common.priceWithVAT
+          </span>
+        }
+        key="price"
+        label={
+          <span>
+            common.priceLabel
+          </span>
+        }
+      />
       <InjectT(ReservationMetadata)
         customField={[Function]}
         reservation={
