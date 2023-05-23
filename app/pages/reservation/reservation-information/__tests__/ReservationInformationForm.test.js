@@ -246,6 +246,42 @@ describe('pages/reservation/reservation-information/ReservationInformationForm',
       });
     });
 
+    describe('payment time limit note', () => {
+      describe('when payable reservation does not require manual confirmation', () => {
+        test('renders payment time limit note', () => {
+          const resource = Resource.build({
+            needManualConfirmation: false,
+          });
+          const props = {
+            isPayableAmount: true,
+            isPaymentRequired: true,
+            resource,
+          };
+          const wrapper = getWrapper(props);
+          const text = wrapper.find('.payment-time-limit-note');
+
+          expect(text).toHaveLength(1);
+        });
+      });
+
+      describe('when payable reservation requires manual confirmation', () => {
+        test('does not render payment time limit note', () => {
+          const resource = Resource.build({
+            needManualConfirmation: true,
+          });
+          const props = {
+            isPayableAmount: true,
+            isPaymentRequired: true,
+            resource,
+          };
+          const wrapper = getWrapper(props);
+          const text = wrapper.find('.payment-time-limit-note');
+
+          expect(text).toHaveLength(0);
+        });
+      });
+    });
+
     describe('form buttons', () => {
       describe('when is editing is false', () => {
         const buttons = getWrapper({ isEditing: false }).find(Button);

@@ -269,7 +269,7 @@ class UnconnectedReservationInformationForm extends Component {
   renderPaymentTimeLimitNote = () => {
     const { t } = this.props;
     return (
-      <div className="wrapped-text">
+      <div className="wrapped-text payment-time-limit-note">
         {t('common.paymentTimeLimitNote')}
       </div>
     );
@@ -280,12 +280,13 @@ class UnconnectedReservationInformationForm extends Component {
       isMakingReservations,
       isPayableAmount,
       isPaymentRequired,
+      resource,
       t,
     } = this.props;
 
     let buttonText;
 
-    if (isPaymentRequired && isPayableAmount) {
+    if (isPaymentRequired && isPayableAmount && !resource.needManualConfirmation) {
       buttonText = t('common.pay');
     } else if (isMakingReservations) {
       buttonText = t('common.saving');
@@ -322,6 +323,8 @@ class UnconnectedReservationInformationForm extends Component {
     } = this.props;
     const userGroupOptions = this.getReservationUserGroups(resource);
     const eventTypeOptions = this.getReservationEventTypes(resource);
+
+    const showPaymentTimeLimitNote = isPaymentRequired && isPayableAmount && !resource.needManualConfirmation;
 
     return (
       <div>
@@ -593,7 +596,7 @@ class UnconnectedReservationInformationForm extends Component {
               {this.renderTermsField('specificTerms')}
             </div>
           )}
-          {isPaymentRequired && isPayableAmount && this.renderPaymentTimeLimitNote()}
+          {showPaymentTimeLimitNote && this.renderPaymentTimeLimitNote()}
           <div>
             <Button
               onClick={onCancel}
