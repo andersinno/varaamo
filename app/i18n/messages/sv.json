@@ -301,6 +301,8 @@
   "ReservationInfo.reservationMinLength": "Minsta längd av bokningen:",
   "ReservationInfo.reservationEarliestDays": "Bokning måste göras {time} i förväg",
   "ReservationInfo.reservationLatestDays": "Bokningar kan göras {time} i förväg, fram tills {date}",
+  "ReservationInfo.requiresManualConfirmation": "Bokning kräver manuell bekräftelse",
+  "ReservationInfo.iconClockAlt": "Klockan",
   "ReservationInfoModal.cancelButton": "Annulera evenmanget",
   "ReservationInfoModal.approveButton": "Bekräfta reserveringen",
   "ReservationInfoModal.denyButton": "Förneka reserveringen",
