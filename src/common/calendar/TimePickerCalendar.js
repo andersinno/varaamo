@@ -180,9 +180,22 @@ class TimePickerCalendar extends Component {
           NOTIFICATION_TYPE.INFO, t('TimePickerCalendar.info.shouldBeReservedWholeDayText'),
         );
       }
+
       const startMoment = moment(selected.start).toJSON();
       const selectedDate = startMoment.split('T')[0];
-      const slots = this.getSlotsForDate(selectedDate, resource);
+
+      // select slots from next exact hour
+      // e.g. if time now 11:40, next available slot should be 12:00
+      // even if exact hour, add one hour to prevent server validation rejecting
+      // time earlier than current
+      const minTime = moment().add(1, 'hour').startOf('hour');
+
+      const slots = this.getSlotsForDate(selectedDate, resource).filter(
+        (slot) => {
+          return slot && moment(slot.end).isAfter(minTime);
+        },
+      );
+
       selectable = {
         start: moment(slots[slots.length - 1].start).toDate(),
         // Add 1 millisecond to round the hour/minute
@@ -282,6 +295,7 @@ class TimePickerCalendar extends Component {
         return [selectable, true];
       }
     }
+
     return [selected, false];
   }
 
