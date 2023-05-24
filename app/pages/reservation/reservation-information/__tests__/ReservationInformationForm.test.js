@@ -282,6 +282,28 @@ describe('pages/reservation/reservation-information/ReservationInformationForm',
       });
     });
 
+    describe('event type options', () => {
+      test('includes none of the above option', () => {
+        const resource = Resource.build({
+          pricingEventTypes: [{
+            id: 1,
+            name: 'Event type 1',
+          }],
+        });
+        const props = {
+          isPayableAmount: true,
+          isPaymentRequired: true,
+          resource,
+        };
+        const wrapper = getWrapper(props);
+        const instance = wrapper.instance();
+        const options = instance.getEventTypeOptions(resource);
+
+        expect(options).toHaveLength(2);
+        expect(options.pop().label).toBe('ReservationInformationForm.noneOfTheAboveOptionLabel');
+      });
+    });
+
     describe('form buttons', () => {
       describe('when is editing is false', () => {
         const buttons = getWrapper({ isEditing: false }).find(Button);
