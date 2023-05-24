@@ -49,6 +49,7 @@ class ReservationInformation extends Component {
       resource,
     } = this.props;
     const formFields = [...resource.supportedReservationExtraFields].map(value => camelCase(value));
+    const eventTypes = resource.pricingEventTypes ? [...resource.pricingEventTypes] : [];
 
     if (isAdmin) {
       formFields.push('comments');
@@ -83,7 +84,9 @@ class ReservationInformation extends Component {
         formFields.push('billingEmailAddress');
       }
       formFields.push('userGroup');
-      formFields.push('eventType');
+      if (eventTypes.length > 0) {
+        formFields.push('eventType');
+      }
     }
 
     return uniq(formFields);
@@ -128,6 +131,7 @@ class ReservationInformation extends Component {
 
     requiredFormFields.push('paymentTermsAndConditions');
     requiredFormFields.push('userGroup');
+    requiredFormFields.push('eventType');
 
     if (!isAdmin) {
       requiredFormFields.push('billingFirstName');
