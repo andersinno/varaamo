@@ -378,13 +378,13 @@ class UnconnectedReservationInformationForm extends Component {
                   )}
                 </div>
               )}
-              {includes(fields, 'eventType') && (eventTypeOptions.length > 0) && (
+              {includes(fields, 'eventType') && (
                 <div>
                   {this.renderDropDown(
                     'eventType',
                     t('ReservationInformationForm.eventType'),
                     eventTypeOptions,
-                    false,
+                    true,
                   )}
                 </div>
               )}

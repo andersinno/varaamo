@@ -69,7 +69,7 @@ describe('pages/reservation/reservation-information/ReservationInformation', () 
   });
 
   describe('getFormFields', () => {
-    const resource = Resource.build({
+    let resource = Resource.build({
       needManualConfirmation: true,
       supportedReservationExtraFields: ['some_field_1', 'some_field_2'],
     });
@@ -115,6 +115,29 @@ describe('pages/reservation/reservation-information/ReservationInformation', () 
       const actual = instance.getFormFields(termsAndConditions);
 
       expect(actual).toEqual([...supportedFields, 'termsAndConditions']);
+    });
+
+    test('returns eventType field when there are event type specific prices', () => {
+      resource = Resource.build({
+        pricingEventTypes: [{
+          id: 1,
+          name: 'Event type 1',
+        }],
+      });
+      const wrapper = getWrapper({ isPaymentRequired: true, resource });
+      const actual = wrapper.instance().getFormFields();
+
+      expect(actual).toEqual(expect.arrayContaining(['eventType']));
+    });
+
+    test('does not return eventType field when there are no event type specific prices', () => {
+      resource = Resource.build({
+        pricingEventTypes: [],
+      });
+      const wrapper = getWrapper({ isPaymentRequired: true, resource });
+      const actual = wrapper.instance().getFormFields();
+
+      expect(actual).not.toEqual(expect.arrayContaining(['eventType']));
     });
   });
 
@@ -178,6 +201,7 @@ describe('pages/reservation/reservation-information/ReservationInformation', () 
     const paymentFields = [
       'paymentTermsAndConditions',
       'userGroup',
+      'eventType',
     ];
 
     test('returns correct required form fields', () => {
