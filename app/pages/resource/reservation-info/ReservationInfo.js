@@ -117,10 +117,20 @@ function renderReservationPeriodInfo(resource, t) {
   );
 }
 
+function renderRequiresManualConfirmationText(t) {
+  return (
+    <p className="needs-manual-confirmation-text">
+      <img alt={t('ReservationInfo.iconClockAlt')} className="app-ResourceHeader__info-icon" src={iconClock} />
+      <strong>{t('ReservationInfo.requiresManualConfirmation')}</strong>
+    </p>
+  );
+}
+
 function ReservationInfo({ isLoggedIn, resource, t }) {
   return (
     <div className="app-ReservationInfo">
       <WrappedText openLinksInNewTab text={resource.reservationInfo} />
+      {resource.needManualConfirmation && renderRequiresManualConfirmationText(t)}
       {renderEarliestResDay(resource, t)}
       {renderLastResDay(resource, t)}
       {renderReservationPeriodInfo(resource, t)}

@@ -309,6 +309,8 @@
   "ReservationInfo.reservationMinLength": "Varauksen vähimmäispituus:",
   "ReservationInfo.reservationEarliestDays": "Varattava vähintään {time} etukäteen",
   "ReservationInfo.reservationLatestDays": "Varauksen voi tehdä {time} etukäteen, {date} asti",
+  "ReservationInfo.requiresManualConfirmation": "Varaus vaatii virkailijan vahvistuksen",
+  "ReservationInfo.iconClockAlt": "Kello",
   "ReservationInfoModal.cancelButton": "Peru varaus",
   "ReservationInfoModal.approveButton": "Hyväksy varaus",
   "ReservationInfoModal.denyButton": "Hylkää varaus",

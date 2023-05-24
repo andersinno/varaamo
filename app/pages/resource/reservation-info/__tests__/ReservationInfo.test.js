@@ -148,4 +148,24 @@ describe('pages/resource/reservation-info/ReservationInfo', () => {
       },
     );
   });
+
+  describe('requires manual confirmation text', () => {
+    test(
+      'is rendered correctly when resource.needManualConfirmation is true',
+      () => {
+        const resource = { needManualConfirmation: true };
+        const requiresManualConfirmationText = getWrapper({ resource }).find('.needs-manual-confirmation-text');
+        expect(requiresManualConfirmationText).toHaveLength(1);
+      },
+    );
+
+    test(
+      'is not rendered if resource.needManualConfirmation is not true',
+      () => {
+        const resource = { needManualConfirmation: false };
+        const requiresManualConfirmationText = getWrapper({ resource }).find('.needs-manual-confirmation-text');
+        expect(requiresManualConfirmationText).toHaveLength(0);
+      },
+    );
+  });
 });
