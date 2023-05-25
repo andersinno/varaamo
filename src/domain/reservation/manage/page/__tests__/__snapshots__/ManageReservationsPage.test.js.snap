@@ -36,6 +36,7 @@ exports[`ManageReservationsPage renders correctly 1`] = `
       onReservationDownload={[Function]}
       onSearchChange={[Function]}
       onShowOnlyFiltersChange={[Function]}
+      showDownload={false}
       showOnlyFilters={
         Array [
           "can_modify",
