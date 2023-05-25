@@ -12,6 +12,9 @@ import {
   getSuccessTypeDescriptor,
 } from '../utils/apiUtils';
 import { getMissingValues, isStaffEvent } from '../utils/reservationUtils';
+import { RESERVATION_STATE } from '../../src/constants/ReservationState';
+import { getApprovedState } from '../../src/domain/reservation/utils';
+import { createPaymentReturnUrl } from '../utils/resourceUtils';
 
 function commentReservation(reservation, resource, comments) {
   const missingValues = getMissingValues(reservation);
@@ -26,7 +29,13 @@ function commentReservation(reservation, resource, comments) {
 }
 
 function confirmPreliminaryReservation(reservation) {
-  return putReservation(Object.assign({}, reservation, { state: 'confirmed' }));
+  const newState = getApprovedState(decamelizeKeys(reservation));
+  const newValues = { state: newState };
+  // if payment is required we should include the payment return URL in the payload
+  if (newState === RESERVATION_STATE.WAITING_FOR_PAYMENT) {
+    newValues.payment_return_url = createPaymentReturnUrl();
+  }
+  return putReservation(Object.assign({}, reservation, newValues));
 }
 
 function deleteReservation(reservation) {
