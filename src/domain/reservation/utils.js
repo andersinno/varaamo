@@ -3,6 +3,7 @@ import find from 'lodash/find';
 import sortBy from 'lodash/sortBy';
 import clone from 'lodash/clone';
 import tail from 'lodash/tail';
+import isEmpty from 'lodash/isEmpty';
 import last from 'lodash/last';
 import merge from 'lodash/merge';
 import get from 'lodash/get';
@@ -149,4 +150,14 @@ export const getShowRefundPolicy = (isAdmin, reservation) => {
   const price = getReservationPrice(reservation.begin, reservation.end, reservation.price_info);
 
   return isAdmin && !isStaffEvent && price > 0;
+};
+
+
+export const getApprovedState = (reservation) => {
+  const isPaidReservationWithManualConfirmation = reservation.need_manual_confirmation
+    && !isEmpty(reservation.price_info);
+
+  return isPaidReservationWithManualConfirmation
+    ? RESERVATION_STATE.WAITING_FOR_PAYMENT
+    : RESERVATION_STATE.CONFIRMED;
 };

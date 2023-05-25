@@ -1,10 +1,10 @@
 import React from 'react';
-import { isEmpty } from 'lodash';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 import injectT from '../../../../../app/i18n/injectT';
 import { RESERVATION_STATE } from '../../../../constants/ReservationState';
+import { getApprovedState } from '../../utils';
 
 const UntranslatedManageReservationsDropdown = ({
   t, onInfoClick, reservation,
@@ -14,12 +14,8 @@ const UntranslatedManageReservationsDropdown = ({
   userCanCancel,
 }) => {
   const isRequestedReservation = reservation.state === RESERVATION_STATE.REQUESTED;
-  const isPaidReservationWithManualConfirmation = reservation.need_manual_confirmation
-    && !isEmpty(reservation.price_info);
+  const reservationApprovedState = getApprovedState(reservation);
 
-  const reservationConfirmationState = isPaidReservationWithManualConfirmation
-    ? RESERVATION_STATE.WAITING_FOR_PAYMENT
-    : RESERVATION_STATE.CONFIRMED;
   return (
     <div className="app-ManageReservationDropdown">
       {userCanModify && (
@@ -31,10 +27,16 @@ const UntranslatedManageReservationsDropdown = ({
             {t('ManageReservationsList.actionLabel.information')}
           </MenuItem>
 
+          {/*
+            TODO: This should be changed so that clicking 'Approve'/'Deny' would utilize
+            app.actions.reservationAction.confirmPreliminaryReservation and
+            app.actions.reservationAction.denyPreliminaryReservation, respectively,
+            instead of having duplicate code for handling approvals/denials in onEditReservation.
+          */}
           {isRequestedReservation && (
             <>
               <MenuItem
-                onClick={() => onEditReservation(reservation, reservationConfirmationState)}
+                onClick={() => onEditReservation(reservation, reservationApprovedState)}
               >
                 {t('ManageReservationsList.actionLabel.approve')}
               </MenuItem>

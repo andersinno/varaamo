@@ -12,7 +12,7 @@ import { getDateAndTime } from '../manage/list/ManageReservationsList';
 import { RESERVATION_STATE } from '../../../constants/ReservationState';
 import ReservationMetadata from '../information/ReservationMetadata';
 import ConnectedReservationCancelModal from './ReservationCancelModal';
-import { getShowRefundPolicy } from '../utils';
+import { getApprovedState, getShowRefundPolicy } from '../utils';
 import ReservationInformationModalContentRow from './ReservationInformationModalContentRow';
 
 const ReservationInformationModal = ({
@@ -53,6 +53,7 @@ const ReservationInformationModal = ({
   const payerLastName = get(reservation, 'billing_last_name', '');
   const payerEmail = get(reservation, 'billing_email_address', '');
   const isRequestedReservation = reservation.state === RESERVATION_STATE.REQUESTED;
+  const approvedState = getApprovedState(reservation);
   const showRefundPolicy = resource !== null && getShowRefundPolicy(isAdmin, reservation);
 
   const priceInfo = get(reservation, 'price_info', {});
@@ -163,7 +164,7 @@ const ReservationInformationModal = ({
 
             <Button
               bsStyle="success"
-              onClick={() => onEditReservation(normalizedReservation, RESERVATION_STATE.CONFIRMED)}
+              onClick={() => onEditReservation(normalizedReservation, approvedState)}
             >
               {t('ReservationInfoModal.approveButton')}
             </Button>
