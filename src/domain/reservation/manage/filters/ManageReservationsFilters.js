@@ -31,6 +31,7 @@ class ManageReservationsFilters extends React.Component {
     onShowOnlyFiltersChange: PropTypes.func.isRequired,
     onReservationDownload: PropTypes.func.isRequired,
     showOnlyFilters: PropTypes.array,
+    showDownload: PropTypes.bool,
     intl: intlShape,
   };
 
@@ -148,6 +149,7 @@ class ManageReservationsFilters extends React.Component {
       intl,
       onShowOnlyFiltersChange,
       showOnlyFilters,
+      showDownload,
     } = this.props;
 
     const state = get(filters, 'state', null);
@@ -241,6 +243,7 @@ class ManageReservationsFilters extends React.Component {
               )}
             </Col>
           </Row>
+          {showDownload && (
           <Row>
             <Col md={6}>
               <SelectField
@@ -262,6 +265,7 @@ class ManageReservationsFilters extends React.Component {
               </Button>
             </Col>
           </Row>
+          )}
         </Grid>
       </div>
     );

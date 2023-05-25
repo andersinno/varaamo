@@ -38,11 +38,11 @@ const INITIAL_SELECTED_RESERVATION_RESOURCE = {
 
 class ManageReservationsPage extends React.Component {
   static propTypes = {
-    isAdmin: PropTypes.bool,
-    t: PropTypes.func.isRequired,
-    history: PropTypes.object,
-    location: PropTypes.object,
     actions: PropTypes.object,
+    history: PropTypes.object,
+    isAdmin: PropTypes.bool,
+    location: PropTypes.object,
+    t: PropTypes.func.isRequired,
     userFavoriteResources: PropTypes.array,
   };
 
@@ -354,6 +354,8 @@ class ManageReservationsPage extends React.Component {
     const filters = searchUtils.getFiltersFromUrl(location, false);
     const title = t('ManageReservationsPage.title');
 
+    const showDownload = !!totalCount;
+
     return (
       <div className="app-ManageReservationsPage">
         <div className="app-ManageReservationsPage__filters">
@@ -369,6 +371,7 @@ class ManageReservationsPage extends React.Component {
             onReservationDownload={this.downloadReservationData}
             onSearchChange={this.onSearchFiltersChange}
             onShowOnlyFiltersChange={this.onShowOnlyFiltersChange}
+            showDownload={showDownload}
             showOnlyFilters={showOnlyFilters}
             units={units}
           />
