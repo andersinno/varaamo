@@ -319,6 +319,7 @@
   "ReservationInformationForm.cancelEdit": "Keskeytä muokkaus",
   "ReservationInformationForm.eventInformationTitle": "Tilaisuuden tiedot",
   "ReservationInformationForm.eventType": "Käyttötarkoitus",
+  "ReservationInformationForm.noneOfTheAboveOptionLabel": "Ei mikään edellisistä",
   "ReservationInformationForm.paymentTermsAndConditionsLabel": "Olen lukenut ja hyväksynyt",
   "ReservationInformationForm.paymentTermsAndConditionsLink": "maksuehdot",
   "ReservationInformationForm.refundCheckBox": "Olen lukenut rahojen palautus ohjeet.",

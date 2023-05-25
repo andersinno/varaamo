@@ -140,7 +140,8 @@ class UnconnectedReservationInformationForm extends Component {
     return t('ReservationForm.reservationFieldsAsteriskNormal');
   };
 
-  getReservationUserGroups = (resource) => {
+  getUserGroupOptions = () => {
+    const { resource } = this.props;
     const reservationUserGroups = resource.pricingUserGroups ? [...resource.pricingUserGroups] : [];
     const reservationUserGroupOptions = [...reservationUserGroups].map(userGroup => (
       { value: userGroup.id, label: userGroup.name }
@@ -148,7 +149,8 @@ class UnconnectedReservationInformationForm extends Component {
     return reservationUserGroupOptions;
   }
 
-  getReservationEventTypes = (resource) => {
+  getEventTypeOptions = () => {
+    const { resource, t } = this.props;
     const reservationEventTypes = resource.pricingEventTypes ? [...resource.pricingEventTypes] : [];
     if (isEmpty(reservationEventTypes)) {
       return [];
@@ -156,6 +158,11 @@ class UnconnectedReservationInformationForm extends Component {
     const eventTypeOptions = [...reservationEventTypes].map(eventType => (
       { value: eventType.id, label: eventType.name }
     ));
+
+    // Add "None of the above" as the last option. This option does not affect the price
+    // but the user is still required to select it if none of the other options apply.
+    eventTypeOptions.push({ value: null, label: t('ReservationInformationForm.noneOfTheAboveOptionLabel') });
+
     return eventTypeOptions;
   }
 
@@ -321,8 +328,8 @@ class UnconnectedReservationInformationForm extends Component {
       isStaff,
       valid,
     } = this.props;
-    const userGroupOptions = this.getReservationUserGroups(resource);
-    const eventTypeOptions = this.getReservationEventTypes(resource);
+    const userGroupOptions = this.getUserGroupOptions();
+    const eventTypeOptions = this.getEventTypeOptions();
 
     const showPaymentTimeLimitNote = isPaymentRequired && isPayableAmount && !resource.needManualConfirmation;
 

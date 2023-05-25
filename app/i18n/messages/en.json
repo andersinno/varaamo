@@ -319,6 +319,7 @@
   "ReservationInformationForm.cancelEdit": "Cancel edit",
   "ReservationInformationForm.eventInformationTitle": "Event information",
   "ReservationInformationForm.eventType": "Event type",
+  "ReservationInformationForm.noneOfTheAboveOptionLabel": "None of the above",
   "ReservationInformationForm.paymentTermsAndConditionsLabel": "I have read and accepted",
   "ReservationInformationForm.paymentTermsAndConditionsLink": "payment terms and conditions",
   "ReservationInformationForm.refundCheckBox": " I have read refund instructions.",
