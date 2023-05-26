@@ -285,6 +285,7 @@ describe('pages/reservation/reservation-information/ReservationInformationForm',
     describe('event type options', () => {
       test('includes none of the above option', () => {
         const resource = Resource.build({
+          includeOtherEventTypeOption: true,
           pricingEventTypes: [{
             id: 1,
             name: 'Event type 1',

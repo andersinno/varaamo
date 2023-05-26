@@ -161,7 +161,12 @@ class UnconnectedReservationInformationForm extends Component {
 
     // Add "None of the above" as the last option. This option does not affect the price
     // but the user is still required to select it if none of the other options apply.
-    eventTypeOptions.push({ value: null, label: t('ReservationInformationForm.noneOfTheAboveOptionLabel') });
+    if (resource.includeOtherEventTypeOption) {
+      eventTypeOptions.push({
+        value: null,
+        label: t('ReservationInformationForm.noneOfTheAboveOptionLabel'),
+      });
+    }
 
     return eventTypeOptions;
   }
