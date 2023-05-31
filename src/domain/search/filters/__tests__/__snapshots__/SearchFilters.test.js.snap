@@ -72,64 +72,6 @@ exports[`ResourceMap renders correctly 1`] = `
         >
           <Col
             bsClass="col"
-            componentClass="div"
-            md={12}
-          >
-            <InjectT(SelectFilter)
-              id="municipality"
-              isMulti={true}
-              label="SearchFilters.municipalityLabel"
-              onChange={[Function]}
-              options={
-                Array [
-                  Object {
-                    "label": "Kangasala",
-                    "value": "kangasala",
-                  },
-                  Object {
-                    "label": "Lempäälä",
-                    "value": "lempäälä",
-                  },
-                  Object {
-                    "label": "Nokia",
-                    "value": "nokia",
-                  },
-                  Object {
-                    "label": "Orivesi",
-                    "value": "orivesi",
-                  },
-                  Object {
-                    "label": "Pirkkala",
-                    "value": "pirkkala",
-                  },
-                  Object {
-                    "label": "Tampere",
-                    "value": "tampere",
-                  },
-                  Object {
-                    "label": "Vesilahti",
-                    "value": "vesilahti",
-                  },
-                  Object {
-                    "label": "Ylöjärvi",
-                    "value": "ylöjärvi",
-                  },
-                ]
-              }
-              value={
-                Array [
-                  "",
-                ]
-              }
-            />
-          </Col>
-        </Row>
-        <Row
-          bsClass="row"
-          componentClass="div"
-        >
-          <Col
-            bsClass="col"
             className="app-SearchFilters__control"
             componentClass="div"
             md={4}
