@@ -6,7 +6,6 @@ import snakeCase from 'lodash/snakeCase';
 import forEach from 'lodash/forEach';
 import moment from 'moment';
 
-import { getDefaultMunicipality } from '../../../app/utils/customizationUtils';
 import constants from '../../../app/constants/AppConstants';
 import * as urlUtils from '../../common/url/utils';
 import settings from '../../../config/settings';
@@ -14,7 +13,6 @@ import settings from '../../../config/settings';
 export const getFiltersFromUrl = (location, supportedFilters = constants.SUPPORTED_SEARCH_FILTERS) => {
   const query = new URLSearchParams(location.search);
   const defaultDate = moment().format(constants.DATE_FORMAT);
-  const defaultMunicipality = getDefaultMunicipality();
 
   const filters = {
     // Give default date to populate start/end time as default when fetching resources,
@@ -22,12 +20,6 @@ export const getFiltersFromUrl = (location, supportedFilters = constants.SUPPORT
     // empty.
     date: defaultDate,
   };
-
-  if (defaultMunicipality) {
-    // Determine current version of Varaamo (Helsinki, Espoo, Vantaa)
-    // and filter results to target that municipality by default.
-    filters.municipality = defaultMunicipality;
-  }
 
   query.forEach((value, key) => {
     if (!supportedFilters || supportedFilters[key] !== undefined) {
