@@ -87,6 +87,10 @@ export const getPrice = (minPriceString, maxPriceString, priceType, t, freeToUse
     return t('ResourceIcons.free');
   }
 
+  if (priceType === resourcePriceTypes.MIXED) {
+    return `${t('common.priceFrom')} ${Number(minPrice)} €`;
+  }
+
   const priceEnding = getPriceEnding(priceType, {
     hour: t('common.unit.time.hour'),
     day: t('common.unit.time.day'),

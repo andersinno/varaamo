@@ -8,6 +8,7 @@ export const resourcePriceTypes = Object.freeze({
   DAILY: 'daily',
   WEEKLY: 'weekly',
   FIXED: 'fixed',
+  MIXED: 'mixed',
 });
 
 export const productPriceType = Object.freeze({
