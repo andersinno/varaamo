@@ -196,6 +196,14 @@ describe('domain resource utility function', () => {
       }, fakeT);
       expect(price).toEqual('100 €');
     });
+
+    test('returns from min price if price type is mixed', () => {
+      const price = resourceUtils.getPriceFromSnakeCaseResource({
+        min_price: '100.00',
+        price_type: 'mixed',
+      }, fakeT);
+      expect(price).toEqual('common.priceFrom 100 €');
+    });
   });
 
   describe('isFree', () => {

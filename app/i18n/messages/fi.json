@@ -126,6 +126,7 @@
   "common.select": "Valitse",
   "common.pay": "Maksa",
   "common.paymentTimeLimitNote": "Huom! Varaus tulee maksaa 15 minuutin sisällä. Muuten varaus perutaan automaattisesti.",
+  "common.priceFrom": "Alk.",
   "common.userNameLabel": "Tilin nimi",
   "common.userEmailLabel": "Tilin sähköposti",
   "common.language.en": "English",
