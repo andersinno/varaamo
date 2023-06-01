@@ -174,7 +174,6 @@ class SearchFilters extends React.Component {
     } = this.state;
 
     const date = get(filters, 'date', moment().format(constants.DATE_FORMAT));
-    const municipality = get(filters, 'municipality', '');
     const availableBetween = get(filters, 'availableBetween', '');
 
     return (
@@ -218,23 +217,6 @@ class SearchFilters extends React.Component {
               header={t('SearchFilters.advancedSearch')}
             >
               <Row>
-                <Col md={12}>
-                  <SelectFilter
-                    id="municipality"
-                    isMulti
-                    label={t('SearchFilters.municipalityLabel')}
-                    onChange={(items) => {
-                      this.onFilterChange(
-                        'municipality',
-                        items ? items.map(item => item.value).join(',') : null,
-                      );
-                    }}
-                    options={searchUtils.getMunicipalityOptions()}
-                    value={municipality.split(',')}
-                  />
-                </Col>
-              </Row>
-              <Row>
                 <Col className="app-SearchFilters__control" md={4} sm={12}>
                   <SelectFilter
                     id="purpose"
@@ -253,7 +235,7 @@ class SearchFilters extends React.Component {
                     label={t('SearchFilters.unitLabel')}
                     name="app-SearchControls-unit-select"
                     onChange={item => this.onFilterChange('unit', item.value)}
-                    options={searchUtils.getUnitOptions(units, intl.locale, municipality)}
+                    options={searchUtils.getUnitOptions(units, intl.locale)}
                     value={filters.unit}
                   />
                 </Col>
