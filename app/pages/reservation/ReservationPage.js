@@ -31,14 +31,22 @@ import { hasProducts, createPaymentReturnUrl } from '../../utils/resourceUtils';
 import RecurringReservationControls from '../../shared/recurring-reservation-controls/RecurringReservationControls';
 import CompactReservationList from '../../shared/compact-reservation-list/CompactReservationList';
 import recurringReservationsConnector from '../../state/recurringReservations';
+import { RESERVATION_TYPE } from '../../../src/domain/reservation/constants';
 
 class UnconnectedReservationPage extends Component {
   constructor(props) {
     super(props);
+
     this.fetchResource = this.fetchResource.bind(this);
+    this.handleChangeReservationType = this.handleChangeReservationType.bind(this);
+
     const { reservationToEdit } = this.props;
+    const isReservation = !isEmpty(reservationToEdit);
+    const reservationType = isReservation ? reservationToEdit.type : null;
+
     this.state = {
-      view: !isEmpty(reservationToEdit) ? 'time' : 'information',
+      view: isReservation ? 'time' : 'information',
+      reservationType,
       reservationPriceInfo: {
         total_price: null,
         amount: null,
@@ -202,9 +210,13 @@ class UnconnectedReservationPage extends Component {
     // If resource is free to use. The resource may still be free if the selected
     // pricing is zero: see isPayableAmount()
     const { resource, isStaff } = this.props;
-    return !resource.freeToUse
-      && hasProducts(resource)
-      && !isStaff;
+    const { reservationType } = this.state;
+
+    if (resource.freeToUse || !hasProducts(resource)) {
+      return false;
+    }
+
+    return isStaff ? reservationType === RESERVATION_TYPE.NORMAL : true;
   }
 
   isPayableAmount() {
@@ -213,6 +225,10 @@ class UnconnectedReservationPage extends Component {
     const { reservationPriceInfo } = this.state;
     const totalPrice = reservationPriceInfo.total_price;
     return !isNaN(totalPrice) && parseFloat(totalPrice) > 0;
+  }
+
+  handleChangeReservationType(reservationType) {
+    this.setState({ reservationType });
   }
 
   renderRecurringReservations = () => {
@@ -337,6 +353,7 @@ class UnconnectedReservationPage extends Component {
                       isStaff={isStaff}
                       onBack={this.handleBack}
                       onCancel={this.handleCancel}
+                      onChangeReservationType={this.handleChangeReservationType}
                       onConfirm={this.handleReservation}
                       reservation={reservationToEdit}
                       reservationPriceInfo={reservationPriceInfo}

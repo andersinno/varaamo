@@ -11,7 +11,17 @@ import injectT from '../../../i18n/injectT';
 import FormTypes from '../../../constants/FormTypes';
 import { toCamelCase } from '../../../../src/common/data/utils';
 
-class InternalReservationFields extends Component {
+
+class UnconnectedInternalReservationFields extends Component {
+  constructor(props) {
+    super(props);
+    this.handleChangeReservationType = this.handleChangeReservationType.bind(this);
+  }
+
+  handleChangeReservationType(event) {
+    this.props.onChangeReservationType(event.target.value);
+  }
+
   render() {
     const {
       t,
@@ -30,6 +40,7 @@ class InternalReservationFields extends Component {
               id="type__internalUse"
               label="type__internalUse"
               name="type"
+              onChange={this.handleChangeReservationType}
               type="radio"
               value={RESERVATION_TYPE.INTERNAL_USE}
             />
@@ -50,6 +61,7 @@ class InternalReservationFields extends Component {
               id="type__blocked"
               label="type__blocked"
               name="type"
+              onChange={this.handleChangeReservationType}
               type="radio"
               value={RESERVATION_TYPE.BLOCKED}
             />
@@ -70,6 +82,7 @@ class InternalReservationFields extends Component {
               id="type__forCustomer"
               label="type__forCustomer"
               name="type"
+              onChange={this.handleChangeReservationType}
               type="radio"
               value={RESERVATION_TYPE.FOR_CUSTOMER}
             />
@@ -83,8 +96,6 @@ class InternalReservationFields extends Component {
           </Col>
         </Row>
 
-        {/* }
-
         <Row>
           <Col md={1}>
             <Field
@@ -92,6 +103,7 @@ class InternalReservationFields extends Component {
               id="type__normal"
               label="type__normal"
               name="type"
+              onChange={this.handleChangeReservationType}
               type="radio"
               value="normal"
             />
@@ -105,8 +117,6 @@ class InternalReservationFields extends Component {
           </Col>
         </Row>
 
-        { */}
-
         <Row>
           <Col md={12}>
             <div className="app-ReservationPage__formfield">
@@ -118,6 +128,7 @@ class InternalReservationFields extends Component {
                 label="comments"
                 maxLength={commentsMaxLengths}
                 name="comments"
+                onChange={this.handleChangeReservationType}
                 rows={5}
               />
               {
@@ -136,14 +147,19 @@ class InternalReservationFields extends Component {
   }
 }
 
-InternalReservationFields.propTypes = {
+UnconnectedInternalReservationFields.propTypes = {
   t: PropTypes.func.isRequired,
   commentsMaxLengths: PropTypes.number.isRequired,
+  onChangeReservationType: PropTypes.func.isRequired,
   valid: PropTypes.bool.isRequired,
 };
 
+UnconnectedInternalReservationFields = injectT(UnconnectedInternalReservationFields); // eslint-disable-line
+
+export { UnconnectedInternalReservationFields };
+
 // eslint-disable-next-line import/no-mutable-exports
-let ConnectedReservationFields = InternalReservationFields;
+let ConnectedReservationFields = UnconnectedInternalReservationFields;
 
 ConnectedReservationFields = injectT(reduxForm({
   form: FormTypes.RESERVATION,

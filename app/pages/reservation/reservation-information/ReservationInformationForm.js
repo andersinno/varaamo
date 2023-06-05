@@ -325,6 +325,7 @@ class UnconnectedReservationInformationForm extends Component {
       onBack,
       onCancel,
       onConfirm,
+      onChangeReservationType,
       resource,
       t,
       termsAndConditions,
@@ -369,6 +370,7 @@ class UnconnectedReservationInformationForm extends Component {
             isStaff && (
             <InternalReservationFields
               commentsMaxLengths={maxLengths.comments}
+              onChangeReservationType={onChangeReservationType}
               valid={valid}
             />
             )
@@ -643,6 +645,7 @@ UnconnectedReservationInformationForm.propTypes = {
   onBack: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
+  onChangeReservationType: PropTypes.func.isRequired,
   requiredFields: PropTypes.array.isRequired,
   resource: PropTypes.object.isRequired,
   t: PropTypes.func.isRequired,

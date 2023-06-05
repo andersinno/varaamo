@@ -223,6 +223,75 @@ describe('pages/reservation/ReservationPage', () => {
     });
   });
 
+  describe('isPaymentRequired', () => {
+    const resourceWithProducts = Resource.build({
+      products: [1, 2, 3],
+    });
+
+    test('payment not required if resource is free', () => {
+      const instance = getWrapper({
+        isStaff: false,
+        resource: {
+          ...resourceWithProducts,
+          freeToUse: true,
+        },
+      }).instance();
+      expect(instance.isPaymentRequired()).toBe(false);
+    });
+
+    test('payment not required if resource does not have product', () => {
+      const instance = getWrapper({
+        isStaff: false,
+        resource: Resource.build({
+          freeToUse: false,
+        }),
+      }).instance();
+      expect(instance.isPaymentRequired()).toBe(false);
+    });
+
+    test('payment required if not staff', () => {
+      const instance = getWrapper({
+        isStaff: false,
+        resource: {
+          ...resourceWithProducts,
+          freeToUse: false,
+        },
+      }).instance();
+      expect(instance.isPaymentRequired()).toBe(true);
+    });
+
+    test('payment not required if staff', () => {
+      const instance = getWrapper({
+        isStaff: true,
+        resource: {
+          ...resourceWithProducts,
+          freeToUse: false,
+        },
+      }).instance();
+      expect(instance.isPaymentRequired()).toBe(false);
+    });
+
+    test('payment required if staff and normal reservation type', () => {
+      const instance = getWrapper({
+        isStaff: true,
+        resource: {
+          ...resourceWithProducts,
+          freeToUse: false,
+        },
+      }).instance();
+      instance.state.reservationType = 'normal';
+      expect(instance.isPaymentRequired()).toBe(true);
+    });
+  });
+
+  describe('handleChangeReservationType', () => {
+    test('sets reservation type on state', () => {
+      const instance = getWrapper({}).instance();
+      instance.handleChangeReservationType('normal');
+      expect(instance.state.reservationType).toBe('normal');
+    });
+  });
+
   describe('componentDidMount', () => {
     describe('when reservations and selected empty', () => {
       let historyMock;
