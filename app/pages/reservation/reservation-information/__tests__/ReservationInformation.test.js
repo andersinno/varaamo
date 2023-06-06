@@ -20,6 +20,7 @@ describe('pages/reservation/reservation-information/ReservationInformation', () 
     onBack: simple.stub(),
     onCancel: simple.stub(),
     onConfirm: simple.stub(),
+    onChangeReservationType: simple.stub(),
     openResourceTermsModal: simple.stub(),
     reservation: Immutable(Reservation.build()),
     reservationPriceInfo: {},

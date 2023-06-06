@@ -25,6 +25,7 @@ class ReservationInformation extends Component {
     onBack: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onConfirm: PropTypes.func.isRequired,
+    onChangeReservationType: PropTypes.func.isRequired,
     reservation: PropTypes.object,
     reservationPriceInfo: PropTypes.object.isRequired,
     resource: PropTypes.object.isRequired,
@@ -152,6 +153,7 @@ class ReservationInformation extends Component {
       isPaymentRequired,
       onBack,
       onCancel,
+      onChangeReservationType,
       resource,
       reservationPriceInfo,
       selectedTime,
@@ -180,6 +182,7 @@ class ReservationInformation extends Component {
             isStaff={isStaff}
             onBack={onBack}
             onCancel={onCancel}
+            onChangeReservationType={onChangeReservationType}
             onConfirm={this.onConfirm}
             requiredFields={this.getRequiredFormFields(resource, termsAndConditions, specificTerms)}
             resource={resource}
