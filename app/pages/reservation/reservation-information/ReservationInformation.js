@@ -1,5 +1,6 @@
 import pick from 'lodash/pick';
 import uniq from 'lodash/uniq';
+import includes from 'lodash/includes';
 import camelCase from 'lodash/camelCase';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -50,7 +51,7 @@ class ReservationInformation extends Component {
       isStaff,
       resource,
     } = this.props;
-    const formFields = [...resource.supportedReservationExtraFields].map(value => camelCase(value));
+    let formFields = [...resource.supportedReservationExtraFields].map(value => camelCase(value));
     const eventTypes = resource.pricingEventTypes ? [...resource.pricingEventTypes] : [];
 
     if (isAdmin) {
@@ -78,12 +79,19 @@ class ReservationInformation extends Component {
     // as they may be required for non-payment related reasons.
 
     if (isPaymentRequired) {
+      const paymentFields = [
+        'paymentTermsAndConditions',
+        'billingFirstName',
+        'billingLastName',
+        'billingPhoneNumber',
+        'billingEmailAddress',
+      ];
+
       if (isPayableAmount) {
-        formFields.push('paymentTermsAndConditions');
-        formFields.push('billingFirstName');
-        formFields.push('billingLastName');
-        formFields.push('billingPhoneNumber');
-        formFields.push('billingEmailAddress');
+        formFields = [...formFields, ...paymentFields];
+      } else {
+        // remove any billing fields in the metadata if payment options have zero amount
+        formFields = formFields.filter(field => !includes(paymentFields, field));
       }
       formFields.push('userGroup');
       if (eventTypes.length > 0) {

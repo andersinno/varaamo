@@ -86,6 +86,81 @@ describe('pages/reservation/reservation-information/ReservationInformation', () 
       expect(actual).toEqual(supportedFields);
     });
 
+    test('returns billing fields if present in metadata', () => {
+      const instance = getWrapper({
+        resource: {
+          ...resource,
+          supportedReservationExtraFields: ['billingFirstName'],
+        },
+        isPaymentRequired: false,
+        isPayableAmount: false,
+      }).instance();
+
+      const actual = instance.getFormFields();
+      expect(actual.includes('billingFirstName')).toBe(true);
+    });
+
+    test('returns billing fields if present in metadata and payable amount', () => {
+      const instance = getWrapper({
+        resource: {
+          ...resource,
+          supportedReservationExtraFields: ['billingFirstName'],
+        },
+        isPaymentRequired: true,
+        isPayableAmount: true,
+      }).instance();
+
+      const actual = instance.getFormFields();
+      expect(actual.includes('billingFirstName')).toBe(true);
+    });
+
+    test('returns no billing fields if present in metadata and no payable amount', () => {
+      const instance = getWrapper({
+        resource: {
+          ...resource,
+          supportedReservationExtraFields: ['billingFirstName'],
+        },
+        isPaymentRequired: true,
+        isPayableAmount: false,
+      }).instance();
+
+      const actual = instance.getFormFields();
+      expect(actual.includes('billingFirstName')).toBe(false);
+    });
+
+    test('returns billing fields if payment required and amount', () => {
+      const instance = getWrapper({
+        resource,
+        isPaymentRequired: true,
+        isPayableAmount: true,
+      }).instance();
+
+      const actual = instance.getFormFields();
+      expect(actual.includes('billingFirstName')).toBe(true);
+    });
+
+    test('returns no billing fields if payment not required', () => {
+      const instance = getWrapper({
+        resource,
+        isPaymentRequired: false,
+        isPayableAmount: true,
+      }).instance();
+
+      const actual = instance.getFormFields();
+      expect(actual.includes('billingFirstName')).toBe(false);
+    });
+
+    test('returns no billing fields if no amount payable', () => {
+      const instance = getWrapper({
+        resource,
+        isPaymentRequired: true,
+        isPayableAmount: false,
+      }).instance();
+
+      const actual = instance.getFormFields();
+      expect(actual.includes('billingFirstName')).toBe(false);
+    });
+
     test(
       'returns supportedReservationExtraFields and admin fields when is admin',
       () => {
