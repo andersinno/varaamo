@@ -4,7 +4,6 @@ import Form from 'react-bootstrap/lib/Form';
 import { Field } from 'redux-form';
 import simple from 'simple-mock';
 
-import constants from '../../../../constants/AppConstants';
 import TermsField from '../../../../shared/form-fields/TermsField';
 import { shallowWithIntl } from '../../../../utils/testUtils';
 import Resource from '../../../../utils/fixtures/Resource';
@@ -18,38 +17,6 @@ describe('pages/reservation/reservation-information/ReservationInformationForm',
     const t = id => id;
 
     describe('if field value is missing', () => {
-      describe('if user is reserving an staff event', () => {
-        const values = { staffEvent: true };
-
-        describe('if field belongs to REQUIRED_STAFF_EVENT_FIELDS', () => {
-          const fieldName = constants.REQUIRED_STAFF_EVENT_FIELDS[0];
-
-          test('returns an error', () => {
-            const props = {
-              fields: [fieldName],
-              requiredFields: [],
-              t,
-            };
-            const errors = validate(values, props);
-            expect(errors[fieldName]).toBeDefined();
-          });
-        });
-
-        describe('if field does not belong to REQUIRED_STAFF_EVENT_FIELDS', () => {
-          const fieldName = 'someField';
-
-          test('does not return an error', () => {
-            const props = {
-              fields: [fieldName],
-              requiredFields: [],
-              t,
-            };
-            const errors = validate(values, props);
-            expect(errors[fieldName]).toBeFalsy();
-          });
-        });
-      });
-
       describe('if user is reserving a regular event', () => {
         const values = {};
 
@@ -166,6 +133,24 @@ describe('pages/reservation/reservation-information/ReservationInformationForm',
       });
 
       describe('required fields', () => {
+        test('displays notice on required fields if required fields present', () => {
+          const props = {
+            fields: [fieldName],
+            requiredFields: [fieldName],
+          };
+          const notice = getWrapper(props).find('.app-ReservationPage__asteriskExplanation');
+          expect(notice.length).toBe(1);
+        });
+
+        test('does not display notice on required fields if required fields not present', () => {
+          const props = {
+            fields: [fieldName],
+            requiredFields: [],
+          };
+          const notice = getWrapper(props).find('.app-ReservationPage__asteriskExplanation');
+          expect(notice.length).toBe(0);
+        });
+
         test('displays an asterisk beside a required field label', () => {
           const props = {
             fields: [fieldName],
@@ -262,6 +247,84 @@ describe('pages/reservation/reservation-information/ReservationInformationForm',
           const text = wrapper.find('.payment-time-limit-note');
 
           expect(text).toHaveLength(1);
+        });
+      });
+
+      describe('rendering user group and event type fields', () => {
+        const pricingUserGroups = [
+          {
+            value: 1,
+            label: 'Students',
+          },
+        ];
+        const pricingEventTypes = [
+          {
+            value: 1,
+            label: 'Parties',
+          },
+        ];
+
+        test('renders both user group and event type', () => {
+          const props = {
+            resource: Resource.build({
+              pricingUserGroups,
+              pricingEventTypes,
+
+            }),
+            fields: ['userGroup', 'eventType'],
+          };
+
+          const wrapper = getWrapper(props);
+          const header = wrapper.find('.app-ReservationPage__title__userAndPurpose');
+          expect(header).toHaveLength(1);
+          const inputs = wrapper.find(Field);
+          expect(inputs).toHaveLength(2);
+        });
+
+        test('does not render fields if no pricing info', () => {
+          const props = {
+            resource: Resource.build(),
+            fields: ['userGroup', 'eventType'],
+          };
+
+          const wrapper = getWrapper(props);
+          const header = wrapper.find('.app-ReservationPage__title__userAndPurpose');
+          expect(header).toHaveLength(0);
+          const inputs = wrapper.find(Field);
+          expect(inputs).toHaveLength(0);
+        });
+
+        test('does not render fields if not in fields array', () => {
+          const props = {
+            resource: Resource.build({
+              pricingUserGroups,
+              pricingEventTypes,
+
+            }),
+            fields: [],
+          };
+
+          const wrapper = getWrapper(props);
+          const header = wrapper.find('.app-ReservationPage__title__userAndPurpose');
+          expect(header).toHaveLength(0);
+          const inputs = wrapper.find(Field);
+          expect(inputs).toHaveLength(0);
+        });
+
+        test('just renders user group', () => {
+          const props = {
+            resource: Resource.build({
+              pricingUserGroups,
+              pricingEventTypes,
+
+            }),
+            fields: ['userGroup'],
+          };
+          const wrapper = getWrapper(props);
+          const header = wrapper.find('.app-ReservationPage__title__userAndPurpose');
+          expect(header).toHaveLength(1);
+          const inputs = wrapper.find(Field);
+          expect(inputs).toHaveLength(1);
         });
       });
 
