@@ -19,6 +19,7 @@ class ReservationInformation extends Component {
     isAdmin: PropTypes.bool.isRequired,
     isEditing: PropTypes.bool.isRequired,
     isMakingReservations: PropTypes.bool.isRequired,
+    isOwnUse: PropTypes.bool.isRequired,
     isPaymentRequired: PropTypes.bool.isRequired,
     isPayableAmount: PropTypes.bool.isRequired,
     isStaff: PropTypes.bool.isRequired,
@@ -107,37 +108,53 @@ class ReservationInformation extends Component {
   }
 
   getRequiredFormFields(resource, termsAndConditions, specificTerms) {
-    const { isAdmin, isStaff } = this.props;
+    const { isAdmin, isStaff, isOwnUse } = this.props;
 
+    const paymentFields = [
+      'paymentTermsAndConditions',
+      'userGroup',
+      'eventType',
+    ];
+
+    const billingFields = [
+      'billingFirstName',
+      'billingLastName',
+      'billingEmailAddress',
+    ];
+
+    let requiredFormFields = [];
+
+    // staff members: only require staff form fields + payment/billing fields if "normal"
+    // reservation type
     if (isStaff) {
-      return constants.REQUIRED_STAFF_EVENT_FIELDS;
+      requiredFormFields = constants.REQUIRED_STAFF_EVENT_FIELDS;
+      if (isOwnUse) {
+        requiredFormFields = [...requiredFormFields, ...paymentFields, ...billingFields];
+      }
+      return requiredFormFields;
     }
 
-    const requiredFormFields = [...resource.requiredReservationExtraFields.map(
+    requiredFormFields = [...resource.requiredReservationExtraFields.map(
       field => camelCase(field),
     )];
 
-    if (termsAndConditions) {
-      if (!isAdmin) requiredFormFields.push('termsAndConditions');
+    if (!isAdmin) {
+      if (termsAndConditions) {
+        requiredFormFields = [...requiredFormFields, 'termsAndConditions'];
+      }
+      if (specificTerms) {
+        requiredFormFields = [...requiredFormFields, 'specificTerms'];
+      }
     }
-
-    if (specificTerms && !isAdmin) {
-      requiredFormFields.push('specificTerms');
-    }
-
     // NOTE: these fields are still assumed to be required even if
     // the resource is free to use, if the fields are in the metadata.
     // For example, we may wish to collect billing info from users for other
     // reasons than payment.
 
-    requiredFormFields.push('paymentTermsAndConditions');
-    requiredFormFields.push('userGroup');
-    requiredFormFields.push('eventType');
+    requiredFormFields = [...requiredFormFields, ...paymentFields];
 
-    if (!isAdmin) {
-      requiredFormFields.push('billingFirstName');
-      requiredFormFields.push('billingLastName');
-      requiredFormFields.push('billingEmailAddress');
+    if (!isAdmin || isOwnUse) {
+      requiredFormFields = [...requiredFormFields, ...billingFields];
     }
 
     return requiredFormFields;

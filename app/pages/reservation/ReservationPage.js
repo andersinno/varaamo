@@ -182,6 +182,10 @@ class UnconnectedReservationPage extends Component {
     }
   };
 
+  handleChangeReservationType(reservationType) {
+    this.setState({ reservationType });
+  }
+
   fetchResource() {
     const {
       actions, date, resource, location,
@@ -206,17 +210,25 @@ class UnconnectedReservationPage extends Component {
     }
   }
 
+  isOwnUse() {
+    // if reservation is intended for own use (non-staff user or "normal" reservation type)
+
+    const { isStaff } = this.props;
+    const { reservationType } = this.state;
+
+    return isStaff ? reservationType === RESERVATION_TYPE.NORMAL : true;
+  }
+
   isPaymentRequired() {
     // If resource is free to use. The resource may still be free if the selected
     // pricing is zero: see isPayableAmount()
-    const { resource, isStaff } = this.props;
-    const { reservationType } = this.state;
+    const { resource } = this.props;
 
     if (resource.freeToUse || !hasProducts(resource)) {
       return false;
     }
 
-    return isStaff ? reservationType === RESERVATION_TYPE.NORMAL : true;
+    return this.isOwnUse();
   }
 
   isPayableAmount() {
@@ -225,10 +237,6 @@ class UnconnectedReservationPage extends Component {
     const { reservationPriceInfo } = this.state;
     const totalPrice = reservationPriceInfo.total_price;
     return !isNaN(totalPrice) && parseFloat(totalPrice) > 0;
-  }
-
-  handleChangeReservationType(reservationType) {
-    this.setState({ reservationType });
   }
 
   renderRecurringReservations = () => {
@@ -348,6 +356,7 @@ class UnconnectedReservationPage extends Component {
                       isAdmin={isAdmin}
                       isEditing={isEditing}
                       isMakingReservations={isMakingReservations}
+                      isOwnUse={this.isOwnUse()}
                       isPayableAmount={isPayableAmount}
                       isPaymentRequired={isPaymentRequired}
                       isStaff={isStaff}

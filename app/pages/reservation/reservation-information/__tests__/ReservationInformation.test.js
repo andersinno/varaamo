@@ -8,12 +8,14 @@ import Unit from '../../../../utils/fixtures/Unit';
 import { shallowWithIntl } from '../../../../utils/testUtils';
 import ReservationInformation from '../ReservationInformation';
 import ReservationInformationForm from '../ReservationInformationForm';
+import constants from '../../../../constants/AppConstants';
 
 describe('pages/reservation/reservation-information/ReservationInformation', () => {
   const defaultProps = {
     isAdmin: false,
     isEditing: false,
     isMakingReservations: false,
+    isOwnUse: false,
     isStaff: false,
     isPayableAmount: false,
     isPaymentRequired: false,
@@ -214,6 +216,42 @@ describe('pages/reservation/reservation-information/ReservationInformation', () 
       expect(actual).toEqual(['someField1', 'someField2'].concat(paymentFields, billingFields));
     });
 
+    test('returns correct required form fields if staff', () => {
+      const resource = Resource.build({
+        requiredReservationExtraFields: ['some_field_1', 'some_field_2'],
+      });
+      const actual = getWrapper({ isStaff: true }).instance().getRequiredFormFields(resource);
+
+      expect(actual).toEqual(constants.REQUIRED_STAFF_EVENT_FIELDS);
+    });
+
+    test('returns correct required form fields if staff and own use', () => {
+      const resource = Resource.build({
+        requiredReservationExtraFields: ['some_field_1', 'some_field_2'],
+      });
+      const actual = getWrapper({ isStaff: true, isOwnUse: true }).instance().getRequiredFormFields(resource);
+
+      expect(actual).toEqual(constants.REQUIRED_STAFF_EVENT_FIELDS.concat(paymentFields, billingFields));
+    });
+
+    test('returns payment fields not required if admin', () => {
+      const resource = Resource.build({
+        requiredReservationExtraFields: ['some_field_1', 'some_field_2'],
+      });
+      const actual = getWrapper({ isAdmin: true }).instance().getRequiredFormFields(resource);
+
+      expect(actual).toEqual(['someField1', 'someField2'].concat(paymentFields));
+    });
+
+    test('returns payment fields required if admin and own use', () => {
+      const resource = Resource.build({
+        requiredReservationExtraFields: ['some_field_1', 'some_field_2'],
+      });
+      const actual = getWrapper({ isAdmin: true, isOwnUse: true }).instance().getRequiredFormFields(resource);
+
+      expect(actual).toEqual(['someField1', 'someField2'].concat(paymentFields, billingFields));
+    });
+
     test('returns required form fields and termsAndConditions', () => {
       const resource = Resource.build({
         requiredReservationExtraFields: ['some_field_1', 'some_field_2'],
@@ -222,6 +260,37 @@ describe('pages/reservation/reservation-information/ReservationInformation', () 
       const actual = instance.getRequiredFormFields(resource, 'terms and conditions');
 
       expect(actual).toEqual(['someField1', 'someField2', 'termsAndConditions'].concat(paymentFields, billingFields));
+    });
+
+    test('returns required form fields and termsAndConditions and is admin', () => {
+      const resource = Resource.build({
+        requiredReservationExtraFields: ['some_field_1', 'some_field_2'],
+      });
+      const instance = getWrapper({ isAdmin: true }).instance();
+      const actual = instance.getRequiredFormFields(resource, 'terms and conditions');
+
+      expect(actual).toEqual(['someField1', 'someField2'].concat(paymentFields));
+    });
+
+
+    test('returns required form fields and specific terms', () => {
+      const resource = Resource.build({
+        requiredReservationExtraFields: ['some_field_1', 'some_field_2'],
+      });
+      const instance = getWrapper().instance();
+      const actual = instance.getRequiredFormFields(resource, null, 'specific terms');
+
+      expect(actual).toEqual(['someField1', 'someField2', 'specificTerms'].concat(paymentFields, billingFields));
+    });
+
+    test('returns required form fields and specific terms and is admin', () => {
+      const resource = Resource.build({
+        requiredReservationExtraFields: ['some_field_1', 'some_field_2'],
+      });
+      const instance = getWrapper({ isAdmin: true }).instance();
+      const actual = instance.getRequiredFormFields(resource, null, 'specific terms');
+
+      expect(actual).toEqual(['someField1', 'someField2'].concat(paymentFields));
     });
   });
 });

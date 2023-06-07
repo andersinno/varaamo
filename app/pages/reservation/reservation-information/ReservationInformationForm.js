@@ -1,4 +1,6 @@
+import { isEmpty } from 'lodash/lang';
 import includes from 'lodash/includes';
+import intersection from 'lodash/intersection';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/lib/Button';
@@ -6,10 +8,8 @@ import Form from 'react-bootstrap/lib/Form';
 import { Field, SubmissionError, reduxForm } from 'redux-form';
 import isEmail from 'validator/lib/isEmail';
 import { connect } from 'react-redux';
-import { isEmpty } from 'lodash/lang';
 
 import TermsField from '../../../shared/form-fields/TermsField';
-import constants from '../../../constants/AppConstants';
 import FormTypes from '../../../constants/FormTypes';
 import ReservationMetadataField from './ReservationMetadataField';
 import DropdownField from './DropdownField';
@@ -90,9 +90,6 @@ function getTermsAndConditionsError(field) {
 
 export function validate(values, { fields, requiredFields, t }) {
   const errors = {};
-  const currentRequiredFields = values.staffEvent
-    ? constants.REQUIRED_STAFF_EVENT_FIELDS
-    : requiredFields;
   fields.forEach((field) => {
     const validator = validators[field];
     if (validator) {
@@ -106,7 +103,7 @@ export function validate(values, { fields, requiredFields, t }) {
         errors[field] = t('ReservationForm.maxLengthError', { maxLength: maxLengths[field] });
       }
     }
-    if (includes(currentRequiredFields, field)) {
+    if (includes(requiredFields, field)) {
       if (!values[field]) {
         errors[field] = (
           isTermsAndConditionsField(field)
@@ -296,6 +293,7 @@ class UnconnectedReservationInformationForm extends Component {
       t,
     } = this.props;
 
+
     let buttonText;
 
     if (isPaymentRequired && isPayableAmount && !resource.needManualConfirmation) {
@@ -326,6 +324,7 @@ class UnconnectedReservationInformationForm extends Component {
       onCancel,
       onConfirm,
       onChangeReservationType,
+      requiredFields,
       resource,
       t,
       termsAndConditions,
@@ -334,8 +333,16 @@ class UnconnectedReservationInformationForm extends Component {
       isStaff,
       valid,
     } = this.props;
+
+    const hasRequiredFields = !isEmpty(intersection(fields, requiredFields));
+
     const userGroupOptions = this.getUserGroupOptions();
     const eventTypeOptions = this.getEventTypeOptions();
+
+    const hasUserGroupField = includes(fields, 'userGroup') && !isEmpty(userGroupOptions);
+    const hasEventTypeField = includes(fields, 'eventType') && !isEmpty(eventTypeOptions);
+
+    const hasPaymentOptionsFields = hasUserGroupField || hasEventTypeField;
 
     const showPaymentTimeLimitNote = isPaymentRequired && isPayableAmount && !resource.needManualConfirmation;
 
@@ -375,14 +382,17 @@ class UnconnectedReservationInformationForm extends Component {
             />
             )
           }
-          <p>
+          {hasRequiredFields && (
+          <p className="app-ReservationPage__asteriskExplanation">
             {this.getAsteriskExplanation()}
           </p>
-
-          {!resource.freeToUse && hasProducts(resource) && (
+          )}
+          {hasPaymentOptionsFields && (
             <div>
-              <h2 className="app-ReservationPage__title">{t('ReservationInformationForm.userAndPurpose')}</h2>
-              {includes(fields, 'userGroup') && (
+              <h2 className="app-ReservationPage__title app-ReservationPage__title__userAndPurpose">
+                {t('ReservationInformationForm.userAndPurpose')}
+              </h2>
+              {hasUserGroupField && (
                 <div>
                   {this.renderDropDown(
                     'userGroup',
@@ -392,7 +402,7 @@ class UnconnectedReservationInformationForm extends Component {
                   )}
                 </div>
               )}
-              {includes(fields, 'eventType') && (
+              {hasEventTypeField && (
                 <div>
                   {this.renderDropDown(
                     'eventType',

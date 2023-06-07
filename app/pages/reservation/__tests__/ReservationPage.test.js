@@ -223,6 +223,30 @@ describe('pages/reservation/ReservationPage', () => {
     });
   });
 
+  describe('isOwnUse', () => {
+    test('isOwnUse if not staff member', () => {
+      const instance = getWrapper({
+        isStaff: false,
+      }).instance();
+      expect(instance.isOwnUse()).toBe(true);
+    });
+
+    test('isOwnUse if staff member', () => {
+      const instance = getWrapper({
+        isStaff: true,
+      }).instance();
+      expect(instance.isOwnUse()).toBe(false);
+    });
+
+    test('isOwnUse if staff member and reservation type normal', () => {
+      const instance = getWrapper({
+        isStaff: true,
+      }).instance();
+      instance.state.reservationType = 'normal';
+      expect(instance.isOwnUse()).toBe(true);
+    });
+  });
+
   describe('isPaymentRequired', () => {
     const resourceWithProducts = Resource.build({
       products: [1, 2, 3],
