@@ -88,7 +88,7 @@ export default {
       labelBsStyle: 'primary',
       labelTextId: 'payment.waiting',
     },
-    rejected: {
+    denied: {
       labelBsStyle: 'danger',
       labelTextId: 'payment.failed',
     },
