@@ -128,7 +128,6 @@ class UnconnectedInternalReservationFields extends Component {
                 label="comments"
                 maxLength={commentsMaxLengths}
                 name="comments"
-                onChange={this.handleChangeReservationType}
                 rows={5}
               />
               {
