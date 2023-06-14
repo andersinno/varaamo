@@ -255,7 +255,7 @@ describe('shared/resource-card/ResourceCard', () => {
         const hourlyPriceSpan = getWrapper({ resource }).find('.app-ResourceCard__hourly-price');
 
         expect(hourlyPriceSpan.is('span')).toBe(true);
-        expect(hourlyPriceSpan.text()).toContain('ResourceIcons.free');
+        expect(hourlyPriceSpan.text()).toContain('ResourceIcons.payable');
       },
     );
   });

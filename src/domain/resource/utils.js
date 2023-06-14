@@ -76,6 +76,10 @@ function getPriceEnding(resourcePriceType, labels) {
 }
 
 export const getPrice = (minPriceString, maxPriceString, priceType, t, freeToUse) => {
+  if (freeToUse) {
+    return t('ResourceIcons.free');
+  }
+
   const minPrice = !isNaN(minPriceString)
     ? Number(minPriceString)
     : minPriceString;
@@ -83,11 +87,11 @@ export const getPrice = (minPriceString, maxPriceString, priceType, t, freeToUse
     ? Number(maxPriceString)
     : maxPriceString;
 
-  if (freeToUse || !(minPrice || maxPrice)) {
-    return t('ResourceIcons.free');
+  if (!(minPrice || maxPrice)) {
+    return t('ResourceIcons.payable');
   }
 
-  if (priceType === resourcePriceTypes.MIXED) {
+  if (!isNaN(minPrice) && priceType === resourcePriceTypes.MIXED) {
     return `${t('common.priceFrom')} ${Number(minPrice)} €`;
   }
 
@@ -102,13 +106,9 @@ export const getPrice = (minPriceString, maxPriceString, priceType, t, freeToUse
   }
 
   const priceString = maxPrice || minPrice;
-  const price = priceString !== 0 ? Number(priceString) : 0;
+  const price = isNaN(priceString) ? 0 : Number(priceString);
 
-  if (price === 0) {
-    return t('ResourceIcons.free');
-  }
-
-  return price ? `${price} ${priceEnding}` : null;
+  return price ? `${price} ${priceEnding}` : t('ResourceIcons.payable');
 };
 
 /**
