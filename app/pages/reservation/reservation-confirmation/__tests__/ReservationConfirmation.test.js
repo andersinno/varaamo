@@ -37,10 +37,27 @@ describe('pages/reservation/reservation-confirmation/ReservationConfirmation', (
     expect(header.text()).toBe('ReservationConfirmation.reservationCreatedTitle');
   });
 
-  test('renders correct header when prop isEdited is false', () => {
+  test('renders correct header when prop isEdited is true', () => {
     const header = getWrapper({ isEdited: true }).find('.app-ReservationPage__header');
     expect(header).toHaveLength(1);
     expect(header.text()).toBe('ReservationConfirmation.reservationEditedTitle');
+  });
+
+  test('renders correct header when prop isEdited is false and needManualConfirmation and state requested', () => {
+    const resource = {
+      ...defaultProps.resource,
+      needManualConfirmation: true,
+    };
+
+    const reservation = {
+      ...defaultProps.reservation,
+      needManualConfirmation: true,
+      state: 'requested',
+    };
+
+    const header = getWrapper({ isEdited: false, resource, reservation }).find('.app-ReservationPage__header');
+    expect(header).toHaveLength(1);
+    expect(header.text()).toBe('ReservationConfirmation.reservationManualConfirmationCreatedTitle');
   });
 
   test('renders ReservationDate with correct props', () => {

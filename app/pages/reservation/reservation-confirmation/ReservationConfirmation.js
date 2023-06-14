@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import queryString from 'query-string';
 
 import constants from '../../../constants/AppConstants';
+import { RESERVATION_STATE } from '../../../../src/constants/ReservationState';
 import injectT from '../../../i18n/injectT';
 import ReservationDate from '../../../shared/reservation-date/ReservationDate';
 import { getReservationPricePerPeriod } from '../../../utils/reservationUtils';
@@ -52,10 +53,12 @@ class ReservationConfirmation extends Component {
     } = this.props;
     const reservationPrice = reservation.priceInfo && reservation.priceInfo.totalPrice;
     const reservationTaxPct = reservation.priceInfo && reservation.priceInfo.taxPercentage;
-    const { needManualConfirmation } = reservation;
+    const { needManualConfirmation, state } = reservation;
 
     const href = `${constants.FEEDBACK_URL}`;
+
     const isBillable = reservationPrice > 0;
+
     let email = '';
     if (isBillable && reservation.billingEmailAddress) {
       email = reservation.billingEmailAddress;
@@ -67,26 +70,17 @@ class ReservationConfirmation extends Component {
       email = user.email;
     }
 
-    const getReservationTitle = () => {
-      let action = '';
-
-      if (isEdited) {
-        action = 'Edited';
-      } else if (needManualConfirmation) {
-        action = 'ManualConfirmationCreated';
-      } else {
-        action = 'Created';
-      }
-
-      return `ReservationConfirmation.reservation${action}Title`;
-    };
+    const isRequested = !isEdited && needManualConfirmation && state === RESERVATION_STATE.REQUESTED;
+    const isCreated = !isEdited && !isRequested;
 
     return (
       <Row className="app-ReservationConfirmation">
         <Col md={6} xs={12}>
           <div className="app-ReservationDetails">
             <h2 className="app-ReservationPage__title app-ReservationPage__title--big app-ReservationPage__header">
-              {t(getReservationTitle())}
+              {isEdited && t('ReservationConfirmation.reservationEditedTitle')}
+              {isRequested && t('ReservationConfirmation.reservationManualConfirmationCreatedTitle')}
+              {isCreated && t('ReservationConfirmation.reservationCreatedTitle')}
             </h2>
             <div className="app-ReservationConfirmation__highlight">
               <ReservationDate
@@ -104,7 +98,7 @@ class ReservationConfirmation extends Component {
               </p>
             </div>
 
-            {!isEdited && !needManualConfirmation && (
+            {isCreated && (
             <p>
               <FormattedHTMLMessage
                 id="ReservationConfirmation.confirmationText"
@@ -112,7 +106,7 @@ class ReservationConfirmation extends Component {
               />
             </p>
             )}
-            {!isEdited && needManualConfirmation && (
+            {isRequested && (
             <p>
               <FormattedHTMLMessage
                 id="ReservationConfirmation.confirmationForManualReservationText"
