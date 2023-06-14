@@ -40,6 +40,46 @@ const OPENING_HOURS = [
 ];
 
 describe('domain resource utility function', () => {
+  describe('getPrice', () => {
+    const t = translationString => translationString;
+
+    test('should be free if freeToUse and min+max prices null', () => {
+      expect(resourceUtils.getPrice(null, null, 'mixed', t, true)).toBe('ResourceIcons.free');
+    });
+
+    test('should be free if freeToUse and min+max prices not null', () => {
+      expect(resourceUtils.getPrice(10.00, 30.00, 'mixed', t, true)).toBe('ResourceIcons.free');
+    });
+
+    test('should be payble if not freeToUse and min+max prices null', () => {
+      expect(resourceUtils.getPrice(null, null, 'mixed', t, false)).toBe('ResourceIcons.payable');
+    });
+
+    test('should just show min price if mixed', () => {
+      expect(resourceUtils.getPrice(10.00, 30.00, 'mixed', t, false)).toBe('common.priceFrom 10 €');
+    });
+
+    test('should show min price as 0 if null if mixed', () => {
+      expect(resourceUtils.getPrice(null, 30.00, 'mixed', t, false)).toBe('common.priceFrom 0 €');
+    });
+
+    test('should show min and max price if daily', () => {
+      expect(resourceUtils.getPrice(10.00, 30.00, 'daily', t, false)).toEqual('10 - 30 €/common.unit.time.day');
+    });
+
+    test('should show one price if daily and min/max price identical', () => {
+      expect(resourceUtils.getPrice(10.00, 10.00, 'daily', t, false)).toEqual('10 €/common.unit.time.day');
+    });
+
+    test('should show max price if max price only', () => {
+      expect(resourceUtils.getPrice(null, 10.00, 'daily', t, false)).toEqual('0 - 10 €/common.unit.time.day');
+    });
+
+    test('should show payable if daily and min/max price not valid number', () => {
+      expect(resourceUtils.getPrice('foo', 'foo', 'daily', t, false)).toEqual('ResourceIcons.payable');
+    });
+  });
+
   describe('getResourcePageLink', () => {
     const resource = {
       id: 'foo',
@@ -128,12 +168,12 @@ describe('domain resource utility function', () => {
     const fakeT = foo => foo;
     test('return free text if there is no price', () => {
       const price = resourceUtils.getPriceFromSnakeCaseResource({ free_to_use: true }, fakeT);
-      expect(price).toContain('free');
+      expect(price).toContain('ResourceIcons.free');
     });
 
     test('return payable text if resource is not free and prices are not set', () => {
       const price = resourceUtils.getPriceFromSnakeCaseResource({ free_to_use: false }, fakeT);
-      expect(price).toBe('ResourceIcons.free');
+      expect(price).toBe('ResourceIcons.payable');
     });
 
     test('return free text if price is 0', () => {
@@ -143,7 +183,7 @@ describe('domain resource utility function', () => {
         free_to_use: true,
       }, fakeT);
 
-      expect(price).toContain('free');
+      expect(price).toContain('ResourceIcons.free');
     });
 
     test('return price even if there is 1 price', () => {
@@ -165,12 +205,12 @@ describe('domain resource utility function', () => {
       expect(price).toEqual('123 - 234 €/common.unit.time.hour');
     });
 
-    test('return null if price exist but not number', () => {
+    test('return payable if price exist but not number', () => {
       const price = resourceUtils.getPriceFromSnakeCaseResource({
         min_price: 'foo',
         price_type: 'hourly',
       }, fakeT);
-      expect(price).toBeNull();
+      expect(price).toBe('ResourceIcons.payable');
     });
 
     test('supports daily prices', () => {
