@@ -11,7 +11,6 @@ import queryString from 'query-string';
 import constants from '../../../constants/AppConstants';
 import injectT from '../../../i18n/injectT';
 import ReservationDate from '../../../shared/reservation-date/ReservationDate';
-import { hasProducts } from '../../../utils/resourceUtils';
 import { getReservationPricePerPeriod } from '../../../utils/reservationUtils';
 import CompactReservationList from '../../../shared/compact-reservation-list/CompactReservationList';
 

@@ -252,7 +252,7 @@
   "ReservationCancelModal.cancelNotAllowedInfoOnlinePayment.2": "Cancellation fee: The booking must be cancelled 14 days before the start of the booking at the latest. If the booking is cancelled less than 14 before the start of the booking, the payment is not refunded. Uncancelled bookings will be invoiced.",
   "ReservationConfirmation.feedbackText": "Thank you for using Varaamo! <a href='{href}'>Send feedback</a>.",
   "ReservationConfirmation.reservationCreatedTitle": "Reservation successful",
-  "ReservationConfirmation.reservationManualConfirmationCreatedTitle": "Reservation request has been sent to the resource administrator for approval",
+  "ReservationConfirmation.reservationManualConfirmationCreatedTitle": "Reservation request has been sent for approval",
   "ReservationConfirmation.reservationEditedTitle": "Reservation updated",
   "ReservationConfirmation.resourceButton": "Return to premise",
   "ReservationConfirmation.ownReservationButton": "Return to your reservations",
