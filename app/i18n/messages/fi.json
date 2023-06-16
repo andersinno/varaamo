@@ -252,7 +252,7 @@
   "ReservationCancelModal.cancelNotAllowedInfoOnlinePayment.2": "Asiakkaan tulee maksaa varausmaksu varauksen yhteydessä. Jos et pääsekään paikalle, ilmoitathan peruutuksestasi sähköpostitse. Kiitos!",
   "ReservationConfirmation.feedbackText": "Kiitokset Varaamon käytöstä! <a href='{href}'>Lähetä palvelusta palautetta</a>.",
   "ReservationConfirmation.reservationCreatedTitle": "Varaus suoritettu onnistuneesti",
-  "ReservationConfirmation.reservationManualConfirmationCreatedTitle": "Varauspyyntö lähetetty resurssin ylläpitäjälle käsiteltäväksi",
+  "ReservationConfirmation.reservationManualConfirmationCreatedTitle": "Varauspyyntö lähetetty käsiteltäväksi",
   "ReservationConfirmation.reservationEditedTitle": "Varaus päivitetty",
   "ReservationConfirmation.resourceButton": "Palaa tilan tietoihin",
   "ReservationConfirmation.ownReservationButton": "Palaa omiin varauksiin",
