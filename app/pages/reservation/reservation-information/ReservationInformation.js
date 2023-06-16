@@ -87,13 +87,13 @@ class ReservationInformation extends Component {
         'billingEmailAddress',
       ];
 
+      // ensure fields are always shown if payable
       if (isPayableAmount) {
         formFields = [...formFields, ...paymentFields];
-      } else {
-        // remove any billing fields in the metadata if payment options have zero amount
-        formFields = formFields.filter(field => !includes(paymentFields, field));
       }
+
       formFields.push('userGroup');
+
       if (eventTypes.length > 0) {
         formFields.push('eventType');
       }

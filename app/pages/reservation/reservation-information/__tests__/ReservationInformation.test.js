@@ -114,7 +114,7 @@ describe('pages/reservation/reservation-information/ReservationInformation', () 
       expect(actual.includes('billingFirstName')).toBe(true);
     });
 
-    test('returns no billing fields if present in metadata and no payable amount', () => {
+    test('returns billing fields if present in metadata and no payable amount', () => {
       const instance = getWrapper({
         resource: {
           ...resource,
@@ -125,7 +125,7 @@ describe('pages/reservation/reservation-information/ReservationInformation', () 
       }).instance();
 
       const actual = instance.getFormFields();
-      expect(actual.includes('billingFirstName')).toBe(false);
+      expect(actual.includes('billingFirstName')).toBe(true);
     });
 
     test('returns billing fields if payment required and amount', () => {
