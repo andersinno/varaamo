@@ -11,7 +11,7 @@ import { getMaxPeriodText, getMinPeriodText } from '../../../utils/resourceUtils
 import injectT from '../../../i18n/injectT';
 
 function renderLoginText(isLoggedIn, resource) {
-  if (isLoggedIn || !resource.reservable) {
+  if (isLoggedIn || !resource.reservable || resource.canOnlyBeReservedExternally) {
     return null;
   }
   const next = encodeURIComponent(window.location.href);
