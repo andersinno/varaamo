@@ -94,8 +94,8 @@ function ResourceInfo({
       {!isEmpty(accessibilitySummariesAndDescription) && (
         <ResourcePanel header={t('ResourceAccessibility.headingText')}>
           <ul>
-            {accessibilitySummariesAndDescription.map(accessibility => (
-              <li>{accessibility}</li>
+            {accessibilitySummariesAndDescription.map((accessibility, index) => (
+              <li key={index}>{accessibility}</li>
             ))}
           </ul>
         </ResourcePanel>
