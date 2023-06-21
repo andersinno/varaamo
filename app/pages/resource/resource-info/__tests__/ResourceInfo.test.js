@@ -17,6 +17,7 @@ describe('pages/resource/resource-info/ResourceInfo', () => {
         genericTerms: 'some generic terms',
         specificTerms: 'some specific terms',
         paymentTerms: 'some payment terms',
+        responsibleContactInfo: 'some person',
         accessibilitySummaries: [{}],
         maxPricePerHour: '30',
         peopleCapacity: '16',
@@ -51,6 +52,11 @@ describe('pages/resource/resource-info/ResourceInfo', () => {
   function getWrapper(extraProps) {
     return shallowWithIntl(<ResourceInfo {...defaultProps} {...extraProps} />);
   }
+
+  test('renders responsible person info', () => {
+    const info = getWrapper().find('.app-ResourceInfo__responsibleContactInfo');
+    expect(info).toHaveLength(1);
+  });
 
   test('renders resource description as WrappedText', () => {
     const wrappedText = getWrapper()

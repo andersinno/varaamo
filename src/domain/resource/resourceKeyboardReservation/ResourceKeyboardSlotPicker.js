@@ -291,8 +291,8 @@ ResourcePageKeyboardTimePicker.propTypes = {
     end: PropTypes.string,
   }),
   t: PropTypes.func.isRequired,
-  maxPeriod: PropTypes.string.isRequired,
-  minPeriod: PropTypes.string.isRequired,
+  maxPeriod: PropTypes.string,
+  minPeriod: PropTypes.string,
   slots: PropTypes.array,
   defaultStartTime: PropTypes.string,
 };
