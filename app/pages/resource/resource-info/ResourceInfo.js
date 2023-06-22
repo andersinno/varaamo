@@ -91,6 +91,16 @@ function ResourceInfo({
         </Row>
       </ResourcePanel>
 
+      {resource.responsibleContactInfo && (
+        <ResourcePanel header={t('ResourceInfo.responsibleContactInfoTitle')}>
+          <Row>
+            <Col className="app-ResourceInfo__responsibleContactInfo" xs={6}>
+              {resource.responsibleContactInfo}
+            </Col>
+          </Row>
+        </ResourcePanel>
+      )}
+
       {!isEmpty(accessibilitySummariesAndDescription) && (
         <ResourcePanel header={t('ResourceAccessibility.headingText')}>
           <ul>

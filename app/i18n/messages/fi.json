@@ -393,6 +393,7 @@
   "ResourceIcons.free": "Maksuton",
   "ResourceIcons.payable": "Maksullinen",
   "ResourceInfo.additionalInfoTitle": "Lisätietoja",
+  "ResourceInfo.responsibleContactInfoTitle": "Vastuuhenkilön yhteystiedot",
   "ResourceInfo.descriptionTitle": "Kuvaus",
   "ResourceInfo.equipmentHeader": "Tilan varusteet",
   "ResourceInfo.resourcePlacementText": "Resurssi on ",
