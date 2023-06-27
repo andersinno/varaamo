@@ -74,11 +74,14 @@ function ResourceInfo({
 
       <ResourcePanel header={t('ResourceInfo.additionalInfoTitle')}>
         <Row>
-          <Col className="app-ResourceInfo__address" xs={6}>
-            {unit && unit.name && <span>{unit.name}</span>}
-            {unit && unit.streetAddress && <span>{unit.streetAddress}</span>}
-            {unit && <span>{`${unit.addressZip} ${upperFirst(unit.municipality)}`.trim()}</span>}
-          </Col>
+          {unit && (
+            <Col className="app-ResourceInfo__address" xs={6}>
+              {unit.name && <span>{unit.name}</span>}
+              {unit.streetAddress && <span>{unit.streetAddress}</span>}
+              {unit.addressZip && <span>{`${unit.addressZip} ${upperFirst(unit.municipality || '')}`.trim()}</span>}
+              {unit.phone && <span>{unit.phone}</span>}
+            </Col>
+          )}
           <Col className="app-ResourceInfo__web" xs={6}>
             {unit && unit.wwwUrl && (
               <span className="app-ResourceInfo__www">
