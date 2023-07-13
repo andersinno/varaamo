@@ -105,10 +105,10 @@
         background-color: $medium-gray;
         color: $dark-gray;
       }
-      &--available:not(.DayPicker-Day--disabled) {
-        background-color: $copper;
+      &--available:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
+        background-color: $white;
         &.DayPicker-Day--selected {
-          background-color: $available-color;
+          background-color: $light-gray;
         }
       }
       &--busy:not(.DayPicker-Day--disabled) {
@@ -170,7 +170,8 @@
         margin: 6px;
       }
       span.free::before {
-        background-color: $copper;
+        background-color: $white;
+        border: 1px solid $dark-gray;
       }
       span.busy::before {
         background-color: $busy-color;
