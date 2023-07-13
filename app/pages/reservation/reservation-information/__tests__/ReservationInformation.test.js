@@ -71,6 +71,80 @@ describe('pages/reservation/reservation-information/ReservationInformation', () 
     });
   });
 
+  describe('isManualConfirmationRequiredForPayment', () => {
+    const resource = Resource.build({
+      needManualConfirmationForZeroPrice: true,
+    });
+
+    const localDefaults = {
+      isPaymentRequired: true,
+      isStaff: false,
+      reservationPriceInfo: {
+        total_price: '0.00',
+      },
+    };
+
+    test('returns true if zero cost', () => {
+      const instance = getWrapper({
+        resource,
+        ...localDefaults,
+      }).instance();
+      expect(instance.isManualConfirmationRequiredForPayment()).toEqual(true);
+    });
+
+    test('returns false if resource does not require confirmation', () => {
+      const instance = getWrapper({
+        resource: {
+          ...resource,
+          needManualConfirmationForZeroPrice: false,
+        },
+        ...localDefaults,
+      }).instance();
+      expect(instance.isManualConfirmationRequiredForPayment()).toEqual(false);
+    });
+
+
+    test('returns false if staff', () => {
+      const instance = getWrapper({
+        resource,
+        ...localDefaults,
+        isStaff: true,
+      }).instance();
+      expect(instance.isManualConfirmationRequiredForPayment()).toEqual(false);
+    });
+
+    test('returns false if payment not required', () => {
+      const instance = getWrapper({
+        resource,
+        ...localDefaults,
+        isPaymentRequired: false,
+      }).instance();
+      expect(instance.isManualConfirmationRequiredForPayment()).toEqual(false);
+    });
+
+    test('returns false if null cost', () => {
+      const instance = getWrapper({
+        resource,
+        ...localDefaults,
+        reservationPriceInfo: {
+          total_price: null,
+        },
+      }).instance();
+      expect(instance.isManualConfirmationRequiredForPayment()).toEqual(false);
+    });
+
+    test('returns false if payment required and not zero cost', () => {
+      const instance = getWrapper({
+        resource,
+        ...localDefaults,
+        reservationPriceInfo: {
+          total_price: '10.00',
+        },
+      }).instance();
+      expect(instance.isManualConfirmationRequiredForPayment()).toEqual(false);
+    });
+  });
+
   describe('getFormFields', () => {
     let resource = Resource.build({
       needManualConfirmation: true,

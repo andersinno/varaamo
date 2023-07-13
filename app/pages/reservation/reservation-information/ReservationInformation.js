@@ -1,6 +1,5 @@
 import pick from 'lodash/pick';
 import uniq from 'lodash/uniq';
-import includes from 'lodash/includes';
 import camelCase from 'lodash/camelCase';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -170,6 +169,22 @@ class ReservationInformation extends Component {
 
   getValue = (value, options) => options.find(option => option.value === value);
 
+  isManualConfirmationRequiredForPayment = () => {
+    // some resources require manual confirmation if the selected price list options
+    // result in a zero price
+    const {
+      isPaymentRequired,
+      reservationPriceInfo,
+      resource,
+      isStaff,
+    } = this.props;
+
+    return resource.needManualConfirmationForZeroPrice
+      && parseFloat(reservationPriceInfo.total_price) === 0
+      && isPaymentRequired
+      && !isStaff;
+  }
+
   render() {
     const {
       isEditing,
@@ -278,6 +293,15 @@ class ReservationInformation extends Component {
                 </span>
               </Col>
             </Row>
+            {this.isManualConfirmationRequiredForPayment() && (
+            <Row>
+              <Col md={12}>
+                <strong className="app-ReservationDetails__needManualConfirmation">
+                  {t('ReservationInfo.requiresManualConfirmation')}
+                </strong>
+              </Col>
+            </Row>
+            )}
           </div>
         </Col>
       </div>
