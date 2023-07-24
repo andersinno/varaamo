@@ -1,10 +1,12 @@
-import { isEmpty } from 'lodash/lang';
+import { isEmpty } from 'lodash/lang'
 import includes from 'lodash/includes';
 import intersection from 'lodash/intersection';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import Button from 'react-bootstrap/lib/Button';
 import Form from 'react-bootstrap/lib/Form';
+import Row from 'react-bootstrap/lib/Row';
+import Col from 'react-bootstrap/lib/Col';
 import { Field, SubmissionError, reduxForm } from 'redux-form';
 import isEmail from 'validator/lib/isEmail';
 import { connect } from 'react-redux';
@@ -56,6 +58,11 @@ const maxLengths = {
   billingLastName: 100,
   billingPhoneNumber: 30,
   company: 100,
+  companyAddressCity: 100,
+  companyAddressStreet: 100,
+  companyAddressZip: 30,
+  companyEmailAddress: 100,
+  companyPhoneNumber: 30,
   numberOfParticipants: 100,
   reserverAddressCity: 100,
   reserverAddressStreet: 100,
@@ -117,10 +124,10 @@ export function validate(values, { fields, requiredFields, t }) {
 }
 
 class UnconnectedReservationInformationForm extends Component {
-    state = {
-      selectedUserGroup: null,
-      selectedEventType: null,
-    }
+  state = {
+    selectedUserGroup: null,
+    selectedEventType: null,
+  }
 
   getAsteriskExplanation = () => {
     const { resource, t } = this.props;
@@ -166,6 +173,10 @@ class UnconnectedReservationInformationForm extends Component {
     }
 
     return eventTypeOptions;
+  }
+
+  handleInvoiceOption = (event) => {
+    this.props.onChangeInvoiceRequested(event.target.value === 'on');
   }
 
   handleUserGroupChange = async (e) => {
@@ -318,6 +329,7 @@ class UnconnectedReservationInformationForm extends Component {
   render() {
     const {
       isEditing,
+      isInvoiceRequested,
       fields,
       handleSubmit,
       onBack,
@@ -341,6 +353,7 @@ class UnconnectedReservationInformationForm extends Component {
 
     const hasUserGroupField = includes(fields, 'userGroup') && !isEmpty(userGroupOptions);
     const hasEventTypeField = includes(fields, 'eventType') && !isEmpty(eventTypeOptions);
+    const hasInvoiceOptions = includes(fields, 'invoiceRequested');
 
     const hasPaymentOptionsFields = hasUserGroupField || hasEventTypeField;
 
@@ -375,17 +388,17 @@ class UnconnectedReservationInformationForm extends Component {
              * and createIsStaffSelector returns isAdmin
              */
             isStaff && (
-            <InternalReservationFields
-              commentsMaxLengths={maxLengths.comments}
-              onChangeReservationType={onChangeReservationType}
-              valid={valid}
-            />
+              <InternalReservationFields
+                commentsMaxLengths={maxLengths.comments}
+                onChangeReservationType={onChangeReservationType}
+                valid={valid}
+              />
             )
           }
           {hasRequiredFields && (
-          <p className="app-ReservationPage__asteriskExplanation">
-            {this.getAsteriskExplanation()}
-          </p>
+            <p className="app-ReservationPage__asteriskExplanation">
+              {this.getAsteriskExplanation()}
+            </p>
           )}
           {hasPaymentOptionsFields && (
             <div>
@@ -414,16 +427,60 @@ class UnconnectedReservationInformationForm extends Component {
               )}
             </div>
           )}
+          {hasInvoiceOptions && (
+            <div>
+              <Row>
+                <Col md={1}>
+                  <Field
+                    component="input"
+                    id="invoiceRequested__false"
+                    label="invoiceRequested__false"
+                    name="invoiceRequested"
+                    onChange={this.handleInvoiceOption}
+                    checked={!isInvoiceRequested}
+                    value="off"
+                    type="radio"
+                  />
+                </Col>
+                <Col md={11}>
+                  <label className="app-ReservationDetails__value" htmlFor="invoiceRequested__false">
+                    {t('ReservationInformationForm.immediatePayment')}
+                  </label>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col md={1}>
+                  <Field
+                    component="input"
+                    id="invoiceRequested__true"
+                    label="invoiceRequested__false"
+                    name="invoiceRequested"
+                    onChange={this.handleInvoiceOption}
+                    type="radio"
+                    checked={isInvoiceRequested}
+                    value="on"
+                  />
+                </Col>
+                <Col md={11}>
+                  <label className="app-ReservationDetails__value" htmlFor="invoiceRequested__true">
+                    {t('ReservationInformationForm.invoicePayment')}
+                  </label>
+                </Col>
+              </Row>
+
+            </div>
+          )}
 
           {includes(fields, 'reservationExtraQuestions')
-          && this.renderField(
-            'reservationExtraQuestions',
-            'textarea',
-            t('common.reservationExtraQuestions'),
-            { rows: 5 },
-          )
+            && this.renderField(
+              'reservationExtraQuestions',
+              'textarea',
+              t('common.reservationExtraQuestions'),
+              { rows: 5 },
+            )
           }
-          { includes(fields, 'reserverName') && (
+          {includes(fields, 'reserverName') && (
             <h2 className="app-ReservationPage__title">
               {t('ReservationInformationForm.reserverInformationTitle')}
             </h2>
@@ -434,6 +491,12 @@ class UnconnectedReservationInformationForm extends Component {
             t('common.reserverNameLabel'),
             null,
             { autoComplete: INPUT_PURPOSES.NAME, externalName: 'name' },
+          )}
+
+          {isInvoiceRequested && (
+            <h2 className="app-ReservationPage__title">
+              {t('ReservationInformationForm.companyInfo')}
+            </h2>
           )}
           {this.renderField(
             'reserverId',
@@ -563,6 +626,61 @@ class UnconnectedReservationInformationForm extends Component {
               },
             )
           }
+          {includes(fields, 'companyPhoneNumber')
+            && this.renderField(
+              'companyPhoneNumber',
+              'tel',
+              t('common.companyPhoneNumberLabel'),
+              null,
+              {
+                autoComplete: ['company', INPUT_PURPOSES.TEL].join(' '),
+                externalName: ['company', INPUT_PURPOSES.TEL].join('-'),
+              },
+            )
+          }
+          {includes(fields, 'companyEmailAddress')
+            && this.renderField(
+              'companyEmailAddress',
+              'email',
+              t('common.companyEmailAddressLabel'),
+              null,
+              {
+                autoComplete: ['company', INPUT_PURPOSES.EMAIL].join(' '),
+                externalName: ['company', INPUT_PURPOSES.EMAIL].join('-'),
+              },
+            )
+          }
+
+          {includes(fields, 'companyAddressStreet')
+            && <h2 className="app-ReservationPage__title">{t('common.companyAddressLabel')}</h2>
+          }
+          {includes(fields, 'companyAddressStreet')
+            && this.renderField(
+              'companyAddressStreet',
+              'text',
+              t('common.companyAddressStreetLabel'),
+              null,
+              { autoComplete: ['company', INPUT_PURPOSES.STREET_ADDRESS].join(' '), externalName: 'company-address' },
+            )
+          }
+          {includes(fields, 'companyAddressZip')
+            && this.renderField(
+              'companyAddressZip',
+              'text',
+              t('common.companyAddressZipLabel'),
+              null,
+              { autoComplete: ['company', INPUT_PURPOSES.POSTAL_CODE].join(' '), externalName: 'company-zip' },
+            )
+          }
+          {includes(fields, 'companyAddressCity')
+            && this.renderField(
+              'companyAddressCity',
+              'text',
+              t('common.companyAddressCityLabel'),
+              null,
+              { autoComplete: ['company', INPUT_PURPOSES.ADDRESS_LEVEL_2].join(' '), externalName: 'company-city' },
+            )
+          }
 
           <h2 className="app-ReservationPage__title">{t('ReservationInformationForm.eventInformationTitle')}</h2>
           {includes(fields, 'eventSubject') && (
@@ -592,25 +710,25 @@ class UnconnectedReservationInformationForm extends Component {
             { min: '0' },
           )}
           {termsAndConditions
-          && (
-          <React.Fragment>
-            <h2 className="app-ReservationPage__title">{t('ReservationTermsModal.resourceTermsTitle')}</h2>
-            <div className="terms-box">
-              <WrappedText text={resource.genericTerms} />
-            </div>
-            {this.renderTermsField('termsAndConditions')}
-          </React.Fragment>
-          )
+            && (
+              <React.Fragment>
+                <h2 className="app-ReservationPage__title">{t('ReservationTermsModal.resourceTermsTitle')}</h2>
+                <div className="terms-box">
+                  <WrappedText text={resource.genericTerms} />
+                </div>
+                {this.renderTermsField('termsAndConditions')}
+              </React.Fragment>
+            )
           }
           {includes(fields, 'paymentTermsAndConditions')
             && (
-            <React.Fragment>
-              <h2 className="app-ReservationPage__title">{t('paymentTerms.title')}</h2>
-              <div className="terms-box">
-                <WrappedText text={resource.paymentTerms} />
-              </div>
-              {this.renderPaymentTermsField()}
-            </React.Fragment>
+              <React.Fragment>
+                <h2 className="app-ReservationPage__title">{t('paymentTerms.title')}</h2>
+                <div className="terms-box">
+                  <WrappedText text={resource.paymentTerms} />
+                </div>
+                {this.renderPaymentTermsField()}
+              </React.Fragment>
             )
           }
           {includes(fields, 'specificTerms') && (
@@ -629,12 +747,12 @@ class UnconnectedReservationInformationForm extends Component {
             </Button>
             {isEditing
               && (
-              <Button
-                bsStyle="default"
-                onClick={onBack}
-              >
-                {t('common.previous')}
-              </Button>
+                <Button
+                  bsStyle="default"
+                  onClick={onBack}
+                >
+                  {t('common.previous')}
+                </Button>
               )
             }
             {this.renderSubmitButton()}
@@ -649,6 +767,7 @@ UnconnectedReservationInformationForm.propTypes = {
   fields: PropTypes.array.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   isEditing: PropTypes.bool.isRequired,
+  isInvoiceRequested: PropTypes.bool.isRequired,
   isMakingReservations: PropTypes.bool.isRequired,
   isPayableAmount: PropTypes.bool.isRequired,
   isPaymentRequired: PropTypes.bool.isRequired,
@@ -656,6 +775,7 @@ UnconnectedReservationInformationForm.propTypes = {
   onCancel: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
   onChangeReservationType: PropTypes.func.isRequired,
+  onChangeInvoiceRequested: PropTypes.func.isRequired,
   requiredFields: PropTypes.array.isRequired,
   resource: PropTypes.object.isRequired,
   t: PropTypes.func.isRequired,

@@ -39,6 +39,7 @@ class UnconnectedReservationPage extends Component {
 
     this.fetchResource = this.fetchResource.bind(this);
     this.handleChangeReservationType = this.handleChangeReservationType.bind(this);
+    this.handleChangeInvoiceRequested = this.handleChangeInvoiceRequested.bind(this);
 
     const { reservationToEdit } = this.props;
     const isReservation = !isEmpty(reservationToEdit);
@@ -46,6 +47,7 @@ class UnconnectedReservationPage extends Component {
 
     this.state = {
       view: isReservation ? 'time' : 'information',
+      isInvoiceRequested: false,
       reservationType,
       reservationPriceInfo: {
         total_price: null,
@@ -186,6 +188,10 @@ class UnconnectedReservationPage extends Component {
     this.setState({ reservationType });
   }
 
+  handleChangeInvoiceRequested(isInvoiceRequested) {
+    this.setState({ isInvoiceRequested })
+  }
+
   fetchResource() {
     const {
       actions, date, resource, location,
@@ -293,7 +299,7 @@ class UnconnectedReservationPage extends Component {
       failedReservations,
       date,
     } = this.props;
-    const { view, reservationPriceInfo } = this.state;
+    const { view, reservationPriceInfo, isInvoiceRequested } = this.state;
 
     if (
       isEmpty(resource)
@@ -355,6 +361,7 @@ class UnconnectedReservationPage extends Component {
                     <ReservationInformation
                       isAdmin={isAdmin}
                       isEditing={isEditing}
+                      isInvoiceRequested={isInvoiceRequested}
                       isMakingReservations={isMakingReservations}
                       isOwnUse={this.isOwnUse()}
                       isPayableAmount={isPayableAmount}
@@ -363,6 +370,7 @@ class UnconnectedReservationPage extends Component {
                       onBack={this.handleBack}
                       onCancel={this.handleCancel}
                       onChangeReservationType={this.handleChangeReservationType}
+                      onChangeInvoiceRequested={this.handleChangeInvoiceRequested}
                       onConfirm={this.handleReservation}
                       reservation={reservationToEdit}
                       reservationPriceInfo={reservationPriceInfo}
