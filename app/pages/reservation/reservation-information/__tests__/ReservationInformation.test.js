@@ -222,13 +222,12 @@ describe('pages/reservation/reservation-information/ReservationInformation', () 
           ...resource,
           canRequestInvoice: true,
         },
-         isPaymentRequired: true,
+        isPaymentRequired: true,
         isPayableAmount: true,
         isInvoiceRequested: true,
       }).instance();
 
       const actual = instance.getFormFields();
-      console.log(actual)
       expect(actual.includes('billingFirstName')).toBe(false);
       expect(actual.includes('companyEmailAddress')).toBe(true);
     });
@@ -239,7 +238,7 @@ describe('pages/reservation/reservation-information/ReservationInformation', () 
           ...resource,
           canRequestInvoice: false,
         },
-         isPaymentRequired: true,
+        isPaymentRequired: true,
         isPayableAmount: true,
         isInvoiceRequested: true,
       }).instance();

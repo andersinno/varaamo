@@ -96,7 +96,7 @@ class ReservationInformation extends Component {
     return [
       ...paymentFields,
       'invoiceRequested',
-      ...isInvoiceRequested ? COMPANY_FIELDS : BILLING_FIELDS
+      ...isInvoiceRequested ? COMPANY_FIELDS : BILLING_FIELDS,
     ];
   }
 
@@ -124,7 +124,7 @@ class ReservationInformation extends Component {
       formFields.push('specificTerms');
     }
 
-    formFields = [...formFields, ...this.getPaymentFormFields()]
+    formFields = [...formFields, ...this.getPaymentFormFields()];
 
     return uniq(formFields);
   }
@@ -261,15 +261,15 @@ class ReservationInformation extends Component {
             fields={this.getFormFields(termsAndConditions, specificTerms)}
             initialValues={this.getFormInitialValues()}
             isEditing={isEditing}
+            isInvoiceRequested={isInvoiceRequested}
             isMakingReservations={isMakingReservations}
             isPayableAmount={isPayableAmount}
             isPaymentRequired={isPaymentRequired}
-            isInvoiceRequested={isInvoiceRequested}
             isStaff={isStaff}
             onBack={onBack}
             onCancel={onCancel}
-            onChangeReservationType={onChangeReservationType}
             onChangeInvoiceRequested={onChangeInvoiceRequested}
+            onChangeReservationType={onChangeReservationType}
             onConfirm={this.onConfirm}
             requiredFields={this.getRequiredFormFields(resource, termsAndConditions, specificTerms)}
             resource={resource}

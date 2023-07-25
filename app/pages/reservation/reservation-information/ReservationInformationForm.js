@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash/lang'
+import { isEmpty } from 'lodash/lang';
 import includes from 'lodash/includes';
 import intersection from 'lodash/intersection';
 import PropTypes from 'prop-types';
@@ -432,14 +432,14 @@ class UnconnectedReservationInformationForm extends Component {
               <Row>
                 <Col md={1}>
                   <Field
+                    checked={!isInvoiceRequested}
                     component="input"
                     id="invoiceRequested__false"
                     label="invoiceRequested__false"
                     name="invoiceRequested"
                     onChange={this.handleInvoiceOption}
-                    checked={!isInvoiceRequested}
-                    value="off"
                     type="radio"
+                    value="off"
                   />
                 </Col>
                 <Col md={11}>
@@ -452,13 +452,13 @@ class UnconnectedReservationInformationForm extends Component {
               <Row>
                 <Col md={1}>
                   <Field
+                    checked={isInvoiceRequested}
                     component="input"
                     id="invoiceRequested__true"
                     label="invoiceRequested__false"
                     name="invoiceRequested"
                     onChange={this.handleInvoiceOption}
                     type="radio"
-                    checked={isInvoiceRequested}
                     value="on"
                   />
                 </Col>
@@ -491,12 +491,6 @@ class UnconnectedReservationInformationForm extends Component {
             t('common.reserverNameLabel'),
             null,
             { autoComplete: INPUT_PURPOSES.NAME, externalName: 'name' },
-          )}
-
-          {isInvoiceRequested && (
-            <h2 className="app-ReservationPage__title">
-              {t('ReservationInformationForm.companyInfo')}
-            </h2>
           )}
           {this.renderField(
             'reserverId',
@@ -651,9 +645,6 @@ class UnconnectedReservationInformationForm extends Component {
             )
           }
 
-          {includes(fields, 'companyAddressStreet')
-            && <h2 className="app-ReservationPage__title">{t('common.companyAddressLabel')}</h2>
-          }
           {includes(fields, 'companyAddressStreet')
             && this.renderField(
               'companyAddressStreet',

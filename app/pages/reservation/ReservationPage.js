@@ -194,7 +194,7 @@ class UnconnectedReservationPage extends Component {
   }
 
   handleChangeInvoiceRequested(isInvoiceRequested) {
-    this.setState({ isInvoiceRequested })
+    this.setState({ isInvoiceRequested });
   }
 
   fetchResource() {
@@ -374,8 +374,8 @@ class UnconnectedReservationPage extends Component {
                       isStaff={isStaff}
                       onBack={this.handleBack}
                       onCancel={this.handleCancel}
-                      onChangeReservationType={this.handleChangeReservationType}
                       onChangeInvoiceRequested={this.handleChangeInvoiceRequested}
+                      onChangeReservationType={this.handleChangeReservationType}
                       onConfirm={this.handleReservation}
                       reservation={reservationToEdit}
                       reservationPriceInfo={reservationPriceInfo}

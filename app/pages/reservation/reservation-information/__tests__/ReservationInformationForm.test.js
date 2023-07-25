@@ -283,6 +283,21 @@ describe('pages/reservation/reservation-information/ReservationInformationForm',
           expect(inputs).toHaveLength(2);
         });
 
+        test('renders invoice requested fields', () => {
+          const props = {
+            resource: Resource.build(),
+            fields: [
+              'invoiceRequested',
+            ],
+          };
+
+          const wrapper = getWrapper(props);
+          expect(wrapper.find('#invoiceRequested__true')).toHaveLength(1);
+          expect(wrapper.find('#invoiceRequested__false')).toHaveLength(1);
+          expect(wrapper.find(Field)).toHaveLength(2);
+        });
+
+
         test('does not render fields if no pricing info', () => {
           const props = {
             resource: Resource.build(),

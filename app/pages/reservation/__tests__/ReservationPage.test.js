@@ -316,6 +316,14 @@ describe('pages/reservation/ReservationPage', () => {
     });
   });
 
+  describe('handleChangeInvoiceRequested', () => {
+    test('sets invoice requested on state', () => {
+      const instance = getWrapper({}).instance();
+      instance.handleChangeInvoiceRequested(true);
+      expect(instance.state.isInvoiceRequested).toBe(true);
+    });
+  });
+
   describe('componentDidMount', () => {
     describe('when reservations and selected empty', () => {
       let historyMock;
