@@ -89,12 +89,15 @@ class UnconnectedReservationPage extends Component {
   componentWillUpdate(nextProps) {
     const { reservationCreated: nextCreated, reservationEdited: nextEdited } = nextProps;
     const { reservationCreated, reservationEdited, resource } = this.props;
+    const { isInvoiceRequested } = this.state;
     if (
       (!isEmpty(nextCreated) || !isEmpty(nextEdited))
       && (nextCreated !== reservationCreated || nextEdited !== reservationEdited)
     ) {
       // Reservation created for resource with product/order: proceed to payment!
-      if (has(nextCreated, 'order.paymentUrl') && !resource.needManualConfirmation) {
+      if (has(nextCreated, 'order.paymentUrl')
+        && !resource.needManualConfirmation
+        && !isInvoiceRequested) {
         const paymentUrl = get(nextCreated, 'order.paymentUrl');
         window.location = paymentUrl;
         return;
@@ -138,6 +141,7 @@ class UnconnectedReservationPage extends Component {
     const {
       actions, reservationToEdit, resource, selected, recurringReservations = [],
     } = this.props;
+    const { isInvoiceRequested } = this.state;
     if (!isEmpty(selected)) {
       const { begin } = first(selected);
       const { end } = last(selected);
@@ -176,6 +180,7 @@ class UnconnectedReservationPage extends Component {
         allReservations.forEach(reservation => actions.postReservation({
           ...values,
           ...order,
+          invoiceRequested: isInvoiceRequested,
           begin: reservation.begin,
           end: reservation.end,
           resource: resource.id,
@@ -339,7 +344,7 @@ class UnconnectedReservationPage extends Component {
                 <ReservationPhases
                   currentPhase={view}
                   isEditing={isEditing || isEdited}
-                  isPaymentRequired={isPaymentRequired && isPayableAmount}
+                  isPaymentRequired={isPaymentRequired && isPayableAmount && !isInvoiceRequested}
                 />
                 {view === 'time' && isEditing && (
                   <ReservationTime
