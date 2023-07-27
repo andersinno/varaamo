@@ -1,32 +1,65 @@
 import PropTypes from 'prop-types';
-import React from 'react';
-import { FormattedHTMLMessage } from 'react-intl';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import PageWrapper from '../../../app/pages/PageWrapper';
-import FeedbackLink from '../../../app/shared/feedback-link/FeedbackLink';
 import injectT from '../../../app/i18n/injectT';
-import { getCurrentCustomization } from '../../../app/utils/customizationUtils';
+import client from '../../common/api/client';
+import { translateItem } from '../../../app/state/selectors/translationSelectors';
+import aboutPageSelector from './AboutPageSelector';
 
-function AboutPage({ t }) {
-  const city = getCurrentCustomization() ? getCurrentCustomization().toLowerCase() : 'default';
-  // TODO: Remove me along with getCurrentCustomization stuff.
+class UnconnectedAboutPage extends Component {
+  static propTypes = {
+    t: PropTypes.func.isRequired,
+    currentLanguage: PropTypes.string.isRequired,
+  };
 
-  return (
-    <PageWrapper className="about-page" title={t('AboutPage.title')}>
-      <div className="app-aboutPage">
-        <h1>{t(`AboutPageContent.${city}Header`)}</h1>
-        <p><FormattedHTMLMessage id="AboutPageContent.tampereText" /></p>
-        <p>
-          <FeedbackLink>{t('AboutPageContent.feedbackLink')}</FeedbackLink>
-        </p>
-        <br />
-      </div>
-    </PageWrapper>
-  );
+  state = {
+    instructions: [],
+  };
+
+  componentDidMount() {
+    this.fetchAndSetInstructions();
+  }
+
+  fetchInstructions = async () => {
+    const response = await client.get('user_instructions');
+    const instructions = response.data.results;
+    return instructions;
+  };
+
+  fetchAndSetInstructions = async () => {
+    try {
+      const instructions = await this.fetchInstructions();
+      const { currentLanguage } = this.props;
+      const translatedInstructions = instructions.map(item => translateItem(item, currentLanguage));
+      this.setState({ instructions: translatedInstructions });
+    } catch (error) {
+      this.setState({ instructions: [] });
+    }
+  };
+
+  render() {
+    const { t } = this.props;
+    const { instructions } = this.state;
+    return (
+      <PageWrapper className="about-page" title={t('AboutPage.title')}>
+        {instructions.map(instruction => (
+          <div
+            className="app-aboutPage__instructions"
+            dangerouslySetInnerHTML={{ __html: instruction.content }}
+            key={instruction.id}
+          />
+        ))}
+      </PageWrapper>
+    );
+  }
 }
 
-AboutPage.propTypes = {
-  t: PropTypes.func.isRequired,
-};
+UnconnectedAboutPage = injectT(UnconnectedAboutPage);  // eslint-disable-line
 
-export default injectT(AboutPage);
+export { UnconnectedAboutPage };
+export default connect(
+  aboutPageSelector,
+  {},
+)(UnconnectedAboutPage);
