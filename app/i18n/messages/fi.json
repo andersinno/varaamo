@@ -30,6 +30,7 @@
   "AccessibilityPage.improvementHeader": "Teemme jatkuvasti työtä saavutettavuuden parantamiseksi",
   "AccessibilityPage.improvementContent": "<p>Tämä verkkosivusto/sovellus on julkaistu 1.2.2018.</p><p>Tämä verkkosivusto/sovellus on päivitetty merkittävien muutosten jälkeen 2.7.2020.</p>",
   "AccessibilityShortcuts.skipToContent": "Siirry sisältöön",
+  "AdminGuidePage.title": "Ylläpitäjän ohjeet",
   "AdminReservationFilters.header": "Varauksen status",
   "AdminResourcesPage.noResourcesMessage": "Sinulla ei vielä ole yhtään omia tiloja näytettäväksi.",
   "AdminResourcesPage.noRightsMessage": "Tarvitset virkailijan oikeudet nähdäksesi tämän sivun.",

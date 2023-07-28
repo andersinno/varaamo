@@ -30,6 +30,7 @@
   "AccessibilityPage.improvementHeader": "Teemme jatkuvasti työtä saavutettavuuden parantamiseksi",
   "AccessibilityPage.improvementContent": "<p>Tämä verkkosivusto/sovellus on julkaistu 1.2.2018.</p><p>Tämä verkkosivusto/sovellus on päivitetty merkittävien muutosten jälkeen 2.7.2020.</p>",
   "AccessibilityShortcuts.skipToContent": "Skip to main content",
+  "AdminGuidePage.title": "Admin instructions",
   "AdminReservationFilters.header": "Reservation status",
   "AdminResourcesPage.noResourcesMessage": "You do not have any premises yet.",
   "AdminResourcesPage.noRightsMessage": "Official rights are required to see this page.",

@@ -12,6 +12,7 @@ import ResourcePage from '../app/pages/resource/ResourcePage';
 import UserReservationsPage from '../app/pages/user-reservations/UserReservationsPage';
 import SearchPage from './domain/search/page/SearchPage';
 import AboutPage from './domain/about/AboutPage';
+import AdminGuidePage from '../app/pages/admin-guide/AdminGuidePage';
 import ManageReservationsPage from './domain/reservation/manage/page/ManageReservationsPage';
 import HomePage from './domain/home/HomePage';
 import CreateNotifications from './common/notificator/create/CreateNotifications';
@@ -51,6 +52,11 @@ export default () => (
         component={CreateNotifications}
         componentName="CreateNotifications"
         path="/create-notifications"
+      />
+      <PrivateRoute
+        component={AdminGuidePage}
+        componentName="AdminGuide"
+        path="/admin-guide"
       />
 
       <Redirect from="/home" to="/" />
