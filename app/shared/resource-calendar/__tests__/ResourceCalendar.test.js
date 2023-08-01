@@ -100,6 +100,16 @@ describe('shared/resource-calendar/ResourceCalendar', () => {
         mockDate.reset();
       });
 
+      test('isDayUnavailable if day is reservable', () => {
+        const instance = getWrapper({ isDayReservable: () => true }).instance();
+        expect(instance.isDayDisabled()).toBe(false);
+      });
+
+      test('isDayUnavailable if day is not reservable', () => {
+        const instance = getWrapper({ isDayReservable: () => false }).instance();
+        expect(instance.isDayDisabled()).toBe(true);
+      });
+
       test('calls isDayReservable function', () => {
         isDisabled(date);
         expect(isDayReservable.callCount).toBe(1);

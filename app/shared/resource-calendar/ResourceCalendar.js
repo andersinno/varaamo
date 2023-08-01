@@ -32,7 +32,7 @@ export class UnconnectedResourceCalendar extends Component {
 
   isDayDisabled = (day) => {
     if (this.props.isDayReservable) {
-      return this.props.isDayReservable(day);
+      return !this.props.isDayReservable(day);
     }
     return this.now.isAfter(day, 'day');
   };
