@@ -108,6 +108,7 @@ class ManageReservationsFilters extends React.Component {
       { value: RESERVATION_STATE.CONFIRMED, label: t('Reservation.stateLabelConfirmed') },
       { value: RESERVATION_STATE.CANCELLED, label: t('Reservation.stateLabelCancelled') },
       { value: RESERVATION_STATE.DENIED, label: t('Reservation.stateLabelDenied') },
+      { value: RESERVATION_STATE.INVOICE_REQUESTED, label: t('Reservation.stateLabelInvoiceRequested') },
       { value: RESERVATION_STATE.REQUESTED, label: t('Reservation.stateLabelRequested') },
       { value: RESERVATION_STATE.WAITING_FOR_PAYMENT, label: t('Reservation.stateLabelWaitingForPayment') },
     ];
@@ -119,12 +120,12 @@ class ManageReservationsFilters extends React.Component {
     return [
       {
         value:
-        RESERVATION_SHOWONLY_FILTERS.FAVORITE,
+          RESERVATION_SHOWONLY_FILTERS.FAVORITE,
         label: t('ManageReservationsFilters.showOnly.favoriteButtonLabel'),
       },
       {
         value:
-        RESERVATION_SHOWONLY_FILTERS.CAN_MODIFY,
+          RESERVATION_SHOWONLY_FILTERS.CAN_MODIFY,
         label: t('ManageReservationsFilters.showOnly.canModifyButtonLabel'),
       },
     ];
@@ -244,27 +245,27 @@ class ManageReservationsFilters extends React.Component {
             </Col>
           </Row>
           {showDownload && (
-          <Row>
-            <Col md={6}>
-              <SelectField
-                id="reservationDownload"
-                label={t('ManageReservationsFilters.downloadReservationData.title')}
-                onChange={item => this.onReservationDownloadOptionChange(item.value)}
-                options={this.getReservationDownloadOptions()}
-                value={reservationDownloadType}
-              />
-            </Col>
-            <Col md={6}>
-              <Button
-                bsStyle="default"
-                className="app-ManageReservationsFilters__downloadButton"
-                key="reservation-download"
-                onClick={() => this.props.onReservationDownload(reservationDownloadType)}
-              >
-                {t('ManageReservationsFilters.downloadReservationData')}
-              </Button>
-            </Col>
-          </Row>
+            <Row>
+              <Col md={6}>
+                <SelectField
+                  id="reservationDownload"
+                  label={t('ManageReservationsFilters.downloadReservationData.title')}
+                  onChange={item => this.onReservationDownloadOptionChange(item.value)}
+                  options={this.getReservationDownloadOptions()}
+                  value={reservationDownloadType}
+                />
+              </Col>
+              <Col md={6}>
+                <Button
+                  bsStyle="default"
+                  className="app-ManageReservationsFilters__downloadButton"
+                  key="reservation-download"
+                  onClick={() => this.props.onReservationDownload(reservationDownloadType)}
+                >
+                  {t('ManageReservationsFilters.downloadReservationData')}
+                </Button>
+              </Col>
+            </Row>
           )}
         </Grid>
       </div>
