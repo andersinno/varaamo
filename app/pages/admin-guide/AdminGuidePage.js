@@ -2,13 +2,13 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import PageWrapper from '../../../app/pages/PageWrapper';
-import injectT from '../../../app/i18n/injectT';
-import client from '../../common/api/client';
-import { translateItem } from '../../../app/state/selectors/translationSelectors';
-import aboutPageSelector from './AboutPageSelector';
+import PageWrapper from '../PageWrapper';
+import injectT from '../../i18n/injectT';
+import client from '../../../src/common/api/client';
+import { translateItem } from '../../state/selectors/translationSelectors';
+import adminGuidePageSelector from './AdminGuidePageSelector';
 
-class UnconnectedAboutPage extends Component {
+class UnconnectedAdminGuidePage extends Component {
   static propTypes = {
     t: PropTypes.func.isRequired,
     currentLanguage: PropTypes.string.isRequired,
@@ -23,7 +23,7 @@ class UnconnectedAboutPage extends Component {
   }
 
   fetchInstructions = async () => {
-    const response = await client.get('user_instructions');
+    const response = await client.get('admin_instructions');
     const instructions = response.data.results;
     return instructions;
   };
@@ -43,10 +43,10 @@ class UnconnectedAboutPage extends Component {
     const { t } = this.props;
     const { instructions } = this.state;
     return (
-      <PageWrapper className="about-page" title={t('AboutPage.title')}>
+      <PageWrapper className="admin-guide-page" title={t('AdminGuidePage.title')}>
         {instructions.map(instruction => (
           <div
-            className="app-aboutPage__instructions"
+            className="app-adminGuidePage__instructions"
             dangerouslySetInnerHTML={{ __html: instruction.content }}
             key={instruction.id}
           />
@@ -56,10 +56,10 @@ class UnconnectedAboutPage extends Component {
   }
 }
 
-UnconnectedAboutPage = injectT(UnconnectedAboutPage);  // eslint-disable-line
+UnconnectedAdminGuidePage = injectT(UnconnectedAdminGuidePage);  // eslint-disable-line
 
-export { UnconnectedAboutPage };
+export { UnconnectedAdminGuidePage };
 export default connect(
-  aboutPageSelector,
+  adminGuidePageSelector,
   {},
-)(UnconnectedAboutPage);
+)(UnconnectedAdminGuidePage);

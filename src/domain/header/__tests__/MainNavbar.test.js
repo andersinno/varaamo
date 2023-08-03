@@ -93,6 +93,12 @@ describe('shared/main-navbar/MainNavbar', () => {
       expect(myReservationsLink).toHaveLength(1);
     });
 
+    test('renders a link to the admin guide page', () => {
+      const adminGuideLink = getLoggedInAdminWrapper()
+        .find(LinkContainer).filter({ to: '/admin-guide' });
+      expect(adminGuideLink).toHaveLength(1);
+    });
+
     test('renders a link to manage reservations page', () => {
       const manageReservationsLink = getLoggedInAdminWrapper()
         .find(LinkContainer).filter({ to: '/manage-reservations' });
@@ -111,31 +117,11 @@ describe('shared/main-navbar/MainNavbar', () => {
       expect(maintenanceLink.prop('target')).toEqual('_blank');
     });
 
-    test('renders a link to varaamo gitbook', () => {
-      const gitbookLink = getLoggedInAdminWrapper()
-        .find(NavItem).filter({ href: gitbookURL });
-      expect(gitbookLink).toHaveLength(1);
-    });
-
-    test('renders a link to varaamo gitbook, open new tab when clicked', () => {
-      const gitbookLink = getLoggedInAdminWrapper()
-        .find(NavItem).filter({ href: gitbookURL });
-      expect(gitbookLink.prop('target')).toEqual('_blank');
-    });
-
     test('renders a external link icon to next to respa admin UI text', () => {
       const maintenanceLink = getLoggedInAdminWrapper()
         .find(NavItem).filter({ href: respaURL });
       const icon = maintenanceLink.find(FAIcon);
 
-      expect(icon).toHaveLength(1);
-    });
-
-    test('renders an icon next to varaamo gitbook text', () => {
-      const gitbookLink = getLoggedInAdminWrapper()
-        .find(NavItem).filter({ href: gitbookURL });
-
-      const icon = gitbookLink.find(FAIcon);
       expect(icon).toHaveLength(1);
     });
   });
@@ -161,6 +147,12 @@ describe('shared/main-navbar/MainNavbar', () => {
       expect(myReservationsLink).toHaveLength(0);
     });
 
+    test('does not render a link to admin guide page', () => {
+      const adminGuidePageLink = getNotLoggedInWrapper()
+        .find(LinkContainer).filter({ to: '/admin-guide' });
+      expect(adminGuidePageLink).toHaveLength(0);
+    });
+
     test('does not render a link to manage reservations page', () => {
       const manageReservationsLink = getNotLoggedInWrapper()
         .find(LinkContainer).filter({ to: '/manage-reservations' });
@@ -171,12 +163,6 @@ describe('shared/main-navbar/MainNavbar', () => {
       const maintenanceLink = getNotLoggedInWrapper()
         .find(NavItem).filter({ href: respaURL });
       expect(maintenanceLink).toHaveLength(0);
-    });
-
-    test('does not render a link to varaamo gitbook', () => {
-      const gitbookLink = getNotLoggedInWrapper()
-        .find(NavItem).filter({ href: gitbookURL });
-      expect(gitbookLink).toHaveLength(0);
     });
   });
 });

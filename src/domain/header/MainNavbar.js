@@ -85,10 +85,11 @@ class MainNavbar extends React.Component {
                     <FAIcon icon={faExternalLinkAlt} />
                   </NavItem>
 
-                  <NavItem eventKey="adminGuide" href="https://cityofhelsinki.gitbook.io/varaamo" target="_blank">
-                    {t('Navbar.adminGuide')}
-                    <FAIcon icon={faExternalLinkAlt} />
-                  </NavItem>
+                  <LinkContainer to="/admin-guide">
+                    <NavItem eventKey="admin-guide" onClick={() => this.collapseItem()}>
+                      {t('Navbar.adminGuide')}
+                    </NavItem>
+                  </LinkContainer>
                 </Fragment>
               )
             }
