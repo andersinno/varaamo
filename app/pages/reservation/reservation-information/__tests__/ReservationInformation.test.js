@@ -19,10 +19,12 @@ describe('pages/reservation/reservation-information/ReservationInformation', () 
     isStaff: false,
     isPayableAmount: false,
     isPaymentRequired: false,
+    isInvoiceRequested: false,
     onBack: simple.stub(),
     onCancel: simple.stub(),
     onConfirm: simple.stub(),
     onChangeReservationType: simple.stub(),
+    onChangeInvoiceRequested: simple.stub(),
     openResourceTermsModal: simple.stub(),
     reservation: Immutable(Reservation.build()),
     reservationPriceInfo: {},
@@ -211,6 +213,57 @@ describe('pages/reservation/reservation-information/ReservationInformation', () 
 
       const actual = instance.getFormFields();
       expect(actual.includes('billingFirstName')).toBe(true);
+      expect(actual.includes('companyEmailAddress')).toBe(false);
+    });
+
+    test('returns company fields if payment required and amount and invoice requested', () => {
+      const instance = getWrapper({
+        resource: {
+          ...resource,
+          canRequestInvoice: true,
+        },
+        isPaymentRequired: true,
+        isPayableAmount: true,
+        isInvoiceRequested: true,
+      }).instance();
+
+      const actual = instance.getFormFields();
+      expect(actual.includes('billingFirstName')).toBe(false);
+      expect(actual.includes('companyEmailAddress')).toBe(true);
+    });
+
+    test('returns billing fields if payment required and amount and invoice not requestable', () => {
+      const instance = getWrapper({
+        resource: {
+          ...resource,
+          canRequestInvoice: false,
+        },
+        isPaymentRequired: true,
+        isPayableAmount: true,
+        isInvoiceRequested: true,
+      }).instance();
+
+      const actual = instance.getFormFields();
+      expect(actual.includes('billingFirstName')).toBe(true);
+      expect(actual.includes('companyEmailAddress')).toBe(false);
+    });
+
+
+    test('returns billing fields if payment required and amount and invoice requested is staff', () => {
+      const instance = getWrapper({
+        resource: {
+          ...resource,
+          canRequestInvoice: true,
+        },
+        isPaymentRequired: true,
+        isPayableAmount: true,
+        isInvoiceRequested: true,
+        isStaff: true,
+      }).instance();
+
+      const actual = instance.getFormFields();
+      expect(actual.includes('billingFirstName')).toBe(true);
+      expect(actual.includes('companyEmailAddress')).toBe(false);
     });
 
     test('returns no billing fields if payment not required', () => {
@@ -350,6 +403,13 @@ describe('pages/reservation/reservation-information/ReservationInformation', () 
       'billingEmailAddress',
     ];
 
+    const invoiceFields = [
+      'reserverId',
+      'companyAddressZip',
+      'companyAddressCity',
+      'companyAddressStreet',
+    ];
+
     const paymentFields = [
       'paymentTermsAndConditions',
       'userGroup',
@@ -372,6 +432,23 @@ describe('pages/reservation/reservation-information/ReservationInformation', () 
       const actual = getWrapper({ isStaff: true }).instance().getRequiredFormFields(resource);
 
       expect(actual).toEqual(constants.REQUIRED_STAFF_EVENT_FIELDS);
+    });
+
+    test('returns correct required form fields if invoice requested', () => {
+      const resource = Resource.build({
+        requiredReservationExtraFields: ['some_field_1', 'some_field_2'],
+      });
+
+      const actual = getWrapper({
+        isInvoiceRequested: true,
+      }).instance().getRequiredFormFields(resource);
+
+
+      expect(actual).toEqual(['someField1', 'someField2'].concat(
+        invoiceFields,
+        paymentFields,
+        billingFields,
+      ));
     });
 
     test('returns correct required form fields if staff and own use', () => {

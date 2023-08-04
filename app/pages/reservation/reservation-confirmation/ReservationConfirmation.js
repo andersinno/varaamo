@@ -53,7 +53,7 @@ class ReservationConfirmation extends Component {
     } = this.props;
     const reservationPrice = reservation.priceInfo && reservation.priceInfo.totalPrice;
     const reservationTaxPct = reservation.priceInfo && reservation.priceInfo.taxPercentage;
-    const { needManualConfirmation, state } = reservation;
+    const { needManualConfirmation, invoiceRequested, state } = reservation;
 
     const href = `${constants.FEEDBACK_URL}`;
 
@@ -70,8 +70,11 @@ class ReservationConfirmation extends Component {
       email = user.email;
     }
 
-    const isRequested = !isEdited && needManualConfirmation && state === RESERVATION_STATE.REQUESTED;
-    const isCreated = !isEdited && !isRequested;
+    const isNew = !isEdited;
+
+    const isRequested = isNew && needManualConfirmation && state === RESERVATION_STATE.REQUESTED;
+    const isInvoiceRequested = isNew && invoiceRequested && state === RESERVATION_STATE.INVOICE_REQUESTED;
+    const isCreated = isNew && !isRequested && !isInvoiceRequested;
 
     return (
       <Row className="app-ReservationConfirmation">
@@ -79,6 +82,7 @@ class ReservationConfirmation extends Component {
           <div className="app-ReservationDetails">
             <h2 className="app-ReservationPage__title app-ReservationPage__title--big app-ReservationPage__header">
               {isEdited && t('ReservationConfirmation.reservationEditedTitle')}
+              {isInvoiceRequested && t('ReservationConfirmation.reservationInvoiceRequestedCreatedTitle')}
               {isRequested && t('ReservationConfirmation.reservationManualConfirmationCreatedTitle')}
               {isCreated && t('ReservationConfirmation.reservationCreatedTitle')}
             </h2>
@@ -99,20 +103,28 @@ class ReservationConfirmation extends Component {
             </div>
 
             {isCreated && (
-            <p>
-              <FormattedHTMLMessage
-                id="ReservationConfirmation.confirmationText"
-                values={{ email }}
-              />
-            </p>
+              <p>
+                <FormattedHTMLMessage
+                  id="ReservationConfirmation.confirmationText"
+                  values={{ email }}
+                />
+              </p>
             )}
             {isRequested && (
-            <p>
-              <FormattedHTMLMessage
-                id="ReservationConfirmation.confirmationForManualReservationText"
-                values={{ email }}
-              />
-            </p>
+              <p>
+                <FormattedHTMLMessage
+                  id="ReservationConfirmation.confirmationForManualReservationText"
+                  values={{ email }}
+                />
+              </p>
+            )}
+            {isInvoiceRequested && (
+              <p>
+                <FormattedHTMLMessage
+                  id="ReservationConfirmation.confirmationInvoiceRequestedReservationText"
+                  values={{ email }}
+                />
+              </p>
             )}
             <p>
               <FormattedHTMLMessage id="ReservationConfirmation.feedbackText" values={{ href }} />

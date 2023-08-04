@@ -1,5 +1,6 @@
 import pick from 'lodash/pick';
 import uniq from 'lodash/uniq';
+import isEmpty from 'lodash/isEmpty';
 import camelCase from 'lodash/camelCase';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -14,6 +15,25 @@ import { isStaffEvent, getReservationPricePerPeriod } from '../../../utils/reser
 import { getTermsAndConditions } from '../../../utils/resourceUtils';
 import ReservationInformationForm from './ReservationInformationForm';
 
+const BILLING_FIELDS = [
+  'billingFirstName',
+  'billingLastName',
+  'billingPhoneNumber',
+  'billingEmailAddress',
+  'paymentTermsAndConditions',
+];
+
+const COMPANY_FIELDS = [
+  'reserverId',
+  'company',
+  'companyEmailAddress',
+  'companyPhoneNumber',
+  'companyAddressZip',
+  'companyAddressCity',
+  'companyAddressStreet',
+];
+
+
 class ReservationInformation extends Component {
   static propTypes = {
     isAdmin: PropTypes.bool.isRequired,
@@ -22,11 +42,13 @@ class ReservationInformation extends Component {
     isOwnUse: PropTypes.bool.isRequired,
     isPaymentRequired: PropTypes.bool.isRequired,
     isPayableAmount: PropTypes.bool.isRequired,
+    isInvoiceRequested: PropTypes.bool.isRequired,
     isStaff: PropTypes.bool.isRequired,
     onBack: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onConfirm: PropTypes.func.isRequired,
     onChangeReservationType: PropTypes.func.isRequired,
+    onChangeInvoiceRequested: PropTypes.func.isRequired,
     reservation: PropTypes.object,
     reservationPriceInfo: PropTypes.object.isRequired,
     resource: PropTypes.object.isRequired,
@@ -41,25 +63,53 @@ class ReservationInformation extends Component {
     onConfirm(values);
   }
 
+  getPaymentFormFields = () => {
+    // provide list of fields to be rendered depending on payment options
+    const {
+      resource,
+      isInvoiceRequested,
+      isPayableAmount,
+      isPaymentRequired,
+      isStaff,
+    } = this.props;
+
+    if (!isPaymentRequired) {
+      return [];
+    }
+
+    const { pricingEventTypes, canRequestInvoice } = resource;
+
+    let paymentFields = ['userGroup'];
+
+    if (!isEmpty(pricingEventTypes)) {
+      paymentFields = [...paymentFields, 'eventType'];
+    }
+
+    if (!isPayableAmount) {
+      return paymentFields;
+    }
+
+    if (isStaff || !canRequestInvoice) {
+      return [...paymentFields, ...BILLING_FIELDS];
+    }
+
+    return [
+      ...paymentFields,
+      'invoiceRequested',
+      ...isInvoiceRequested ? COMPANY_FIELDS : BILLING_FIELDS,
+    ];
+  }
 
   getFormFields = (termsAndConditions, specificTerms) => {
     const {
       isAdmin,
-      isPaymentRequired,
-      isPayableAmount,
       isStaff,
       resource,
     } = this.props;
     let formFields = [...resource.supportedReservationExtraFields].map(value => camelCase(value));
-    const eventTypes = resource.pricingEventTypes ? [...resource.pricingEventTypes] : [];
 
     if (isAdmin) {
       formFields.push('comments');
-
-      /* waiting for backend implementation */
-      // formFields.push('reserverName');
-      // formFields.push('reserverEmailAddress');
-      // formFields.push('reserverPhoneNumber');
     }
 
     if (resource.needManualConfirmation && isStaff) {
@@ -74,29 +124,7 @@ class ReservationInformation extends Component {
       formFields.push('specificTerms');
     }
 
-    // NOTE: these fields may still be included in the metadata,
-    // as they may be required for non-payment related reasons.
-
-    if (isPaymentRequired) {
-      const paymentFields = [
-        'paymentTermsAndConditions',
-        'billingFirstName',
-        'billingLastName',
-        'billingPhoneNumber',
-        'billingEmailAddress',
-      ];
-
-      // ensure fields are always shown if payable
-      if (isPayableAmount) {
-        formFields = [...formFields, ...paymentFields];
-      }
-
-      formFields.push('userGroup');
-
-      if (eventTypes.length > 0) {
-        formFields.push('eventType');
-      }
-    }
+    formFields = [...formFields, ...this.getPaymentFormFields()];
 
     return uniq(formFields);
   }
@@ -115,7 +143,12 @@ class ReservationInformation extends Component {
   }
 
   getRequiredFormFields(resource, termsAndConditions, specificTerms) {
-    const { isAdmin, isStaff, isOwnUse } = this.props;
+    const {
+      isAdmin,
+      isOwnUse,
+      isInvoiceRequested,
+      isStaff,
+    } = this.props;
 
     const paymentFields = [
       'paymentTermsAndConditions',
@@ -127,6 +160,13 @@ class ReservationInformation extends Component {
       'billingFirstName',
       'billingLastName',
       'billingEmailAddress',
+    ];
+
+    const invoiceFields = [
+      'reserverId',
+      'companyAddressZip',
+      'companyAddressCity',
+      'companyAddressStreet',
     ];
 
     let requiredFormFields = [];
@@ -151,6 +191,9 @@ class ReservationInformation extends Component {
       }
       if (specificTerms) {
         requiredFormFields = [...requiredFormFields, 'specificTerms'];
+      }
+      if (isInvoiceRequested) {
+        requiredFormFields = [...requiredFormFields, ...invoiceFields];
       }
     }
     // NOTE: these fields are still assumed to be required even if
@@ -188,12 +231,14 @@ class ReservationInformation extends Component {
   render() {
     const {
       isEditing,
+      isInvoiceRequested,
       isMakingReservations,
       isPayableAmount,
       isPaymentRequired,
       onBack,
       onCancel,
       onChangeReservationType,
+      onChangeInvoiceRequested,
       resource,
       reservationPriceInfo,
       selectedTime,
@@ -216,12 +261,14 @@ class ReservationInformation extends Component {
             fields={this.getFormFields(termsAndConditions, specificTerms)}
             initialValues={this.getFormInitialValues()}
             isEditing={isEditing}
+            isInvoiceRequested={isInvoiceRequested}
             isMakingReservations={isMakingReservations}
             isPayableAmount={isPayableAmount}
             isPaymentRequired={isPaymentRequired}
             isStaff={isStaff}
             onBack={onBack}
             onCancel={onCancel}
+            onChangeInvoiceRequested={onChangeInvoiceRequested}
             onChangeReservationType={onChangeReservationType}
             onConfirm={this.onConfirm}
             requiredFields={this.getRequiredFormFields(resource, termsAndConditions, specificTerms)}
@@ -294,13 +341,13 @@ class ReservationInformation extends Component {
               </Col>
             </Row>
             {this.isManualConfirmationRequiredForPayment() && (
-            <Row>
-              <Col md={12}>
-                <strong className="app-ReservationDetails__needManualConfirmation">
-                  {t('ReservationInfo.requiresManualConfirmation')}
-                </strong>
-              </Col>
-            </Row>
+              <Row>
+                <Col md={12}>
+                  <strong className="app-ReservationDetails__needManualConfirmation">
+                    {t('ReservationInfo.requiresManualConfirmation')}
+                  </strong>
+                </Col>
+              </Row>
             )}
           </div>
         </Col>
