@@ -113,7 +113,7 @@ export const getEditReservationUrl = (reservation) => {
  */
 export const canUserModifyReservation = (reservation) => {
   if (get(reservation, 'user_permissions.can_modify', false)
-      && reservation.state !== RESERVATION_STATE.CANCELLED) {
+    && reservation.state !== RESERVATION_STATE.CANCELLED) {
     return true;
   }
 
@@ -131,7 +131,7 @@ export const canUserModifyReservation = (reservation) => {
  */
 export const canUserCancelReservation = (reservation) => {
   if (get(reservation, 'user_permissions.can_delete', false)
-      && reservation.state !== RESERVATION_STATE.CANCELLED) {
+    && reservation.state !== RESERVATION_STATE.CANCELLED) {
     return true;
   }
 
@@ -152,10 +152,21 @@ export const getShowRefundPolicy = (isAdmin, reservation) => {
   return isAdmin && !isStaffEvent && price > 0;
 };
 
+export const isRequestedState = (reservation) => {
+  return [
+    RESERVATION_STATE.REQUESTED,
+    RESERVATION_STATE.INVOICE_REQUESTED,
+  ].includes(reservation.state);
+};
 
 export const getApprovedState = (reservation) => {
-  const isPaidReservationWithManualConfirmation = reservation.need_manual_confirmation
-    && !isEmpty(reservation.price_info);
+  const hasPayment = !isEmpty(reservation.price_info);
+
+  if (reservation.invoice_requested && hasPayment) {
+    return RESERVATION_STATE.CONFIRMED;
+  }
+
+  const isPaidReservationWithManualConfirmation = reservation.need_manual_confirmation && hasPayment;
 
   return isPaidReservationWithManualConfirmation
     ? RESERVATION_STATE.WAITING_FOR_PAYMENT

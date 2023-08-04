@@ -37,6 +37,10 @@ exports[`ManageReservationsFilters renders correctly 1`] = `
                 "value": "denied",
               },
               Object {
+                "label": "Reservation.stateLabelInvoiceRequested",
+                "value": "invoice_requested",
+              },
+              Object {
                 "label": "Reservation.stateLabelRequested",
                 "value": "requested",
               },
