@@ -489,6 +489,7 @@
   "Reservation.stateLabelConfirmedButNotPaid": "Approved; not paid",
   "Reservation.stateLabelDenied": "Denied",
   "Reservation.stateLabelRequested": "Requested",
+  "Reservation.stateLabelInvoiceRequested": "Invoice requested",
   "Reservation.stateLabelWaitingForPayment": "Waiting for payment",
   "ResourceReservationCalendar.requiredLoginMethods": "Login methods: {allowedLoginMethodNames}",
   "ResourceReservationCalendar.reserveButton": "Reserve",

@@ -4,6 +4,7 @@ import {
   getNextReservationForToday,
   getShowRefundPolicy,
   getApprovedState,
+  isRequestedState,
 } from '../utils';
 import reservationGenerator from '../../../common/data/fixtures/reservation';
 import { RESERVATION_STATE } from '../../../constants/ReservationState';
@@ -19,15 +20,29 @@ describe('Reservation utils function ', () => {
       expect(canModify).toBeFalsy();
     });
 
+    test('return true if (logged in) user have can_modify true', () => {
+      const reservation = reservationCreator({
+        user_permissions: { can_modify: true },
+      });
+      const canModify = canUserModifyReservation(reservation);
+
+      expect(canModify).toBeTruthy();
+    });
+
     test('return false if (logged in) user have can_modify false', () => {
-      const reservation = reservationCreator({ can_modify: false });
+      const reservation = reservationCreator({
+        user_permissions: { can_modify: false },
+      });
       const canModify = canUserModifyReservation(reservation);
 
       expect(canModify).toBeFalsy();
     });
 
     test('return false if (logged in) user have can_modify true, but reservation state was canceled', () => {
-      const reservation = reservationCreator({ can_modify: true, state: RESERVATION_STATE.CANCELLED });
+      const reservation = reservationCreator({
+        user_permissions: { can_modify: true },
+        state: RESERVATION_STATE.CANCELLED,
+      });
       const canModify = canUserModifyReservation(reservation);
 
       expect(canModify).toBeFalsy();
@@ -50,24 +65,32 @@ describe('Reservation utils function ', () => {
     });
 
     test('return false if (logged in) user have can_delete false', () => {
-      const reservation = reservationCreator({ can_delete: false });
+      const reservation = reservationCreator({
+        user_permissions: { can_delete: false },
+      });
       const canCancel = canUserCancelReservation(reservation);
 
       expect(canCancel).toBeFalsy();
     });
 
     test('return false if (logged in) user have can_delete true, but reservation state was canceled', () => {
-      const reservation = reservationCreator({ can_delete: true, state: RESERVATION_STATE.CANCELLED });
+      const reservation = reservationCreator({
+        user_permissions: { can_delete: true },
+        state: RESERVATION_STATE.CANCELLED,
+      });
       const canCancel = canUserCancelReservation(reservation);
 
       expect(canCancel).toBeFalsy();
     });
 
     test('return true if (logged in) user have can_delete true, state not canceled', () => {
-      const reservation = reservationCreator({ can_delete: true, state: RESERVATION_STATE.CONFIRMED });
+      const reservation = reservationCreator({
+        user_permissions: { can_delete: true },
+        state: RESERVATION_STATE.CONFIRMED,
+      });
       const canCancel = canUserCancelReservation(reservation);
 
-      expect(canCancel).toBeFalsy();
+      expect(canCancel).toBeTruthy();
     });
   });
 
@@ -89,10 +112,23 @@ describe('Reservation utils function ', () => {
     });
   });
 
+  describe('isRequestedState', () => {
+    test('should return true if reservation is requested', () => {
+      expect(isRequestedState({ state: RESERVATION_STATE.REQUESTED })).toBe(true);
+    });
+    test('should return true if reservation is invoice requested', () => {
+      expect(isRequestedState({ state: RESERVATION_STATE.INVOICE_REQUESTED })).toBe(true);
+    });
+    test('should return true if reservation is not requested', () => {
+      expect(isRequestedState({ state: RESERVATION_STATE.WAITING_FOR_PAYMENT })).toBe(false);
+    });
+  });
+
   describe('getApprovedState', () => {
     test('should return RESERVATION_STATE.WAITING_FOR_PAYMENT if reservation requires payment', () => {
       const reservation = {
         need_manual_confirmation: true,
+        invoice_requested: false,
         begin: new Date(2017, 6, 7, 10, 0, 0, 0),
         end: new Date(2017, 6, 7, 11, 0, 0, 0),
         price_info: {
@@ -109,6 +145,7 @@ describe('Reservation utils function ', () => {
     test('should return RESERVATION_STATE.CONFIRMED if reservation does not require manual confirmation', () => {
       const reservation = {
         need_manual_confirmation: false,
+        invoice_requested: false,
         begin: new Date(2017, 6, 7, 10, 0, 0, 0),
         end: new Date(2017, 6, 7, 11, 0, 0, 0),
         price_info: {
@@ -122,9 +159,28 @@ describe('Reservation utils function ', () => {
       expect(getApprovedState(reservation)).toBe(RESERVATION_STATE.CONFIRMED);
     });
 
+    test('should return RESERVATION_STATE.CONFIRMED if reservation invoice requested', () => {
+      const reservation = {
+        need_manual_confirmation: false,
+        invoice_requested: true,
+        begin: new Date(2017, 6, 7, 10, 0, 0, 0),
+        end: new Date(2017, 6, 7, 11, 0, 0, 0),
+        price_info: {
+          total_price: 20.00,
+          amount: 20.00,
+          tax_percentage: 24.00,
+          type: 'fixed',
+        },
+      };
+
+      expect(getApprovedState(reservation)).toBe(RESERVATION_STATE.CONFIRMED);
+    });
+
+
     test('should return RESERVATION_STATE.CONFIRMED if reservation does not have price info', () => {
       const reservation = {
         need_manual_confirmation: true,
+        invoice_requested: false,
         begin: new Date(2017, 6, 7, 10, 0, 0, 0),
         end: new Date(2017, 6, 7, 11, 0, 0, 0),
         price_info: {},
