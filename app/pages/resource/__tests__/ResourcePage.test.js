@@ -302,41 +302,59 @@ describe('pages/resource/ResourcePage', () => {
     describe('resource.reservableAfter is not defined', () => {
       const instance = getWrapper().instance();
 
-      test('returns true when the day is before today', () => {
-        const isDisabled = instance.isDayReservable('1990-03-06T00:00:00Z');
-        expect(isDisabled).toBe(true);
+      test('returns false when the day is before today', () => {
+        expect(instance.isDayReservable('1990-03-06T00:00:00Z')).toBe(false);
       });
 
-      test('returns false when the day is today', () => {
-        const today = new Date();
-        const isDisabled = instance.isDayReservable(today.toISOString());
-        expect(isDisabled).toBe(false);
+      test('returns true when the day is today', () => {
+        expect(instance.isDayReservable(new Date().toISOString())).toBe(true);
       });
 
-      test('returns false when the day is after today', () => {
+      test('returns true when the day is after today', () => {
         const date = new Date();
         date.setDate(date.getDate() + 1);
-
-        const tomorrow = date.toISOString();
-        const isDisabled = instance.isDayReservable(tomorrow);
-
-        expect(isDisabled).toBe(false);
+        expect(instance.isDayReservable(date.toISOString())).toBe(true);
       });
     });
 
     describe('resource.reservableAfter is defined', () => {
       const instance = getWrapper({ resource: { reservableAfter: '2019-03-09T00:00:00Z' } }).instance();
 
-      test('returns true if the day is before reservableAfter', () => {
-        const dayBefore = '2019-03-06T00:00:00Z';
-        const isDisabled = instance.isDayReservable(dayBefore);
-        expect(isDisabled).toBe(true);
+      test('returns false if the day is before reservableAfter', () => {
+        expect(instance.isDayReservable('2019-03-06T00:00:00Z')).toBe(false);
       });
 
-      test('returns false if the day is after reservableAfter', () => {
-        const dayAfter = '2019-03-12T00:00:00Z';
-        const isDisabled = instance.isDayReservable(dayAfter);
-        expect(isDisabled).toBe(false);
+      test('returns true if the day is after reservableAfter', () => {
+        expect(instance.isDayReservable('2019-03-12T00:00:00Z')).toBe(true);
+      });
+    });
+
+    describe('resource.reservableBefore is defined', () => {
+      const instance = getWrapper({
+        resource: {
+          reservableAfter: '2019-03-09T00:00:00Z',
+          reservableBefore: '2019-03-15T00:00:00Z',
+        },
+      }).instance();
+
+      test('returns false if the day is before reservableAfter', () => {
+        expect(instance.isDayReservable('2019-03-06T00:00:00Z')).toBe(false);
+      });
+
+      test('returns false if the day is after reservableBefore', () => {
+        expect(instance.isDayReservable('2019-03-16T00:00:00Z')).toBe(false);
+      });
+
+      test('returns true if the day is before reservableBefore', () => {
+        expect(instance.isDayReservable('2019-03-12T00:00:00Z')).toBe(true);
+      });
+
+      test('returns true if the day is same day as reservableAfter', () => {
+        expect(instance.isDayReservable('2019-03-09T00:00:00Z')).toBe(true);
+      });
+
+      test('returns true if the day is same day as reservableBefore', () => {
+        expect(instance.isDayReservable('2019-03-15T00:00:00Z')).toBe(true);
       });
     });
   });

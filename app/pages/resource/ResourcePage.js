@@ -88,11 +88,32 @@ class UnconnectedResourcePage extends Component {
   };
 
   isDayReservable = (day) => {
-    const { resource: { reservableAfter, reservableBefore } } = this.props;
-    const beforeDate = reservableAfter || moment().subtract(0, 'day');
-    const lastDate = reservableBefore ? moment(reservableBefore).add(1, 'day') : null;
-    if (lastDate) return !moment(day).isBetween(beforeDate, lastDate, 'day');
-    return moment(day).isBefore(beforeDate, 'day');
+    // NOTE: making assumption here that we are dealing with same timezones
+    // and daylight savings taken into account.
+
+    const fromDate = this.getReservableAfter();
+    const untilDate = this.getReservableBefore();
+
+    const currentDate = moment(day).startOf('day');
+
+    // should be inclusive of current date
+    return untilDate
+      ? currentDate.isBetween(fromDate.subtract(1, 'day'), untilDate, 'day')
+      : currentDate.isSameOrAfter(fromDate, 'day');
+  };
+
+  getReservableAfter = () => {
+    const { resource: { reservableAfter } } = this.props;
+    return reservableAfter
+      ? moment(reservableAfter).startOf('day')
+      : moment().subtract(0, 'day').startOf('day');
+  };
+
+  getReservableBefore = () => {
+    const { resource: { reservableBefore } } = this.props;
+    return reservableBefore
+      ? moment(reservableBefore).startOf('day').add(1, 'day')
+      : null;
   };
 
   handleDateChange = (newDate) => {
