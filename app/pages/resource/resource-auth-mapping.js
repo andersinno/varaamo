@@ -22,17 +22,23 @@ export const RESOURCE_AUTHENTICATION_GROUPING = {
   'strong': {
     loginMethodNames: ['Suomi.fi'],
     loginMethodIcons: [suomiFiIcon],
-    canReserveWith: ['suomifi', 'tampere_adfs'],
+    canReserveWith: ['suomifi', 'tampere_adfs', 'tampereazuread'],
   },
   'PIKI': {
     loginMethodNames: ['PIKI-kirjastokortti'],
     loginMethodIcons: [pikiIcon],
-    canReserveWith: ['axiell_aurora', 'tampere_adfs'],
+    canReserveWith: ['axiell_aurora', 'tampere_adfs', 'tampereazuread'],
   },
   'mid': {
     loginMethodNames: ['Suomi.fi', 'Phone', 'PIKI-kirjastokortti'],
     loginMethodIcons: [suomiFiIcon, mobileIcon, pikiIcon],
-    canReserveWith: ['suomifi', 'mobile', 'axiell_aurora', 'tampere_adfs'],
+    canReserveWith: [
+      'suomifi',
+      'mobile',
+      'axiell_aurora',
+      'tampere_adfs',
+      'tampereazuread',
+    ],
   },
   'weak': {
     loginMethodNames: [
@@ -59,6 +65,7 @@ export const RESOURCE_AUTHENTICATION_GROUPING = {
       'facebook',
       'yletunnus',
       'tampere_adfs',
+      'tampereazuread',
     ],
   },
 };
@@ -70,4 +77,5 @@ export const LOGIN_METHODS_NAMES = {
   'google': 'Google',
   'facebook': 'Facebook',
   'yletunnus': 'Yletunnus',
+  'tampereazuread': 'Azure AD',
 };
