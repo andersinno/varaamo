@@ -95,7 +95,10 @@ describe('ManageReservationsPage', () => {
         resolve({ data: 'File content' });
       });
       simple.mock(client, 'get').returnWith(myPromise);
-      page.instance().downloadReservationData('csv');
+      page.instance().downloadReservationData('csv:basic');
+      page.instance().downloadReservationData('csv:accounting');
+      page.instance().downloadReservationData('excel:basic');
+      page.instance().downloadReservationData('excel:accounting');
     });
   });
 });
