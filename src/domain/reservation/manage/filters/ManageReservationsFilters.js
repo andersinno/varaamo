@@ -38,7 +38,7 @@ class ManageReservationsFilters extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { selectedReservationDownloadOption: 'xlsx' };
+    this.state = { selectedReservationDownloadOption: 'xlsx:basic' };
   }
 
   onDateFilterChange = (start, end) => {
@@ -133,8 +133,10 @@ class ManageReservationsFilters extends React.Component {
 
   getReservationDownloadOptions = () => {
     return [
-      { value: 'xlsx', label: 'Excel' },
-      { value: 'csv', label: 'CSV' },
+      { value: 'xlsx:basic', label: 'Excel (Basic)' },
+      { value: 'xlsx:accounting', label: 'Excel (Accounting)' },
+      { value: 'csv:basic', label: 'CSV (Basic)' },
+      { value: 'csv:accounting', label: 'CSV (Accounting)' },
     ];
   };
 
