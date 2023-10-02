@@ -591,13 +591,13 @@ describe('domain resource utility function', () => {
 
     test('are rendered correctly for mid auth', () => {
       const resource = { authentication: 'mid' };
-      const allowedLoginMethodNamesString = 'Suomi.fi/Phone/PIKI-kirjastokortti';
+      const allowedLoginMethodNamesString = 'Suomi.fi/PIKI-kirjastokortti';
       expect(resourceUtils.getRequiredLoginMethod(resource)).toEqual(allowedLoginMethodNamesString);
     });
 
     test('are rendered correctly for weak auth', () => {
       const resource = { authentication: 'weak' };
-      const allowedLoginMethodNamesString = 'Suomi.fi/PIKI-kirjastokortti/Phone/Google/Facebook/Yle Tunnus';
+      const allowedLoginMethodNamesString = 'Suomi.fi/PIKI-kirjastokortti/Google/Facebook/Yle Tunnus';
       expect(resourceUtils.getRequiredLoginMethod(resource)).toEqual(allowedLoginMethodNamesString);
     });
 

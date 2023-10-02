@@ -127,13 +127,6 @@ exports[`ResourceCard renders correctly 1`] = `
           title="PIKI-kirjastokortti"
         />
         <img
-          alt="Phone"
-          className="app-resourceCardInfoCell__icon"
-          key="Phone"
-          src="test-file-stub"
-          title="Phone"
-        />
-        <img
           alt="Google"
           className="app-resourceCardInfoCell__icon"
           key="Google"
