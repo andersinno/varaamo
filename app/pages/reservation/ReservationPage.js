@@ -191,6 +191,9 @@ class UnconnectedReservationPage extends Component {
 
   handleChangeReservationType(reservationType) {
     this.setState({ reservationType });
+    if (reservationType === RESERVATION_TYPE.NORMAL) {
+      this.props.actions.changeFrequency('');
+    }
   }
 
   handleChangeInvoiceRequested(isInvoiceRequested) {
@@ -327,6 +330,7 @@ class UnconnectedReservationPage extends Component {
 
     const isPaymentRequired = this.isPaymentRequired();
     const isPayableAmount = this.isPayableAmount();
+    const showOccuranceControls = isAdmin && this.state.reservationType !== RESERVATION_TYPE.NORMAL;
 
     const setReservationPriceInfo = (info) => {
       this.setState({ reservationPriceInfo: info });
@@ -362,7 +366,7 @@ class UnconnectedReservationPage extends Component {
                 )}
                 {view === 'information' && selectedTime && (
                   <>
-                    {isAdmin && this.renderRecurringReservations()}
+                    {showOccuranceControls && this.renderRecurringReservations()}
                     <ReservationInformation
                       isAdmin={isAdmin}
                       isEditing={isEditing}
@@ -441,6 +445,7 @@ function mapDispatchToProps(dispatch) {
     putReservation,
     postReservation,
     removeReservation: recurringReservationsConnector.removeReservation,
+    changeFrequency: recurringReservationsConnector.changeFrequency,
     setSelectedTimeSlots,
     addNotification,
   };
