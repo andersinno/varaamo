@@ -295,11 +295,16 @@ class ManageReservationsPage extends React.Component {
     }));
   }
 
-  downloadReservationData = (downloadType) => {
+  downloadReservationData = (downloadOption) => {
+    const [downloadType, reportType] = downloadOption.split(/:/);
     const { location } = this.props;
     const { totalCount } = this.state;
     const filters = searchUtils.getFiltersFromUrl(location, false);
+    // TBD: includeAccountingFields should be additional option here
     const params = { ...filters, excludeReservationExtraFields: 1 };
+    if (reportType === 'accounting') {
+      params.includeAccountingFields = 1;
+    }
     const fileName = `reservation_${Date.now()}`;
 
     let contentType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
