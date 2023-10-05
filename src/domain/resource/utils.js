@@ -407,7 +407,7 @@ export const isDateReservable = (resource, date) => {
   const reservableBefore = get(resource, 'reservable_before', null);
 
   const isAdmin = get(resource, 'user_permissions.is_admin', false);
-  const isBefore = reservableBefore ? moment(date).isSameOrBefore(moment(reservableBefore), 'day') : true;
+  const isBefore = reservableBefore ? moment(date).isBefore(moment(reservableBefore), 'day') : true;
   const isAfter = reservableAfter ? moment(date).isSameOrAfter(moment(reservableAfter), 'day') : true;
 
   return isAdmin || (isBefore && isAfter);
