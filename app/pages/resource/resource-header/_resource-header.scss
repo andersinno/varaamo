@@ -62,4 +62,17 @@
       vertical-align: bottom;
     }
   }
+  &__access-methods {
+    margin-top: 8px;
+    & span {
+      margin-right: 8px;
+    }
+  }
+  & .access-method {
+    img {
+      height: $line-height-computed;
+      width: $line-height-computed;
+      vertical-align: bottom;
+    }
+  }
 }
