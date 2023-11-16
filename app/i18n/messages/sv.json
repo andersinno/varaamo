@@ -64,6 +64,7 @@
   "payment.paid": "Betald",
   "payment.success": "Betalning genomförd",
   "payment.processing": "Behandlar betalning",
+  "payment.inInvoicing": "Vid Fakturering",
   "payment.failed": "Betalning misslyckades",
   "payment.cancelled": "Betalning avbruten",
   "payment.waiting": "Väntar på utbetalning",
