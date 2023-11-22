@@ -58,6 +58,10 @@ export default {
       labelBsStyle: 'success',
       labelTextId: 'common.confirmed',
     },
+    invoice_requested: {
+      labelBsStyle: 'primary',
+      labelTextId: 'common.requested',
+    },
     paid: {
       labelBsStyle: 'success',
       labelTextId: 'common.confirmed',
@@ -95,6 +99,14 @@ export default {
     cancelled: {
       labelBsStyle: 'danger',
       labelTextId: 'payment.cancelled',
+    },
+    invoice_requested: {
+      labelBsStyle: 'primary',
+      labelTextId: 'common.requested',
+    },
+    in_invoicing: {
+      labelBsStyle: 'success',
+      labelTextId: 'payment.inInvoicing',
     },
   },
   SEARCH_PAGE_SIZE: 30,

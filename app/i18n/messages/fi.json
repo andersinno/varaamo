@@ -71,6 +71,7 @@
   "payment.paid": "Maksettu",
   "payment.success": "Maksu suoritettu",
   "payment.processing": "Käsitellään maksua",
+  "payment.inInvoicing": "Laskutuksessa",
   "payment.failed": "Maksu epäonnistui",
   "payment.cancelled": "Maksu keskeytetty",
   "payment.waiting": "Odottaa maksua",

@@ -35,6 +35,7 @@ describe('pages/user-reservations/reservation-filters/AdminReservationFilters', 
         { label: 'common.confirmed', value: 'paid' },
         { label: 'common.denied', value: 'denied' },
         { label: 'common.requested', value: 'requested' },
+        { label: 'common.requested', value: 'invoice_requested' },
         { label: 'common.waiting', value: 'waiting_for_payment' },
       ];
       expect(select.props().options).toEqual(expected);

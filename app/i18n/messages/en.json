@@ -71,6 +71,7 @@
   "payment.paid": "Paid",
   "payment.success": "Payment successful",
   "payment.processing": "Processing payment",
+  "payment.inInvoicing": "In Invoicing",
   "payment.failed": "Payment failed",
   "payment.cancelled": "Payment cancelled",
   "payment.waiting": "Waiting for payment",
