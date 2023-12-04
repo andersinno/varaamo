@@ -164,6 +164,7 @@ class ReservationInformation extends Component {
 
     const invoiceFields = [
       'reserverId',
+      'company',
       'companyAddressZip',
       'companyAddressCity',
       'companyAddressStreet',

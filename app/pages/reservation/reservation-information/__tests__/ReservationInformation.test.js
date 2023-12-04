@@ -405,6 +405,7 @@ describe('pages/reservation/reservation-information/ReservationInformation', () 
 
     const invoiceFields = [
       'reserverId',
+      'company',
       'companyAddressZip',
       'companyAddressCity',
       'companyAddressStreet',
