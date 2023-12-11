@@ -8,7 +8,7 @@ exports[`ManageReservationsStatus renders correctly 1`] = `
     bsClass="label"
     bsStyle="warning"
   >
-    Reservation.stateLabelRequested
+    Reservation.stateLabelInvoiceRequested
   </Label>
 </div>
 `;

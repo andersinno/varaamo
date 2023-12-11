@@ -461,6 +461,34 @@ describe('pages/reservation/reservation-information/ReservationInformationForm',
           });
         });
       });
+
+      describe('when payment is required', () => {
+        describe('when invoice is requested', () => {
+          const buttons = getWrapper({
+            isPaymentRequired: true,
+            isPayableAmount: true,
+            isInvoiceRequested: true,
+          }).find(Button);
+
+          test('the second button has correct text', () => {
+            const button = buttons.at(1);
+            expect(button.props().children).toBe('common.reserve');
+          });
+        });
+
+        describe('when invoice is not requested', () => {
+          const buttons = getWrapper({
+            isPaymentRequired: true,
+            isPayableAmount: true,
+            isInvoiceRequested: false,
+          }).find(Button);
+
+          test('the second button has correct text', () => {
+            const button = buttons.at(1);
+            expect(button.props().children).toBe('common.pay');
+          });
+        });
+      });
     });
   });
 });

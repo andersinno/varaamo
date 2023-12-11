@@ -297,6 +297,7 @@ class UnconnectedReservationInformationForm extends Component {
 
   renderSubmitButton() {
     const {
+      isInvoiceRequested,
       isMakingReservations,
       isPayableAmount,
       isPaymentRequired,
@@ -308,7 +309,11 @@ class UnconnectedReservationInformationForm extends Component {
     let buttonText;
 
     if (isPaymentRequired && isPayableAmount && !resource.needManualConfirmation) {
-      buttonText = t('common.pay');
+      if (isInvoiceRequested) {
+        buttonText = t('common.reserve');
+      } else {
+        buttonText = t('common.pay');
+      }
     } else if (isMakingReservations) {
       buttonText = t('common.saving');
     } else {

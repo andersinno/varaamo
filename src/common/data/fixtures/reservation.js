@@ -11,7 +11,7 @@ export default new Factory()
   .attr('has_catering_order', false)
   .attr('its_own', false)
   .attr('staff_event', false)
-  .attr('state', 'requested')
+  .attr('state', 'invoice_requested')
   .attr('user', {})
   .attr('user_permissions', null)
   .attr('comments', '');
