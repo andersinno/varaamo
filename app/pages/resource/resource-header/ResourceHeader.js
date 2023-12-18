@@ -13,7 +13,11 @@ import iconMapMarker from '../../../assets/icons/map-marker.svg';
 import iconTicket from '../../../assets/icons/ticket.svg';
 import iconUser from '../../../assets/icons/user-o.svg';
 import iconClock from '../../../assets/icons/clock-o.svg';
+import iconDoor from '../../../assets/icons/door-open.svg';
+import iconKey from '../../../assets/icons/key.svg';
+import iconPin from '../../../assets/icons/pin.svg';
 import iconMap from '../../../assets/icons/map.svg';
+import iconMobile from '../../../assets/icons/mobile.svg';
 import { RESOURCE_AUTHENTICATION_GROUPING } from '../resource-auth-mapping';
 
 function ResourceHeader({
@@ -39,6 +43,22 @@ function ResourceHeader({
         {' km'}
       </span>
     );
+  };
+
+  const accessIcons = {
+    'mobile_app': iconMobile,
+    'open_door': iconDoor,
+    'physical_key': iconKey,
+    'pincode': iconPin,
+    'staff_member': iconUser,
+  };
+
+  const accessLabels = {
+    'mobile_app': t('AccessMethod.mobileApp'),
+    'open_door': t('AccessMethod.openDoor'),
+    'physical_key': t('AccessMethod.physicalKey'),
+    'pincode': t('AccessMethod.pincode'),
+    'staff_member': t('AccessMethod.staffMember'),
   };
 
   const getAllowedLoginMethodsIcons = () => {
@@ -140,6 +160,23 @@ function ResourceHeader({
             <div className="app-ResourceHeader__info">
               {getAllowedLoginMethodsIcons()}
             </div>
+            {resource.accessMethods && resource.accessMethods.length > 0 && (
+            <div className="app-ResourceHeader__info app-ResourceHeader__access-methods">
+              <span className="app-ResourceHeader__info-label">
+                {t('ResourceHeader.accessMethods')}
+:
+              </span>
+                {resource.accessMethods.map(method => (
+                  <span className="app-ResourceHeader__info-label access-method" key={method.id}>
+                    <img
+                      alt={accessLabels[method.id]}
+                      src={accessIcons[method.id]}
+                      title={accessLabels[method.id]}
+                    />
+                  </span>
+                ))}
+            </div>
+            )}
             <div className="app-ResourceHeader__buttons">
               {!showMap && (
                 <Button className="app-ResourceHeader__map-button" onClick={onMapClick}>
@@ -156,6 +193,7 @@ function ResourceHeader({
               {isLoggedIn && <FavoriteButton resource={resource} />}
             </div>
           </div>
+
         </div>
       </Grid>
     </section>
