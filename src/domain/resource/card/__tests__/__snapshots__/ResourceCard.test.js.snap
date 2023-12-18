@@ -54,6 +54,11 @@ exports[`ResourceCard renders correctly 1`] = `
             date="30-07-2019"
             resource={
               Object {
+                "access_methods": Array [
+                  Object {
+                    "id": "pincode",
+                  },
+                ],
                 "authentication": "weak",
                 "available_hours": Array [],
                 "equipment": Array [],
@@ -150,6 +155,24 @@ exports[`ResourceCard renders correctly 1`] = `
       </span>
       <span>
         ResourceCard.requiredLoginMethods
+      </span>
+    </span>
+    <span
+      className="app-resourceCardInfoCell"
+    >
+      <span
+        className="app-ResourceCardInfoCell__loginMethods"
+      >
+        <img
+          alt="AccessMethod.pincode"
+          className="app-resourceCardInfoCell__icon"
+          key="pincode"
+          src="test-file-stub"
+          title="AccessMethod.pincode"
+        />
+      </span>
+      <span>
+        ResourceCard.accessMethods
       </span>
     </span>
   </div>

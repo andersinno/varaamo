@@ -13,7 +13,12 @@ describe('ResourceCard', () => {
       key: 'foo',
       onFavoriteClick: jest.fn(),
       onFilterClick: jest.fn(),
-      resource: resource.build({ authentication: 'weak' }),
+      resource: resource.build({
+        authentication: 'weak',
+        access_methods: [
+          { id: 'pincode' },
+        ],
+      }),
       unit: unit.build(),
       t: () => {},
     };
