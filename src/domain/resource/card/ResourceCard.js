@@ -10,12 +10,16 @@ import iconHome from 'hel-icons/dist/shapes/home.svg';
 import iconMapMarker from 'hel-icons/dist/shapes/map-marker.svg';
 import iconTicket from 'hel-icons/dist/shapes/ticket.svg';
 import iconUser from 'hel-icons/dist/shapes/user-o.svg';
-import iconHeart from 'hel-icons/dist/shapes/heart-o.svg';
 
+import iconHeart from '../../../../app/assets/icons/heart-white.svg';
+import iconDoor from '../../../../app/assets/icons/door-open.svg';
+import iconKey from '../../../../app/assets/icons/key.svg';
+import iconPin from '../../../../app/assets/icons/pin.svg';
+import iconMap from '../../../../app/assets/icons/map.svg';
+import iconMobile from '../../../../app/assets/icons/mobile.svg';
 import FontSizes from '../../../../app/constants/FontSizes';
 import injectT from '../../../../app/i18n/injectT';
-import iconMap from '../../../../app/assets/icons/map.svg';
-import iconHeartFilled from '../../../../app/assets/icons/heart-filled.svg';
+import iconHeartFilled from '../../../../app/assets/icons/heart-white-filled.svg';
 import * as dataUtils from '../../../common/data/utils';
 import * as urlUtils from '../../../common/url/utils';
 import * as searchUtils from '../../search/utils';
@@ -27,6 +31,15 @@ import UnpublishedLabel from '../../../../app/shared/label/unpublished/Unpublish
 import ResourceCardInfoCell from './ResourceCardInfoCell';
 import { isLoggedInSelector } from '../../../../app/state/selectors/authSelectors';
 import { RESOURCE_AUTHENTICATION_GROUPING } from '../../../../app/pages/resource/resource-auth-mapping';
+
+const accessIcons = {
+  'mobile_app': iconMobile,
+  'open_door': iconDoor,
+  'physical_key': iconKey,
+  'pincode': iconPin,
+  'staff_member': iconUser,
+};
+
 
 class ResourceCard extends React.Component {
   static propTypes = {
@@ -87,74 +100,130 @@ class ResourceCard extends React.Component {
     return undefined;
   }
 
-  render() {
-    const {
-      date,
-      isLoggedIn,
-      isStacked,
-      resource,
-      onFavoriteClick,
-      onFilterClick,
-      unit,
-      intl,
-      t,
-      isNormalFontSize,
-    } = this.props;
-    const locale = intl.locale;
-    const typeName = resource.type
-      ? dataUtils.getLocalizedFieldValue(resource.type.name, locale)
-      : '';
+getAccessMethodsIcons = (t) => {
+  const accessLabels = {
+    'mobile_app': t('AccessMethod.mobileApp'),
+    'open_door': t('AccessMethod.openDoor'),
+    'physical_key': t('AccessMethod.physicalKey'),
+    'pincode': t('AccessMethod.pincode'),
+    'staff_member': t('AccessMethod.staffMember'),
+  };
 
-    return (
-      <div
-        className={classNames('app-resourceCard2', {
-          'app-resourceCard2__stacked': isStacked,
-          'app-resourceCard2--normal-font-size': isNormalFontSize,
-        })}
-      >
-        <Link
-          className={classNames('app-resourceCard2__image-link', {
-            'app-resourceCard2__image-link--large-font-size': !isNormalFontSize,
-          })}
-          onClick={this.handleLinkClick}
-          to={this.getResourcePageLink()}
-        >
-          <BackgroundImage
-            height={420}
-            image={getMainImage(resource.images)}
-            width={700}
+  const { resource } = this.props;
+
+  return resource.access_methods && resource.access_methods.length > 0 ? (
+    <span className="app-resourceCardInfoCell">
+      <span className="app-ResourceCardInfoCell__loginMethods">
+        {this.props.resource.access_methods.map(method => (
+          <img
+            alt={accessLabels[method.id]}
+            className="app-resourceCardInfoCell__icon"
+            key={method.id}
+            src={accessIcons[method.id]}
+            title={accessLabels[method.id]}
           />
-        </Link>
-        <div className="app-resourceCard2__content">
-          <Link onClick={this.handleLinkClick} to={this.getResourcePageLink()}>
-            <h4>{dataUtils.getLocalizedFieldValue(resource.name, locale, true)}</h4>
-            <div className="app-resourceCard2__unit-name">
-              <span>{dataUtils.getLocalizedFieldValue(unit.name, locale)}</span>
-              <div className="app-resourceCard2__unit-name-labels">
-                <ResourceAvailability date={date} resource={resource} />
-                {!resource.public && <UnpublishedLabel />}
-              </div>
-            </div>
-          </Link>
-          <div className="app-resourceCard2__description">
-            {dataUtils.getLocalizedFieldValue(
-              resource.description,
-              locale,
-              true,
-            )}
-          </div>
-        </div>
-        <div className="app-resourceCard2__info">
-          {resource.type && (
-            <ResourceCardInfoCell
-              icon={iconHome}
-              onClick={() => onFilterClick('search', typeName)}
-              text={typeName}
+
+        ))}
+      </span>
+      <span>
+        {t('ResourceCard.accessMethods')}
+      </span>
+    </span>
+  ) : undefined;
+};
+
+render() {
+  const {
+    date,
+    isLoggedIn,
+    isStacked,
+    resource,
+    onFavoriteClick,
+    onFilterClick,
+    unit,
+    intl,
+    t,
+    isNormalFontSize,
+  } = this.props;
+  const locale = intl.locale;
+  const typeName = resource.type
+    ? dataUtils.getLocalizedFieldValue(resource.type.name, locale)
+    : '';
+
+  const handleFavorite = (event) => {
+    event.stopPropagation();
+    event.preventDefault();
+    onFavoriteClick(resource);
+    return false;
+  };
+
+  const favoriteLabel = resource.is_favorite ? t('ResourceCard.favoriteRemoveButton') : t('ResourceCard.favoriteAddButton');
+
+  return (
+    <div
+      className={classNames('app-resourceCard2', {
+        'app-resourceCard2__stacked': isStacked,
+        'app-resourceCard2--normal-font-size': isNormalFontSize,
+      })}
+    >
+      <Link
+        className={classNames('app-resourceCard2__image-link', {
+          'app-resourceCard2__image-link--large-font-size': !isNormalFontSize,
+        })}
+        onClick={this.handleLinkClick}
+        to={this.getResourcePageLink()}
+      >
+        <BackgroundImage
+          darken={isLoggedIn}
+          height={420}
+          image={getMainImage(resource.images)}
+          width={700}
+        />
+        {isLoggedIn && (
+          <button
+            className="app-resourceCard2__favorite-button"
+            onClick={handleFavorite}
+            title={favoriteLabel}
+            type="button"
+          >
+            <img
+              alt={favoriteLabel}
+              className="app-resourceCard2__image-icon"
+              src={resource.is_favorite ? iconHeartFilled : iconHeart}
             />
+          </button>
+        )}
+      </Link>
+      <div className="app-resourceCard2__content">
+        <Link onClick={this.handleLinkClick} to={this.getResourcePageLink()}>
+          <h4>{dataUtils.getLocalizedFieldValue(resource.name, locale, true)}</h4>
+          <div className="app-resourceCard2__unit-name">
+            <span>{dataUtils.getLocalizedFieldValue(unit.name, locale)}</span>
+            <div className="app-resourceCard2__unit-name-labels">
+              <ResourceAvailability date={date} resource={resource} />
+              {!resource.public && <UnpublishedLabel />}
+            </div>
+          </div>
+        </Link>
+        <div className="app-resourceCard2__description">
+          {dataUtils.getLocalizedFieldValue(
+            resource.description,
+            locale,
+            true,
           )}
-          <ResourceCardInfoCell
-            icon={iconUser}
-            onClick={
+        </div>
+      </div>
+      <div className="app-resourceCard2__info">
+        {resource.type && (
+        <ResourceCardInfoCell
+          icon={iconHome}
+          onClick={() => onFilterClick('search', typeName)}
+          text={typeName}
+        />
+        )}
+        <ResourceCardInfoCell
+          icon={iconUser}
+          onClick={
               resource.people_capacity
                 ? () => onFilterClick(
                   'people',
@@ -164,46 +233,41 @@ class ResourceCard extends React.Component {
                 )
                 : null
             }
-            text={
+          text={
               resource.people_capacity
                 ? t('ResourceCard.peopleCapacity', {
                   people: resource.people_capacity,
                 })
                 : '-'
             }
-          />
-          <ResourceCardInfoCell
-            icon={iconTicket}
-            onClick={
+        />
+        <ResourceCardInfoCell
+          icon={iconTicket}
+          onClick={
               resourceUtils.isFree(resource)
                 ? () => onFilterClick('freeOfCharge', true)
                 : null
             }
-            text={resourceUtils.getPriceFromSnakeCaseResource(resource, t)}
-          />
-          <ResourceCardInfoCell
-            icon={iconMap}
-            text={resourceUtils.getUnitAddress(unit, locale)}
-          />
-          {resource.distance && (
-            <ResourceCardInfoCell
-              icon={iconMapMarker}
-              onClick={() => null}
-              text={resourceUtils.getResourceDistance(resource)}
-            />
-          )}
-          {this.getAllowedLoginMethodsIcons(t)}
-          {isLoggedIn && (
-            <ResourceCardInfoCell
-              alt={typeName}
-              icon={resource.is_favorite ? iconHeartFilled : iconHeart}
-              onClick={() => onFavoriteClick(resource)}
-            />
-          )}
-        </div>
+          text={resourceUtils.getPriceFromSnakeCaseResource(resource, t)}
+        />
+        <ResourceCardInfoCell
+          icon={iconMap}
+          text={resourceUtils.getUnitAddress(unit, locale)}
+        />
+        {resource.distance && (
+        <ResourceCardInfoCell
+          icon={iconMapMarker}
+          onClick={() => null}
+          text={resourceUtils.getResourceDistance(resource)}
+        />
+        )}
+        {this.getAllowedLoginMethodsIcons(t)}
+        {this.getAccessMethodsIcons(t)}
+
       </div>
-    );
-  }
+    </div>
+  );
+}
 }
 
 const UnconnectedResourceCard = injectT(ResourceCard);
