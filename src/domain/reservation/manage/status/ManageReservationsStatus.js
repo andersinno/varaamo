@@ -16,6 +16,8 @@ export const getLabelStyle = (status) => {
       return 'danger';
     case RESERVATION_STATE.REQUESTED:
       return 'warning';
+    case RESERVATION_STATE.INVOICE_REQUESTED:
+      return 'warning';
     case RESERVATION_STATE.WAITING_FOR_PAYMENT:
       return 'warning';
     default:
@@ -33,6 +35,8 @@ export const getLabelText = (status, t) => {
       return t('Reservation.stateLabelDenied');
     case RESERVATION_STATE.REQUESTED:
       return t('Reservation.stateLabelRequested');
+    case RESERVATION_STATE.INVOICE_REQUESTED:
+      return t('Reservation.stateLabelInvoiceRequested');
     case RESERVATION_STATE.WAITING_FOR_PAYMENT:
       return t('Reservation.stateLabelWaitingForPayment');
     default:

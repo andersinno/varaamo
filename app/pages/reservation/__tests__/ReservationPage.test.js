@@ -26,6 +26,7 @@ describe('pages/reservation/ReservationPage', () => {
     history,
     actions: {
       clearReservations: simple.mock(),
+      changeFrequency: jest.fn(),
       closeReservationSuccessModal: simple.mock(),
       fetchResource: simple.mock(),
       openResourceTermsModal: simple.mock(),
@@ -173,6 +174,14 @@ describe('pages/reservation/ReservationPage', () => {
       expect(controls).toHaveLength(0);
     });
 
+    test('does not render RecurringReservationControls component for admins if reservation type is normal', () => {
+      defaultProps.isStaff = true;
+      const wrapper = getWrapper({ isAdmin: true });
+      wrapper.setState({ reservationType: 'normal' });
+      const controls = wrapper.find(RecurringReservationControls);
+      expect(controls).toHaveLength(0);
+    });
+
     test('does not render CompactReservationList if user is not admin', () => {
       defaultProps.isStaff = false; // RecurringReservation visibility is based on isStaff value!
       const list = getWrapper({ isAdmin: false }).find(CompactReservationList);
@@ -313,6 +322,23 @@ describe('pages/reservation/ReservationPage', () => {
       const instance = getWrapper({}).instance();
       instance.handleChangeReservationType('normal');
       expect(instance.state.reservationType).toBe('normal');
+    });
+
+    test('clears occurances when reservation type is set to normal', () => {
+      const occurances = [
+        {
+          begin: '2023-06-18T15:00:00.000Z',
+          end: '2023-06-18T16:00:00.000Z',
+        },
+        {
+          begin: '2023-07-18T15:00:00.000Z',
+          end: '2023-07-18T16:00:00.000Z',
+        },
+      ];
+      const instance = getWrapper({ recurringReservations: occurances }).instance();
+      expect(instance.props.recurringReservations).toEqual(occurances);
+      instance.handleChangeReservationType('normal');
+      expect(defaultProps.actions.changeFrequency).toHaveBeenCalledWith('');
     });
   });
 

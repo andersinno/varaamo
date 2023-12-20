@@ -167,16 +167,24 @@ exports[`ManageReservationsFilters renders correctly 1`] = `
           options={
             Array [
               Object {
-                "label": "Excel",
-                "value": "xlsx",
+                "label": "Excel (Basic)",
+                "value": "xlsx:basic",
               },
               Object {
-                "label": "CSV",
-                "value": "csv",
+                "label": "Excel (Accounting)",
+                "value": "xlsx:accounting",
+              },
+              Object {
+                "label": "CSV (Basic)",
+                "value": "csv:basic",
+              },
+              Object {
+                "label": "CSV (Accounting)",
+                "value": "csv:accounting",
               },
             ]
           }
-          value="xlsx"
+          value="xlsx:basic"
         />
       </Col>
       <Col

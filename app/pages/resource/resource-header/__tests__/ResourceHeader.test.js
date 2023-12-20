@@ -14,6 +14,12 @@ describe('pages/resource/resource-header/ResourceHeader', () => {
     unit: Unit.id,
     authentication: 'strong',
     maxPeriod: 2,
+    accessMethods: [
+      {
+        id: 'pincode',
+        name: 'Pincode',
+      },
+    ],
   });
   const defaultProps = {
     onBackClick: () => null,
@@ -61,7 +67,7 @@ describe('pages/resource/resource-header/ResourceHeader', () => {
         const infos = getWrapper().find('.app-ResourceHeader__info');
         const images = infos.find('img');
 
-        expect(images).toHaveLength(6);
+        expect(images).toHaveLength(7);
 
         expect(images.at(0).prop('alt')).toBe('ResourceHeader.purpose');
       });
@@ -72,7 +78,7 @@ describe('pages/resource/resource-header/ResourceHeader', () => {
         const infos = getWrapper().find('.app-ResourceHeader__info');
         const images = infos.find('img');
 
-        expect(images).toHaveLength(6);
+        expect(images).toHaveLength(7);
 
         expect(images.at(1).prop('alt')).toBe('ResourceHeader.capacity');
       });
@@ -83,7 +89,7 @@ describe('pages/resource/resource-header/ResourceHeader', () => {
         const infos = getWrapper().find('.app-ResourceHeader__info');
         const images = infos.find('img');
 
-        expect(images).toHaveLength(6);
+        expect(images).toHaveLength(7);
 
         expect(images.at(2).prop('alt')).toBe('ResourceHeader.maxTime');
       });
@@ -103,7 +109,7 @@ describe('pages/resource/resource-header/ResourceHeader', () => {
         const infos = getWrapper().find('.app-ResourceHeader__info');
         const images = infos.find('img');
 
-        expect(images).toHaveLength(6);
+        expect(images).toHaveLength(7);
 
         expect(images.at(3).prop('alt')).toBe('ResourceHeader.price');
       });
@@ -141,7 +147,7 @@ describe('pages/resource/resource-header/ResourceHeader', () => {
         const infos = getWrapper().find('.app-ResourceHeader__info');
         const images = infos.find('img');
 
-        expect(images).toHaveLength(6);
+        expect(images).toHaveLength(7);
 
         expect(images.at(4).prop('alt')).toBe('ResourceHeader.premise');
       });

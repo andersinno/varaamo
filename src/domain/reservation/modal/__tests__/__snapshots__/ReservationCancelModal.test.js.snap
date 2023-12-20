@@ -67,7 +67,7 @@ exports[`domain/reservation/modal/ReservationCancelModal renders correctly 1`] =
                 "its_own": false,
                 "resource": undefined,
                 "staff_event": false,
-                "state": "requested",
+                "state": "invoice_requested",
                 "url": "https://respa.koe.hel.ninja/v1/reservation/192388/",
                 "user": Object {},
                 "user_permissions": null,
