@@ -155,3 +155,172 @@ exports[`ResourceCard renders correctly 1`] = `
   </div>
 </div>
 `;
+
+exports[`ResourceCard user logged in 1`] = `
+<div
+  className="app-resourceCard2"
+>
+  <Link
+    className="app-resourceCard2__image-link app-resourceCard2__image-link--large-font-size"
+    replace={false}
+    to={
+      Object {
+        "pathname": "/resources/1",
+        "search": "date=30-07-2019",
+        "state": Object {
+          "fromSearchResults": true,
+        },
+      }
+    }
+  >
+    <BackgroundImage
+      darken={true}
+      height={420}
+      image={Object {}}
+      width={700}
+    />
+    <button
+      className="app-resourceCard2__favorite-button"
+      onClick={[Function]}
+      title="ResourceCard.favoriteAddButton"
+      type="button"
+    >
+      <img
+        alt="ResourceCard.favoriteAddButton"
+        className="app-resourceCard2__image-icon"
+        src="test-file-stub"
+      />
+    </button>
+  </Link>
+  <div
+    className="app-resourceCard2__content"
+  >
+    <Link
+      replace={false}
+      to={
+        Object {
+          "pathname": "/resources/1",
+          "search": "date=30-07-2019",
+          "state": Object {
+            "fromSearchResults": true,
+          },
+        }
+      }
+    >
+      <h4>
+        Resource (en) - 1
+      </h4>
+      <div
+        className="app-resourceCard2__unit-name"
+      >
+        <span>
+          Unit (en) - 1
+        </span>
+        <div
+          className="app-resourceCard2__unit-name-labels"
+        >
+          <InjectT(ResourceAvailability)
+            date="30-07-2019"
+            resource={
+              Object {
+                "authentication": "weak",
+                "available_hours": Array [],
+                "equipment": Array [],
+                "id": 1,
+                "is_favorite": false,
+                "name": Object {
+                  "en": "Resource (en) - 1",
+                  "fi": "Resource (fi) - 1",
+                  "sv": "Resource (sv) - 1",
+                },
+                "need_manual_confirmation": false,
+                "opening_hours": Array [],
+                "products": Array [],
+                "public": true,
+                "required_reservation_extra_fields": Array [],
+                "reservable": true,
+                "reservable_after": null,
+                "should_be_reserved_whole_day": false,
+                "slot_size": "00:30:00",
+                "supported_reservation_extra_fields": Array [],
+                "unit": 1,
+                "user_permissions": Object {
+                  "canMakeReservations": true,
+                  "isAdmin": false,
+                },
+              }
+            }
+          />
+        </div>
+      </div>
+    </Link>
+    <div
+      className="app-resourceCard2__description"
+    />
+  </div>
+  <div
+    className="app-resourceCard2__info"
+  >
+    <ResourceCardInfoCell
+      icon="test-file-stub"
+      onClick={null}
+      text="-"
+    />
+    <ResourceCardInfoCell
+      icon="test-file-stub"
+      onClick={[Function]}
+      text="ResourceIcons.payable"
+    />
+    <ResourceCardInfoCell
+      icon="test-file-stub"
+      text=""
+    />
+    <span
+      className="app-resourceCardInfoCell"
+    >
+      <span
+        className="app-ResourceCardInfoCell__loginMethods"
+      >
+        <img
+          alt="Suomi.fi"
+          className="app-resourceCardInfoCell__icon"
+          key="Suomi.fi"
+          src="test-file-stub"
+          title="Suomi.fi"
+        />
+        <img
+          alt="PIKI-kirjastokortti"
+          className="app-resourceCardInfoCell__icon"
+          key="PIKI-kirjastokortti"
+          src="test-file-stub"
+          title="PIKI-kirjastokortti"
+        />
+        <img
+          alt="Google"
+          className="app-resourceCardInfoCell__icon"
+          key="Google"
+          src="test-file-stub"
+          title="Google"
+        />
+        <img
+          alt="Facebook"
+          className="app-resourceCardInfoCell__icon"
+          key="Facebook"
+          src="test-file-stub"
+          title="Facebook"
+        />
+        <img
+          alt="Yle Tunnus"
+          className="app-resourceCardInfoCell__icon"
+          key="Yle Tunnus"
+          src="test-file-stub"
+          title="Yle Tunnus"
+        />
+      </span>
+      <span>
+        ResourceCard.requiredLoginMethods
+      </span>
+    </span>
+  </div>
+</div>
+`;
