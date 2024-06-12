@@ -10,7 +10,7 @@ import { withRouter } from 'react-router-dom';
 import { NotificationContainer } from 'react-notifications';
 import firebase from 'firebase/app';
 
-import { isAdminSelector } from '../state/selectors/authSelectors';
+import { isAdminSelector, currentUserSelector } from '../state/selectors/authSelectors';
 import { fetchUser } from '../actions/userActions';
 import { enableGeoposition } from '../actions/uiActions';
 import Favicon from '../shared/favicon/Favicon';
@@ -21,6 +21,7 @@ import { getCustomizationClassName } from '../utils/customizationUtils';
 import Notifications from '../shared/notifications/NotificationsContainer';
 import UserNotificator from '../../src/common/notificator/user/UserNotificator';
 import AccessibilityShortcuts from '../shared/accessibility-shortcuts/AccessibilityShortcuts';
+import UserEmailFormModal from '../shared/modals/user-email-form/UserEmailFormModal';
 import FontSizes from '../constants/FontSizes';
 
 const userIdSelector = state => state.auth.userId;
@@ -34,6 +35,7 @@ export const selector = createStructuredSelector({
   userId: userIdSelector,
   fontSize: fontSizeSelector,
   isHighContrast: isHighContrastSelector,
+  user: currentUserSelector,
 });
 
 export class UnconnectedAppContainer extends Component {
@@ -67,9 +69,10 @@ export class UnconnectedAppContainer extends Component {
 
   render() {
     const {
-      isStaff, language, fontSize, isHighContrast,
+      isStaff, language, fontSize, isHighContrast, user, userId,
     } = this.props;
     const mainContentId = 'main-content';
+    const userHasEmail = Boolean(user && (user.email || user.emails));
 
     return (
       <>
@@ -101,6 +104,12 @@ export class UnconnectedAppContainer extends Component {
             {this.props.children}
           </div>
           <Footer />
+          {(userId) && (
+            <UserEmailFormModal
+              show={userId && !userHasEmail}
+              userId={userId}
+            />
+          )}
         </div>
       </>
     );
@@ -116,6 +125,7 @@ UnconnectedAppContainer.propTypes = {
   fetchUser: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   userId: PropTypes.string,
+  user: PropTypes.object,
   fontSize: PropTypes.oneOf(Object.values(FontSizes)),
 };
 
