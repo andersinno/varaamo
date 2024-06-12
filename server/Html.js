@@ -51,18 +51,10 @@ class Html extends Component {
       return null;
     }
     const scriptString = `
-    var mtm = window._mtm = window._mtm || [];
-    mtm.push({ 'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start' });
-    (function () {
-    var scripts = ['https://cdn.matomo.cloud/tamperecity.matomo.cloud/container_dEStTJeP.js', // Cloud container
-    'https://matomo.tampere.fi/js/container_mgAlas5z.js']; // On-premise Container
-    var d = document, s = d.getElementsByTagName('script')[0];
-    scripts.forEach(function (src) {
-    var g = d.createElement('script');
-    g.type = 'text/javascript'; g.async = true; g.src = src;
-    s.parentNode.insertBefore(g, s);
-    });
-    })();
+     var _mtm = window._mtm = window._mtm || [];
+    _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src='https://matomo.tampere.fi/js/container_${settings.MATOMO_CONTAINER_ID}.js'; s.parentNode.insertBefore(g,s);
     `;
     return (
       <>
