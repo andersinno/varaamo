@@ -526,5 +526,14 @@
   "CalendarLegend.closed": "Ei varattavissa",
   "CalendarLegend.selection": "Oma varaus",
   "CalendarLegend.taken": "Varattu",
-  "CalendarLegend.available": "Vapaa"
+  "CalendarLegend.available": "Vapaa",
+  "UserEmailForm.title": "Sähköpostiosoite tarvitaan",
+  "UserEmailForm.text": "Jotta Varaamosta voidaan lähettää varauksiin liittyviä sähköposteja, tarvitsemme sähköpostiosoitteesi.",
+  "UserEmailForm.text2": "Annathan sähköpostiosoitteesi, jotta se voidaan tallentaa tietoihisi.",
+  "UserEmailForm.emailFieldLabel": "Sähköpostiosoite",
+  "UserEmailForm.emailField2Label": "Sähköpostiosoite uudelleen",
+  "UserEmailForm.confirmButton": "Vahvista",
+  "UserEmailForm.emailMismatchError": "Sähköpostiosoitteet eivät vastaa toisiaan.",
+  "UserEmailForm.emailSet": "Sähköpostiosoite tallennettu.",
+  "UserEmailForm.failedToSetEmail": "Sähköpostiosoitteen tallennus epäonnistui. Joko sähköpostiosoitteen muoto ei kelpaa tai se on jo käytössä."
 }
