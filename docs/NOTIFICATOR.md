@@ -7,7 +7,7 @@ Notificator is using Google's Firebase instead of Respa API. To create and setup
 Add your Firebase API keys corresponding variables in `.env`. (Firebase related variables are show in updated [env.example](https://github.com/City-of-Helsinki/varaamo/blob/develop/.env.example) file.)
 
 When user closes notification, notification ID is stored in cookies and will be show again only if cookies are cleared.  
-To create user notifications, enter `/create-notifations` to URL and log in with credentials you created while setting up your Firebase project.  
+To create user notifications, enter `/create-notifications` to URL and log in with credentials you created while setting up your Firebase project.  
 
 **Create new notification fields**
 - Name: This is only used in notifications list, can be empty.
