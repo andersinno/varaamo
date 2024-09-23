@@ -1,4 +1,4 @@
-import googleIcon from '../../assets/icons/google.svg';
+import googleIcon from '../../assets/icons/google.png';
 import pikiIcon from '../../assets/icons/piki.png';
 import suomiFiIcon from '../../assets/icons/suomiFi.svg';
 
