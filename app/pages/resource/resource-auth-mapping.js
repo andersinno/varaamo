@@ -1,8 +1,6 @@
-import facebookIcon from '../../assets/icons/facebook.svg';
 import googleIcon from '../../assets/icons/google.svg';
 import pikiIcon from '../../assets/icons/piki.png';
 import suomiFiIcon from '../../assets/icons/suomiFi.svg';
-import yleIcon from '../../assets/icons/yle.svg';
 
 /*
 Mapping of resource authentication level with the corresponding allowed login methods.
@@ -43,22 +41,16 @@ export const RESOURCE_AUTHENTICATION_GROUPING = {
       'Suomi.fi',
       'PIKI-kirjastokortti',
       'Google',
-      'Facebook',
-      'Yle Tunnus',
     ],
     loginMethodIcons: [
       suomiFiIcon,
       pikiIcon,
       googleIcon,
-      facebookIcon,
-      yleIcon,
     ],
     canReserveWith: [
       'suomifi',
       'axiell_aurora',
       'google',
-      'facebook',
-      'yletunnus',
       'tampere_adfs',
       'tampereazuread',
     ],
@@ -70,7 +62,5 @@ export const LOGIN_METHODS_NAMES = {
   'axiell_aurora': 'PIKI',
   'tampere_adfs': 'Tampere Adfs',
   'google': 'Google',
-  'facebook': 'Facebook',
-  'yletunnus': 'Yletunnus',
   'tampereazuread': 'Azure AD',
 };

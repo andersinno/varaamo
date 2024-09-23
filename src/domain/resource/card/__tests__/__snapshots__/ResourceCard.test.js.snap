@@ -133,20 +133,6 @@ exports[`ResourceCard renders correctly 1`] = `
           src="test-file-stub"
           title="Google"
         />
-        <img
-          alt="Facebook"
-          className="app-resourceCardInfoCell__icon"
-          key="Facebook"
-          src="test-file-stub"
-          title="Facebook"
-        />
-        <img
-          alt="Yle Tunnus"
-          className="app-resourceCardInfoCell__icon"
-          key="Yle Tunnus"
-          src="test-file-stub"
-          title="Yle Tunnus"
-        />
       </span>
       <span>
         ResourceCard.requiredLoginMethods
@@ -301,20 +287,6 @@ exports[`ResourceCard user logged in 1`] = `
           key="Google"
           src="test-file-stub"
           title="Google"
-        />
-        <img
-          alt="Facebook"
-          className="app-resourceCardInfoCell__icon"
-          key="Facebook"
-          src="test-file-stub"
-          title="Facebook"
-        />
-        <img
-          alt="Yle Tunnus"
-          className="app-resourceCardInfoCell__icon"
-          key="Yle Tunnus"
-          src="test-file-stub"
-          title="Yle Tunnus"
         />
       </span>
       <span>
