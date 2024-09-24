@@ -597,7 +597,7 @@ describe('domain resource utility function', () => {
 
     test('are rendered correctly for weak auth', () => {
       const resource = { authentication: 'weak' };
-      const allowedLoginMethodNamesString = 'Suomi.fi/PIKI-kirjastokortti/Google/Facebook/Yle Tunnus';
+      const allowedLoginMethodNamesString = 'Suomi.fi/PIKI-kirjastokortti/Google';
       expect(resourceUtils.getRequiredLoginMethod(resource)).toEqual(allowedLoginMethodNamesString);
     });
 

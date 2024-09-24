@@ -132,7 +132,8 @@ $resourceCardTitleBottomMargin: 6px;
     flex-wrap: wrap;
 
     @media (min-width: $screen-xs-min) {
-      display: inline-block;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       width: 100%;
     }
 

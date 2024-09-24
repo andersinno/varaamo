@@ -1,12 +1,11 @@
-$cellWidth: 33.33%;
 $cellHeight: 50%;
 
 .app-resourceCardInfoCell {
+  padding: 6px 12px;
   border: none;
   background: transparent;
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
-  width: $cellWidth;
   height: $cellHeight;
   align-items: center;
 
@@ -22,7 +21,8 @@ $cellHeight: 50%;
   }
 
   &__icon {
-    width: $line-height-computed*1.2;
+    border-radius: 50%;
+    width: $line-height-computed
   }
 
   span {
@@ -35,4 +35,6 @@ $cellHeight: 50%;
 
 .app-ResourceCardInfoCell__loginMethods {
   flex-direction: row;
+  display: flex;
+  grid-gap: 4px;
 }
