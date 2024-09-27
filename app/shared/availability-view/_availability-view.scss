@@ -1,7 +1,7 @@
 .availability-view {
   $slot-height: 50px;
   $slot-border-size: 1px;
-  $slot-border: $slot-border-size solid white;
+  $slot-border: $slot-border-size solid #ddd;
   $slot-comment-bubble-size: 18px;
   $av-header-height: $input-height-base;
   display: flex;
@@ -337,11 +337,11 @@
     }
   }
   .reservation-slot {
-    background-color: $gray-lighter;
+    background-color: $light-gray;
     overflow: hidden;
 
     &-selectable {
-      background-color: $gray-light;
+      background-color: $white;
       cursor: pointer;
     }
     &-selected {
