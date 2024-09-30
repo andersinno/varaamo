@@ -22,6 +22,9 @@ function configurePassport() {
       });
     },
   );
+  tampereStrategy.authorizationParams = options => ({
+    ui_locales: options.ui_locales || 'fi',
+  });
 
   passport.use(tampereStrategy);
 

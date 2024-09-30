@@ -33,7 +33,9 @@ router.get('/login',
     req.session.next = req.query.next; // eslint-disable-line no-param-reassign
     next();
   },
-  passport.authenticate('tampere'));
+  (req, res, next) => {
+    passport.authenticate('tampere', { ui_locales: req.query.ui_locales })(req, res, next);
+  });
 
 router.get('/login/tampere/return',
   passport.authenticate('tampere', { failureRedirect: '/login' }),
@@ -51,7 +53,8 @@ router.get('/logout', (req, res) => {
   req.logOut();
   const logoutUrl = process.env.AUTH_LOGOUT_URL || 'https://auth.tampere.fi/logout/';
   const redirectUrl = req.query.next || 'https://varaamo.tampere.fi';
-  res.redirect(`${logoutUrl}?next=${redirectUrl}`);
+  const uiLocales = req.query.ui_locales || 'fi';
+  res.redirect(`${logoutUrl}?next=${redirectUrl}&ui_locales=${uiLocales}`);
 });
 
 export default router;

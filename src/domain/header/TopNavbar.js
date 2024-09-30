@@ -40,9 +40,9 @@ class TopNavbar extends Component {
     this.props.changeLocale(nextLocale);
   }
 
-  handleLoginClick() {
+  handleLoginClick = () => {
     const next = encodeURIComponent(window.location.href);
-    window.location.assign(`${window.location.origin}/login?next=${next}`);
+    window.location.assign(`${window.location.origin}/login?next=${next}&ui_locales=${this.props.currentLanguage}`);
   }
 
   render() {
@@ -147,7 +147,7 @@ class TopNavbar extends Component {
                       </li>
                     )}
                     <TabbableNavItem
-                      href={`/logout?next=${window.location.origin}`}
+                      href={`/logout?next=${window.location.origin}&ui_locales=${currentLanguage}`}
                       onClick={closeMenu}
                     >
                       <FormattedHTMLMessage id="Navbar.logout" />
