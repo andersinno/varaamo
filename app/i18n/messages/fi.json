@@ -533,6 +533,7 @@
   "UserEmailForm.emailFieldLabel": "Sähköpostiosoite",
   "UserEmailForm.emailField2Label": "Sähköpostiosoite uudelleen",
   "UserEmailForm.confirmButton": "Vahvista",
+  "UserEmailForm.cancelButton": "Peruuta ja palaa kirjautumissivulle",
   "UserEmailForm.emailMismatchError": "Sähköpostiosoitteet eivät vastaa toisiaan.",
   "UserEmailForm.emailSet": "Sähköpostiosoite tallennettu.",
   "UserEmailForm.failedToSetEmail": "Sähköpostiosoitteen tallennus epäonnistui. Joko sähköpostiosoitteen muoto ei kelpaa tai se on jo käytössä."

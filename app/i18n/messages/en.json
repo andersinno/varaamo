@@ -523,6 +523,7 @@
   "UserEmailForm.emailFieldLabel": "Email address",
   "UserEmailForm.emailField2Label": "Confirm email address",
   "UserEmailForm.confirmButton": "Confirm",
+  "UserEmailForm.cancelButton": "Cancel and return to login",
   "UserEmailForm.emailMismatchError": "The email addresses do not match.",
   "UserEmailForm.emailSet": "Email address saved.",
   "UserEmailForm.failedToSetEmail": "Failed to save the email address. Either the format is incorrect or the email address is already in use."
