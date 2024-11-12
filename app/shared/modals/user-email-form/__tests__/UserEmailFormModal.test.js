@@ -31,7 +31,7 @@ describe('UserEmailFormModal', () => {
     expect(modalTitle.prop('children')).toBe('UserEmailForm.title');
     expect(wrapper.find('p').at(0).text()).toBe('UserEmailForm.text');
     expect(wrapper.find('p').at(1).text()).toBe('UserEmailForm.text2');
-    expect(confirmButton.length).toBe(1);
+    expect(confirmButton.length).toBe(2);
   });
 
   it('submits the form successfully', async () => {

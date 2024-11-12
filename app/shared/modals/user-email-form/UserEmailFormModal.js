@@ -112,7 +112,15 @@ function UserEmailFormModal({ userId, show, t }) {
         )}
       </Modal.Body>
       <Modal.Footer>
-        <Button form="user-email-form" type="submit" variant="primary">
+        <Button
+          form="user-email-form"
+          href={`/logout?next=${window.location.origin}/login`}
+          type="button"
+          variant="primary"
+        >
+          {t('UserEmailForm.cancelButton')}
+        </Button>
+        <Button bsStyle="primary" form="user-email-form" type="submit" variant="primary">
           {t('UserEmailForm.confirmButton')}
         </Button>
       </Modal.Footer>
