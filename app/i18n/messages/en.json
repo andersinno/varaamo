@@ -14,7 +14,7 @@
   "AccessibilityPage.unreachableContentHeader": "Ei-saavutettava sisältö",
   "AccessibilityPage.unreachableContent": "Lainsäädäntö saavutettavuudesta ei koske karttasisältöjä. Palvelun karttamuotoinen tieto ei ole täysin saavutettava, mutta karttaupotuksen olemassaolo ei haittaa muuta käyttöä ja osoitetiedot on esitetty myös tekstimuodossa.",
   "AccessibilityPage.authenticationServiceHeader": "Tunnistautumispalvelu",
-  "AccessibilityPage.authenticationServiceContent": "Kevyeen tunnistautumiseen käytettävät Facebook-, Google- ja Yle Tunnus –palvelut ovat kolmannen osapuolen tuottamia palveluita, joiden saavutettavuuteen ei Tampereen kaupunki voi vaikuttaa.",
+  "AccessibilityPage.authenticationServiceContent": "Kevyeen tunnistautumiseen käytettävä Google–palvelu on kolmannen osapuolen tuottama palvelu, jonka saavutettavuuteen ei Tampereen kaupunki voi vaikuttaa.",
   "AccessibilityPage.deficienciesAndCorrectionsHeader": "Tiedetyt puutteet ja niiden korjaus",
   "AccessibilityPage.deficienciesAndCorrectionsContent": "<p>Otsikkotasojen käytössä on joillakin sivuilla puutteita. Joidenkin otsikkotasojen yli on hypätty ja kaikkia otsikkoja ei ole merkitty ohjelmallisesti otsikoiksi. (WCAG 1.3.1, 2.4.6, 4.1.1, 4.1.2)</p><p>Kaikki linkkitekstit eivät ole kuvaavia. Joillain sivuilla käytetään samaa linkkitekstiä useaan kertaan eri linkeissä, ja osa linkkiteksteistä on liian suppeita. Joillain sivuilla sama linkki toistetaan kahdesti. (WCAG 2.4.4)</p><p>Osa palvelun lomakkeista eivät ole täysin saavutettavia. Joidenkin lomakkeiden toimintojen käyttäminen ruudunlukijalla tai näppäinkomennoin on haastavaa. (WCAG 2.1.4, 3.2.4, 3.3.1, 3.3.2, 3.3.3)</p><p>Sivustolla puutteita Aria – landmark roolien määrittelyissä, jotka eivät ole kaikilta osin uniikkeja tai kata koko sivun sisältöä.</p>",
   "AccessibilityPage.graphicElementsHeader": "Graafiset elementit",
@@ -516,5 +516,15 @@
   "CalendarLegend.closed": "Unavailable",
   "CalendarLegend.selection": "My reservation",
   "CalendarLegend.taken": "Taken",
-  "CalendarLegend.available": "Available"
+  "CalendarLegend.available": "Available",
+  "UserEmailForm.title": "Email address required",
+  "UserEmailForm.text": "In order to send reservation related emails from Varaamo, we need your email address.",
+  "UserEmailForm.text2": "Please provide your email address so that we can save it to your user details.",
+  "UserEmailForm.emailFieldLabel": "Email address",
+  "UserEmailForm.emailField2Label": "Confirm email address",
+  "UserEmailForm.confirmButton": "Confirm",
+  "UserEmailForm.cancelButton": "Cancel and return to login",
+  "UserEmailForm.emailMismatchError": "The email addresses do not match.",
+  "UserEmailForm.emailSet": "Email address saved.",
+  "UserEmailForm.failedToSetEmail": "Failed to save the email address. Either the format is incorrect or the email address is already in use."
 }
