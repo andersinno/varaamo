@@ -47,7 +47,7 @@ describe('pages/admin-resources/AdminResourcesPage', () => {
       const pageWrapper = getWrapper().find(PageWrapper);
       expect(pageWrapper).toHaveLength(1);
       expect(pageWrapper.prop('className')).toBe('admin-resources-page');
-      expect(pageWrapper.prop('title')).toBe('AdminResourcesPage.adminTitle');
+      expect(pageWrapper.prop('title')).toBe('AdminResourcesPage.favoriteTitle');
       expect(pageWrapper.prop('fluid')).toBe(true);
     });
 
@@ -69,7 +69,7 @@ describe('pages/admin-resources/AdminResourcesPage', () => {
 
       test('displays correct title inside h1 tags', () => {
         const h1 = getIsAdminWrapper().find('h1');
-        expect(h1.text()).toBe('AdminResourcesPage.adminTitle');
+        expect(h1.text()).toBe('AdminResourcesPage.favoriteTitle');
       });
 
       describe('Loader', () => {
