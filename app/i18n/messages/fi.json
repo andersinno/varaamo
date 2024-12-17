@@ -393,7 +393,7 @@
   "ResourceHeader.accessMethods": "Sisäänpääsy",
   "ResourceIcons.free": "Maksuton",
   "ResourceIcons.payable": "Maksullinen",
-  "ResourceInfo.additionalInfoTitle": "Lisätietoja",
+  "ResourceInfo.additionalInfoTitle": "Toimipisteen tiedot",
   "ResourceInfo.responsibleContactInfoTitle": "Vastuuhenkilön yhteystiedot",
   "ResourceInfo.descriptionTitle": "Kuvaus",
   "ResourceInfo.equipmentHeader": "Tilan varusteet",
