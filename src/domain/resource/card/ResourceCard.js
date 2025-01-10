@@ -236,7 +236,7 @@ render() {
           text={
               resource.people_capacity
                 ? t('ResourceCard.peopleCapacity', {
-                  people: resource.people_capacity,
+                  people: `${resource.people_capacity_lower}${resource.people_capacity_upper ? `-${resource.people_capacity_upper}` : ''}`,
                 })
                 : '-'
             }

@@ -126,7 +126,7 @@ class ResourceCard extends Component {
             onClick={this.handleSearchByPeopleCapacity}
           >
             <span className="app-ResourceCard__peopleCapacity">
-              {t('ResourceCard.peopleCapacity', { people: resource.peopleCapacity })}
+              {t('ResourceCard.peopleCapacity', { people: `${resource.peopleCapacityLower}${resource.peopleCapacityUpper ? `-${resource.peopleCapacityUpper}` : ''}` })}
             </span>
           </ResourceCardInfoCell>
 
