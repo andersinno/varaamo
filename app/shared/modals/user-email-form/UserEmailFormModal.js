@@ -12,7 +12,9 @@ import { NOTIFICATION_TYPE } from '../../../../src/common/notification/constants
 import client from '../../../../src/common/api/client';
 import injectT from '../../../i18n/injectT';
 
-function UserEmailFormModal({ userId, show, t }) {
+function UserEmailFormModal({
+  fetchUser, userId, show, t,
+}) {
   const [open, setOpen] = useState(false);
   const [error, setError] = useState(false);
   const [emailMismatch, setEmailMismatch] = useState(false);
@@ -35,6 +37,7 @@ function UserEmailFormModal({ userId, show, t }) {
         .then(() => {
           createNotification(NOTIFICATION_TYPE.SUCCESS, t('UserEmailForm.emailSet'));
           setOpen(false);
+          fetchUser(userId);
         })
         .catch((e) => {
           setError(true);
@@ -129,6 +132,7 @@ function UserEmailFormModal({ userId, show, t }) {
 }
 
 UserEmailFormModal.propTypes = {
+  fetchUser: PropTypes.func.isRequired,
   userId: PropTypes.string.isRequired,
   show: PropTypes.bool.isRequired,
   t: PropTypes.func.isRequired,
