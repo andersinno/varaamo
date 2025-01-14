@@ -106,6 +106,7 @@ export class UnconnectedAppContainer extends Component {
           <Footer />
           {(userId) && (
             <UserEmailFormModal
+              fetchUser={this.props.fetchUser}
               show={userId && !userHasEmail}
               userId={userId}
             />
