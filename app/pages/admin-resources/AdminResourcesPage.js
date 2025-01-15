@@ -71,9 +71,8 @@ class UnconnectedAdminResourcesPage extends Component {
       resourceTypes,
     } = this.props;
     return (
-      <PageWrapper className="admin-resources-page" fluid title={(t('AdminResourcesPage.adminTitle'))}>
-        {isAdmin && <h1>{t('AdminResourcesPage.adminTitle')}</h1>}
-        {!isAdmin && <h1>{t('AdminResourcesPage.favoriteTitle')}</h1>}
+      <PageWrapper className="admin-resources-page" fluid title={(t('AdminResourcesPage.favoriteTitle'))}>
+        <h1>{t('AdminResourcesPage.favoriteTitle')}</h1>
         <Loader loaded={Boolean(!isFetchingResources || resources.length)}>
           {isLoggedin && (
             <div>
