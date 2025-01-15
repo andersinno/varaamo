@@ -88,8 +88,9 @@ function ResourceHeader({
     }
     return undefined;
   };
-
-  const peopleCapacityText = t('ResourceCard.peopleCapacity', { people: resource.peopleCapacity });
+  const peopleCapacityText = t('ResourceCard.peopleCapacity', {
+    people: `${resource.peopleCapacityLower}${resource.peopleCapacityUpper ? `-${resource.peopleCapacityUpper}` : ''}`,
+  });
   const maxPeriodText = getMaxPeriodText(t, resource);
   const priceText = getPrice(t, resource);
   const typeName = resource.type ? resource.type.name : '\u00A0';
