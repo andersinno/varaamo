@@ -61,7 +61,7 @@ class MainNavbar extends React.Component {
             {isLoggedIn && (
               <LinkContainer to="/admin-resources">
                 <NavItem eventKey="admin-resources" onClick={() => this.collapseItem()}>
-                  {isAdmin ? t('Navbar.adminResources') : t('Navbar.userFavorites')}
+                  {t('Navbar.userFavorites')}
                 </NavItem>
               </LinkContainer>
             )}
