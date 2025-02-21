@@ -10,14 +10,14 @@ import WrappedText from '../../../shared/wrapped-text/WrappedText';
 import { getMaxPeriodText, getMinPeriodText } from '../../../utils/resourceUtils';
 import injectT from '../../../i18n/injectT';
 
-function renderLoginText(isLoggedIn, resource) {
+function renderLoginText(isLoggedIn, locale, resource) {
   if (isLoggedIn || !resource.reservable || resource.canOnlyBeReservedExternally) {
     return null;
   }
   const next = encodeURIComponent(window.location.href);
   return (
     <p className="login-text">
-      <FormattedHTMLMessage id="ReservationInfo.loginMessage" values={{ next }} />
+      <FormattedHTMLMessage id="ReservationInfo.loginMessage" values={{ next, ui_locales: locale }} />
     </p>
   );
 }
@@ -126,7 +126,9 @@ function renderRequiresManualConfirmationText(t) {
   );
 }
 
-function ReservationInfo({ isLoggedIn, resource, t }) {
+function ReservationInfo({
+  isLoggedIn, locale, resource, t,
+}) {
   return (
     <div className="app-ReservationInfo">
       <WrappedText openLinksInNewTab text={resource.reservationInfo} />
@@ -135,13 +137,14 @@ function ReservationInfo({ isLoggedIn, resource, t }) {
       {renderLastResDay(resource, t)}
       {renderReservationPeriodInfo(resource, t)}
       {renderMaxReservationsPerUserText(resource.maxReservationsPerUser, t)}
-      {renderLoginText(isLoggedIn, resource)}
+      {renderLoginText(isLoggedIn, locale, resource)}
     </div>
   );
 }
 
 ReservationInfo.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
+  locale: PropTypes.string,
   resource: PropTypes.shape({
     maxPeriod: PropTypes.string,
     maxReservationsPerUser: PropTypes.number,

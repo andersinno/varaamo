@@ -74,6 +74,7 @@ function renderRequiredLoginMethod(resource, t) {
 
 const ResourceReservationCalendar = ({
   isLoggedIn,
+  locale,
   resource,
   t,
   selected,
@@ -86,7 +87,7 @@ const ResourceReservationCalendar = ({
 
   const handleLoginButtonClick = () => {
     const next = encodeURIComponent(window.location.href);
-    window.location.assign(`${window.location.origin}/login?next=${next}`);
+    window.location.assign(`${window.location.origin}/login?next=${next}&ui_locales=${locale}`);
   };
 
   const canMakeReservations = get(
@@ -141,6 +142,7 @@ const ResourceReservationCalendar = ({
 
 ResourceReservationCalendar.propTypes = {
   isLoggedIn: PropTypes.bool,
+  locale: PropTypes.string,
   onReserve: PropTypes.func.isRequired,
   resource: PropTypes.object.isRequired,
   t: PropTypes.func.isRequired,
