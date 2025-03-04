@@ -1,6 +1,6 @@
 
 # Pull node image with locked node version
-FROM node:14.21.3
+FROM node:18.20.7
 
 # Make guest app dir
 RUN mkdir -p /usr/src/app
