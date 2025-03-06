@@ -23,28 +23,28 @@ exports[`ManageReservationsFilters renders correctly 1`] = `
           label="ManageReservationsFilters.statusLabel"
           onChange={[Function]}
           options={
-            Array [
-              Object {
+            [
+              {
                 "label": "Reservation.stateLabelConfirmed",
                 "value": "confirmed",
               },
-              Object {
+              {
                 "label": "Reservation.stateLabelCancelled",
                 "value": "cancelled",
               },
-              Object {
+              {
                 "label": "Reservation.stateLabelDenied",
                 "value": "denied",
               },
-              Object {
+              {
                 "label": "Reservation.stateLabelInvoiceRequested",
                 "value": "invoice_requested",
               },
-              Object {
+              {
                 "label": "Reservation.stateLabelRequested",
                 "value": "requested",
               },
-              Object {
+              {
                 "label": "Reservation.stateLabelWaitingForPayment",
                 "value": "waiting_for_payment",
               },
@@ -111,8 +111,8 @@ exports[`ManageReservationsFilters renders correctly 1`] = `
           label="ManageReservationsFilters.unitLabel"
           onChange={[Function]}
           options={
-            Array [
-              Object {
+            [
+              {
                 "label": "Unit (en) - 1",
                 "value": 1,
               },
@@ -131,12 +131,12 @@ exports[`ManageReservationsFilters renders correctly 1`] = `
           label="ManageReservationsFilters.showOnly.title"
           onChange={[Function]}
           options={
-            Array [
-              Object {
+            [
+              {
                 "label": "ManageReservationsFilters.showOnly.favoriteButtonLabel",
                 "value": "favorite",
               },
-              Object {
+              {
                 "label": "ManageReservationsFilters.showOnly.canModifyButtonLabel",
                 "value": "can_modify",
               },
@@ -165,20 +165,20 @@ exports[`ManageReservationsFilters renders correctly 1`] = `
           label="ManageReservationsFilters.downloadReservationData.title"
           onChange={[Function]}
           options={
-            Array [
-              Object {
+            [
+              {
                 "label": "Excel (Basic)",
                 "value": "xlsx:basic",
               },
-              Object {
+              {
                 "label": "Excel (Accounting)",
                 "value": "xlsx:accounting",
               },
-              Object {
+              {
                 "label": "CSV (Basic)",
                 "value": "csv:basic",
               },
-              Object {
+              {
                 "label": "CSV (Accounting)",
                 "value": "csv:accounting",
               },
