@@ -4,11 +4,13 @@ services:
   web:
     container_name: varaamo-frontend
     build:
+      target: development
       context: .
       dockerfile: Dockerfile
+
     volumes:
-      - '.:/usr/src/app'
-      - '/usr/src/app/node_modules'
+      - '.:/app'
+      - '/app/node_modules'
     ports:
       - '3000:3000'
       - '5858:5858'

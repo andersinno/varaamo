@@ -1,17 +1,36 @@
 
 # Pull node image with locked node version
-FROM node:10.15.1
+FROM andersinnovations/node:12-slim AS app-base
 
-# Make guest app dir
-RUN mkdir -p /usr/src/app
+COPY package.json /app/package.json
+COPY yarn.lock /app/yarn.lock
 
-# Set workdir
-WORKDIR /usr/src/app
+RUN yarn install
 
-COPY package.json package.json
+COPY . /app/
 
-COPY yarn.lock yarn.lock
-
-RUN yarn install --silent
-
+# ============================
+FROM app-base AS development
+# ============================
 CMD ["yarn", "start"]
+
+EXPOSE 3000
+
+# ==============================================
+FROM app-base AS production
+# ==============================================
+ARG API_URL
+ARG RESPA_ADMIN_URL
+ARG LOGIN_CALLBACK_URL
+ARG CLIENT_ID
+ARG CLIENT_SECRET
+ARG SESSION_SECRET
+ARG TARGET_APP
+ARG PORT
+ARG AUTH_LOGOUT_URL
+ARG CUSTOM_MUNICIPALITY_OPTIONS
+
+RUN yarn build
+CMD ["npm", "run", "start:production"]
+
+EXPOSE 8080
