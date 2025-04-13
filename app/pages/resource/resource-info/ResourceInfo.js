@@ -98,7 +98,7 @@ function ResourceInfo({
         <ResourcePanel header={t('ResourceInfo.responsibleContactInfoTitle')}>
           <Row>
             <Col className="app-ResourceInfo__responsibleContactInfo" xs={6}>
-              {resource.responsibleContactInfo}
+              <WrappedText text={resource.responsibleContactInfo} />
             </Col>
           </Row>
         </ResourcePanel>
