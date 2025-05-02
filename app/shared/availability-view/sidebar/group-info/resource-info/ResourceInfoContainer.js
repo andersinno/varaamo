@@ -23,6 +23,7 @@ export function ResourceInfo(props) {
   return (
     <div
       className={classNames('resource-info', { 'resource-info-selected': props.isSelected })}
+      id={`resource-info-${props.id}`}
       title={props.name}
     >
       <div className="name">
@@ -30,9 +31,11 @@ export function ResourceInfo(props) {
       </div>
       <div className="details">
         <span className="unit-name">{props.unitName || ''}</span>
-        <Glyphicon glyph="user" />
-        {' '}
-        {props.peopleCapacity}
+        <span className="people-capacity">
+          <Glyphicon glyph="user" />
+          {' '}
+          {props.peopleCapacity}
+        </span>
         {!props.public && (
           <UnpublishedLabel />
         )}

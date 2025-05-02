@@ -27,10 +27,43 @@ class UnconnectedAvailabilityTimeline extends React.Component {
     slotSize: PropTypes.string,
   };
 
-  shouldComponentUpdate(nextProps) {
+  resizeObserver = null;
+
+  constructor(props) {
+    super(props);
+    this.state = { height: undefined };
+  }
+
+  componentDidMount() {
+    this.setRowHeight();
+    const sidebar = document.getElementById('reservation-list-sidebar');
+    if (sidebar) {
+      this.resizeObserver = new ResizeObserver(() => {
+        this.setRowHeight();
+      });
+      this.resizeObserver.observe(sidebar);
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
     const isSelected = nextProps.selection && nextProps.selection.resourceId === this.props.id;
     const wasSelected = this.props.selection && this.props.selection.resourceId === this.props.id;
-    return this.props.items !== nextProps.items || isSelected || wasSelected;
+    return this.props.items !== nextProps.items || this.state.height !== nextState.height || isSelected || wasSelected;
+  }
+
+  componentWillUnmount() {
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+    }
+  }
+
+  setRowHeight = () => {
+    const el = document.getElementById(`resource-info-${this.props.id}`);
+    if (el) {
+      this.setState({
+        height: el.getBoundingClientRect().height,
+      });
+    }
   }
 
   render() {
@@ -45,7 +78,10 @@ class UnconnectedAvailabilityTimeline extends React.Component {
       slotSize,
     } = this.props;
     return (
-      <div className="availability-timeline">
+      <div
+        className="availability-timeline"
+        style={{ height: this.state.height }}
+      >
         {this.props.items.map((item, index) => {
           if (item.type === 'reservation-slot') {
             return (

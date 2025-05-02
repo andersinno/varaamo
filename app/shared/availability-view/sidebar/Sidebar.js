@@ -13,7 +13,7 @@ Sidebar.propTypes = {
 export default function Sidebar(props) {
   const date = props.date;
   return (
-    <div className="sidebar">
+    <div className="sidebar" id="reservation-list-sidebar">
       {props.groups.map(group => (
         <GroupInfo
           date={date}
