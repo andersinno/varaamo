@@ -411,7 +411,7 @@ class ManageReservationsPage extends React.Component {
                     search: searchUtils.getSearchFromFilters({ ...filters, page: newPage }),
                   })}
                   page={filters && filters.page ? Number(filters.page) : 1}
-                  pages={Math.round(totalCount / PAGE_SIZE)}
+                  pages={Math.ceil(totalCount / PAGE_SIZE)}
                 />
               </Col>
             </Row>
