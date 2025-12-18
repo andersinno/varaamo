@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .app-ResourceCardSlider {
   $button-size: $line-height-computed;
   $button-offset: 10px;
@@ -11,7 +13,7 @@
 
   &_arrow {
     position: absolute;
-    top: $app-ResourceCard-height / 2 - $button-size / 2;
+    top: math.div($app-ResourceCard-height, 2) - math.div($button-size, 2);
     width: $button-size;
     height: $button-size;
     border: none;

@@ -1,5 +1,4 @@
 import React from 'react';
-import simple from 'simple-mock';
 
 import PageWrapper from '../../PageWrapper';
 import { shallowWithIntl } from '../../../utils/testUtils';
@@ -47,8 +46,7 @@ describe('pages/admin-guide/AdminGuidePage', () => {
   describe('componentDidMount', () => {
     test('fetches data', () => {
       const wrapperInstance = getWrapper().instance();
-      simple.mock(wrapperInstance, 'fetchInstructions');
-      const fetchInstructionsSpy = jest.spyOn(wrapperInstance, 'fetchInstructions');
+      const fetchInstructionsSpy = jest.spyOn(wrapperInstance, 'fetchInstructions').mockResolvedValue([]);
 
       wrapperInstance.componentDidMount();
 

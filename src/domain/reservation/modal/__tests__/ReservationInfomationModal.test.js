@@ -1,7 +1,8 @@
+/* eslint-disable max-len */
 import React from 'react';
 import toJSON from 'enzyme-to-json';
 
-import { shallowWithIntl, globalDateMock } from '../../../../../app/utils/testUtils';
+import { shallowWithIntl } from '../../../../../app/utils/testUtils';
 import ReservationInformationModal from '../ReservationInformationModal';
 import reservation from '../../../../common/data/fixtures/reservation';
 
@@ -26,8 +27,6 @@ describe('ReservationInformationModal', () => {
   );
 
   test('renders correctly', () => {
-    globalDateMock();
-
     expect(toJSON(getWrapper())).toMatchSnapshot();
   });
 

@@ -5,6 +5,19 @@ import { shallowWithIntl } from '../../../utils/testUtils';
 import { UnconnectedUserReservationsPage as UserReservationsPage } from '../UserReservationsPage';
 import ReservationList from '../reservation-list/ReservationListContainer';
 
+// Mock the client module to avoid making actual API calls
+jest.mock('../../../../src/common/api/client', () => ({
+  __esModule: true,
+  default: {
+    get: jest.fn().mockResolvedValue({
+      data: {
+        results: [],
+        count: 0,
+      },
+    }),
+  },
+}));
+
 describe('pages/user-reservations/UserReservationsPage', () => {
   const defaultProps = {
     location: {
@@ -15,6 +28,8 @@ describe('pages/user-reservations/UserReservationsPage', () => {
     },
     t: path => path,
     reduxReservations: {},
+
+    sendReservationsToRedux: jest.fn(),
   };
 
   function getWrapper(extraProps = {}) {

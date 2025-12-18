@@ -49,7 +49,17 @@ module.exports = merge(common, {
           'style-loader',
           'css-loader',
           'resolve-url-loader',
-          { loader: 'sass-loader', options: { sourceMap: true, sourceMapContents: false } },
+          {
+            loader: 'sass-loader',
+            options: {
+              sassOptions: {
+                sourceMap: true,
+                sourceMapContents: false,
+                quietDeps: true,
+                silenceDeprecations: ['import', 'global-builtin', 'legacy-js-api'],
+              },
+            },
+          },
           { loader: 'postcss-loader', options: { plugins: [autoprefixer({ browsers: ['last 2 version', 'ie 9'] })] } },
         ],
       },

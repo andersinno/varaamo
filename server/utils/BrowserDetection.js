@@ -1,7 +1,8 @@
 import React from 'react';
 
 /**
- * @description Check if user is using IE browser or old versions of Edge and if that's the case show browser unsupported messages
+ * @description Check if user is using IE browser or old versions of Edge and if that's the case
+ * show browser unsupported messages
  *
  * @returns {JSX.Element}
  */
@@ -45,6 +46,6 @@ export default function BrowserDetection() {
     }
   `;
 
-  // eslint-disable-next-line react/react-in-jsx-scope
+  // eslint-disable-next-line react/react-in-jsx-scope, react/no-danger
   return <script dangerouslySetInnerHTML={{ __html: scriptString }} />;
 }

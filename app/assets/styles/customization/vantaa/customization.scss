@@ -1,3 +1,5 @@
+@use "sass:color";
+
 @import "./variables";
 
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,800');
@@ -95,8 +97,8 @@
     }
     button:hover,
     button:active {
-      background-color: darken($blue-light, 5);
-      border-color: darken($blue-light, 5);
+      background-color: color.adjust($blue-light, $lightness: -5%);
+      border-color: color.adjust($blue-light, $lightness: -5%);
     }
   }
 

@@ -50,7 +50,9 @@ class ReservationListItem extends Component {
     const nameSeparator = isEmpty(resource) || isEmpty(unit) ? '' : ', ';
 
     const confirmedAndInvoiceable = reservation.state === 'confirmed' && reservation.invoice_requested;
-    const paymentLabel = constants.RESERVATION_PAYMENT_LABELS[confirmedAndInvoiceable ? 'in_invoicing' : reservation.state];
+    const paymentLabel = constants.RESERVATION_PAYMENT_LABELS[confirmedAndInvoiceable
+      ? 'in_invoicing'
+      : reservation.state];
     const statusLabel = constants.RESERVATION_STATE_LABELS[reservation.state];
     let price;
     let vat;

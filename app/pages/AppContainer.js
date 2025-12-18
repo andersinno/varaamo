@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'react-router-dom';
 import { NotificationContainer } from 'react-notifications';
-import firebase from 'firebase/app';
+import firebase from 'firebase/compat/app';
 
 import { isAdminSelector, currentUserSelector } from '../state/selectors/authSelectors';
 import { fetchUser } from '../actions/userActions';
