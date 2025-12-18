@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .date-picker {
   position: relative;
   border: 1px solid $input-border;
@@ -7,7 +9,7 @@
     display: inline-block;
     content: '';
     position: absolute;
-    top: calc(50% - #{$arrow-size / 2});
+    top: calc(50% - math.div($arrow-size, 2));
     right: 5px;
     border-left: $arrow-size solid transparent;
     border-right: $arrow-size solid transparent;

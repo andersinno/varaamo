@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .app-SearchMapToggle {
   background-color: $hel-copper;
   display: block;
@@ -16,8 +18,8 @@
 
     &:hover,
     &:active {
-      background-color: darken($hel-copper, 5);
-      border-color: darken($hel-copper, 5);
+      background-color: color.adjust($hel-copper, $lightness: 5%);
+      border-color: color.adjust($hel-copper, $lightness: -5%);
       box-shadow: none;
     }
   }

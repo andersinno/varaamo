@@ -1,7 +1,9 @@
+@use "sass:math";
+
 .image-carousel {
   @media (max-width: $resource-page-width) {
-    margin-left: -($grid-gutter-width/2);
-    margin-right: -($grid-gutter-width/2);
+    margin-left: -(math.div($grid-gutter-width, 2));
+    margin-right: -(math.div($grid-gutter-width, 2));
   }
   .image-container {
     background-color: $gray-light;
