@@ -5,7 +5,6 @@ import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import { Link } from 'react-router-dom';
 
-import { version } from '../../../package.json';
 import FeedbackLink from '../../../app/shared/feedback-link/FeedbackLink';
 import Logo from '../../../app/shared/logo/Logo';
 import MunicipalityLogos from '../../../app/shared/logo/MunicipalityLogos';

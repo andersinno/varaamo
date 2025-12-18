@@ -47,6 +47,7 @@ class UnconnectedAdminGuidePage extends Component {
         {instructions.map(instruction => (
           <div
             className="app-adminGuidePage__instructions"
+            // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{ __html: instruction.content }}
             key={instruction.id}
           />

@@ -157,7 +157,9 @@ render() {
     return false;
   };
 
-  const favoriteLabel = resource.is_favorite ? t('ResourceCard.favoriteRemoveButton') : t('ResourceCard.favoriteAddButton');
+  const favoriteLabel = resource.is_favorite
+    ? t('ResourceCard.favoriteRemoveButton')
+    : t('ResourceCard.favoriteAddButton');
 
   return (
     <div

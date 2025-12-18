@@ -61,8 +61,12 @@ describe('UserEmailFormModal', () => {
 
     // Set the values and trigger onChange handlers
     act(() => {
-      wrapper.find('FormControl[name="email"]').simulate('change', { target: { name: 'email', value: 'test@example.com' } });
-      wrapper.find('FormControl[name="confirmEmail"]').simulate('change', { target: { name: 'confirmEmail', value: 'mismatch@example.com' } });
+      wrapper.find('FormControl[name="email"]').simulate('change', {
+        target: { name: 'email', value: 'test@example.com' },
+      });
+      wrapper.find('FormControl[name="confirmEmail"]').simulate('change', {
+        target: { name: 'confirmEmail', value: 'mismatch@example.com' },
+      });
     });
 
     // Ensure component re-renders after state update

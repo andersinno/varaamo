@@ -39,7 +39,7 @@ function UserEmailFormModal({
           setOpen(false);
           fetchUser(userId);
         })
-        .catch((e) => {
+        .catch(() => {
           setError(true);
           createNotification(NOTIFICATION_TYPE.ERROR, t('UserEmailForm.failedToSetEmail'));
         });
